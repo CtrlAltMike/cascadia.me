@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Kit — Cascadia.me</title>
+  <meta name="description" content="Build your own emergency kit. Full checklists for earthquake, wildfire, flooding, and winter storm — what you need, how much, why, and where to find it.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    /* Kit-page-specific styles (Limn owns) */
+    .kit-section { scroll-margin-top: calc(var(--nav-height) + var(--space-2)); }
+
+    .kit-header { margin-bottom: var(--space-6); }
+    .kit-header h2 { margin-bottom: var(--space-1); }
+    .kit-header .kit-desc { color: var(--color-timber); }
+
+    .kit-tier { margin-bottom: var(--space-6); }
+    .kit-tier-header { margin-bottom: var(--space-4); }
+    .kit-tier-header h3 { margin-bottom: var(--space-1); }
+    .kit-tier-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-timber);
+      font-size: var(--text-sm);
+      margin-top: var(--space-1);
+    }
+
+    .supply-quantity {
+      font-size: var(--text-sm);
+      margin-bottom: 0.25em;
+    }
+
+    .kit-print-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-fog);
+    }
+
+    .kit-print-row-top {
+      margin-top: 0;
+      margin-bottom: var(--space-4);
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .kit-back-top {
+      margin-top: var(--space-2);
+      text-align: right;
+    }
+
+    .kit-back-top a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .kit-nav {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-3);
+    }
+
+    .kit-nav a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      border: 1px solid var(--color-fog);
+      border-radius: 4px;
+      transition: all var(--duration) var(--ease-out);
+    }
+
+    .kit-nav a:hover {
+      border-color: var(--color-lantern);
+      background: var(--color-lantern-glow);
+      color: var(--color-stone);
+    }
+
+    /* Utility page: keep checklist content visible instead of waiting on scroll reveal */
+    .kit-section .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    @media print {
+      .kit-print-row, .kit-nav, .hero, .how-to-use, .site-header, .site-footer { display: none; }
+      .kit-section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Nav -->
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="build-your-kit.html" class="active">Build Your Kit</a></li>
+        <li><a href="approach.html">The Approach</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content reveal">
+      <h1>Build Your Kit</h1>
+      <p class="hero-subtitle">
+        A hardware store, a pharmacy, a Saturday afternoon, and this list.
+        Everything here is something you can find locally and assemble yourself.
+      </p>
+      <nav class="kit-nav">
+        <a href="#earthquake">Earthquake</a>
+        <a href="#wildfire">Wildfire</a>
+        <a href="#winter-storm">Winter Storm</a>
+        <a href="#flooding">Flooding</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- How to use this page -->
+  <section class="section how-to-use" style="background: var(--color-cloud);">
+    <div class="container content-width reveal">
+      <h2>How this works</h2>
+      <p>
+        Each kit below is organized by priority. <strong>Critical</strong> items are
+        the ones that matter most — start there. <strong>Important</strong> items add
+        depth and resilience. <strong>Recommended</strong> items are nice to have.
+      </p>
+      <p>
+        Every item includes why you need it and where to find it. Most of this is at
+        your local hardware store and grocery store.
+      </p>
+      <p>
+        Two tiers for each threat: <strong>Essentials</strong> (the minimum, for 1–2 people)
+        and <strong>Complete</strong> (scaled for a family or longer duration). Start with
+        essentials. Add depth when you can.
+      </p>
+      <div class="callout callout-info" style="margin-top: var(--space-3);">
+        <h4>Print your checklists</h4>
+        <p>
+          Each kit has a print button that opens a clean, formatted checklist you can take
+          to the store. Checkboxes included. We also have a printable family communication
+          plan template — fill it out together and keep copies in every kit.
+        </p>
+        <div style="margin-top: var(--space-2);">
+          <button class="btn btn-outline" onclick="kits.printFamilyPlan()">Print family communication plan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EARTHQUAKE KIT ===== -->
+  <section class="section kit-section" id="earthquake">
+    <div class="container content-width">
+      <div class="kit-header reveal">
+        <h2>Earthquake Kit</h2>
+        <p class="kit-desc">
+          What to have ready when the ground moves. Sized for the reality that municipal
+          water, power, and roads may be out for days — especially west of the Cascades.
+        </p>
+        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
+          Read the full <a href="earthquake.html">earthquake guide</a> for context.
+        </p>
+      </div>
+      <div class="kit-print-row kit-print-row-top reveal">
+        <button class="btn btn-outline" onclick="kits.print('earthquake')">Print earthquake checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <div id="earthquake-kit" class="reveal"></div>
+      <div class="kit-print-row reveal">
+        <button class="btn btn-outline" onclick="kits.print('earthquake')">Print earthquake checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ===== WILDFIRE KIT ===== -->
+  <section class="section kit-section" id="wildfire" style="background: var(--color-cloud);">
+    <div class="container content-width">
+      <div class="kit-header reveal">
+        <h2>Wildfire Evacuation Kit</h2>
+        <p class="kit-desc">
+          When wildfire threatens, you may have minutes to leave. This kit lives by
+          your door or in your vehicle — ready to grab.
+        </p>
+        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
+          Read the full <a href="wildfire.html">wildfire guide</a> for context.
+        </p>
+      </div>
+      <div class="kit-print-row kit-print-row-top reveal">
+        <button class="btn btn-outline" onclick="kits.print('wildfire')">Print wildfire checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <div id="wildfire-kit" class="reveal"></div>
+      <div class="kit-print-row reveal">
+        <button class="btn btn-outline" onclick="kits.print('wildfire')">Print wildfire checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ===== WINTER STORM KIT ===== -->
+  <section class="section kit-section" id="winter-storm">
+    <div class="container content-width">
+      <div class="kit-header reveal">
+        <h2>Winter Storm Kit</h2>
+        <p class="kit-desc">
+          Power outages. Downed trees. Roads that don't get plowed for days. This kit
+          is for riding it out at home when the grid goes down and nobody's coming to
+          fix it quickly.
+        </p>
+        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
+          Read the full <a href="winter-storm.html">winter storm guide</a> for context.
+        </p>
+      </div>
+      <div class="kit-print-row kit-print-row-top reveal">
+        <button class="btn btn-outline" onclick="kits.print('winter-storm')">Print winter storm checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <div id="winter-storm-kit" class="reveal"></div>
+      <div class="kit-print-row reveal">
+        <button class="btn btn-outline" onclick="kits.print('winter-storm')">Print winter storm checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ===== FLOODING KIT ===== -->
+  <section class="section kit-section" id="flooding" style="background: var(--color-cloud);">
+    <div class="container content-width">
+      <div class="kit-header reveal">
+        <h2>Flood Preparedness Kit</h2>
+        <p class="kit-desc">
+          River flooding gives you hours of warning, not minutes. This kit is about
+          using that time well — protecting what you can, moving what matters, and
+          being ready to leave.
+        </p>
+        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
+          Read the full <a href="flooding.html">flooding guide</a> for context.
+        </p>
+      </div>
+      <div class="kit-print-row kit-print-row-top reveal">
+        <button class="btn btn-outline" onclick="kits.print('flooding')">Print flooding checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <div id="flooding-kit" class="reveal"></div>
+      <div class="kit-print-row reveal">
+        <button class="btn btn-outline" onclick="kits.print('flooding')">Print flooding checklist</button>
+        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
+      </div>
+      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
+    </div>
+  </section>
+
+  <!-- One more thing -->
+  <section class="section" style="background: var(--color-fog);">
+    <div class="container content-width text-center reveal">
+      <h2>The best time was last year. The second best time is now.</h2>
+      <p style="margin-top: var(--space-2); margin-bottom: var(--space-4);">
+        You don't have to do everything at once. Start with the critical items for
+        whichever threat is most relevant to where you live. Add depth over time.
+        The point isn't perfection — it's being meaningfully more ready than you
+        were yesterday.
+      </p>
+      <a href="guides.html" class="btn btn-primary">Back to the guides</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Cascadia<span>.me</span></h3>
+          <p>
+            A Pacific Northwest preparedness guide. Regional, specific,
+            and written by your neighbor.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Guides</h4>
+            <ul>
+              <li><a href="earthquake.html">Earthquake</a></li>
+              <li><a href="wildfire.html">Wildfire</a></li>
+              <li><a href="winter-storm.html">Winter Storm</a></li>
+              <li><a href="flooding.html">Flooding</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="build-your-kit.html">Build Your Kit</a></li>
+              <li><a href="approach.html">The Approach</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cascadia.me · <a href="https://ko-fi.com/cascadiame" target="_blank" rel="noopener">Support Cascadia.me in the most meaningful way</a></p>
+        <p class="seasonal-footer"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/kits.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    // Render all kit sections
+    kits.render('earthquake', 'earthquake-kit');
+    kits.render('wildfire', 'wildfire-kit');
+    kits.render('winter-storm', 'winter-storm-kit');
+    kits.render('flooding', 'flooding-kit');
+  </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

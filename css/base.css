@@ -1,0 +1,275 @@
+/* ============================================================
+   PREP.SUPPLY — Design System
+   Foundation: variables, reset, typography, spacing, utilities
+   Owner: Keel (shared — changes require Podium agreement)
+   ============================================================ */
+
+/* === Font Loading === */
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+
+/* === Design Tokens === */
+:root {
+  /* Primary neutrals — warm stone palette */
+  --color-stone:        #3d3a36;
+  --color-timber:       #6b5e4f;
+  --color-fog:          #e8e4de;
+  --color-cloud:        #f5f2ec;
+  --color-white:        #faf8f5;
+
+  /* Accent — lantern amber: preparedness as warmth */
+  --color-lantern:      #c8913a;
+  --color-lantern-dim:  #a67628;
+  --color-lantern-glow: #f5e6cc;
+
+  /* Functional — accessible, no red/green reliance */
+  --color-water:        #3d6a7a;   /* links, interactive */
+  --color-alert:        #b85c3a;   /* urgent callouts — burnt orange, NOT red */
+  --color-safe:         #4a7a5e;   /* confirmation — muted forest, value-contrast safe */
+
+  /* Typography */
+  --font-display:   'Bitter', Georgia, 'Times New Roman', serif;
+  --font-body:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:      'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale — 1.25 ratio, base 17px */
+  --text-xs:    0.8rem;     /* ~13.6px */
+  --text-sm:    0.9rem;     /* ~15.3px */
+  --text-base:  1rem;       /* 17px */
+  --text-lg:    1.25rem;    /* ~21px */
+  --text-xl:    1.563rem;   /* ~26.5px */
+  --text-2xl:   1.953rem;   /* ~33px */
+  --text-3xl:   2.441rem;   /* ~41.5px */
+  --text-4xl:   3.052rem;   /* ~52px */
+
+  /* Line heights */
+  --leading-tight:    1.2;
+  --leading-snug:     1.35;
+  --leading-normal:   1.6;
+  --leading-relaxed:  1.75;
+
+  /* Spacing — 8px base unit */
+  --space-1:   0.5rem;    /* 8px */
+  --space-2:   1rem;      /* 16px */
+  --space-3:   1.5rem;    /* 24px */
+  --space-4:   2rem;      /* 32px */
+  --space-5:   2.5rem;    /* 40px */
+  --space-6:   3rem;      /* 48px */
+  --space-8:   4rem;      /* 64px */
+  --space-10:  5rem;      /* 80px */
+  --space-12:  6rem;      /* 96px */
+  --space-16:  8rem;      /* 128px */
+
+  /* Layout */
+  --content-width:     42rem;   /* ~714px — optimal reading width */
+  --page-width:        72rem;   /* ~1224px — max page width */
+  --nav-height:        4rem;
+
+  /* Transitions */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --duration:   0.3s;
+}
+
+/* === Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 106.25%;  /* 17px base */
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-stone);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-water);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-lantern-dim);
+}
+
+ul, ol {
+  padding-left: 1.5em;
+}
+
+/* === Typography === */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  color: var(--color-stone);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.01em;
+}
+
+h4 {
+  font-size: var(--text-xl);
+}
+
+h5 {
+  font-size: var(--text-lg);
+}
+
+p {
+  margin-bottom: var(--space-3);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+strong {
+  font-weight: 600;
+}
+
+blockquote {
+  border-left: 3px solid var(--color-lantern);
+  padding-left: var(--space-3);
+  margin: var(--space-4) 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--color-timber);
+}
+
+small, .text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-muted {
+  color: var(--color-timber);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* === Layout === */
+
+.container {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+.content-width {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.section {
+  padding: var(--space-10) 0;
+}
+
+.section-lg {
+  padding: var(--space-12) 0;
+}
+
+/* === Scroll Reveal === */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Utility === */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* === Responsive === */
+
+@media (max-width: 1024px) {
+  :root {
+    --text-4xl: 2.5rem;
+    --text-3xl: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-4xl: 2rem;
+    --text-3xl: 1.75rem;
+    --text-2xl: 1.5rem;
+  }
+
+  html {
+    font-size: 100%; /* 16px base on mobile */
+  }
+
+  .container {
+    padding: 0 var(--space-2);
+  }
+
+  .section {
+    padding: var(--space-8) 0;
+  }
+
+  .section-lg {
+    padding: var(--space-10) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-4xl: 1.75rem;
+    --text-3xl: 1.5rem;
+    --text-2xl: 1.25rem;
+  }
+}

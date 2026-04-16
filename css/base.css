@@ -63,6 +63,7 @@
   --content-width:     42rem;   /* ~714px — optimal reading width */
   --page-width:        72rem;   /* ~1224px — max page width */
   --nav-height:        4rem;
+  --sticky-header-offset: var(--nav-height);
 
   /* Transitions */
   --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);

@@ -29,6 +29,12 @@ function initNavScroll() {
   if (!header) return;
 
   let lastScroll = 0;
+  const root = document.documentElement;
+
+  function syncStickyOffset() {
+    const hidden = header.classList.contains('nav-hidden');
+    root.style.setProperty('--sticky-header-offset', hidden ? '0px' : `${header.offsetHeight}px`);
+  }
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
@@ -50,8 +56,12 @@ function initNavScroll() {
       header.classList.remove('nav-hidden');
     }
 
+    syncStickyOffset();
     lastScroll = currentScroll;
   }, { passive: true });
+
+  window.addEventListener('resize', syncStickyOffset, { passive: true });
+  syncStickyOffset();
 }
 
 // --- Seasonal footer ---

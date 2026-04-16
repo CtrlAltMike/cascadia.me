@@ -11,11 +11,44 @@
   <link rel="stylesheet" href="css/components.css">
   <style>
     /* Kit-page-specific styles (Limn owns) */
-    .kit-section { scroll-margin-top: calc(var(--nav-height) + var(--space-2)); }
+    .kit-section { scroll-margin-top: calc(var(--nav-height) + 4.5rem); }
+
+    .kit-nav-shell {
+      position: sticky;
+      top: var(--sticky-header-offset);
+      z-index: 80;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(232, 228, 222, 0.32);
+      border-bottom: 1px solid rgba(232, 228, 222, 0.9);
+      transition: top var(--duration) var(--ease-out);
+    }
+
+    .kit-nav-shell .container {
+      padding-top: var(--space-2);
+      padding-bottom: var(--space-2);
+    }
 
     .kit-header { margin-bottom: var(--space-6); }
     .kit-header h2 { margin-bottom: var(--space-1); }
     .kit-header .kit-desc { color: var(--color-timber); }
+
+    .kit-banner {
+      margin: 0 0 var(--space-4);
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgba(107, 94, 79, 0.18);
+      box-shadow: 0 18px 40px rgba(61, 58, 54, 0.08);
+      background: var(--color-fog);
+    }
+
+    .kit-banner img {
+      display: block;
+      width: 100%;
+      height: 132px;
+      object-fit: cover;
+      object-position: left center;
+    }
 
     .kit-tier { margin-bottom: var(--space-6); }
     .kit-tier-header { margin-bottom: var(--space-4); }
@@ -64,9 +97,12 @@
     .kit-nav {
       display: flex;
       gap: var(--space-2);
-      flex-wrap: wrap;
-      margin-top: var(--space-3);
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+
+    .kit-nav::-webkit-scrollbar { display: none; }
 
     .kit-nav a {
       font-size: var(--text-sm);
@@ -76,12 +112,87 @@
       border: 1px solid var(--color-fog);
       border-radius: 4px;
       transition: all var(--duration) var(--ease-out);
+      background: rgba(250, 248, 245, 0.92);
+      white-space: nowrap;
     }
 
     .kit-nav a:hover {
       border-color: var(--color-lantern);
       background: var(--color-lantern-glow);
       color: var(--color-stone);
+    }
+
+    .kit-start-grid,
+    .kit-universal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .kit-start-grid {
+      list-style: none;
+      padding: 0;
+    }
+
+    .kit-start-item,
+    .kit-universal-item {
+      padding: var(--space-3);
+      background: var(--color-white);
+      border: 1px solid var(--color-fog);
+      border-radius: 0.9rem;
+      box-shadow: 0 12px 32px rgba(61, 58, 54, 0.05);
+    }
+
+    .kit-start-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: var(--space-2);
+      border-radius: 999px;
+      background: var(--color-lantern-glow);
+      color: var(--color-lantern-dim);
+      font-size: var(--text-sm);
+      font-weight: 700;
+    }
+
+    .kit-start-item h3,
+    .kit-universal-item h3 {
+      font-size: var(--text-lg);
+      margin-bottom: 0.35em;
+    }
+
+    .kit-start-item p,
+    .kit-universal-item p {
+      font-size: var(--text-sm);
+      color: var(--color-timber);
+    }
+
+    .kit-universal-item p + p {
+      margin-top: var(--space-1);
+      font-size: var(--text-xs);
+    }
+
+    .kit-forgotten {
+      margin-top: 0;
+      margin-bottom: var(--space-4);
+    }
+
+    .kit-forgotten h4 {
+      margin-bottom: 0.4em;
+    }
+
+    .kit-forgotten ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .kit-forgotten li {
+      margin-bottom: 0.35rem;
+      color: var(--color-timber);
+      font-size: var(--text-sm);
     }
 
     /* Utility page: keep checklist content visible instead of waiting on scroll reveal */
@@ -92,8 +203,19 @@
     }
 
     @media print {
-      .kit-print-row, .kit-nav, .hero, .how-to-use, .site-header, .site-footer { display: none; }
+      .kit-print-row, .kit-nav-shell, .hero, .how-to-use, .kit-start, .kit-universal, .kit-banner, .kit-forgotten, .site-header, .site-footer { display: none; }
       .kit-section { page-break-inside: avoid; }
+    }
+
+    @media (max-width: 768px) {
+      .kit-start-grid,
+      .kit-universal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kit-banner img {
+        height: 112px;
+      }
     }
   </style>
 </head>
@@ -124,12 +246,55 @@
         A hardware store, a pharmacy, a Saturday afternoon, and this list.
         Everything here is something you can find locally and assemble yourself.
       </p>
-      <nav class="kit-nav">
+    </div>
+  </section>
+
+  <section class="kit-nav-shell">
+    <div class="container">
+      <nav class="kit-nav" aria-label="Jump to kit sections">
         <a href="#earthquake">Earthquake</a>
         <a href="#wildfire">Wildfire</a>
         <a href="#winter-storm">Winter Storm</a>
         <a href="#flooding">Flooding</a>
       </nav>
+    </div>
+  </section>
+
+  <section class="section kit-start" id="start-here" style="background: var(--color-fog);">
+    <div class="container content-width reveal">
+      <p class="guide-section-label">Start here</p>
+      <h2>If you only do five things this weekend</h2>
+      <p>
+        Do these first. They cover more of the real risk on this page than buying
+        a dozen gadgets and never organizing them.
+      </p>
+      <ol class="kit-start-grid">
+        <li class="kit-start-item">
+          <span class="kit-start-step">1</span>
+          <h3>Store three days of water</h3>
+          <p>Start with the boring essential: actual drinking water, already in the house, before the next outage or evacuation order.</p>
+        </li>
+        <li class="kit-start-item">
+          <span class="kit-start-step">2</span>
+          <h3>Buy one real first aid kit</h3>
+          <p>Not a hotel pouch. A kit that can handle cuts, sprains, burns, and the small injuries that become big problems when systems are down.</p>
+        </li>
+        <li class="kit-start-item">
+          <span class="kit-start-step">3</span>
+          <h3>Gather light, radio, and backup power</h3>
+          <p>Put flashlights or headlamps, a radio, chargers, and one charged power bank in a known place everyone can find fast.</p>
+        </li>
+        <li class="kit-start-item">
+          <span class="kit-start-step">4</span>
+          <h3>Print the communication plan</h3>
+          <p>Write down meeting points, the out-of-area contact, and key numbers. When phones fail, a paper plan matters more than another app.</p>
+        </li>
+        <li class="kit-start-item">
+          <span class="kit-start-step">5</span>
+          <h3>Pack one door-ready go-bag</h3>
+          <p>Clothes, meds, document copies, chargers, masks, snacks, and pet basics. You can expand by hazard after the basics are covered.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -165,10 +330,63 @@
     </div>
   </section>
 
+  <section class="section kit-universal" id="universal-items">
+    <div class="container content-width reveal">
+      <p class="guide-section-label">Buy once, use everywhere</p>
+      <h2>Universal items that show up in almost every kit</h2>
+      <p>
+        These are the cross-cutting basics. Buy them once, decide where they live,
+        and then duplicate only what truly needs to be in a car, go-bag, or second location.
+      </p>
+      <div class="kit-universal-grid">
+        <div class="kit-universal-item">
+          <h3>Water + containers</h3>
+          <p>Earthquakes, storms, and floods all mess with safe water fast. Wildfire evacuations are easier when water is already in the car.</p>
+          <p class="text-muted">Start with three days. More if you have kids, pets, or long drive times.</p>
+        </div>
+        <div class="kit-universal-item">
+          <h3>First aid + medications</h3>
+          <p>Delayed medical care is common across every scenario on this site. A real first aid kit and backup prescriptions are universal readiness.</p>
+          <p class="text-muted">Add personal meds before you buy another multitool.</p>
+        </div>
+        <div class="kit-universal-item">
+          <h3>Light + batteries</h3>
+          <p>Power loss is not a niche case here. Headlamps or flashlights belong in every hazard plan, not just winter storm prep.</p>
+          <p class="text-muted">Put one near each bed, not only in a storage tote.</p>
+        </div>
+        <div class="kit-universal-item">
+          <h3>Radio + alerts</h3>
+          <p>Information changes outcomes. Emergency radio, county alerts, and evacuation warnings matter in quakes, smoke, floods, and winter outages.</p>
+          <p class="text-muted">Set alerts now. Do not rely on remembering later.</p>
+        </div>
+        <div class="kit-universal-item">
+          <h3>Documents + cash</h3>
+          <p>Recovery starts with IDs, insurance info, and small bills. Those matter whether you are evacuating, checking into a motel, or filing a claim.</p>
+          <p class="text-muted">Paper copies plus digital backups is the right combination.</p>
+        </div>
+        <div class="kit-universal-item">
+          <h3>Masks, gloves, and work clothes</h3>
+          <p>Smoke, dust, broken glass, wet debris, and cleanup all punish bare hands and lungs. Protective basics carry across every hazard.</p>
+          <p class="text-muted">N95s, work gloves, and sturdy shoes do more than most novelty gear.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== EARTHQUAKE KIT ===== -->
   <section class="section kit-section" id="earthquake">
     <div class="container content-width">
       <div class="kit-header reveal">
+        <figure class="kit-banner">
+          <img
+            src="assets/quake.png"
+            alt="Panoramic earthquake banner with cracked ground, evergreens, foothills, and a mountain behind nearby homes."
+            width="1420"
+            height="120"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
         <h2>Earthquake Kit</h2>
         <p class="kit-desc">
           What to have ready when the ground moves. Sized for the reality that municipal
@@ -177,6 +395,14 @@
         <p class="text-muted text-sm" style="margin-top: var(--space-1);">
           Read the full <a href="earthquake.html">earthquake guide</a> for context.
         </p>
+      </div>
+      <div class="callout callout-info kit-forgotten reveal">
+        <h4>What most people forget</h4>
+        <ul>
+          <li>Shoes by the bed, not just at the front door.</li>
+          <li>A manual can opener and the wrench to shut off gas.</li>
+          <li>Pet supplies and a printed family communication plan.</li>
+        </ul>
       </div>
       <div class="kit-print-row kit-print-row-top reveal">
         <button class="btn btn-outline" onclick="kits.print('earthquake')">Print earthquake checklist</button>
@@ -195,6 +421,16 @@
   <section class="section kit-section" id="wildfire" style="background: var(--color-cloud);">
     <div class="container content-width">
       <div class="kit-header reveal">
+        <figure class="kit-banner">
+          <img
+            src="assets/fire.png"
+            alt="Panoramic wildfire banner with flames moving through a forested hillside toward a house in the distance."
+            width="1415"
+            height="140"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
         <h2>Wildfire Evacuation Kit</h2>
         <p class="kit-desc">
           When wildfire threatens, you may have minutes to leave. This kit lives by
@@ -203,6 +439,14 @@
         <p class="text-muted text-sm" style="margin-top: var(--space-1);">
           Read the full <a href="wildfire.html">wildfire guide</a> for context.
         </p>
+      </div>
+      <div class="callout callout-info kit-forgotten reveal">
+        <h4>What most people forget</h4>
+        <ul>
+          <li>A half-full gas tank is not an evacuation plan.</li>
+          <li>Pet carriers and document pouches need to be packed before the alert.</li>
+          <li>Printed routes matter when smoke and dead cell data make navigation worse.</li>
+        </ul>
       </div>
       <div class="kit-print-row kit-print-row-top reveal">
         <button class="btn btn-outline" onclick="kits.print('wildfire')">Print wildfire checklist</button>
@@ -221,6 +465,16 @@
   <section class="section kit-section" id="winter-storm">
     <div class="container content-width">
       <div class="kit-header reveal">
+        <figure class="kit-banner">
+          <img
+            src="assets/storm.png"
+            alt="Panoramic winter storm banner with heavy snow over pines, a frozen valley, and a snow-covered house."
+            width="1420"
+            height="140"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
         <h2>Winter Storm Kit</h2>
         <p class="kit-desc">
           Power outages. Downed trees. Roads that don't get plowed for days. This kit
@@ -230,6 +484,14 @@
         <p class="text-muted text-sm" style="margin-top: var(--space-1);">
           Read the full <a href="winter-storm.html">winter storm guide</a> for context.
         </p>
+      </div>
+      <div class="callout callout-info kit-forgotten reveal">
+        <h4>What most people forget</h4>
+        <ul>
+          <li>Carbon monoxide detector batteries before backup heat comes out.</li>
+          <li>A manual can opener and a real outside cooking plan.</li>
+          <li>Traction material and a winter car kit, not just extra blankets.</li>
+        </ul>
       </div>
       <div class="kit-print-row kit-print-row-top reveal">
         <button class="btn btn-outline" onclick="kits.print('winter-storm')">Print winter storm checklist</button>
@@ -248,6 +510,16 @@
   <section class="section kit-section" id="flooding" style="background: var(--color-cloud);">
     <div class="container content-width">
       <div class="kit-header reveal">
+        <figure class="kit-banner">
+          <img
+            src="assets/flood.png"
+            alt="Panoramic flooding banner with swollen river water, bridge, city skyline, and homes standing in rising water."
+            width="1420"
+            height="150"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
         <h2>Flood Preparedness Kit</h2>
         <p class="kit-desc">
           River flooding gives you hours of warning, not minutes. This kit is about
@@ -257,6 +529,14 @@
         <p class="text-muted text-sm" style="margin-top: var(--space-1);">
           Read the full <a href="flooding.html">flooding guide</a> for context.
         </p>
+      </div>
+      <div class="callout callout-info kit-forgotten reveal">
+        <h4>What most people forget</h4>
+        <ul>
+          <li>Flood insurance has a waiting period, so it has to happen before storm season.</li>
+          <li>Move photos, hard drives, documents, and keepsakes first.</li>
+          <li>Cleanup gear matters: boots, gloves, masks, and disinfectant, not just sandbags.</li>
+        </ul>
       </div>
       <div class="kit-print-row kit-print-row-top reveal">
         <button class="btn btn-outline" onclick="kits.print('flooding')">Print flooding checklist</button>

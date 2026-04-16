@@ -9,6 +9,7 @@
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/effects.css">
 </head>
 <body>
 
@@ -33,8 +34,11 @@
   <article class="guide" data-threat="earthquake">
 
     <!-- Hero -->
-    <header class="guide-hero topo-zone topo-earthquake">
-      <div class="container">
+    <header class="guide-hero guide-hero-earthquake">
+      <div class="fx-layer" aria-hidden="true">
+        <div class="fx-quake-fault"></div>
+      </div>
+      <div class="container fx-quake-target">
         <div class="guide-meta reveal">
           <span class="guide-meta-item">Western Washington &amp; Oregon</span>
           <span class="guide-meta-item">Last major event: 1700</span>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POC · Earthquake effect — Cascadia.me</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span> · POC</a>
+      <ul class="nav-links">
+        <li><a href="index.html">All effects</a></li>
+        <li><a href="flooding.html">Flood</a></li>
+        <li><a href="wildfire.html">Fire</a></li>
+        <li><a href="winter-storm.html">Storm</a></li>
+        <li><a href="earthquake.html" class="active">Quake</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <article class="guide" data-threat="earthquake">
+
+    <header class="guide-hero guide-hero-earthquake">
+      <div class="fx-layer">
+        <div class="fx-quake-fault"></div>
+      </div>
+
+      <div class="container fx-quake-target">
+        <div class="guide-meta reveal revealed">
+          <span class="guide-meta-item">Cascadia subduction zone, WA/OR/BC</span>
+          <span class="guide-meta-item">Last full rupture: 1700</span>
+          <span class="guide-meta-item">Always season</span>
+        </div>
+        <h1 class="reveal revealed">Earthquake</h1>
+        <p class="hero-subtitle reveal revealed">
+          The earthquake we're preparing for has already happened — in 1700, and
+          roughly every 300 years before that. We're inside the window now. Here's
+          how to outfit a house, a kit, and a family for the minute and the month.
+        </p>
+      </div>
+    </header>
+
+    <section class="guide-section">
+      <div class="container">
+        <div class="content-width">
+          <p class="guide-section-label">POC notes</p>
+          <p>
+            Once every 25 seconds the hero text gives a ~600ms 1px tremor — a
+            heavy-truck-passing kind of motion, not a Hollywood shake. A barely-there
+            hairline "fault" hints across the bottom edge of the hero in
+            <code>--color-stone</code> at ~10–18% alpha. Honors reduced motion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</body>
+</html>

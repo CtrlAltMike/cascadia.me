@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Build Your Kit — Cascadia.me</title>
   <meta name="description" content="Build your own emergency kit. Full checklists for earthquake, wildfire, flooding, and winter storm — what you need, how much, why, and where to find it.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#faf8f5">
+  <link rel="canonical" href="https://cascadia.me/build-your-kit.html">
+  <meta property="og:site_name" content="Cascadia.me">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Build Your Kit — Cascadia.me">
+  <meta property="og:description" content="Build your own emergency kit. Full checklists for earthquake, wildfire, flooding, and winter storm — what you need, how much, why, and where to find it.">
+  <meta property="og:url" content="https://cascadia.me/build-your-kit.html">
+  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Build Your Kit — Cascadia.me">
+  <meta name="twitter:description" content="Build your own emergency kit. Full checklists for earthquake, wildfire, flooding, and winter storm — what you need, how much, why, and where to find it.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
@@ -104,22 +122,25 @@
 
     .kit-nav::-webkit-scrollbar { display: none; }
 
-    .kit-nav a {
-      font-size: var(--text-sm);
-      font-weight: 500;
-      text-decoration: none;
-      padding: 0.5em 1em;
-      border: 1px solid var(--color-fog);
-      border-radius: 4px;
-      transition: all var(--duration) var(--ease-out);
-      background: rgba(250, 248, 245, 0.92);
+    .kit-nav-link {
+      flex: 0 0 auto;
       white-space: nowrap;
+      padding: 0.72em 1.15em;
+      background: rgba(250, 248, 245, 0.94);
+      border-color: rgba(107, 94, 79, 0.2);
+      box-shadow: 0 10px 24px rgba(61, 58, 54, 0.06);
     }
 
-    .kit-nav a:hover {
-      border-color: var(--color-lantern);
-      background: var(--color-lantern-glow);
-      color: var(--color-stone);
+    .kit-nav-link:hover {
+      background: var(--color-stone);
+      border-color: var(--color-stone);
+      color: var(--color-white);
+      box-shadow: 0 14px 28px rgba(61, 58, 54, 0.12);
+    }
+
+    .kit-nav-link:focus-visible {
+      outline: 2px solid var(--color-lantern);
+      outline-offset: 2px;
     }
 
     .kit-start-grid,
@@ -218,6 +239,20 @@
       }
     }
   </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Build Your Kit",
+      "url": "https://cascadia.me/build-your-kit.html",
+      "description": "Build your own emergency kit. Full checklists for earthquake, wildfire, flooding, and winter storm — what you need, how much, why, and where to find it.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Cascadia.me",
+        "url": "https://cascadia.me/"
+      }
+    }
+  </script>
 </head>
 <body id="top">
 
@@ -225,15 +260,16 @@
   <header class="site-header">
     <nav class="nav-inner">
       <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
       </button>
-      <ul class="nav-links">
+      <ul class="nav-links" id="site-nav-links">
         <li><a href="guides.html">Guides</a></li>
         <li><a href="build-your-kit.html" class="active">Build Your Kit</a></li>
         <li><a href="approach.html">The Approach</a></li>
+        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
   </header>
@@ -252,10 +288,10 @@
   <section class="kit-nav-shell">
     <div class="container">
       <nav class="kit-nav" aria-label="Jump to kit sections">
-        <a href="#earthquake">Earthquake</a>
-        <a href="#wildfire">Wildfire</a>
-        <a href="#winter-storm">Winter Storm</a>
-        <a href="#flooding">Flooding</a>
+        <a href="#earthquake" class="btn btn-outline kit-nav-link">Earthquake</a>
+        <a href="#wildfire" class="btn btn-outline kit-nav-link">Wildfire</a>
+        <a href="#winter-storm" class="btn btn-outline kit-nav-link">Winter Storm</a>
+        <a href="#flooding" class="btn btn-outline kit-nav-link">Flooding</a>
       </nav>
     </div>
   </section>
@@ -326,6 +362,9 @@
         <div style="margin-top: var(--space-2);">
           <button class="btn btn-outline" onclick="kits.printFamilyPlan()">Print family communication plan</button>
         </div>
+        <p class="support-inline" style="margin-top: var(--space-2);">
+          If this plan is useful, <a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">support Cascadia.me</a>.
+        </p>
       </div>
     </div>
   </section>
@@ -379,7 +418,7 @@
       <div class="kit-header reveal">
         <figure class="kit-banner">
           <img
-            src="assets/quake.png"
+            src="assets/quake.webp"
             alt="Panoramic earthquake banner with cracked ground, evergreens, foothills, and a mountain behind nearby homes."
             width="1420"
             height="120"
@@ -423,7 +462,7 @@
       <div class="kit-header reveal">
         <figure class="kit-banner">
           <img
-            src="assets/fire.png"
+            src="assets/fire.webp"
             alt="Panoramic wildfire banner with flames moving through a forested hillside toward a house in the distance."
             width="1415"
             height="140"
@@ -467,7 +506,7 @@
       <div class="kit-header reveal">
         <figure class="kit-banner">
           <img
-            src="assets/storm.png"
+            src="assets/storm.webp"
             alt="Panoramic winter storm banner with heavy snow over pines, a frozen valley, and a snow-covered house."
             width="1420"
             height="140"
@@ -512,7 +551,7 @@
       <div class="kit-header reveal">
         <figure class="kit-banner">
           <img
-            src="assets/flood.png"
+            src="assets/flood.webp"
             alt="Panoramic flooding banner with swollen river water, bridge, city skyline, and homes standing in rising water."
             width="1420"
             height="150"
@@ -565,6 +604,19 @@
     </div>
   </section>
 
+  <section class="section">
+    <div class="container content-width">
+      <div class="support-card reveal">
+        <p class="support-card-eyebrow">Support this site</p>
+        <h3>If this site helped, keep it going.</h3>
+        <p>No ads. No affiliate links. If this made your planning clearer, you can support the project.</p>
+        <div class="support-card-actions">
+          <a href="https://ko-fi.com/mikehen" class="btn btn-outline" target="_blank" rel="noopener">Support on Ko-fi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
@@ -596,7 +648,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Cascadia.me · <a href="https://ko-fi.com/makermike" target="_blank" rel="noopener">Support Cascadia.me in the most meaningful way</a></p>
+        <p>&copy; 2026 Cascadia.me</p>
         <p class="seasonal-footer"></p>
       </div>
     </div>

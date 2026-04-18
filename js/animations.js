@@ -4,21 +4,33 @@
    Owner: Keel
    ============================================================ */
 
-// --- Scroll Reveal ---
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-);
-
 function initReveals() {
-  document.querySelectorAll('.reveal').forEach(el => {
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  if (!reveals.length) return;
+
+  if (
+    !('IntersectionObserver' in window) ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    reveals.forEach((el) => {
+      el.classList.add('revealed');
+    });
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  reveals.forEach((el) => {
     revealObserver.observe(el);
   });
 }
@@ -30,10 +42,29 @@ function initNavScroll() {
 
   let lastScroll = 0;
   const root = document.documentElement;
+  const mobileNavQuery = window.matchMedia('(max-width: 768px)');
 
   function syncStickyOffset() {
     const hidden = header.classList.contains('nav-hidden');
     root.style.setProperty('--sticky-header-offset', hidden ? '0px' : `${header.offsetHeight}px`);
+  }
+
+  function updateNavVisibility(currentScroll) {
+    if (!mobileNavQuery.matches) {
+      header.classList.remove('nav-hidden');
+      return;
+    }
+
+    // Hide on scroll down, show on scroll up on mobile only.
+    if (currentScroll > 300) {
+      if (currentScroll > lastScroll + 5) {
+        header.classList.add('nav-hidden');
+      } else if (currentScroll < lastScroll - 5) {
+        header.classList.remove('nav-hidden');
+      }
+    } else {
+      header.classList.remove('nav-hidden');
+    }
   }
 
   window.addEventListener('scroll', () => {
@@ -45,22 +76,24 @@ function initNavScroll() {
       header.classList.remove('scrolled');
     }
 
-    // Hide on scroll down, show on scroll up
-    if (currentScroll > 300) {
-      if (currentScroll > lastScroll + 5) {
-        header.classList.add('nav-hidden');
-      } else if (currentScroll < lastScroll - 5) {
-        header.classList.remove('nav-hidden');
-      }
-    } else {
-      header.classList.remove('nav-hidden');
-    }
-
+    updateNavVisibility(currentScroll);
     syncStickyOffset();
     lastScroll = currentScroll;
   }, { passive: true });
 
   window.addEventListener('resize', syncStickyOffset, { passive: true });
+  const handleNavBreakpointChange = () => {
+    updateNavVisibility(window.scrollY);
+    syncStickyOffset();
+  };
+
+  if (mobileNavQuery.addEventListener) {
+    mobileNavQuery.addEventListener('change', handleNavBreakpointChange);
+  } else if (mobileNavQuery.addListener) {
+    mobileNavQuery.addListener(handleNavBreakpointChange);
+  }
+
+  updateNavVisibility(window.scrollY);
   syncStickyOffset();
 }
 

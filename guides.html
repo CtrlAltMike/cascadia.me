@@ -1,14 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guides — Cascadia.me</title>
   <meta name="description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#faf8f5">
+  <link rel="canonical" href="https://cascadia.me/guides.html">
+  <meta property="og:site_name" content="Cascadia.me">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Guides — Cascadia.me">
+  <meta property="og:description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <meta property="og:url" content="https://cascadia.me/guides.html">
+  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Guides — Cascadia.me">
+  <meta name="twitter:description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Guides",
+      "url": "https://cascadia.me/guides.html",
+      "description": "Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Cascadia.me",
+        "url": "https://cascadia.me/"
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -16,15 +48,16 @@
   <header class="site-header">
     <nav class="nav-inner">
       <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
       </button>
-      <ul class="nav-links">
+      <ul class="nav-links" id="site-nav-links">
         <li><a href="guides.html" class="active">Guides</a></li>
         <li><a href="build-your-kit.html">Build Your Kit</a></li>
         <li><a href="approach.html">The Approach</a></li>
+        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
   </header>
@@ -51,7 +84,7 @@
         <a href="earthquake.html" class="guide-card">
           <div class="guide-card-topo">
             <img
-              src="assets/quake.png"
+              src="assets/quake.webp"
               alt="Panoramic earthquake banner with cracked ground, evergreens, foothills, and a mountain behind nearby homes."
               class="guide-card-banner"
               width="1420"
@@ -89,7 +122,7 @@
         <a href="wildfire.html" class="guide-card">
           <div class="guide-card-topo">
             <img
-              src="assets/fire.png"
+              src="assets/fire.webp"
               alt="Panoramic wildfire banner with flames moving through a forested hillside toward a house in the distance."
               class="guide-card-banner"
               width="1415"
@@ -126,7 +159,7 @@
         <a href="winter-storm.html" class="guide-card">
           <div class="guide-card-topo">
             <img
-              src="assets/storm.png"
+              src="assets/storm.webp"
               alt="Panoramic winter storm banner with heavy snow over pines, a frozen valley, and a snow-covered house."
               class="guide-card-banner"
               width="1420"
@@ -163,7 +196,7 @@
         <a href="flooding.html" class="guide-card">
           <div class="guide-card-topo">
             <img
-              src="assets/flood.png"
+              src="assets/flood.webp"
               alt="Panoramic flooding banner with swollen river water, bridge, city skyline, and homes standing in rising water."
               class="guide-card-banner"
               width="1420"
@@ -222,6 +255,19 @@
     </div>
   </section>
 
+  <section class="section">
+    <div class="container content-width">
+      <div class="support-card reveal">
+        <p class="support-card-eyebrow">Support this site</p>
+        <h3>If this site helped, keep it going.</h3>
+        <p>No ads. No affiliate links. If this made your planning clearer, you can support the project.</p>
+        <div class="support-card-actions">
+          <a href="https://ko-fi.com/mikehen" class="btn btn-outline" target="_blank" rel="noopener">Support on Ko-fi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
@@ -253,7 +299,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Cascadia.me · <a href="https://ko-fi.com/makermike" target="_blank" rel="noopener">Support Cascadia.me in the most meaningful way</a></p>
+        <p>&copy; 2026 Cascadia.me</p>
         <p class="seasonal-footer"></p>
       </div>
     </div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POC · Flooding effect — Cascadia.me</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span> · POC</a>
+      <ul class="nav-links">
+        <li><a href="index.html">All effects</a></li>
+        <li><a href="flooding.html" class="active">Flood</a></li>
+        <li><a href="wildfire.html">Fire</a></li>
+        <li><a href="winter-storm.html">Storm</a></li>
+        <li><a href="earthquake.html">Quake</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <article class="guide" data-threat="flooding">
+
+    <header class="guide-hero guide-hero-flooding">
+      <!-- POC: subtle water-line layer, additive only -->
+      <div class="fx-layer">
+        <div class="fx-flood-line"></div>
+      </div>
+
+      <div class="container">
+        <div class="guide-meta reveal revealed">
+          <span class="guide-meta-item">River valleys &amp; floodplains, WA/OR/BC</span>
+          <span class="guide-meta-item">2025: Leavenworth, western WA devastated</span>
+          <span class="guide-meta-item">Season: November – March</span>
+        </div>
+        <h1 class="reveal revealed">Flooding</h1>
+        <p class="hero-subtitle reveal revealed">
+          River flooding usually gives you hours of warning — not minutes. The question
+          isn't whether you'll have time. It's whether you'll use it. Here's how to
+          read the signs, protect what you can, and leave when it's time.
+        </p>
+      </div>
+    </header>
+
+    <section class="guide-section">
+      <div class="container">
+        <div class="content-width">
+          <p class="guide-section-label">POC notes</p>
+          <p>
+            A slow rising/falling water-line layer sits behind the type at the bottom
+            of the hero. It uses <code>--color-water</code> at 3–7% opacity and travels
+            ±2px over an 11s ease cycle. No new colors. No layout impact.
+            Disabled under <code>prefers-reduced-motion</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</body>
+</html>

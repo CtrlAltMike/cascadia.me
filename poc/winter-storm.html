@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POC · Winter storm effect — Cascadia.me</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span> · POC</a>
+      <ul class="nav-links">
+        <li><a href="index.html">All effects</a></li>
+        <li><a href="flooding.html">Flood</a></li>
+        <li><a href="wildfire.html">Fire</a></li>
+        <li><a href="winter-storm.html" class="active">Storm</a></li>
+        <li><a href="earthquake.html">Quake</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <article class="guide" data-threat="winter-storm">
+
+    <header class="guide-hero guide-hero-winter-storm">
+      <div class="fx-layer">
+        <div class="fx-storm-flakes"></div>
+      </div>
+
+      <div class="container">
+        <div class="guide-meta reveal revealed">
+          <span class="guide-meta-item">Lowlands &amp; passes, WA/OR/BC</span>
+          <span class="guide-meta-item">2024: Multi-day ice across Portland</span>
+          <span class="guide-meta-item">Season: December – February</span>
+        </div>
+        <h1 class="reveal revealed">Winter Storm</h1>
+        <p class="hero-subtitle reveal revealed">
+          A Pacific Northwest winter storm rarely kills with cold alone. It kills
+          with what fails after the cold — the power, the pipes, the road home.
+          Here's how to be the household that's still warm on day three.
+        </p>
+      </div>
+    </header>
+
+    <section class="guide-section">
+      <div class="container">
+        <div class="content-width">
+          <p class="guide-section-label">POC notes</p>
+          <p>
+            Two layers: a 78° wind-hatch drifting horizontally (14s) and a sparse
+            radial-gradient flake field falling on a 22s loop. Flakes use
+            <code>--color-cloud</code>, hatch uses <code>--color-stone</code> at
+            ~3% alpha. Sparse — closer to weather outside a window than confetti.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</body>
+</html>

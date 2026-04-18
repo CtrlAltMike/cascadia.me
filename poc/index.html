@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POC · Hazard atmosphere effects — Cascadia.me</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="effects.css">
+  <style>
+    .poc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .poc-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--color-fog);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: box-shadow var(--duration) var(--ease-out),
+                  transform var(--duration) var(--ease-out);
+    }
+    .poc-card:hover {
+      box-shadow: 0 6px 24px rgba(61,58,54,0.08);
+      transform: translateY(-2px);
+      color: inherit;
+    }
+    .poc-card-thumb {
+      position: relative;
+      height: 160px;
+      overflow: hidden;
+    }
+    .poc-card-body {
+      padding: var(--space-2) var(--space-3) var(--space-3);
+    }
+    .poc-card-body h3 {
+      font-size: var(--text-lg);
+      margin-bottom: 0.25em;
+    }
+    .poc-card-body p {
+      font-size: var(--text-sm);
+      color: var(--color-timber);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span> · POC</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">All effects</a></li>
+        <li><a href="flooding.html">Flood</a></li>
+        <li><a href="wildfire.html">Fire</a></li>
+        <li><a href="winter-storm.html">Storm</a></li>
+        <li><a href="earthquake.html">Quake</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="guide">
+    <section class="guide-section section-lg">
+      <div class="container">
+        <div class="content-width">
+          <p class="guide-section-label">Proof of concept</p>
+          <h1>Hazard atmosphere</h1>
+          <p class="hero-subtitle" style="margin-top: var(--space-2);">
+            Four very small effects, one per hazard, layered on top of the existing
+            guide hero. Nothing in the live site is touched — these pages reference
+            <code>../css/base.css</code> and <code>../css/components.css</code> as-is
+            and add a single new stylesheet, <code>effects.css</code>.
+          </p>
+          <p class="text-muted" style="font-size: var(--text-sm);">
+            Open each one and let the page sit for ~30 seconds before judging.
+            The earthquake tremor in particular only happens once every 25s.
+          </p>
+        </div>
+
+        <div class="poc-grid">
+          <a class="poc-card" href="flooding.html">
+            <div class="poc-card-thumb guide-hero-flooding">
+              <div class="fx-layer"><div class="fx-flood-line"></div></div>
+            </div>
+            <div class="poc-card-body">
+              <h3>Flood</h3>
+              <p>Slow rising water-line beneath the type. ±2px, 11s, water-color at 3–7%.</p>
+            </div>
+          </a>
+
+          <a class="poc-card" href="wildfire.html">
+            <div class="poc-card-thumb guide-hero-wildfire">
+              <div class="fx-layer">
+                <div class="fx-fire-glow"></div>
+                <div class="fx-fire-haze"></div>
+                <div class="fx-fire-ember"></div>
+              </div>
+            </div>
+            <div class="poc-card-body">
+              <h3>Fire</h3>
+              <p>Warm radial glow pulse + a horizontally drifting smoke-light hatch.</p>
+            </div>
+          </a>
+
+          <a class="poc-card" href="winter-storm.html">
+            <div class="poc-card-thumb guide-hero-winter-storm">
+              <div class="fx-layer">
+                <div class="fx-storm-flakes"></div>
+              </div>
+            </div>
+            <div class="poc-card-body">
+              <h3>Storm</h3>
+              <p>Sparse drifting flakes with a faint windblown diagonal hatch.</p>
+            </div>
+          </a>
+
+          <a class="poc-card" href="earthquake.html">
+            <div class="poc-card-thumb guide-hero-earthquake">
+              <div class="fx-layer"><div class="fx-quake-fault"></div></div>
+            </div>
+            <div class="poc-card-body">
+              <h3>Quake</h3>
+              <p>1px tremor on hero text every 25s; barely-there fault line at the bottom.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="content-width" style="margin-top: var(--space-6);">
+          <p class="guide-section-label">If approved, integration is one CSS file + four small markup adds</p>
+          <p>
+            Each guide hero would gain one <code>&lt;div class="fx-layer"&gt;…&lt;/div&gt;</code>
+            block right inside <code>.guide-hero</code>, and <code>effects.css</code>
+            would be linked alongside <code>components.css</code>. Earthquake also adds
+            <code>fx-quake-target</code> to the hero's <code>.container</code>.
+            No existing rules change.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

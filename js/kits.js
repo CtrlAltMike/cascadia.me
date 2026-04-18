@@ -7,6 +7,9 @@
 (function() {
   'use strict';
 
+  const SUPPORT_URL = 'https://ko-fi.com/mikehen';
+  const PRINT_SUPPORT_TEXT = 'Support Cascadia.me at ko-fi.com/mikehen';
+
   // === Supply Data ===
   // Each kit is organized by threat type and household size.
   // No prices — this is about empowering people to build their own.
@@ -319,9 +322,12 @@
         body { font-family: Inter, -apple-system, sans-serif; font-size: 11pt; color: #3d3a36; max-width: 8in; margin: 0 auto; padding: 0.5in; }
         h1 { font-family: Bitter, Georgia, serif; font-size: 1.5em; margin-bottom: 0.25em; }
         .subtitle { color: #6b5e4f; margin-bottom: 1em; }
+        .print-support-line { margin: 0 0 1em; padding: 0 0 0.5em; border-bottom: 1px solid #e8e4de; font-size: 0.85em; color: #6b5e4f; }
+        .print-support-line a { color: inherit; text-decoration: none; }
         .print-note { margin-top: 2em; padding-top: 0.75em; border-top: 1px solid #e8e4de; font-size: 0.8em; color: #6b5e4f; }
         @media print { body { padding: 0; } }
       </style></head><body>
+      <p class="print-support-line"><a href="${SUPPORT_URL}">${PRINT_SUPPORT_TEXT}</a></p>
       <h1>${kit.name}</h1>
       <p class="subtitle">${kit.description}</p>
       ${allSupplies}
@@ -352,6 +358,8 @@
         h1 { font-family: Bitter, Georgia, serif; font-size: 1.5em; margin-bottom: 0.25em; }
         h2 { font-family: Bitter, Georgia, serif; font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.5em; }
         .subtitle { color: #6b5e4f; margin-bottom: 1.5em; }
+        .print-support-line { margin: 0 0 1em; padding: 0 0 0.5em; border-bottom: 1px solid #e8e4de; font-size: 0.85em; color: #6b5e4f; }
+        .print-support-line a { color: inherit; text-decoration: none; }
         .field { border-bottom: 1px solid #6b5e4f; min-width: 200px; display: inline-block; margin: 0.25em 0; padding: 0.25em 0; }
         .field-wide { border-bottom: 1px solid #6b5e4f; display: block; margin: 0.5em 0; padding: 0.25em 0; min-height: 1.5em; }
         .row { margin: 0.75em 0; }
@@ -360,6 +368,7 @@
         th { font-weight: 600; border-bottom: 2px solid #3d3a36; }
         @media print { body { padding: 0; } }
       </style></head><body>
+      <p class="print-support-line"><a href="${SUPPORT_URL}">${PRINT_SUPPORT_TEXT}</a></p>
       <h1>Family Communication Plan</h1>
       <p class="subtitle">Fill this out together. Print copies for each household member and keep one in your emergency kit.</p>
 

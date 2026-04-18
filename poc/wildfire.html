@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POC · Wildfire effect — Cascadia.me</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span> · POC</a>
+      <ul class="nav-links">
+        <li><a href="index.html">All effects</a></li>
+        <li><a href="flooding.html">Flood</a></li>
+        <li><a href="wildfire.html" class="active">Fire</a></li>
+        <li><a href="winter-storm.html">Storm</a></li>
+        <li><a href="earthquake.html">Quake</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <article class="guide" data-threat="wildfire">
+
+    <header class="guide-hero guide-hero-wildfire">
+      <div class="fx-layer">
+        <div class="fx-fire-glow"></div>
+        <div class="fx-fire-haze"></div>
+        <div class="fx-fire-ember"></div>
+      </div>
+
+      <div class="container">
+        <div class="guide-meta reveal revealed">
+          <span class="guide-meta-item">East slope &amp; dry valleys, WA/OR/BC</span>
+          <span class="guide-meta-item">2023: Medical Lake, Gray fires</span>
+          <span class="guide-meta-item">Season: July – October</span>
+        </div>
+        <h1 class="reveal revealed">Wildfire</h1>
+        <p class="hero-subtitle reveal revealed">
+          Wildfire rarely arrives on the wind you can see. It arrives on the one
+          coming over the next ridge — three days before the smoke. Here's how to
+          read the season, harden the house, and decide when staying is the gamble.
+        </p>
+      </div>
+    </header>
+
+    <section class="guide-section">
+      <div class="container">
+        <div class="content-width">
+          <p class="guide-section-label">POC notes</p>
+          <p>
+            A warm radial glow at the top edge slowly pulses (7s, 85%–100% opacity)
+            using <code>--color-lantern</code> at very low alpha. A second layer
+            drifts a faint <code>--color-alert</code> hatching horizontally over
+            18s — reads as distant smoke-light. Both use <code>multiply</code> blend
+            so the underlying tones stay correct.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</body>
+</html>

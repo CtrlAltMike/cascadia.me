@@ -1,30 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Approach — Cascadia.me</title>
   <meta name="description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#faf8f5">
+  <link rel="canonical" href="https://cascadia.me/approach.html">
+  <meta property="og:site_name" content="Cascadia.me">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Our Approach — Cascadia.me">
+  <meta property="og:description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <meta property="og:url" content="https://cascadia.me/approach.html">
+  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Our Approach — Cascadia.me">
+  <meta name="twitter:description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <style>
+    .approach-page .section {
+      padding: var(--space-8) 0;
+    }
+
+    .approach-principles .approach-principle {
+      margin-top: var(--space-4);
+    }
+
+    @media (max-width: 768px) {
+      .approach-page .section {
+        padding: var(--space-6) 0;
+      }
+
+      .approach-principles .approach-principle {
+        margin-top: var(--space-3);
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "Our Approach",
+      "url": "https://cascadia.me/approach.html",
+      "description": "Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Cascadia.me",
+        "url": "https://cascadia.me/"
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="approach-page">
 
   <!-- Nav -->
   <header class="site-header">
     <nav class="nav-inner">
       <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
       </button>
-      <ul class="nav-links">
+      <ul class="nav-links" id="site-nav-links">
         <li><a href="guides.html">Guides</a></li>
         <li><a href="build-your-kit.html">Build Your Kit</a></li>
         <li><a href="approach.html" class="active">The Approach</a></li>
+        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
   </header>
@@ -94,13 +146,13 @@
   </section>
 
   <!-- Principles -->
-  <section class="section">
+  <section class="section approach-principles">
     <div class="container content-width">
       <div class="reveal">
         <h2>How I think about this</h2>
       </div>
 
-      <div class="reveal" style="margin-top: var(--space-6);">
+      <div class="reveal approach-principle">
         <h3>Regional, not generic</h3>
         <p>
           "Have 72 hours of water" is technically correct and practically useless.
@@ -121,7 +173,7 @@
         </p>
       </div>
 
-      <div class="reveal" style="margin-top: var(--space-5);">
+      <div class="reveal approach-principle">
         <h3>Care, not fear</h3>
         <p>
           Preparedness isn't about anxiety. It's about care. You build a kit because
@@ -138,7 +190,7 @@
         </p>
       </div>
 
-      <div class="reveal" style="margin-top: var(--space-5);">
+      <div class="reveal approach-principle">
         <h3>Useful, not just informative</h3>
         <p>
           Every guide on this site is built around one question: will this actually
@@ -152,7 +204,7 @@
         </p>
       </div>
 
-      <div class="reveal" style="margin-top: var(--space-5);">
+      <div class="reveal approach-principle">
         <h3>Honest about what I don't know</h3>
         <p>
           I'm not a seismologist, fire scientist, or emergency management
@@ -165,6 +217,20 @@
           The best emergency preparedness resource is still your local emergency
           management office. This site is a supplement, not a replacement.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--color-cloud);">
+    <div class="container content-width">
+      <div class="support-card reveal">
+        <p class="support-card-eyebrow">Support this project</p>
+        <h2>This stays independent because readers support it.</h2>
+        <p>There are no ads here. No affiliate links. No incentive to turn preparedness into panic shopping. Reader support is what lets me keep researching, updating, and writing this in a way that stays useful.</p>
+        <p>If Cascadia.me helped you make a plan, build a kit, or explain the risk to someone you care about, you can support it on Ko-fi. No account required.</p>
+        <div class="support-card-actions">
+          <a href="https://ko-fi.com/mikehen" class="btn btn-outline" target="_blank" rel="noopener">Support on Ko-fi</a>
+        </div>
       </div>
     </div>
   </section>
@@ -218,7 +284,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Cascadia.me · <a href="https://ko-fi.com/makermike" target="_blank" rel="noopener">Support Cascadia.me in the most meaningful way</a></p>
+        <p>&copy; 2026 Cascadia.me</p>
         <p class="seasonal-footer"></p>
       </div>
     </div>

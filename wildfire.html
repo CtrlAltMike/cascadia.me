@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wildfire — Cascadia.me</title>
-  <meta name="description" content="Wildfire preparedness for the Pacific Northwest. If you live east of the Cascades or in the wildland-urban interface, this guide is for you.">
+  <title>Pacific Northwest Wildfire Preparedness Guide | Cascadia.me</title>
+  <meta name="description" content="Pacific Northwest wildfire preparedness guide for households in the WUI: evacuation planning, defensible space, smoke readiness, and what to do when fire moves fast.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/wildfire.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Wildfire — Cascadia.me">
-  <meta property="og:description" content="Wildfire preparedness for the Pacific Northwest. If you live east of the Cascades or in the wildland-urban interface, this guide is for you.">
+  <meta property="og:title" content="Pacific Northwest Wildfire Preparedness Guide | Cascadia.me">
+  <meta property="og:description" content="Pacific Northwest wildfire preparedness guide for households in the WUI: evacuation planning, defensible space, smoke readiness, and what to do when fire moves fast.">
   <meta property="og:url" content="https://cascadia.me/wildfire.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Wildfire — Cascadia.me">
-  <meta name="twitter:description" content="Wildfire preparedness for the Pacific Northwest. If you live east of the Cascades or in the wildland-urban interface, this guide is for you.">
+  <meta name="twitter:title" content="Pacific Northwest Wildfire Preparedness Guide | Cascadia.me">
+  <meta name="twitter:description" content="Pacific Northwest wildfire preparedness guide for households in the WUI: evacuation planning, defensible space, smoke readiness, and what to do when fire moves fast.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,15 +35,84 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Wildfire",
-      "url": "https://cascadia.me/wildfire.html",
-      "description": "Wildfire preparedness for the Pacific Northwest. If you live east of the Cascades or in the wildland-urban interface, this guide is for you.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Cascadia.me",
-        "url": "https://cascadia.me/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/wildfire.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://cascadia.me/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Wildfire preparedness guide",
+              "item": "https://cascadia.me/wildfire.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/wildfire.html#webpage",
+          "url": "https://cascadia.me/wildfire.html",
+          "name": "Pacific Northwest Wildfire Preparedness Guide",
+          "description": "Pacific Northwest wildfire preparedness guide for households in the WUI: evacuation planning, defensible space, smoke readiness, and what to do when fire moves fast.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "breadcrumb": {
+            "@id": "https://cascadia.me/wildfire.html#breadcrumb"
+          },
+          "dateModified": "2026-04-19",
+          "about": "Pacific Northwest wildfire preparedness"
+        }
+      ]
     }
   </script>
 </head>
@@ -78,6 +151,7 @@
           <span class="guide-meta-item">Eastern Washington &amp; Cascade foothills</span>
           <span class="guide-meta-item">2020: 330,000 acres in 24 hours</span>
           <span class="guide-meta-item">Season: June – October</span>
+          <span class="guide-meta-item">Reviewed April 19, 2026</span>
         </div>
         <h1 class="reveal">Wildfire</h1>
         <p class="hero-subtitle reveal">
@@ -489,6 +563,23 @@
               All of it mattered.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section">
+      <div class="container content-width">
+        <div class="editorial-note reveal">
+          <p class="editorial-note-meta">Written by Michael Hendrick • Reviewed April 19, 2026</p>
+          <h3>Primary references for this guide</h3>
+          <p>This page combines regional household planning with official wildfire readiness, evacuation, and forest management sources. Use it to prepare early, then follow fire district and emergency management instructions when a live incident starts moving.</p>
+          <ul>
+            <li><a href="approach.html">Read the author and sourcing approach</a></li>
+            <li><a href="https://www.ready.gov/wildfires" target="_blank" rel="noopener">Ready.gov wildfire guidance</a></li>
+            <li><a href="https://www.dnr.wa.gov/wildfire" target="_blank" rel="noopener">Washington DNR wildfire guidance</a></li>
+            <li><a href="https://www.oregon.gov/odf/fire/pages/default.aspx" target="_blank" rel="noopener">Oregon Department of Forestry fire guidance</a></li>
+            <li><a href="https://www.nwcg.gov/" target="_blank" rel="noopener">National Wildfire Coordinating Group</a></li>
+          </ul>
         </div>
       </div>
     </section>

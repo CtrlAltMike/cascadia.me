@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Winter Storm — Cascadia.me</title>
-  <meta name="description" content="Winter storm preparedness for the Pacific Northwest. Power outages, ice storms, and what it takes to ride out days without the grid.">
+  <title>Pacific Northwest Winter Storm Preparedness Guide | Cascadia.me</title>
+  <meta name="description" content="Pacific Northwest winter storm preparedness guide for outages, ice, and cold: backup heat, water, food, communication, and staying safe when the grid is down.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/winter-storm.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Winter Storm — Cascadia.me">
-  <meta property="og:description" content="Winter storm preparedness for the Pacific Northwest. Power outages, ice storms, and what it takes to ride out days without the grid.">
+  <meta property="og:title" content="Pacific Northwest Winter Storm Preparedness Guide | Cascadia.me">
+  <meta property="og:description" content="Pacific Northwest winter storm preparedness guide for outages, ice, and cold: backup heat, water, food, communication, and staying safe when the grid is down.">
   <meta property="og:url" content="https://cascadia.me/winter-storm.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Winter Storm — Cascadia.me">
-  <meta name="twitter:description" content="Winter storm preparedness for the Pacific Northwest. Power outages, ice storms, and what it takes to ride out days without the grid.">
+  <meta name="twitter:title" content="Pacific Northwest Winter Storm Preparedness Guide | Cascadia.me">
+  <meta name="twitter:description" content="Pacific Northwest winter storm preparedness guide for outages, ice, and cold: backup heat, water, food, communication, and staying safe when the grid is down.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,15 +35,84 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Winter Storm",
-      "url": "https://cascadia.me/winter-storm.html",
-      "description": "Winter storm preparedness for the Pacific Northwest. Power outages, ice storms, and what it takes to ride out days without the grid.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Cascadia.me",
-        "url": "https://cascadia.me/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/winter-storm.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://cascadia.me/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Winter storm preparedness guide",
+              "item": "https://cascadia.me/winter-storm.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/winter-storm.html#webpage",
+          "url": "https://cascadia.me/winter-storm.html",
+          "name": "Pacific Northwest Winter Storm Preparedness Guide",
+          "description": "Pacific Northwest winter storm preparedness guide for outages, ice, and cold: backup heat, water, food, communication, and staying safe when the grid is down.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "breadcrumb": {
+            "@id": "https://cascadia.me/winter-storm.html#breadcrumb"
+          },
+          "dateModified": "2026-04-19",
+          "about": "Pacific Northwest winter storm preparedness"
+        }
+      ]
     }
   </script>
 </head>
@@ -76,6 +149,7 @@
           <span class="guide-meta-item">Rural &amp; island communities, WA/OR/BC</span>
           <span class="guide-meta-item">2022: 400,000+ without power</span>
           <span class="guide-meta-item">Season: November – March</span>
+          <span class="guide-meta-item">Reviewed April 19, 2026</span>
         </div>
         <h1 class="reveal">Winter Storm</h1>
         <p class="hero-subtitle reveal">
@@ -640,6 +714,23 @@
               make tea and listen. Not because you're brave. Because you're ready.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section">
+      <div class="container content-width">
+        <div class="editorial-note reveal">
+          <p class="editorial-note-meta">Written by Michael Hendrick • Reviewed April 19, 2026</p>
+          <h3>Primary references for this guide</h3>
+          <p>This page combines Pacific Northwest outage experience with official winter weather, emergency radio, and household preparedness sources. Use it for planning and supplies, then follow your local forecast office and emergency alerts during an actual storm.</p>
+          <ul>
+            <li><a href="approach.html">Read the author and sourcing approach</a></li>
+            <li><a href="https://www.weather.gov/safety/winter" target="_blank" rel="noopener">National Weather Service winter safety guidance</a></li>
+            <li><a href="https://www.weather.gov/nwr/" target="_blank" rel="noopener">NOAA Weather Radio overview</a></li>
+            <li><a href="https://www.ready.gov/winter-weather" target="_blank" rel="noopener">Ready.gov winter weather guidance</a></li>
+            <li><a href="https://www.ready.gov/power-outages" target="_blank" rel="noopener">Ready.gov power outage guidance</a></li>
+          </ul>
         </div>
       </div>
     </section>

@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guides — Cascadia.me</title>
-  <meta name="description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <title>Pacific Northwest Preparedness Guides | Cascadia.me</title>
+  <meta name="description" content="Explore Pacific Northwest preparedness guides for earthquake, wildfire, flooding, and winter storms, written for households in Washington, Oregon, and coastal BC.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/guides.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Guides — Cascadia.me">
-  <meta property="og:description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <meta property="og:title" content="Pacific Northwest Preparedness Guides | Cascadia.me">
+  <meta property="og:description" content="Explore Pacific Northwest preparedness guides for earthquake, wildfire, flooding, and winter storms, written for households in Washington, Oregon, and coastal BC.">
   <meta property="og:url" content="https://cascadia.me/guides.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Guides — Cascadia.me">
-  <meta name="twitter:description" content="Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.">
+  <meta name="twitter:title" content="Pacific Northwest Preparedness Guides | Cascadia.me">
+  <meta name="twitter:description" content="Explore Pacific Northwest preparedness guides for earthquake, wildfire, flooding, and winter storms, written for households in Washington, Oregon, and coastal BC.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,15 +34,111 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "Guides",
-      "url": "https://cascadia.me/guides.html",
-      "description": "Pacific Northwest preparedness guides. Earthquake, wildfire, flooding, and winter storm — specific to where you live, written by your neighbor.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Cascadia.me",
-        "url": "https://cascadia.me/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/guides.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://cascadia.me/guides.html"
+            }
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://cascadia.me/guides.html#itemlist",
+          "name": "Pacific Northwest preparedness guides",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Earthquake preparedness guide",
+              "item": "https://cascadia.me/earthquake.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Wildfire preparedness guide",
+              "item": "https://cascadia.me/wildfire.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Flood preparedness guide",
+              "item": "https://cascadia.me/flooding.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "Winter storm preparedness guide",
+              "item": "https://cascadia.me/winter-storm.html"
+            }
+          ]
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://cascadia.me/guides.html#webpage",
+          "url": "https://cascadia.me/guides.html",
+          "name": "Pacific Northwest Preparedness Guides",
+          "description": "Explore Pacific Northwest preparedness guides for earthquake, wildfire, flooding, and winter storms, written for households in Washington, Oregon, and coastal BC.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "mainEntity": {
+            "@id": "https://cascadia.me/guides.html#itemlist"
+          },
+          "breadcrumb": {
+            "@id": "https://cascadia.me/guides.html#breadcrumb"
+          },
+          "dateModified": "2026-04-19"
+        }
+      ]
     }
   </script>
 </head>
@@ -252,6 +352,23 @@
         <a href="build-your-kit.html">Build Your Kit</a> page has the full supply
         checklists — printable, organized by threat, with sourcing suggestions.
       </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-width">
+      <div class="editorial-note reveal">
+        <p class="editorial-note-meta">Written by Michael Hendrick • Reviewed April 19, 2026</p>
+        <h2>How the guide hub stays useful</h2>
+        <p>Each guide is written for a specific Pacific Northwest hazard and links back to official sources when local geology, weather, mapping, or alerts materially change what households should do.</p>
+        <p>If a live incident is underway, start with the relevant hazard page here for regional context, then switch to the appropriate emergency management or weather agency for current instructions.</p>
+        <ul>
+          <li><a href="approach.html">Read the author and sourcing approach</a></li>
+          <li><a href="https://www.ready.gov/" target="_blank" rel="noopener">Ready.gov</a></li>
+          <li><a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a></li>
+          <li><a href="https://www.usgs.gov/" target="_blank" rel="noopener">U.S. Geological Survey</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 

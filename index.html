@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cascadia.me — Pacific Northwest Preparedness</title>
-  <meta name="description" content="A preparedness guide for the Pacific Northwest. Earthquake, wildfire, flooding, winter storm — know what's coming and be ready.">
+  <title>Pacific Northwest Preparedness Guide | Cascadia.me</title>
+  <meta name="description" content="Practical Pacific Northwest preparedness guides for earthquakes, wildfire, flooding, winter storms, and emergency kits for households in Washington, Oregon, and coastal BC.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Cascadia.me — Pacific Northwest Preparedness">
-  <meta property="og:description" content="A preparedness guide for the Pacific Northwest. Earthquake, wildfire, flooding, winter storm — know what's coming and be ready.">
+  <meta property="og:title" content="Pacific Northwest Preparedness Guide | Cascadia.me">
+  <meta property="og:description" content="Practical Pacific Northwest preparedness guides for earthquakes, wildfire, flooding, winter storms, and emergency kits for households in Washington, Oregon, and coastal BC.">
   <meta property="og:url" content="https://cascadia.me/">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cascadia.me — Pacific Northwest Preparedness">
-  <meta name="twitter:description" content="A preparedness guide for the Pacific Northwest. Earthquake, wildfire, flooding, winter storm — know what's coming and be ready.">
+  <meta name="twitter:title" content="Pacific Northwest Preparedness Guide | Cascadia.me">
+  <meta name="twitter:description" content="Practical Pacific Northwest preparedness guides for earthquakes, wildfire, flooding, winter storms, and emergency kits for households in Washington, Oregon, and coastal BC.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,11 +34,58 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Cascadia.me",
-      "url": "https://cascadia.me/",
-      "description": "A preparedness guide for the Pacific Northwest. Earthquake, wildfire, flooding, winter storm — know what's coming and be ready.",
-      "inLanguage": "en-US"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "description": "Practical Pacific Northwest preparedness guides for earthquakes, wildfire, flooding, winter storms, and emergency kits for households in Washington, Oregon, and coastal BC.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/#webpage",
+          "url": "https://cascadia.me/",
+          "name": "Pacific Northwest Preparedness Guide",
+          "description": "Practical Pacific Northwest preparedness guides for earthquakes, wildfire, flooding, winter storms, and emergency kits for households in Washington, Oregon, and coastal BC.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "dateModified": "2026-04-19",
+          "about": "Pacific Northwest preparedness"
+        }
+      ]
     }
   </script>
 </head>
@@ -236,6 +287,23 @@
         — Michael, in Washington State.
         <a href="approach.html">Read more about why this exists</a>.
       </p>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--color-cloud);">
+    <div class="container content-width">
+      <div class="editorial-note reveal">
+        <p class="editorial-note-meta">Written and reviewed in Washington State • Updated April 19, 2026</p>
+        <h2>How Cascadia.me handles preparedness guidance</h2>
+        <p>Cascadia.me is written by Michael Hendrick and reviewed against official geological, weather, emergency management, and disaster recovery guidance relevant to the Pacific Northwest.</p>
+        <p>Use these guides for regional context and planning. When an event is happening now, follow incident-specific instructions from your local emergency manager, fire district, weather service office, or evacuation order first.</p>
+        <ul>
+          <li><a href="approach.html">Read the author and sourcing approach</a></li>
+          <li><a href="https://www.usgs.gov/" target="_blank" rel="noopener">U.S. Geological Survey</a></li>
+          <li><a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a></li>
+          <li><a href="https://www.ready.gov/" target="_blank" rel="noopener">Ready.gov</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 

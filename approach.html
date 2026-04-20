@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Approach — Cascadia.me</title>
-  <meta name="description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <title>About Cascadia.me and How the Guides Are Sourced | Cascadia.me</title>
+  <meta name="description" content="Meet Michael Hendrick and read how Cascadia.me researches, sources, and updates its Pacific Northwest preparedness guides.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/approach.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Our Approach — Cascadia.me">
-  <meta property="og:description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <meta property="og:title" content="About Cascadia.me and How the Guides Are Sourced | Cascadia.me">
+  <meta property="og:description" content="Meet Michael Hendrick and read how Cascadia.me researches, sources, and updates its Pacific Northwest preparedness guides.">
   <meta property="og:url" content="https://cascadia.me/approach.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Our Approach — Cascadia.me">
-  <meta name="twitter:description" content="Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.">
+  <meta name="twitter:title" content="About Cascadia.me and How the Guides Are Sourced | Cascadia.me">
+  <meta name="twitter:description" content="Meet Michael Hendrick and read how Cascadia.me researches, sources, and updates its Pacific Northwest preparedness guides.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,15 +53,80 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "name": "Our Approach",
-      "url": "https://cascadia.me/approach.html",
-      "description": "Why Cascadia.me exists. A father in Washington State read a New Yorker article, got unsettled, and built an emergency kit. This is what he learned.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Cascadia.me",
-        "url": "https://cascadia.me/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/approach.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "The Approach",
+              "item": "https://cascadia.me/approach.html"
+            }
+          ]
+        },
+        {
+          "@type": "AboutPage",
+          "@id": "https://cascadia.me/approach.html#webpage",
+          "url": "https://cascadia.me/approach.html",
+          "name": "About Cascadia.me and How the Guides Are Sourced",
+          "description": "Meet Michael Hendrick and read how Cascadia.me researches, sources, and updates its Pacific Northwest preparedness guides.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "mainEntity": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "breadcrumb": {
+            "@id": "https://cascadia.me/approach.html#breadcrumb"
+          },
+          "dateModified": "2026-04-19"
+        }
+      ]
     }
   </script>
 </head>
@@ -89,6 +158,22 @@
         What one person learned about preparedness in the Pacific Northwest —
         and decided to share.
       </p>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--color-cloud);">
+    <div class="container content-width">
+      <div class="editorial-note reveal">
+        <p class="editorial-note-meta">Author, sourcing, and update policy</p>
+        <h2>Who writes this and how it is reviewed</h2>
+        <p>I'm Michael Hendrick, based in Washington State, and I write and maintain Cascadia.me.</p>
+        <p>I revisit pages when major regional events expose gaps, when official guidance materially changes, and during regular review sweeps so the advice stays anchored to real agencies and real Pacific Northwest conditions.</p>
+        <ul>
+          <li><a href="https://www.ready.gov/" target="_blank" rel="noopener">Ready.gov</a></li>
+          <li><a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a></li>
+          <li><a href="https://www.usgs.gov/" target="_blank" rel="noopener">U.S. Geological Survey</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 

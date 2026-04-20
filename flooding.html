@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flooding — Cascadia.me</title>
-  <meta name="description" content="Flood preparedness for the Pacific Northwest. River flooding, atmospheric rivers, and what to do when the water is rising.">
+  <title>Pacific Northwest Flood Preparedness Guide | Cascadia.me</title>
+  <meta name="description" content="Pacific Northwest flood preparedness guide: river gauge monitoring, floodplain planning, home protection, evacuation timing, and recovery after the water recedes.">
+  <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <link rel="canonical" href="https://cascadia.me/flooding.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Flooding — Cascadia.me">
-  <meta property="og:description" content="Flood preparedness for the Pacific Northwest. River flooding, atmospheric rivers, and what to do when the water is rising.">
+  <meta property="og:title" content="Pacific Northwest Flood Preparedness Guide | Cascadia.me">
+  <meta property="og:description" content="Pacific Northwest flood preparedness guide: river gauge monitoring, floodplain planning, home protection, evacuation timing, and recovery after the water recedes.">
   <meta property="og:url" content="https://cascadia.me/flooding.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Flooding — Cascadia.me">
-  <meta name="twitter:description" content="Flood preparedness for the Pacific Northwest. River flooding, atmospheric rivers, and what to do when the water is rising.">
+  <meta name="twitter:title" content="Pacific Northwest Flood Preparedness Guide | Cascadia.me">
+  <meta name="twitter:description" content="Pacific Northwest flood preparedness guide: river gauge monitoring, floodplain planning, home protection, evacuation timing, and recovery after the water recedes.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,15 +35,84 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Flooding",
-      "url": "https://cascadia.me/flooding.html",
-      "description": "Flood preparedness for the Pacific Northwest. River flooding, atmospheric rivers, and what to do when the water is rising.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Cascadia.me",
-        "url": "https://cascadia.me/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/flooding.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://cascadia.me/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Flood preparedness guide",
+              "item": "https://cascadia.me/flooding.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/flooding.html#webpage",
+          "url": "https://cascadia.me/flooding.html",
+          "name": "Pacific Northwest Flood Preparedness Guide",
+          "description": "Pacific Northwest flood preparedness guide: river gauge monitoring, floodplain planning, home protection, evacuation timing, and recovery after the water recedes.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "breadcrumb": {
+            "@id": "https://cascadia.me/flooding.html#breadcrumb"
+          },
+          "dateModified": "2026-04-19",
+          "about": "Pacific Northwest flood preparedness"
+        }
+      ]
     }
   </script>
 </head>
@@ -76,6 +149,7 @@
           <span class="guide-meta-item">River valleys &amp; floodplains, WA/OR/BC</span>
           <span class="guide-meta-item">2025: Leavenworth, western WA devastated</span>
           <span class="guide-meta-item">Season: November – March</span>
+          <span class="guide-meta-item">Reviewed April 19, 2026</span>
         </div>
         <h1 class="reveal">Flooding</h1>
         <p class="hero-subtitle reveal">
@@ -601,6 +675,23 @@
               gives you hours. Use them.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section">
+      <div class="container content-width">
+        <div class="editorial-note reveal">
+          <p class="editorial-note-meta">Written by Michael Hendrick • Reviewed April 19, 2026</p>
+          <h3>Primary references for this guide</h3>
+          <p>This page combines regional floodplain experience with official river monitoring, flood safety, and mapping sources. Use it to prepare and set thresholds now, then follow local alerts and evacuation instructions when water is rising.</p>
+          <ul>
+            <li><a href="approach.html">Read the author and sourcing approach</a></li>
+            <li><a href="https://www.weather.gov/safety/flood" target="_blank" rel="noopener">National Weather Service flood safety guidance</a></li>
+            <li><a href="https://waterdata.usgs.gov/" target="_blank" rel="noopener">USGS water data and river gauges</a></li>
+            <li><a href="https://msc.fema.gov/portal/home" target="_blank" rel="noopener">FEMA Flood Map Service Center</a></li>
+            <li><a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov flood guidance</a></li>
+          </ul>
         </div>
       </div>
     </section>

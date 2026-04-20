@@ -118,6 +118,7 @@
 
     .kit-nav {
       display: flex;
+      justify-content: center;
       gap: var(--space-2);
       flex-wrap: nowrap;
       overflow-x: auto;
@@ -233,6 +234,10 @@
     }
 
     @media (max-width: 768px) {
+      .kit-nav {
+        justify-content: flex-start;
+      }
+
       .kit-start-grid,
       .kit-universal-grid {
         grid-template-columns: 1fr;
@@ -360,44 +365,6 @@
         <a href="#winter-storm" class="btn btn-outline kit-nav-link">Winter Storm</a>
         <a href="#flooding" class="btn btn-outline kit-nav-link">Flooding</a>
       </nav>
-    </div>
-  </section>
-
-  <section class="section kit-start" id="start-here" style="background: var(--color-fog);">
-    <div class="container content-width reveal">
-      <p class="guide-section-label">Start here</p>
-      <h2>If you only do five things this weekend</h2>
-      <p>
-        Do these first. They cover more of the real risk on this page than buying
-        a dozen gadgets and never organizing them.
-      </p>
-      <ol class="kit-start-grid">
-        <li class="kit-start-item">
-          <span class="kit-start-step">1</span>
-          <h3>Store three days of water</h3>
-          <p>Start with the boring essential: actual drinking water, already in the house, before the next outage or evacuation order.</p>
-        </li>
-        <li class="kit-start-item">
-          <span class="kit-start-step">2</span>
-          <h3>Buy one real first aid kit</h3>
-          <p>Not a hotel pouch. A kit that can handle cuts, sprains, burns, and the small injuries that become big problems when systems are down.</p>
-        </li>
-        <li class="kit-start-item">
-          <span class="kit-start-step">3</span>
-          <h3>Gather light, radio, and backup power</h3>
-          <p>Put flashlights or headlamps, a radio, chargers, and one charged power bank in a known place everyone can find fast.</p>
-        </li>
-        <li class="kit-start-item">
-          <span class="kit-start-step">4</span>
-          <h3>Print the communication plan</h3>
-          <p>Write down meeting points, the out-of-area contact, and key numbers. When phones fail, a paper plan matters more than another app.</p>
-        </li>
-        <li class="kit-start-item">
-          <span class="kit-start-step">5</span>
-          <h3>Pack one door-ready go-bag</h3>
-          <p>Clothes, meds, document copies, chargers, masks, snacks, and pet basics. You can expand by hazard after the basics are covered.</p>
-        </li>
-      </ol>
     </div>
   </section>
 
@@ -657,6 +624,20 @@
     </div>
   </section>
 
+  <!-- One more thing -->
+  <section class="section" style="background: var(--color-fog);">
+    <div class="container content-width text-center reveal">
+      <h2>The best time was last year. The second best time is now.</h2>
+      <p style="margin-top: var(--space-2); margin-bottom: var(--space-4);">
+        You don't have to do everything at once. Start with the critical items for
+        whichever threat is most relevant to where you live. Add depth over time.
+        The point isn't perfection — it's being meaningfully more ready than you
+        were yesterday.
+      </p>
+      <a href="guides.html" class="btn btn-primary">Back to the guides</a>
+    </div>
+  </section>
+
   <section class="section" style="background: var(--color-cloud);">
     <div class="container content-width">
       <div class="editorial-note reveal">
@@ -671,20 +652,6 @@
           <li><a href="https://www.weather.gov/nwr/" target="_blank" rel="noopener">NOAA Weather Radio overview</a></li>
         </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- One more thing -->
-  <section class="section" style="background: var(--color-fog);">
-    <div class="container content-width text-center reveal">
-      <h2>The best time was last year. The second best time is now.</h2>
-      <p style="margin-top: var(--space-2); margin-bottom: var(--space-4);">
-        You don't have to do everything at once. Start with the critical items for
-        whichever threat is most relevant to where you live. Add depth over time.
-        The point isn't perfection — it's being meaningfully more ready than you
-        were yesterday.
-      </p>
-      <a href="guides.html" class="btn btn-primary">Back to the guides</a>
     </div>
   </section>
 

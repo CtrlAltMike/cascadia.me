@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cascadia-slack-alerts",
+  "main": "src/index.js",
+  "compatibility_date": "2026-06-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["15 8 * * *"]
+  },
+  "vars": {
+    "TRAFFIC_ALLOWED_ORIGIN": "https://cascadia.me",
+    "TRAFFIC_SITE_NAME": "Cascadia.me"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "TRAFFIC_KV",
+      "id": "538c8516ecc543158ff960ffcd0d79a1",
+      "preview_id": "2be633b65c054d7a820a9ef78672c472"
+    }
+  ]
+}

@@ -58,7 +58,7 @@ In Ko-fi webhook settings, set the webhook URL to:
 https://<worker-host>/kofi
 ```
 
-Set Ko-fi's verification token to the same value stored in `KOFI_VERIFICATION_TOKEN`.
+Open the Advanced section, copy Ko-fi's generated verification token, and store that value in the Worker secret `KOFI_VERIFICATION_TOKEN`.
 
 ## Traffic beacon
 

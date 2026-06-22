@@ -1,8 +1,9 @@
 # Cascadia Slack Alerts Worker
 
-This Worker posts two kinds of messages into the `ebbline.slack.com` workspace:
+This Worker posts three kinds of messages into the `ebbline.slack.com` workspace:
 
 - Ko-fi donation events to `#ko-fi-donations`
+- Reader feedback to `#cascadia-feedback`
 - Daily privacy-preserving traffic summaries to `#cascadia-traffic`
 
 The static site should never contain Slack webhook URLs, Ko-fi verification tokens, or Cloudflare API tokens. Keep all of those in Worker secrets.
@@ -10,6 +11,7 @@ The static site should never contain Slack webhook URLs, Ko-fi verification toke
 ## Endpoints
 
 - `POST /kofi` receives Ko-fi webhook payloads.
+- `POST /feedback` receives first-party reader feedback submissions from the static site.
 - `POST /traffic` receives first-party page-view beacons from the static site.
 - `POST /traffic/digest` manually sends a digest for testing. Requires `Authorization: Bearer $ADMIN_TOKEN`.
 - `GET /health` returns a basic health response.
@@ -19,6 +21,7 @@ The static site should never contain Slack webhook URLs, Ko-fi verification toke
 Create two Slack incoming webhooks:
 
 - `#ko-fi-donations` -> `SLACK_DONATIONS_WEBHOOK_URL`
+- `#cascadia-feedback` -> `SLACK_FEEDBACK_WEBHOOK_URL`
 - `#cascadia-traffic` -> `SLACK_TRAFFIC_WEBHOOK_URL`
 
 Slack incoming webhooks accept a JSON payload and post it to the channel selected when the webhook is created.
@@ -39,6 +42,7 @@ Then set secrets:
 
 ```sh
 npx wrangler secret put SLACK_DONATIONS_WEBHOOK_URL
+npx wrangler secret put SLACK_FEEDBACK_WEBHOOK_URL
 npx wrangler secret put SLACK_TRAFFIC_WEBHOOK_URL
 npx wrangler secret put KOFI_VERIFICATION_TOKEN
 npx wrangler secret put ADMIN_TOKEN
@@ -61,6 +65,22 @@ https://<worker-host>/kofi
 Open the Advanced section, copy Ko-fi's generated verification token, and store that value in the Worker secret `KOFI_VERIFICATION_TOKEN`.
 
 ## Traffic beacon
+
+## Feedback widget
+
+The static site uses a floating feedback widget with an optional first name or initials, a required 400-character feedback field, and an optional quote-permission checkbox. Submissions are posted privately to Slack for review. They are not published on the site automatically.
+
+To enable the widget on the static site, add this meta tag in the page `<head>`:
+
+```html
+<meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
+```
+
+Then add the script near the existing footer scripts:
+
+```html
+<script src="js/feedback.js"></script>
+```
 
 The Worker stores only aggregate counts by date, page path, referrer hostname, and `utm_source`. It does not store IP addresses, cookies, user agents, or per-visitor identifiers.
 

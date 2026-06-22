@@ -1,4 +1,7 @@
 const MAX_KOFI_BYTES = 64 * 1024;
+const MAX_FEEDBACK_BYTES = 4096;
+const MAX_FEEDBACK_MESSAGE_LENGTH = 400;
+const MAX_FEEDBACK_NAME_LENGTH = 40;
 const MAX_TRAFFIC_BYTES = 2048;
 const TOP_ITEM_LIMIT = 12;
 
@@ -6,7 +9,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    if (request.method === "OPTIONS" && url.pathname === "/traffic") {
+    if (request.method === "OPTIONS" && (url.pathname === "/traffic" || url.pathname === "/feedback")) {
       return corsResponse(null, 204, env);
     }
 
@@ -16,6 +19,14 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/kofi") {
       return handleKofiWebhook(request, env);
+    }
+
+    if (request.method === "POST" && url.pathname === "/feedback") {
+      if (!isAllowedOrigin(request, env)) {
+        return corsResponse({ error: "origin_not_allowed" }, 403, env);
+      }
+
+      return handleFeedback(request, env);
     }
 
     if (request.method === "POST" && url.pathname === "/traffic") {
@@ -45,6 +56,28 @@ export default {
     ctx.waitUntil(sendTrafficDigest(env, date));
   },
 };
+
+async function handleFeedback(request, env) {
+  if (!env.SLACK_FEEDBACK_WEBHOOK_URL) {
+    return corsResponse({ error: "missing_configuration" }, 500, env);
+  }
+
+  let payload;
+  try {
+    const body = await readBoundedText(request, MAX_FEEDBACK_BYTES);
+    payload = JSON.parse(body);
+  } catch (error) {
+    return corsResponse({ error: "invalid_request" }, 400, env);
+  }
+
+  const feedback = normalizeFeedbackPayload(payload);
+  if (!feedback.message) {
+    return corsResponse({ error: "feedback_required" }, 400, env);
+  }
+
+  await postToSlack(env.SLACK_FEEDBACK_WEBHOOK_URL, formatFeedbackMessage(feedback));
+  return corsResponse({ ok: true }, 200, env);
+}
 
 async function handleKofiWebhook(request, env) {
   if (!env.SLACK_DONATIONS_WEBHOOK_URL || !env.KOFI_VERIFICATION_TOKEN) {
@@ -144,6 +177,41 @@ function formatDonationMessage(payload) {
   };
 }
 
+function formatFeedbackMessage(feedback) {
+  const displayName = feedback.name || "Reader";
+  const permission = feedback.canQuote ? "Yes" : "No";
+  const page = feedback.pageTitle || feedback.path || "Unknown page";
+
+  return {
+    text: `New Cascadia.me feedback from ${displayName}`,
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*New Cascadia.me feedback*\n*From:* ${escapeSlack(displayName)}\n*OK to quote after review:* ${permission}`,
+        },
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `>${escapeSlack(feedback.message).replace(/\n/g, "\n>")}`,
+        },
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: `Page: ${escapeSlack(page)}${feedback.path ? ` (${escapeSlack(feedback.path)})` : ""}`,
+          },
+        ],
+      },
+    ],
+  };
+}
+
 function formatTrafficDigest(traffic, env) {
   const siteName = env.TRAFFIC_SITE_NAME || "Cascadia.me";
   const pageLines = topLines(traffic.pages);
@@ -164,6 +232,21 @@ function formatTrafficDigest(traffic, env) {
       digestSection("Referrers", referrerLines),
       digestSection("UTM sources", sourceLines),
     ].filter(Boolean),
+  };
+}
+
+function normalizeFeedbackPayload(payload) {
+  const rawName = typeof payload?.name === "string" ? payload.name : "";
+  const rawMessage = typeof payload?.message === "string" ? payload.message : "";
+  const rawPath = typeof payload?.path === "string" ? payload.path : "";
+  const rawPageTitle = typeof payload?.pageTitle === "string" ? payload.pageTitle : "";
+
+  return {
+    name: cleanSingleLine(rawName).slice(0, MAX_FEEDBACK_NAME_LENGTH),
+    message: cleanMultiline(rawMessage).slice(0, MAX_FEEDBACK_MESSAGE_LENGTH),
+    canQuote: payload?.canQuote === true,
+    path: normalizePath(rawPath),
+    pageTitle: cleanSingleLine(rawPageTitle).slice(0, 140),
   };
 }
 
@@ -328,6 +411,18 @@ function normalizeSource(search) {
   const params = new URLSearchParams(search.startsWith("?") ? search : `?${search}`);
   const source = params.get("utm_source");
   return source ? source.slice(0, 80) : "(none)";
+}
+
+function cleanSingleLine(value) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function cleanMultiline(value) {
+  return value.replace(/\r\n?/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function escapeSlack(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function increment(counter, key) {

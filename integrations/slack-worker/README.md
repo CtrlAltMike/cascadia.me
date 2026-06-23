@@ -4,7 +4,7 @@ This Worker posts three kinds of messages into the `ebbline.slack.com` workspace
 
 - Ko-fi donation events to `#ko-fi-donations`
 - Reader feedback to `#cascadia-feedback`
-- Daily privacy-preserving traffic summaries to `#cascadia-traffic`
+- Daily and weekly privacy-preserving traffic summaries to `#cascadia-traffic`
 
 The static site should never contain Slack webhook URLs, Ko-fi verification tokens, or Cloudflare API tokens. Keep all of those in Worker secrets.
 
@@ -13,12 +13,12 @@ The static site should never contain Slack webhook URLs, Ko-fi verification toke
 - `POST /kofi` receives Ko-fi webhook payloads.
 - `POST /feedback` receives first-party reader feedback submissions from the static site.
 - `POST /traffic` receives first-party page-view beacons from the static site.
-- `POST /traffic/digest` manually sends a digest for testing. Requires `Authorization: Bearer $ADMIN_TOKEN`.
+- `POST /traffic/digest` manually sends a daily or weekly digest for testing. Requires `Authorization: Bearer $ADMIN_TOKEN`.
 - `GET /health` returns a basic health response.
 
 ## Slack setup
 
-Create two Slack incoming webhooks:
+Create three Slack incoming webhooks:
 
 - `#ko-fi-donations` -> `SLACK_DONATIONS_WEBHOOK_URL`
 - `#cascadia-feedback` -> `SLACK_FEEDBACK_WEBHOOK_URL`
@@ -98,12 +98,19 @@ Then add the script near the existing footer scripts:
 
 If you later put the Worker on a same-origin route such as `https://cascadia.me/traffic`, update the meta content accordingly.
 
-The scheduled digest currently runs at `13:35 UTC`, summarizing the previous UTC date. That is 6:35 AM Pacific during daylight time. Adjust `triggers.crons` in `wrangler.jsonc` if you want a different reporting time.
+The daily traffic digest currently runs at `13:35 UTC`, summarizing the previous UTC date. That is 6:35 AM Pacific during daylight time. The weekly summary runs Mondays at `13:45 UTC`, summarizing the previous seven UTC dates. Adjust `triggers.crons` in `wrangler.jsonc` if you want different reporting times.
 
 ## Manual digest test
 
 ```sh
 curl -X POST "https://cascadia-slack-alerts.mike-551.workers.dev/traffic/digest?date=2026-06-22" \
+  -H "Authorization: Bearer $ADMIN_TOKEN"
+```
+
+Weekly digest test:
+
+```sh
+curl -X POST "https://cascadia-slack-alerts.mike-551.workers.dev/traffic/digest?period=weekly&date=2026-06-22" \
   -H "Authorization: Bearer $ADMIN_TOKEN"
 ```
 

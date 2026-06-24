@@ -5,7 +5,7 @@
 Use a small Cloudflare Worker as the boundary between public services and Slack:
 
 1. Ko-fi calls the Worker when a donation happens.
-2. Cascadia.me optionally sends a tiny first-party traffic beacon to the Worker.
+2. The Worker queries Cloudflare Web Analytics/RUM for aggregate traffic data.
 3. The Worker posts donation alerts and daily traffic summaries into Slack.
 
 This avoids exposing Slack webhook URLs in the static GitHub Pages site.
@@ -13,7 +13,7 @@ This avoids exposing Slack webhook URLs in the static GitHub Pages site.
 ## Channels
 
 - `#ko-fi-donations`: donation alerts from Ko-fi
-- `#cascadia-traffic`: daily traffic summary, top pages, referrers, and UTM sources
+- `#cascadia-traffic`: daily traffic summary, top pages, and referrers
 
 ## Deployment artifact
 
@@ -23,23 +23,7 @@ Worker source lives in:
 integrations/slack-worker/
 ```
 
-The site-side beacon helper lives at:
-
-```text
-js/traffic.js
-```
-
-It does nothing until a page includes this in `<head>`:
-
-```html
-<meta name="cascadia-traffic-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/traffic">
-```
-
-And this near the existing footer scripts:
-
-```html
-<script src="js/traffic.js"></script>
-```
+Traffic summaries use Cloudflare Web Analytics as the source of truth. The static site no longer ships a separate Cascadia.me traffic beacon or posts page views to the Slack Worker.
 
 ## Ethical traffic loops
 
@@ -54,7 +38,7 @@ These sites are about disaster preparedness, so the goal should be useful discov
 
 ## First experiments
 
-Use simple UTM links and watch `#cascadia-traffic` for one week:
+Use simple channel-specific links and watch Cloudflare Web Analytics for one week. The Slack digest will show total page views, top pages, and referrer hosts; it will not break out UTM sources.
 
 ```text
 https://cascadia.me/build-your-kit.html?utm_source=nextdoor&utm_medium=community&utm_campaign=kit-checklist

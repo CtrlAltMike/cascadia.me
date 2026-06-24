@@ -12,14 +12,9 @@
     "crons": ["35 13 * * *", "45 13 * * 1"]
   },
   "vars": {
+    "CLOUDFLARE_ACCOUNT_ID": "55133253f683cbc04fc3a47ccdcb2906",
     "TRAFFIC_ALLOWED_ORIGIN": "https://cascadia.me",
+    "TRAFFIC_HOSTNAME": "cascadia.me",
     "TRAFFIC_SITE_NAME": "Cascadia.me"
-  },
-  "kv_namespaces": [
-    {
-      "binding": "TRAFFIC_KV",
-      "id": "538c8516ecc543158ff960ffcd0d79a1",
-      "preview_id": "2be633b65c054d7a820a9ef78672c472"
-    }
-  ]
+  }
 }

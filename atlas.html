@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regional Hazard Atlas | Cascadia.me</title>
+  <meta name="description" content="Explore a Cascadia hazard atlas with historical earthquakes, major wildfire perimeters, and flood hazard zones across the Pacific Northwest.">
+  <meta name="author" content="Michael Hendrick">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#faf8f5">
+  <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
+  <link rel="canonical" href="https://cascadia.me/atlas.html">
+  <meta property="og:site_name" content="Cascadia.me">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Regional Hazard Atlas | Cascadia.me">
+  <meta property="og:description" content="A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.">
+  <meta property="og:url" content="https://cascadia.me/atlas.html">
+  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
+  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Regional Hazard Atlas | Cascadia.me">
+  <meta name="twitter:description" content="A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css?v=atlas-20260626">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/atlas.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Atlas",
+              "item": "https://cascadia.me/atlas.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/atlas.html#webpage",
+          "url": "https://cascadia.me/atlas.html",
+          "name": "Regional Hazard Atlas",
+          "description": "A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "dateModified": "2026-06-26",
+          "breadcrumb": {
+            "@id": "https://cascadia.me/atlas.html#breadcrumb"
+          },
+          "about": "Pacific Northwest hazard mapping"
+        }
+      ]
+    }
+  </script>
+</head>
+<body class="atlas-body">
+
+  <!-- Nav -->
+  <header class="site-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <ul class="nav-links" id="site-nav-links">
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="build-your-kit.html">Build Your Kit</a></li>
+        <li><a href="atlas.html" class="active">Atlas</a></li>
+        <li><a href="approach.html">The Approach</a></li>
+        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="atlas-page">
+    <section class="atlas-page-section atlas-section" data-atlas>
+      <div class="atlas-page-layout">
+        <aside class="atlas-sidebar">
+          <div class="atlas-copy">
+            <h1>Regional hazard atlas</h1>
+            <p>
+              Explore natural hazards that shape life in Cascadia. Turn layers on or
+              off to see where earthquakes, wildfires, and flood zones overlap in the
+              places we call home.
+            </p>
+          </div>
+
+          <div class="atlas-control-group">
+            <h2>Hazard layers</h2>
+            <div class="atlas-toolbar" role="group" aria-label="Hazard layers">
+              <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-quake"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Earthquakes</span>
+                  <span class="atlas-toggle-subtitle" data-atlas-quake-summary>Magnitude 5.0+ since 1900</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="earthquakes" checked>
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+
+              <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-fire"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Wildfires</span>
+                  <span class="atlas-toggle-subtitle" data-atlas-fire-summary>10,000+ acres since 2000</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="fires" checked>
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+
+              <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-flood"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Flood zones</span>
+                  <span class="atlas-toggle-subtitle">River corridors plus local FEMA zones</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="floods">
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="atlas-filter-group" aria-label="Filter map">
+            <h2>Filter map</h2>
+            <div class="atlas-filter-stack">
+              <div class="atlas-filter-block">
+                <div class="atlas-filter-title">Earthquakes</div>
+                <label class="atlas-field">
+                  <span>Time window</span>
+                  <select data-atlas-quake-window aria-label="Earthquake time window">
+                    <option value="30d">Last 30 days</option>
+                    <option value="1y">Last year</option>
+                    <option value="2000">Since 2000</option>
+                    <option value="1900" selected>Historical since 1900</option>
+                  </select>
+                </label>
+                <label class="atlas-range-field">
+                  <span class="atlas-range-heading">
+                    <span>Minimum magnitude</span>
+                    <output data-atlas-quake-mag-output aria-label="M5.0+">M5.0+</output>
+                  </span>
+                  <input type="range" min="2.5" max="7" step="0.5" value="5" data-atlas-quake-min-mag>
+                </label>
+                <p class="atlas-filter-note" data-atlas-quake-note>Historical searches use M5.0+ minimum to stay readable.</p>
+              </div>
+
+              <div class="atlas-filter-block">
+                <div class="atlas-filter-title">Wildfires</div>
+                <label class="atlas-range-field">
+                  <span class="atlas-range-heading">
+                    <span>Since year</span>
+                    <output data-atlas-fire-year-output aria-label="2000">2000</output>
+                  </span>
+                  <input type="range" min="2000" max="2026" step="1" value="2000" data-atlas-fire-year>
+                </label>
+                <label class="atlas-field">
+                  <span>Minimum size</span>
+                  <select data-atlas-fire-acres aria-label="Minimum wildfire size">
+                    <option value="10000" selected>10,000+ acres</option>
+                    <option value="25000">25,000+ acres</option>
+                    <option value="50000">50,000+ acres</option>
+                    <option value="100000">100,000+ acres</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="atlas-data">
+            <h2>Data status</h2>
+            <div class="atlas-loading-note" data-atlas-loading-note hidden>
+              <span class="atlas-loading-spinner" aria-hidden="true"></span>
+              <span>Fetching public data. Larger layers can take a few seconds to render.</span>
+            </div>
+            <p class="atlas-status" data-atlas-status aria-live="polite">Map waiting to load.</p>
+            <ul class="atlas-status-list">
+              <li data-atlas-status-key="earthquakes">Earthquakes waiting.</li>
+              <li data-atlas-status-key="fires">Wildfire layer waiting.</li>
+              <li data-atlas-status-key="floods">Floods off. Turn on for river corridors + FEMA zones.</li>
+            </ul>
+            <p class="atlas-latency-note">Public source layers load on demand and may briefly lag while the map fetches and draws them.</p>
+            <p class="atlas-updated">Not live inundation or water depth.</p>
+            <p class="atlas-source">
+              Sources: USGS earthquakes, NIFC fire perimeters, FEMA flood hazard zones, OpenStreetMap basemap.
+            </p>
+          </div>
+        </aside>
+
+        <div class="atlas-panel" id="regional-hazard-atlas-map" aria-label="Regional hazard atlas">
+          <div class="atlas-map" id="cascadia-atlas-map" role="region" aria-label="Interactive map of Cascadia hazard data">
+            <div class="atlas-placeholder" data-atlas-placeholder>
+              <h2>Regional hazard atlas</h2>
+              <p>Centered on the Cascadian bioregion from northern California to coastal British Columbia.</p>
+            </div>
+            <div class="atlas-map-legend" aria-label="Map legend">
+              <span><span class="atlas-legend-ring"></span> Earthquake magnitude</span>
+              <span><span class="atlas-legend-fire"></span> Wildfire perimeter</span>
+              <span><span class="atlas-legend-flood"></span> Flood zone</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="atlas-intro" data-atlas-intro aria-labelledby="atlas-intro-title">
+    <div class="atlas-intro-panel">
+      <h2 id="atlas-intro-title">Read the map calmly.</h2>
+      <p>
+        This atlas is not here to create anxiety. It is a way to understand the
+        landscape we already live in: faults, fire country, river valleys, and
+        the places where preparation is practical.
+      </p>
+      <p>
+        Use it for orientation and planning. During an active event, follow your
+        local emergency manager, fire district, weather service, or evacuation order.
+      </p>
+      <button type="button" class="btn btn-primary" data-atlas-intro-close>Enter the atlas</button>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Cascadia<span>.me</span></h3>
+          <p>
+            A Pacific Northwest preparedness guide. Regional, specific,
+            and written by your neighbor.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Guides</h4>
+            <ul>
+              <li><a href="earthquake.html">Earthquake</a></li>
+              <li><a href="wildfire.html">Wildfire</a></li>
+              <li><a href="flooding.html">Flooding</a></li>
+              <li><a href="winter-storm.html">Winter Storm</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="atlas.html">Atlas</a></li>
+              <li><a href="build-your-kit.html">Build Your Kit</a></li>
+              <li><a href="approach.html">The Approach</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cascadia.me</p>
+        <p class="seasonal-footer"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/share.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/atlas.js"></script>
+  <script src="js/feedback.js"></script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

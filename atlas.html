@@ -9,6 +9,7 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
+  <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
   <link rel="canonical" href="https://cascadia.me/atlas.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
@@ -31,7 +32,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css?v=atlas-20260626">
+  <link rel="stylesheet" href="css/components.css?v=conditions-20260709">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -138,9 +139,8 @@
           <div class="atlas-copy">
             <h1>Regional hazard atlas</h1>
             <p>
-              Explore natural hazards that shape life in Cascadia. Turn layers on or
-              off to see where earthquakes, wildfires, and flood zones overlap in the
-              places we call home.
+              See current official conditions alongside the historical hazards that
+              shape life in Cascadia. Live coverage begins with Washington and Oregon.
             </p>
           </div>
 
@@ -148,22 +148,32 @@
             <h2>Hazard layers</h2>
             <div class="atlas-toolbar" role="group" aria-label="Hazard layers">
               <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-live"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Current conditions</span>
+                  <span class="atlas-toggle-subtitle">Fire records, perimeters, weather alerts, connected evacuations</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="live" checked>
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+
+              <label class="atlas-toggle">
                 <span class="atlas-swatch atlas-swatch-quake"></span>
                 <span class="atlas-toggle-copy">
                   <span class="atlas-toggle-title">Earthquakes</span>
                   <span class="atlas-toggle-subtitle" data-atlas-quake-summary>Magnitude 5.0+ since 1900</span>
                 </span>
-                <input type="checkbox" data-atlas-layer="earthquakes" checked>
+                <input type="checkbox" data-atlas-layer="earthquakes">
                 <span class="atlas-switch" aria-hidden="true"></span>
               </label>
 
               <label class="atlas-toggle">
                 <span class="atlas-swatch atlas-swatch-fire"></span>
                 <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Wildfires</span>
+                  <span class="atlas-toggle-title">Historical wildfires</span>
                   <span class="atlas-toggle-subtitle" data-atlas-fire-summary>10,000+ acres since 2000</span>
                 </span>
-                <input type="checkbox" data-atlas-layer="fires" checked>
+                <input type="checkbox" data-atlas-layer="fires">
                 <span class="atlas-switch" aria-hidden="true"></span>
               </label>
 
@@ -204,7 +214,7 @@
               </div>
 
               <div class="atlas-filter-block">
-                <div class="atlas-filter-title">Wildfires</div>
+                <div class="atlas-filter-title">Historical wildfires</div>
                 <label class="atlas-range-field">
                   <span class="atlas-range-heading">
                     <span>Since year</span>
@@ -233,14 +243,15 @@
             </div>
             <p class="atlas-status" data-atlas-status aria-live="polite">Map waiting to load.</p>
             <ul class="atlas-status-list">
-              <li data-atlas-status-key="earthquakes">Earthquakes waiting.</li>
-              <li data-atlas-status-key="fires">Wildfire layer waiting.</li>
+              <li data-atlas-status-key="live">Current conditions waiting.</li>
+              <li data-atlas-status-key="earthquakes">Earthquakes off. Turn on to explore USGS records.</li>
+              <li data-atlas-status-key="fires">Historical wildfires off. Turn on to explore past perimeters.</li>
               <li data-atlas-status-key="floods">Floods off. Turn on for river corridors + FEMA zones.</li>
             </ul>
             <p class="atlas-latency-note">Public source layers load on demand and may briefly lag while the map fetches and draws them.</p>
-            <p class="atlas-updated">Not live inundation or water depth.</p>
+            <p class="atlas-updated">For situational awareness only. Follow local officials and evacuation orders.</p>
             <p class="atlas-source">
-              Sources: USGS earthquakes, NIFC fire perimeters, FEMA flood hazard zones, OpenStreetMap basemap.
+              Sources: NIFC/WFIGS, NWS, connected county emergency managers, USGS, FEMA, WSDOT when configured, OpenStreetMap.
             </p>
           </div>
         </aside>
@@ -252,8 +263,11 @@
               <p>Centered on the Cascadian bioregion from northern California to coastal British Columbia.</p>
             </div>
             <div class="atlas-map-legend" aria-label="Map legend">
+              <span><span class="atlas-legend-live-fire"></span> Current fire</span>
+              <span><span class="atlas-legend-evac"></span> Evacuation</span>
+              <span><span class="atlas-legend-weather"></span> Weather alert</span>
               <span><span class="atlas-legend-ring"></span> Earthquake magnitude</span>
-              <span><span class="atlas-legend-fire"></span> Wildfire perimeter</span>
+              <span><span class="atlas-legend-fire"></span> Historical fire</span>
               <span><span class="atlas-legend-flood"></span> Flood zone</span>
             </div>
           </div>
@@ -319,7 +333,7 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
-  <script src="js/atlas.js"></script>
+  <script src="js/atlas.js?v=conditions-20260709"></script>
   <script src="js/feedback.js"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

@@ -1,3 +1,5 @@
+import { conditionsPreflightResponse, handleConditionsRequest } from "./conditions.js";
+
 const MAX_KOFI_BYTES = 64 * 1024;
 const MAX_FEEDBACK_BYTES = 4096;
 const MAX_FEEDBACK_MESSAGE_LENGTH = 400;
@@ -49,6 +51,14 @@ const TRAFFIC_DIGEST_QUERY = `
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    if (request.method === "OPTIONS" && url.pathname === "/conditions") {
+      return conditionsPreflightResponse(env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/conditions") {
+      return handleConditionsRequest(request, env, ctx);
+    }
 
     if (request.method === "OPTIONS" && url.pathname === "/feedback") {
       return corsResponse(null, 204, env);

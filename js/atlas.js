@@ -14,7 +14,9 @@
   const USGS_QUAKES = 'https://earthquake.usgs.gov/fdsnws/event/1/query';
   const NIFC_FIRES = 'https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/InteragencyFirePerimeterHistory_All_Years_View/FeatureServer/0/query';
   const FEMA_FLOODS = 'https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query';
+  const CONDITIONS_ENDPOINT = document.querySelector('meta[name="cascadia-conditions-endpoint"]')?.content;
   const CASCADIA_BOUNDS = [[-128.4, 39.7], [-115.6, 52.6]];
+  const LIVE_REFRESH_MS = 5 * 60 * 1000;
   const FLOOD_MIN_ZOOM = 5.1;
   const FLOOD_PAGE_SIZE = 240;
   const QUAKE_WINDOWS = {
@@ -81,6 +83,9 @@
   let mapLoadPromise = null;
   const quakeCache = new Map();
   let loadedQuakeKey = null;
+  let liveConditionsData = null;
+  let liveConditionsPromise = null;
+  let liveLoadedAt = 0;
   let fireCollection = null;
   let loadedFireKey = null;
   let floodAbort = null;
@@ -603,6 +608,16 @@
   function setLayerVisibility(layer, visible) {
     const visibility = visible ? 'visible' : 'none';
     const ids = {
+      live: [
+        'atlas-live-alert-fill',
+        'atlas-live-alert-line',
+        'atlas-live-perimeter-fill',
+        'atlas-live-perimeter-line',
+        'atlas-live-evac-fill',
+        'atlas-live-evac-line',
+        'atlas-live-fire-points',
+        'atlas-live-road-points',
+      ],
       earthquakes: ['atlas-quake-rings', 'atlas-quake-points'],
       fires: ['atlas-fire-fill', 'atlas-fire-line'],
       floods: ['atlas-flood-corridor-glow', 'atlas-flood-corridor-line', 'atlas-flood-fill', 'atlas-flood-line-halo', 'atlas-flood-line'],
@@ -618,6 +633,7 @@
   async function ensureLayer(layer) {
     if (!map) await initAtlas();
 
+    if (layer === 'live') return ensureLiveConditions();
     if (layer === 'earthquakes') return ensureEarthquakes();
     if (layer === 'fires') return ensureFires();
     if (layer === 'floods') return ensureFloods();
@@ -630,11 +646,223 @@
       await ensureLayer(layer);
     } catch (error) {
       const labels = {
+        live: 'Current conditions',
         earthquakes: 'Earthquakes',
-        fires: 'Wildfires',
+        fires: 'Historical wildfires',
         floods: 'Flood zones',
       };
       setStatus(layer, `${labels[layer] || 'Layer'} could not load.`, 'error');
+    }
+  }
+
+  async function ensureLiveConditions() {
+    if (!CONDITIONS_ENDPOINT) {
+      throw new Error('Current conditions endpoint is not configured');
+    }
+
+    const isFresh = liveConditionsData && Date.now() - liveLoadedAt < LIVE_REFRESH_MS;
+    if (isFresh) {
+      renderLiveConditions(liveConditionsData);
+      return;
+    }
+
+    setStatus('live', 'Loading current official conditions.', 'loading');
+    if (!liveConditionsPromise) {
+      liveConditionsPromise = fetchJson(CONDITIONS_ENDPOINT)
+        .then((data) => {
+          liveConditionsData = data;
+          liveLoadedAt = Date.now();
+          return data;
+        })
+        .finally(() => {
+          liveConditionsPromise = null;
+        });
+    }
+
+    const data = await liveConditionsPromise;
+    renderLiveConditions(data);
+  }
+
+  function renderLiveConditions(data) {
+    const collections = {
+      alerts: mapFeatureCollection(data.alerts),
+      perimeters: mapFeatureCollection(data.perimeters),
+      evacuations: mapFeatureCollection(data.evacuations),
+      fires: mapFeatureCollection(data.fires),
+      roads: mapFeatureCollection(data.roads),
+    };
+
+    setGeoJsonSource('atlas-live-alerts', collections.alerts);
+    setGeoJsonSource('atlas-live-perimeters', collections.perimeters);
+    setGeoJsonSource('atlas-live-evacuations', collections.evacuations);
+    setGeoJsonSource('atlas-live-fires', collections.fires);
+    setGeoJsonSource('atlas-live-roads', collections.roads);
+    addLiveConditionLayers();
+
+    loadedLayers.add('live');
+    const summary = data.summary || {};
+    const alertCount = Number(summary.weatherAlertCount) || 0;
+    const evacuationCount = Number(summary.evacuationCount) || 0;
+    const degraded = data.degraded ? ' Some sources are temporarily unavailable.' : '';
+    setStatus(
+      'live',
+      `Current conditions: ${Number(summary.fireCount) || 0} fire records, ${evacuationCount} evacuation area${evacuationCount === 1 ? '' : 's'}, ${alertCount} priority weather alert${alertCount === 1 ? '' : 's'}.${degraded}`,
+      data.degraded ? 'error' : 'ready'
+    );
+  }
+
+  function mapFeatureCollection(collection) {
+    return {
+      type: 'FeatureCollection',
+      features: Array.isArray(collection?.features)
+        ? collection.features.filter((feature) => feature?.type === 'Feature' && feature.geometry)
+        : [],
+    };
+  }
+
+  function setGeoJsonSource(id, data) {
+    if (map.getSource(id)) {
+      map.getSource(id).setData(data);
+      return;
+    }
+    map.addSource(id, { type: 'geojson', data });
+  }
+
+  function addLiveConditionLayers() {
+    if (!map.getLayer('atlas-live-alert-fill')) {
+      map.addLayer({
+        id: 'atlas-live-alert-fill',
+        type: 'fill',
+        source: 'atlas-live-alerts',
+        paint: {
+          'fill-color': [
+            'match', ['get', 'kind'],
+            'fire-weather', '#c8913a',
+            'flood-weather', '#3f7890',
+            'winter-weather', '#667b8c',
+            '#806c55',
+          ],
+          'fill-opacity': 0.14,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-alert-line')) {
+      map.addLayer({
+        id: 'atlas-live-alert-line',
+        type: 'line',
+        source: 'atlas-live-alerts',
+        paint: {
+          'line-color': [
+            'match', ['get', 'kind'],
+            'fire-weather', '#a67628',
+            'flood-weather', '#2f667c',
+            'winter-weather', '#526777',
+            '#6b5e4f',
+          ],
+          'line-opacity': 0.86,
+          'line-width': 1.6,
+          'line-dasharray': [2, 1.5],
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-perimeter-fill')) {
+      map.addLayer({
+        id: 'atlas-live-perimeter-fill',
+        type: 'fill',
+        source: 'atlas-live-perimeters',
+        paint: {
+          'fill-color': '#b85c3a',
+          'fill-opacity': 0.2,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-perimeter-line')) {
+      map.addLayer({
+        id: 'atlas-live-perimeter-line',
+        type: 'line',
+        source: 'atlas-live-perimeters',
+        paint: {
+          'line-color': '#8f3f29',
+          'line-opacity': 0.9,
+          'line-width': 1.8,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-evac-fill')) {
+      map.addLayer({
+        id: 'atlas-live-evac-fill',
+        type: 'fill',
+        source: 'atlas-live-evacuations',
+        paint: {
+          'fill-color': [
+            'match', ['to-number', ['get', 'level']],
+            1, '#d8b958',
+            2, '#d78132',
+            3, '#b4432d',
+            4, '#665079',
+            '#b85c3a',
+          ],
+          'fill-opacity': 0.42,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-evac-line')) {
+      map.addLayer({
+        id: 'atlas-live-evac-line',
+        type: 'line',
+        source: 'atlas-live-evacuations',
+        paint: {
+          'line-color': '#672d23',
+          'line-opacity': 0.96,
+          'line-width': 2.2,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-fire-points')) {
+      map.addLayer({
+        id: 'atlas-live-fire-points',
+        type: 'circle',
+        source: 'atlas-live-fires',
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['to-number', ['coalesce', ['get', 'acres'], 0]],
+            0, 4.5,
+            1000, 7,
+            10000, 10,
+            50000, 14,
+          ],
+          'circle-color': [
+            'match', ['get', 'status'],
+            'contained', '#8b7a66',
+            'reported', '#c8913a',
+            '#b4432d',
+          ],
+          'circle-opacity': 0.9,
+          'circle-stroke-color': '#fff4df',
+          'circle-stroke-width': 1.4,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-live-road-points')) {
+      map.addLayer({
+        id: 'atlas-live-road-points',
+        type: 'circle',
+        source: 'atlas-live-roads',
+        paint: {
+          'circle-radius': 5.5,
+          'circle-color': '#315f73',
+          'circle-opacity': 0.92,
+          'circle-stroke-color': '#eaf2f4',
+          'circle-stroke-width': 1.5,
+        },
+      });
     }
   }
 
@@ -781,7 +1009,7 @@
     loadedFireKey = filter.key;
     loadedLayers.add('fires');
     const capped = data.properties && data.properties.exceededTransferLimit ? ' capped' : '';
-    setStatus('fires', `Wildfires: ${data.features.length}${capped} NIFC ${formatAcres(filter.acres)}+ acre perimeters since ${filter.year}.`, 'ready');
+    setStatus('fires', `Historical wildfires: ${data.features.length}${capped} NIFC ${formatAcres(filter.acres)}+ acre perimeters since ${filter.year}.`, 'ready');
   }
 
   function filterFireFeatures(features, filter) {
@@ -998,10 +1226,27 @@
         }
       }, 240);
     });
+
+    window.setInterval(() => {
+      const liveToggle = toggles.find((input) => input.dataset.atlasLayer === 'live');
+      if (liveToggle?.checked && !document.hidden) {
+        loadLayerSafely('live');
+      }
+    }, LIVE_REFRESH_MS);
   }
 
   function firstAtlasFeature(point) {
-    const layers = ['atlas-quake-points', 'atlas-fire-fill', 'atlas-flood-fill', 'atlas-flood-corridor-line']
+    const layers = [
+      'atlas-live-fire-points',
+      'atlas-live-road-points',
+      'atlas-live-evac-fill',
+      'atlas-live-perimeter-fill',
+      'atlas-live-alert-fill',
+      'atlas-quake-points',
+      'atlas-fire-fill',
+      'atlas-flood-fill',
+      'atlas-flood-corridor-line',
+    ]
       .filter((id) => map.getLayer(id));
     if (!layers.length) return null;
     return map.queryRenderedFeatures(point, { layers })[0] || null;
@@ -1009,11 +1254,69 @@
 
   function renderFeaturePopup(feature) {
     if (!feature || !feature.layer) return '';
+    if (feature.layer.id === 'atlas-live-fire-points') return liveFirePopup(feature.properties || {});
+    if (feature.layer.id === 'atlas-live-road-points') return roadAlertPopup(feature.properties || {});
+    if (feature.layer.id === 'atlas-live-evac-fill') return evacuationPopup(feature.properties || {});
+    if (feature.layer.id === 'atlas-live-perimeter-fill') return livePerimeterPopup(feature.properties || {});
+    if (feature.layer.id === 'atlas-live-alert-fill') return weatherAlertPopup(feature.properties || {});
     if (feature.layer.id === 'atlas-quake-points') return quakePopup(feature.properties || {});
     if (feature.layer.id === 'atlas-fire-fill') return firePopup(feature.properties || {});
     if (feature.layer.id === 'atlas-flood-fill') return floodPopup(feature.properties || {});
     if (feature.layer.id === 'atlas-flood-corridor-line') return floodCorridorPopup(feature.properties || {});
     return '';
+  }
+
+  function liveFirePopup(props) {
+    const acres = props.acres === null || props.acres === '' ? NaN : Number(props.acres);
+    const containment = props.containment === null || props.containment === '' ? NaN : Number(props.containment);
+    const location = [props.county ? `${props.county} County` : '', props.state || ''].filter(Boolean).join(', ');
+    return [
+      `<h4>${escapeHtml(props.name || 'Current wildfire')}</h4>`,
+      location ? `<p>${escapeHtml(location)}</p>` : '',
+      `<p>${Number.isFinite(acres) ? `${Math.round(acres).toLocaleString()} acres` : 'Acreage not reported'} · ${Number.isFinite(containment) ? `${Math.round(containment)}% contained` : 'Containment not reported'}</p>`,
+      props.updatedAt ? `<p>Updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
+      popupSourceLink(props.evacuationSourceUrl || props.sourceUrl, props.evacuationSourceUrl ? 'Official evacuation source' : 'Official fire source'),
+    ].join('');
+  }
+
+  function livePerimeterPopup(props) {
+    const acres = props.acres === null || props.acres === '' ? NaN : Number(props.acres);
+    return [
+      `<h4>${escapeHtml(props.name || 'Current fire perimeter')}</h4>`,
+      `<p>${Number.isFinite(acres) ? `${Math.round(acres).toLocaleString()} mapped acres` : 'Mapped acreage not reported'}</p>`,
+      props.updatedAt ? `<p>Perimeter updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
+      '<p>Perimeters can lag changing fire conditions.</p>',
+      popupSourceLink(props.sourceUrl, 'Official fire source'),
+    ].join('');
+  }
+
+  function evacuationPopup(props) {
+    return [
+      `<h4>${escapeHtml(props.label || 'Evacuation area')}</h4>`,
+      `<p>${escapeHtml(props.incidentName || 'Chelan County incident')}</p>`,
+      Number(props.level) >= 3 ? '<p><strong>Leave now and follow official instructions.</strong></p>' : '',
+      props.updatedAt ? `<p>Updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
+      popupSourceLink(props.sourceUrl, 'Official evacuation source'),
+    ].join('');
+  }
+
+  function weatherAlertPopup(props) {
+    return [
+      `<h4>${escapeHtml(props.event || 'Weather alert')}</h4>`,
+      props.headline ? `<p>${escapeHtml(props.headline)}</p>` : '',
+      props.area ? `<p>${escapeHtml(props.area)}</p>` : '',
+      props.endsAt ? `<p>Ends ${escapeHtml(formatPopupDate(props.endsAt))}</p>` : '',
+      popupSourceLink(props.sourceUrl, 'Official weather alert'),
+    ].join('');
+  }
+
+  function roadAlertPopup(props) {
+    return [
+      `<h4>${escapeHtml(props.event || 'Highway alert')}</h4>`,
+      `<p>${escapeHtml(props.headline || props.road || 'WSDOT alert')}</p>`,
+      props.updatedAt ? `<p>Updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
+      popupSourceLink(props.sourceUrl, 'Official road source'),
+    ].join('');
   }
 
   function quakePopup(props) {
@@ -1054,6 +1357,22 @@
       `<h4>${escapeHtml(props.name || 'Flood-prone river corridor')}</h4>`,
       '<p>Flood-prone river corridor. This is a planning cue, not live inundation depth.</p>',
     ].join('');
+  }
+
+  function popupSourceLink(value, label) {
+    if (typeof value !== 'string' || !value.startsWith('https://')) return '';
+    return `<p><a href="${escapeHtml(value)}" target="_blank" rel="noopener">${escapeHtml(label)}</a></p>`;
+  }
+
+  function formatPopupDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'time not reported';
+    return date.toLocaleString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
   }
 
   function initIntroModal() {

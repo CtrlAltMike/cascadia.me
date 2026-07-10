@@ -13,6 +13,7 @@
   },
   "vars": {
     "CLOUDFLARE_ACCOUNT_ID": "55133253f683cbc04fc3a47ccdcb2906",
+    "CONDITIONS_ALLOWED_ORIGIN": "*",
     "TRAFFIC_ALLOWED_ORIGIN": "https://cascadia.me",
     "TRAFFIC_HOSTNAME": "cascadia.me",
     "TRAFFIC_SITE_NAME": "Cascadia.me"

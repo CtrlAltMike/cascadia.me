@@ -1,6 +1,6 @@
 # Cascadia Slack Alerts Worker
 
-This Worker posts three kinds of messages into the `ebbline.slack.com` workspace:
+This Worker serves Cascadia.me's public current-conditions feed and posts three kinds of messages into the `ebbline.slack.com` workspace:
 
 - Ko-fi donation events to `#ko-fi-donations`
 - Reader feedback to `#cascadia-feedback`
@@ -10,6 +10,7 @@ The static site should never contain Slack webhook URLs, Ko-fi verification toke
 
 ## Endpoints
 
+- `GET /conditions` aggregates current NIFC fires and perimeters, selected NWS alerts, Chelan County evacuation polygons, and optional WSDOT highway alerts.
 - `POST /kofi` receives Ko-fi webhook payloads.
 - `POST /feedback` receives first-party reader feedback submissions from the static site.
 - `POST /traffic/digest` manually sends a daily or weekly digest for testing. Requires `Authorization: Bearer $ADMIN_TOKEN`.
@@ -47,6 +48,14 @@ npx wrangler secret put SLACK_TRAFFIC_WEBHOOK_URL
 npx wrangler secret put KOFI_VERIFICATION_TOKEN
 npx wrangler secret put ADMIN_TOKEN
 ```
+
+WSDOT highway alerts are optional. Request a Traveler Information API access code from WSDOT, then enable that source with:
+
+```sh
+npx wrangler secret put WSDOT_ACCESS_CODE
+```
+
+Without this secret, `/conditions` reports the WSDOT source as `not_configured` and continues serving the other sources.
 
 Deploy:
 
@@ -87,6 +96,12 @@ The traffic digest does not collect browser events itself. It queries Cloudflare
 The digest currently includes total page views, daily trend, top pages, and referrer hosts. UTM source breakdowns are omitted because Cloudflare Web Analytics pageload events do not expose request query strings through the RUM GraphQL dataset.
 
 The daily traffic digest currently runs at `13:35 UTC`, summarizing the previous UTC date. That is 6:35 AM Pacific during daylight time. The weekly summary runs Mondays at `13:45 UTC`, summarizing the previous seven UTC dates. Adjust `triggers.crons` in `wrangler.jsonc` if you want different reporting times.
+
+## Current conditions feed
+
+The feed uses public, authoritative source APIs and returns normalized GeoJSON `FeatureCollection` objects for `fires`, `perimeters`, `evacuations`, `alerts`, and `roads`. It caches complete responses for two minutes and reports source-level availability and source timestamps in every payload.
+
+The endpoint is for situational awareness, not emergency notification. Cascadia.me should continue to direct readers to local emergency managers and opt-in alert systems.
 
 ## Manual digest test
 

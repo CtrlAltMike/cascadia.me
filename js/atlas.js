@@ -81,6 +81,8 @@
   let map = null;
   let initPromise = null;
   let mapLoadPromise = null;
+  let mapResizeObserver = null;
+  let mapResizeFrame = null;
   const quakeCache = new Map();
   let loadedQuakeKey = null;
   let liveConditionsData = null;
@@ -531,6 +533,19 @@
     });
   }
 
+  function observeMapSize() {
+    if (!('ResizeObserver' in window) || mapResizeObserver) return;
+
+    mapResizeObserver = new ResizeObserver(() => {
+      if (!map) return;
+      window.cancelAnimationFrame(mapResizeFrame);
+      mapResizeFrame = window.requestAnimationFrame(() => {
+        map?.resize();
+      });
+    });
+    mapResizeObserver.observe(panel);
+  }
+
   async function initAtlas() {
     if (initPromise) return initPromise;
 
@@ -575,6 +590,7 @@
 
         addReferenceLayers();
         fitCascadia();
+        observeMapSize();
         wireMapInteractions();
         setStatus('map', 'Map loaded.', 'ready');
 

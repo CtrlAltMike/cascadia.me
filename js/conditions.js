@@ -1,5 +1,5 @@
 /* ============================================================
-   Cascadia.me — Current conditions cards
+   Cascadia.me — Current conditions displays
    Renders normalized public data without replacing official alerts.
    ============================================================ */
 
@@ -9,6 +9,7 @@
 
   const endpoint = document.querySelector('meta[name="cascadia-conditions-endpoint"]')?.content;
   const REFRESH_MS = 5 * 60 * 1000;
+  const TICKER_ROTATE_MS = 8 * 1000;
   const officialFallbacks = [
     ['Chelan County', 'https://www.co.chelan.wa.us/emergency-management/pages/active-emergencies'],
     ['Kittitas County', 'https://www.co.kittitas.wa.us/sheriff/emergency.aspx'],
@@ -16,6 +17,7 @@
   ];
   let lastChecked = 0;
   let loading = false;
+  const tickerControllers = new WeakMap();
 
   function featureList(collection) {
     return Array.isArray(collection?.features) ? collection.features : [];
@@ -113,29 +115,149 @@
   }
 
   function renderSection(section, data) {
-    const list = section.querySelector('[data-conditions-list]');
     const status = section.querySelector('[data-conditions-status]');
-    const freshness = section.querySelector('[data-conditions-freshness]');
-    const coverage = section.querySelector('[data-conditions-coverage]');
     const limit = Math.max(1, Number(section.dataset.limit) || 4);
     const entries = buildEntries(data).slice(0, limit);
 
+    const unavailable = (data.sources || []).filter((source) => source.status === 'unavailable').length;
+    const notConfigured = (data.sources || []).filter((source) => source.status === 'not_configured').length;
+    const statusText = unavailable
+      ? `${unavailable} source${unavailable === 1 ? '' : 's'} temporarily unavailable. ${section.dataset.display === 'ticker' ? 'Available official feeds remain in rotation.' : 'Available official feeds are shown below.'}`
+      : 'Official feeds checked. Conditions can change faster than a map updates.';
+    status.textContent = statusText;
+    status.dataset.state = unavailable ? 'warning' : 'ready';
+    section.dataset.state = unavailable ? 'warning' : 'ready';
+
+    if (section.dataset.display === 'ticker') {
+      renderTicker(section, entries, statusText);
+      section.setAttribute('aria-busy', 'false');
+      return;
+    }
+
+    const list = section.querySelector('[data-conditions-list]');
+    const freshness = section.querySelector('[data-conditions-freshness]');
+    const coverage = section.querySelector('[data-conditions-coverage]');
     list.replaceChildren();
     entries.forEach((entry) => list.appendChild(conditionCard(entry)));
     if (!entries.length) {
       list.appendChild(emptyCard());
     }
 
-    const unavailable = (data.sources || []).filter((source) => source.status === 'unavailable').length;
-    const notConfigured = (data.sources || []).filter((source) => source.status === 'not_configured').length;
-    status.textContent = unavailable
-      ? `${unavailable} source${unavailable === 1 ? '' : 's'} temporarily unavailable. Available official feeds are shown below.`
-      : 'Official feeds checked. Conditions can change faster than a map updates.';
-    status.dataset.state = unavailable ? 'warning' : 'ready';
-
     freshness.textContent = `Checked ${formatTime(data.checkedAt)}. ${notConfigured ? 'WSDOT integration is awaiting an access code. ' : ''}Evacuation coverage is not yet statewide.`;
     renderCoverage(coverage, data.evacuationCoverage || []);
     section.setAttribute('aria-busy', 'false');
+  }
+
+  function renderTicker(section, entries, statusText) {
+    const items = [
+      {
+        kind: 'status',
+        kicker: 'Feed status',
+        text: statusText,
+        sourceUrl: null,
+      },
+      ...entries.map((entry) => ({
+        kind: 'condition',
+        kicker: entry.badge,
+        text: tickerEntryText(entry),
+        sourceUrl: entry.sourceUrl,
+      })),
+    ];
+
+    if (items.length === 1) {
+      items.push({
+        kind: 'status',
+        kicker: 'Current conditions',
+        text: 'No matching current records were returned. Follow local officials for changing conditions.',
+        sourceUrl: null,
+      });
+    }
+
+    const controller = tickerController(section);
+    controller.items = items;
+    controller.index = 0;
+    showTickerItem(controller, false);
+    startTicker(controller);
+  }
+
+  function tickerController(section) {
+    const existing = tickerControllers.get(section);
+    if (existing) return existing;
+
+    const controller = {
+      section,
+      item: section.querySelector('[data-conditions-ticker-item]'),
+      kicker: section.querySelector('[data-conditions-ticker-kicker]'),
+      text: section.querySelector('[data-conditions-ticker-text]'),
+      source: section.querySelector('[data-conditions-ticker-source]'),
+      toggle: section.querySelector('[data-conditions-ticker-toggle]'),
+      items: [],
+      index: 0,
+      paused: false,
+      timer: null,
+    };
+
+    controller.toggle.addEventListener('click', () => {
+      controller.paused = !controller.paused;
+      controller.toggle.setAttribute('aria-pressed', String(controller.paused));
+      controller.toggle.setAttribute(
+        'aria-label',
+        controller.paused ? 'Resume current conditions ticker' : 'Pause current conditions ticker',
+      );
+      controller.toggle.textContent = controller.paused ? 'Resume' : 'Pause';
+      if (controller.paused) {
+        window.clearInterval(controller.timer);
+        controller.timer = null;
+      } else {
+        startTicker(controller);
+      }
+    });
+
+    tickerControllers.set(section, controller);
+    return controller;
+  }
+
+  function startTicker(controller) {
+    window.clearInterval(controller.timer);
+    controller.timer = null;
+    if (controller.paused || controller.items.length < 2) return;
+
+    controller.timer = window.setInterval(() => {
+      if (document.hidden) return;
+      controller.index = (controller.index + 1) % controller.items.length;
+      showTickerItem(controller, true);
+    }, TICKER_ROTATE_MS);
+  }
+
+  function showTickerItem(controller, animate) {
+    const entry = controller.items[controller.index];
+    if (!entry) return;
+
+    if (animate) controller.item.classList.add('is-changing');
+    const update = () => {
+      controller.kicker.textContent = entry.kicker;
+      controller.text.textContent = entry.text;
+      controller.item.dataset.kind = entry.kind || 'condition';
+      if (entry.sourceUrl) {
+        controller.source.href = entry.sourceUrl;
+        controller.source.hidden = false;
+      } else {
+        controller.source.hidden = true;
+        controller.source.removeAttribute('href');
+      }
+      controller.item.classList.remove('is-changing');
+    };
+
+    if (animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.setTimeout(update, 160);
+    } else {
+      update();
+    }
+  }
+
+  function tickerEntryText(entry) {
+    const details = [entry.summary, ...(entry.facts || [])].filter(Boolean);
+    return [entry.title, ...details].join(' · ');
   }
 
   function conditionCard(entry) {
@@ -214,13 +336,31 @@
   }
 
   function renderError(section) {
-    const list = section.querySelector('[data-conditions-list]');
     const status = section.querySelector('[data-conditions-status]');
+    status.textContent = 'The live feed could not be reached. Use official local sources for current instructions.';
+    status.dataset.state = 'error';
+    section.dataset.state = 'error';
+
+    if (section.dataset.display === 'ticker') {
+      const controller = tickerController(section);
+      controller.items = [{
+        kind: 'status',
+        kicker: 'Feed status',
+        text: status.textContent,
+        sourceUrl: null,
+      }];
+      controller.index = 0;
+      showTickerItem(controller, false);
+      startTicker(controller);
+      section.setAttribute('aria-busy', 'false');
+      return;
+    }
+
+    const list = section.querySelector('[data-conditions-list]');
     const freshness = section.querySelector('[data-conditions-freshness]');
     const coverage = section.querySelector('[data-conditions-coverage]');
     list.replaceChildren(errorCard());
     status.textContent = 'The live feed could not be reached. Use the official county links below.';
-    status.dataset.state = 'error';
     freshness.textContent = 'No live data is being shown on this page.';
     renderCoverage(coverage, []);
     section.setAttribute('aria-busy', 'false');

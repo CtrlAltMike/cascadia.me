@@ -32,7 +32,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/components.css?v=20260710-ticker">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -144,23 +144,26 @@
   </section>
 
   <!-- Current conditions -->
-  <section class="conditions-section" id="current-conditions" data-current-conditions data-limit="4" aria-busy="true">
+  <section class="conditions-ticker-section" id="current-conditions" data-current-conditions data-display="ticker" data-limit="4" aria-busy="true">
     <div class="container">
-      <div class="conditions-heading">
-        <div>
-          <p class="conditions-eyebrow">Current conditions</p>
-          <h2>What’s happening now</h2>
-          <p>Official fire, weather, and evacuation sources for the Washington and Oregon pilot.</p>
+      <div class="conditions-ticker" data-conditions-ticker aria-label="Current official conditions">
+        <p class="conditions-ticker-label">
+          <span class="conditions-ticker-dot" aria-hidden="true"></span>
+          Current conditions
+        </p>
+        <div class="conditions-ticker-viewport">
+          <p class="conditions-ticker-item" data-conditions-ticker-item>
+            <span class="conditions-ticker-kicker" data-conditions-ticker-kicker>Live feed</span>
+            <span class="conditions-ticker-text" data-conditions-ticker-text>Checking official sources…</span>
+            <a class="conditions-ticker-source" data-conditions-ticker-source href="atlas.html" hidden>Official source</a>
+          </p>
         </div>
-        <a href="atlas.html" class="btn btn-outline">Open the live atlas</a>
+        <div class="conditions-ticker-actions">
+          <button class="conditions-ticker-toggle" type="button" data-conditions-ticker-toggle aria-pressed="false" aria-label="Pause current conditions ticker">Pause</button>
+          <a class="conditions-ticker-atlas" href="atlas.html">Live atlas <span aria-hidden="true">→</span></a>
+        </div>
       </div>
-      <p class="conditions-status" data-conditions-status role="status">Checking official sources…</p>
-      <div class="conditions-grid" data-conditions-list></div>
-      <div class="conditions-notes">
-        <p data-conditions-freshness>Connecting to public data feeds.</p>
-        <p><strong>For situational awareness only.</strong> This is not an emergency notification service. Follow local officials and evacuation orders.</p>
-        <p data-conditions-coverage>Official evacuation sources are loading.</p>
-      </div>
+      <p class="sr-only" data-conditions-status role="status">Checking official sources…</p>
       <noscript><p class="conditions-noscript">Live conditions require JavaScript. Use your county emergency management page for current instructions.</p></noscript>
     </div>
   </section>
@@ -398,7 +401,7 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
-  <script src="js/conditions.js?v=20260709"></script>
+  <script src="js/conditions.js?v=20260710-ticker"></script>
   <script src="js/feedback.js"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

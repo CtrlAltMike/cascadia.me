@@ -9,6 +9,7 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#faf8f5">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
+  <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
   <link rel="canonical" href="https://cascadia.me/wildfire.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
@@ -163,6 +164,28 @@
         </p>
       </div>
     </header>
+
+    <!-- Current conditions -->
+    <section class="conditions-section conditions-section-guide" id="current-conditions" data-current-conditions data-limit="6" aria-busy="true">
+      <div class="container">
+        <div class="conditions-heading">
+          <div>
+            <p class="conditions-eyebrow">Current conditions</p>
+            <h2>Wildfire and evacuation watch</h2>
+            <p>Official incident, fire-weather, and connected county evacuation sources.</p>
+          </div>
+          <a href="atlas.html" class="btn btn-outline">Open the live atlas</a>
+        </div>
+        <p class="conditions-status" data-conditions-status role="status">Checking official sources…</p>
+        <div class="conditions-grid" data-conditions-list></div>
+        <div class="conditions-notes">
+          <p data-conditions-freshness>Connecting to public data feeds.</p>
+          <p><strong>For situational awareness only.</strong> Do not wait for this page to update. Follow local officials and evacuation orders.</p>
+          <p data-conditions-coverage>Official evacuation sources are loading.</p>
+        </div>
+        <noscript><p class="conditions-noscript">Live conditions require JavaScript. Use your county emergency management page for current instructions.</p></noscript>
+      </div>
+    </section>
 
     <!-- Scene: The First 15 Minutes -->
     <section class="guide-scene guide-section">
@@ -672,6 +695,7 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
+  <script src="js/conditions.js?v=20260709"></script>
   <script src="js/feedback.js"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

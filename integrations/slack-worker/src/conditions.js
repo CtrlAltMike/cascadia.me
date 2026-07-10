@@ -4,11 +4,24 @@ const MAX_SOURCE_BYTES = 6 * 1024 * 1024;
 const FIRE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 const STALE_SOURCE_MS = 24 * 60 * 60 * 1000;
 const PNW_US_BOUNDS = [-125.2, 42, -116.4, 49.1];
+const CASCADIA_BOUNDS = [-128.4, 39.7, -115.6, 52.6];
+const BC_CASCADIA_BOUNDS = [-128.4, 48, -115.6, 52.6];
+const HECTARES_TO_ACRES = 2.47105;
+const ACTIVE_BC_FIRE_STATUSES = new Set([
+  "being held",
+  "fire of note",
+  "out of control",
+  "under control",
+]);
 
 const WFIGS_INCIDENTS =
   "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Incident_Locations_Current/FeatureServer/0/query";
 const WFIGS_PERIMETERS =
   "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_Current/FeatureServer/0/query";
+const BCWS_ACTIVE_FIRES =
+  "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0/query";
+const BCWS_FIRE_PERIMETERS =
+  "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer/0/query";
 const CHELAN_EVACUATIONS =
   "https://services6.arcgis.com/kL9uP9rflLEjUDsy/arcgis/rest/services/Emergency_Management_Layers_View/FeatureServer/2/query";
 const NWS_ALERTS = "https://api.weather.gov/alerts/active?area=WA";
@@ -25,6 +38,16 @@ const SOURCE_DEFINITIONS = {
     id: "nifc-perimeters",
     label: "NIFC current fire perimeters",
     url: "https://www.nifc.gov/fire-information/maps",
+  },
+  bcFires: {
+    id: "bcws-fires",
+    label: "BC Wildfire Service current fire incidents",
+    url: "https://www2.gov.bc.ca/gov/content/safety/wildfire-status/wildfire-situation",
+  },
+  bcPerimeters: {
+    id: "bcws-perimeters",
+    label: "BC Wildfire Service current fire perimeters",
+    url: "https://www2.gov.bc.ca/gov/content/safety/wildfire-status/wildfire-situation",
   },
   alerts: {
     id: "nws-alerts",
@@ -115,6 +138,8 @@ export async function buildConditions(env = {}, options = {}) {
   const tasks = [
     ["fires", () => fetchCurrentFires(fetchImpl, now)],
     ["perimeters", () => fetchCurrentPerimeters(fetchImpl, now)],
+    ["bcFires", () => fetchCurrentBcFires(fetchImpl, now)],
+    ["bcPerimeters", () => fetchCurrentBcPerimeters(fetchImpl, now)],
     ["alerts", () => fetchNwsAlerts(fetchImpl)],
     ["evacuations", () => fetchChelanEvacuations(fetchImpl)],
   ];
@@ -127,6 +152,8 @@ export async function buildConditions(env = {}, options = {}) {
   const collections = {
     fires: emptyFeatureCollection(),
     perimeters: emptyFeatureCollection(),
+    bcFires: emptyFeatureCollection(),
+    bcPerimeters: emptyFeatureCollection(),
     alerts: emptyFeatureCollection(),
     evacuations: emptyFeatureCollection(),
     roads: emptyFeatureCollection(),
@@ -170,6 +197,11 @@ export async function buildConditions(env = {}, options = {}) {
     });
   }
 
+  collections.fires = mergeFeatureCollections(collections.fires, collections.bcFires);
+  collections.perimeters = mergeFeatureCollections(collections.perimeters, collections.bcPerimeters);
+  delete collections.bcFires;
+  delete collections.bcPerimeters;
+
   const unavailableSources = sources.filter((source) => source.status === "unavailable").length;
   const availableSources = sources.filter((source) => source.status === "available").length;
 
@@ -178,8 +210,8 @@ export async function buildConditions(env = {}, options = {}) {
     checkedAt: now.toISOString(),
     cacheSeconds: CACHE_SECONDS,
     region: {
-      label: "Washington and Oregon pilot",
-      bounds: PNW_US_BOUNDS,
+      label: "Cascadia pilot: British Columbia, Washington, and Oregon",
+      bounds: CASCADIA_BOUNDS,
     },
     availableSources,
     degraded: unavailableSources > 0,
@@ -254,6 +286,72 @@ async function fetchCurrentPerimeters(fetchImpl, now) {
       const latest = Date.parse(feature.properties.updatedAt || "");
       return Number.isFinite(latest) && latest >= cutoff;
     });
+
+  return {
+    collection: featureCollection(features),
+    updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
+  };
+}
+
+async function fetchCurrentBcFires(fetchImpl, now) {
+  const year = now.getUTCFullYear();
+  const url = arcgisQueryUrl(BCWS_ACTIVE_FIRES, {
+    // Status is deliberately not trusted as an upstream query filter. The
+    // allowlist below fails closed if an out or unknown record is returned.
+    where: `FIRE_YEAR = ${year}`,
+    outFields: [
+      "FIRE_YEAR",
+      "IGNITION_DATE",
+      "FIRE_STATUS",
+      "FIRE_CENTRE",
+      "ZONE",
+      "CURRENT_SIZE",
+      "INCIDENT_NAME",
+      "FIRE_NUMBER",
+      "FIRE_CAUSE",
+      "GEOGRAPHIC_DESCRIPTION",
+      "FIRE_URL",
+      "FIRE_OF_NOTE_IND",
+    ].join(","),
+    resultRecordCount: "1000",
+  }, BC_CASCADIA_BOUNDS);
+  const result = await fetchJson(fetchImpl, url, { accept: "application/geo+json" });
+  const features = validFeatures(result.data)
+    .map(normalizeBcFireFeature)
+    .filter(Boolean)
+    .sort(compareFireFeatures);
+
+  return {
+    collection: featureCollection(features),
+    updatedAt: result.lastModifiedAt,
+  };
+}
+
+async function fetchCurrentBcPerimeters(fetchImpl, now) {
+  const year = now.getUTCFullYear();
+  const url = arcgisQueryUrl(BCWS_FIRE_PERIMETERS, {
+    // Apply the same local allowlist used for points so a missed query clause
+    // cannot put an extinguished fire back on the map.
+    where: `FIRE_YEAR = ${year}`,
+    outFields: [
+      "FIRE_NUMBER",
+      "VERSION_NUMBER",
+      "FIRE_YEAR",
+      "FIRE_SIZE_HECTARES",
+      "TRACK_DATE",
+      "LOAD_DATE",
+      "FIRE_STATUS",
+      "FIRE_URL",
+    ].join(","),
+    maxAllowableOffset: "0.00035",
+    resultRecordCount: "1000",
+  }, BC_CASCADIA_BOUNDS);
+  const result = await fetchJson(fetchImpl, url, { accept: "application/geo+json" });
+  const features = latestBcPerimeters(
+    validFeatures(result.data)
+      .map((feature) => normalizeBcPerimeterFeature(feature, now))
+      .filter(Boolean)
+  );
 
   return {
     collection: featureCollection(features),
@@ -367,6 +465,75 @@ function normalizePerimeterFeature(feature, now) {
       stale: isStale(updatedAt, now),
       sourceName: "NIFC WFIGS",
       sourceUrl: SOURCE_DEFINITIONS.perimeters.url,
+    },
+  };
+}
+
+function normalizeBcFireFeature(feature) {
+  const properties = feature.properties || {};
+  const stageOfControl = cleanText(properties.FIRE_STATUS, 80);
+  if (!isActiveBcFireStatus(stageOfControl)) {
+    return null;
+  }
+
+  const hectares = finiteNumber(properties.CURRENT_SIZE);
+  const fireNumber = cleanText(properties.FIRE_NUMBER, 80);
+  const sourceUrl = safeHttpsUrl(properties.FIRE_URL) || SOURCE_DEFINITIONS.bcFires.url;
+
+  return {
+    type: "Feature",
+    geometry: feature.geometry,
+    properties: {
+      id: normalizeId(fireNumber || feature.id),
+      kind: "wildfire",
+      name: cleanText(properties.INCIDENT_NAME, 100) || fireNumber || "Unnamed B.C. fire",
+      acres: hectares === null ? null : hectares * HECTARES_TO_ACRES,
+      containment: null,
+      city: cleanText(properties.GEOGRAPHIC_DESCRIPTION, 160),
+      county: null,
+      state: "British Columbia",
+      fireCentre: cleanText(properties.FIRE_CENTRE, 100),
+      zone: cleanText(properties.ZONE, 100),
+      cause: cleanText(properties.FIRE_CAUSE, 80),
+      stageOfControl,
+      discoveredAt: toIso(properties.IGNITION_DATE),
+      updatedAt: null,
+      status: stageOfControl.toLowerCase() === "under control" ? "contained" : "current",
+      stale: false,
+      sourceName: "BC Wildfire Service",
+      sourceUrl,
+      evacuationSourceName: null,
+      evacuationSourceUrl: null,
+    },
+  };
+}
+
+function normalizeBcPerimeterFeature(feature, now) {
+  const properties = feature.properties || {};
+  const stageOfControl = cleanText(properties.FIRE_STATUS, 80);
+  if (!isActiveBcFireStatus(stageOfControl)) {
+    return null;
+  }
+
+  const hectares = finiteNumber(properties.FIRE_SIZE_HECTARES);
+  const fireNumber = cleanText(properties.FIRE_NUMBER, 80);
+  const updatedAt = latestIso([properties.TRACK_DATE, properties.LOAD_DATE]);
+
+  return {
+    type: "Feature",
+    geometry: feature.geometry,
+    properties: {
+      id: normalizeId(fireNumber || feature.id),
+      kind: "wildfire-perimeter",
+      name: fireNumber ? `B.C. fire ${fireNumber}` : "B.C. fire perimeter",
+      acres: hectares === null ? null : hectares * HECTARES_TO_ACRES,
+      containment: null,
+      stageOfControl,
+      version: finiteNumber(properties.VERSION_NUMBER),
+      updatedAt,
+      stale: isStale(updatedAt, now),
+      sourceName: "BC Wildfire Service",
+      sourceUrl: safeHttpsUrl(properties.FIRE_URL) || SOURCE_DEFINITIONS.bcPerimeters.url,
     },
   };
 }
@@ -570,6 +737,33 @@ function validFeatures(data) {
     : [];
 }
 
+function mergeFeatureCollections(...collections) {
+  return featureCollection(collections.flatMap((collection) => validFeatures(collection)));
+}
+
+function latestBcPerimeters(features) {
+  const latestByFire = new Map();
+  for (const feature of features) {
+    const key = feature.properties?.id || "";
+    const existing = latestByFire.get(key);
+    if (!existing || compareBcPerimeterVersions(feature, existing) > 0) {
+      latestByFire.set(key, feature);
+    }
+  }
+  return [...latestByFire.values()];
+}
+
+function compareBcPerimeterVersions(left, right) {
+  const leftVersion = left.properties?.version ?? -1;
+  const rightVersion = right.properties?.version ?? -1;
+  if (leftVersion !== rightVersion) return leftVersion - rightVersion;
+
+  const leftUpdated = Date.parse(left.properties?.updatedAt || "");
+  const rightUpdated = Date.parse(right.properties?.updatedAt || "");
+  return (Number.isFinite(leftUpdated) ? leftUpdated : -1)
+    - (Number.isFinite(rightUpdated) ? rightUpdated : -1);
+}
+
 function featureCollection(features) {
   return { type: "FeatureCollection", features };
 }
@@ -618,6 +812,20 @@ function cleanText(value, limit) {
   if (typeof value !== "string") return null;
   const cleaned = value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
   return cleaned ? cleaned.slice(0, limit) : null;
+}
+
+function isActiveBcFireStatus(value) {
+  return typeof value === "string" && ACTIVE_BC_FIRE_STATUSES.has(value.toLowerCase());
+}
+
+function safeHttpsUrl(value) {
+  if (typeof value !== "string") return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
 }
 
 function stateName(value) {

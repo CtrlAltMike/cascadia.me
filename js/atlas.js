@@ -15,8 +15,12 @@
   const NIFC_FIRES = 'https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/InteragencyFirePerimeterHistory_All_Years_View/FeatureServer/0/query';
   const FEMA_FLOODS = 'https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query';
   const CONDITIONS_ENDPOINT = document.querySelector('meta[name="cascadia-conditions-endpoint"]')?.content;
+  const WIND_ENDPOINT = document.querySelector('meta[name="cascadia-wind-endpoint"]')?.content;
+  const FORECAST_WIND_ENDPOINT = document.querySelector('meta[name="cascadia-forecast-wind-endpoint"]')?.content;
   const CASCADIA_BOUNDS = [[-128.4, 39.7], [-115.6, 52.6]];
   const LIVE_REFRESH_MS = 5 * 60 * 1000;
+  const WIND_REFRESH_MS = 15 * 60 * 1000;
+  const FORECAST_REFRESH_MS = 30 * 60 * 1000;
   const FLOOD_MIN_ZOOM = 5.1;
   const FLOOD_PAGE_SIZE = 240;
   const QUAKE_WINDOWS = {
@@ -71,6 +75,8 @@
   const fireYearControl = atlas.querySelector('[data-atlas-fire-year]');
   const fireYearOutput = atlas.querySelector('[data-atlas-fire-year-output]');
   const fireAcresControl = atlas.querySelector('[data-atlas-fire-acres]');
+  const forecastOffsetControl = atlas.querySelector('[data-atlas-forecast-offset]');
+  const forecastNote = atlas.querySelector('[data-atlas-forecast-note]');
   const statusItems = new Map(
     Array.from(atlas.querySelectorAll('[data-atlas-status-key]')).map((item) => [item.dataset.atlasStatusKey, item])
   );
@@ -88,6 +94,14 @@
   let liveConditionsData = null;
   let liveConditionsPromise = null;
   let liveLoadedAt = 0;
+  let windData = null;
+  let windPromise = null;
+  let windLoadedAt = 0;
+  let forecastData = null;
+  let forecastPromise = null;
+  let forecastLoadedAt = 0;
+  let activeForecast = null;
+  let forecastPointAbort = null;
   let fireCollection = null;
   let loadedFireKey = null;
   let floodAbort = null;
@@ -634,6 +648,8 @@
         'atlas-live-fire-points',
         'atlas-live-road-points',
       ],
+      wind: ['atlas-wind-observation-halo', 'atlas-wind-observation-arrows'],
+      'forecast-wind': ['atlas-forecast-wind-speed'],
       earthquakes: ['atlas-quake-rings', 'atlas-quake-points'],
       fires: ['atlas-fire-fill', 'atlas-fire-line'],
       floods: ['atlas-flood-corridor-glow', 'atlas-flood-corridor-line', 'atlas-flood-fill', 'atlas-flood-line-halo', 'atlas-flood-line'],
@@ -650,6 +666,8 @@
     if (!map) await initAtlas();
 
     if (layer === 'live') return ensureLiveConditions();
+    if (layer === 'wind') return ensureWindObservations();
+    if (layer === 'forecast-wind') return ensureForecastWind();
     if (layer === 'earthquakes') return ensureEarthquakes();
     if (layer === 'fires') return ensureFires();
     if (layer === 'floods') return ensureFloods();
@@ -663,6 +681,8 @@
     } catch (error) {
       const labels = {
         live: 'Current conditions',
+        wind: 'Observed wind',
+        'forecast-wind': 'Forecast wind',
         earthquakes: 'Earthquakes',
         fires: 'Historical wildfires',
         floods: 'Flood zones',
@@ -725,6 +745,225 @@
       `Current conditions: ${Number(summary.fireCount) || 0} fire records, ${evacuationCount} evacuation area${evacuationCount === 1 ? '' : 's'}, ${alertCount} priority weather alert${alertCount === 1 ? '' : 's'}.${degraded}`,
       data.degraded ? 'error' : 'ready'
     );
+  }
+
+  async function ensureWindObservations() {
+    if (!WIND_ENDPOINT) {
+      throw new Error('Wind observations endpoint is not configured');
+    }
+
+    const isFresh = windData && Date.now() - windLoadedAt < WIND_REFRESH_MS;
+    if (isFresh) {
+      renderWindObservations(windData);
+      return;
+    }
+
+    setStatus('wind', 'Loading recent wind station observations.', 'loading');
+    if (!windPromise) {
+      windPromise = fetchJson(WIND_ENDPOINT)
+        .then((data) => {
+          windData = data;
+          windLoadedAt = Date.now();
+          return data;
+        })
+        .finally(() => {
+          windPromise = null;
+        });
+    }
+
+    const data = await windPromise;
+    renderWindObservations(data);
+  }
+
+  function renderWindObservations(data) {
+    const observations = mapFeatureCollection(data.observations);
+    setGeoJsonSource('atlas-wind-observations', observations);
+    addWindObservationLayers();
+
+    loadedLayers.add('wind');
+    const summary = data.summary || {};
+    const stationCount = Number(summary.stationCount) || 0;
+    const staleCount = Number(summary.staleStationCount) || 0;
+    const ageNote = staleCount
+      ? ` ${staleCount} older observation${staleCount === 1 ? ' is' : 's are'} shown faintly.`
+      : '';
+    const degraded = data.degraded ? ' One observation source is temporarily unavailable.' : '';
+    setStatus(
+      'wind',
+      `Observed wind: ${stationCount} recent station report${stationCount === 1 ? '' : 's'} across Cascadia.${ageNote}${degraded}`,
+      data.degraded ? 'error' : 'ready'
+    );
+  }
+
+  function addWindObservationLayers() {
+    ensureWindArrowImage();
+
+    if (!map.getLayer('atlas-wind-observation-halo')) {
+      map.addLayer({
+        id: 'atlas-wind-observation-halo',
+        type: 'circle',
+        source: 'atlas-wind-observations',
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['to-number', ['coalesce', ['get', 'speedKmh'], 0]],
+            0, 3,
+            40, 4.5,
+            80, 6,
+          ],
+          'circle-color': '#f7f2e8',
+          'circle-opacity': ['case', ['boolean', ['get', 'stale'], false], 0.34, 0.7],
+          'circle-stroke-color': [
+            'step', ['to-number', ['coalesce', ['get', 'speedKmh'], 0]],
+            '#4f8292',
+            30, '#827c58',
+            55, '#a66e36',
+          ],
+          'circle-stroke-opacity': ['case', ['boolean', ['get', 'stale'], false], 0.42, 0.88],
+          'circle-stroke-width': 1.2,
+        },
+      });
+    }
+
+    if (!map.getLayer('atlas-wind-observation-arrows')) {
+      map.addLayer({
+        id: 'atlas-wind-observation-arrows',
+        type: 'symbol',
+        source: 'atlas-wind-observations',
+        layout: {
+          'icon-image': 'atlas-wind-arrow',
+          'icon-size': [
+            'interpolate', ['linear'], ['to-number', ['coalesce', ['get', 'speedKmh'], 0]],
+            0, 0.58,
+            30, 0.78,
+            60, 1,
+            100, 1.18,
+          ],
+          'icon-rotate': ['to-number', ['get', 'bearing']],
+          'icon-rotation-alignment': 'map',
+          'icon-pitch-alignment': 'map',
+          'icon-allow-overlap': false,
+          'icon-padding': 4,
+        },
+        paint: {
+          'icon-opacity': ['case', ['boolean', ['get', 'stale'], false], 0.38, 0.92],
+        },
+      });
+    }
+  }
+
+  function ensureWindArrowImage() {
+    if (map.hasImage('atlas-wind-arrow')) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 48;
+    canvas.height = 48;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = '#2f667c';
+    context.lineWidth = 4;
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+    context.beginPath();
+    context.moveTo(24, 41);
+    context.lineTo(24, 7);
+    context.moveTo(11, 20);
+    context.lineTo(24, 7);
+    context.lineTo(37, 20);
+    context.stroke();
+    map.addImage('atlas-wind-arrow', context.getImageData(0, 0, canvas.width, canvas.height), {
+      pixelRatio: 2,
+    });
+  }
+
+  async function ensureForecastWind() {
+    if (!FORECAST_WIND_ENDPOINT) {
+      throw new Error('Forecast wind endpoint is not configured');
+    }
+
+    const isFresh = forecastData && Date.now() - forecastLoadedAt < FORECAST_REFRESH_MS;
+    if (isFresh) {
+      renderForecastWind(forecastData);
+      return;
+    }
+
+    setStatus('forecast-wind', 'Loading forecast wind guidance.', 'loading');
+    if (!forecastPromise) {
+      forecastPromise = fetchJson(FORECAST_WIND_ENDPOINT)
+        .then((data) => {
+          forecastData = data;
+          forecastLoadedAt = Date.now();
+          return data;
+        })
+        .finally(() => {
+          forecastPromise = null;
+        });
+    }
+
+    const data = await forecastPromise;
+    renderForecastWind(data);
+  }
+
+  function renderForecastWind(data) {
+    const model = data?.model;
+    if (!model?.validAt || !model?.runAt || !data.tileTemplateBase) {
+      throw new Error('Forecast wind metadata was incomplete');
+    }
+
+    const validAt = selectedForecastTime(model);
+    const tileUrl = `${data.tileTemplateBase}?time=${encodeURIComponent(validAt)}&run=${encodeURIComponent(model.runAt)}`;
+    const source = map.getSource('atlas-forecast-wind');
+    if (source) {
+      source.setTiles([tileUrl]);
+    } else {
+      map.addSource('atlas-forecast-wind', {
+        type: 'raster',
+        tiles: [tileUrl],
+        tileSize: 256,
+        maxzoom: 9,
+        attribution: 'Forecast wind: Environment and Climate Change Canada RDPS',
+      });
+    }
+
+    if (!map.getLayer('atlas-forecast-wind-speed')) {
+      map.addLayer({
+        id: 'atlas-forecast-wind-speed',
+        type: 'raster',
+        source: 'atlas-forecast-wind',
+        paint: {
+          'raster-opacity': 0.36,
+          'raster-fade-duration': 240,
+          'raster-resampling': 'linear',
+        },
+      }, map.getLayer('atlas-region-line') ? 'atlas-region-line' : undefined);
+    }
+
+    activeForecast = {
+      validAt,
+      runAt: model.runAt,
+      pointEndpoint: data.pointEndpoint,
+      sourceName: model.sourceName,
+      sourceUrl: model.sourceUrl,
+    };
+    loadedLayers.add('forecast-wind');
+    const validLabel = formatPopupDate(validAt);
+    const runLabel = formatPopupDate(model.runAt);
+    if (forecastNote) {
+      forecastNote.textContent = `Valid ${validLabel}. Model run ${runLabel}. Click the shaded map for speed and direction.`;
+    }
+    setStatus(
+      'forecast-wind',
+      `Forecast wind: ${model.name || 'RDPS'} ${model.resolutionKm || 10} km guidance valid ${validLabel}.`,
+      'ready'
+    );
+  }
+
+  function selectedForecastTime(model) {
+    const offsetHours = Math.max(0, Number(forecastOffsetControl?.value) || 0);
+    const base = Date.parse(model.validAt);
+    const through = Date.parse(model.validThrough || '');
+    let selected = base + offsetHours * 60 * 60 * 1000;
+    if (Number.isFinite(through)) selected = Math.min(selected, through);
+    return new Date(selected).toISOString().replace('.000Z', 'Z');
   }
 
   function mapFeatureCollection(collection) {
@@ -1214,10 +1453,18 @@
 
     map.on('click', (event) => {
       const feature = firstAtlasFeature(event.point);
-      if (!feature) return;
+      if (!feature) {
+        const forecastToggle = toggles.find((input) => input.dataset.atlasLayer === 'forecast-wind');
+        if (forecastToggle?.checked && activeForecast) {
+          showForecastPointPopup(event.lngLat, popup);
+        }
+        return;
+      }
 
       const html = renderFeaturePopup(feature);
       if (!html) return;
+
+      forecastPointAbort?.abort();
 
       popup
         .setLngLat(event.lngLat)
@@ -1226,7 +1473,10 @@
     });
 
     map.on('mousemove', (event) => {
-      map.getCanvas().style.cursor = firstAtlasFeature(event.point) ? 'pointer' : '';
+      const forecastToggle = toggles.find((input) => input.dataset.atlasLayer === 'forecast-wind');
+      map.getCanvas().style.cursor = firstAtlasFeature(event.point)
+        ? 'pointer'
+        : forecastToggle?.checked ? 'crosshair' : '';
     });
 
     map.on('mouseleave', () => {
@@ -1249,10 +1499,51 @@
         loadLayerSafely('live');
       }
     }, LIVE_REFRESH_MS);
+
+    window.setInterval(() => {
+      const windToggle = toggles.find((input) => input.dataset.atlasLayer === 'wind');
+      if (windToggle?.checked && !document.hidden) {
+        loadLayerSafely('wind');
+      }
+    }, WIND_REFRESH_MS);
+
+    window.setInterval(() => {
+      const forecastToggle = toggles.find((input) => input.dataset.atlasLayer === 'forecast-wind');
+      if (forecastToggle?.checked && !document.hidden) {
+        loadLayerSafely('forecast-wind');
+      }
+    }, FORECAST_REFRESH_MS);
+  }
+
+  async function showForecastPointPopup(lngLat, popup) {
+    if (!activeForecast?.pointEndpoint) return;
+
+    forecastPointAbort?.abort();
+    forecastPointAbort = new AbortController();
+    popup
+      .setLngLat(lngLat)
+      .setHTML('<h4>Forecast wind</h4><p>Loading model guidance for this point.</p>')
+      .addTo(map);
+
+    const url = new URL(activeForecast.pointEndpoint);
+    url.searchParams.set('lat', String(lngLat.lat));
+    url.searchParams.set('lon', String(lngLat.lng));
+    url.searchParams.set('time', activeForecast.validAt);
+    url.searchParams.set('run', activeForecast.runAt);
+
+    try {
+      const data = await fetchJson(url.toString(), { signal: forecastPointAbort.signal });
+      popup.setHTML(forecastPointPopup(data));
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      popup.setHTML('<h4>Forecast wind unavailable</h4><p>The model value for this point could not be retrieved. Try again shortly.</p>');
+    }
   }
 
   function firstAtlasFeature(point) {
     const layers = [
+      'atlas-wind-observation-arrows',
+      'atlas-wind-observation-halo',
       'atlas-live-fire-points',
       'atlas-live-road-points',
       'atlas-live-evac-fill',
@@ -1270,6 +1561,9 @@
 
   function renderFeaturePopup(feature) {
     if (!feature || !feature.layer) return '';
+    if (feature.layer.id === 'atlas-wind-observation-arrows' || feature.layer.id === 'atlas-wind-observation-halo') {
+      return windObservationPopup(feature.properties || {});
+    }
     if (feature.layer.id === 'atlas-live-fire-points') return liveFirePopup(feature.properties || {});
     if (feature.layer.id === 'atlas-live-road-points') return roadAlertPopup(feature.properties || {});
     if (feature.layer.id === 'atlas-live-evac-fill') return evacuationPopup(feature.properties || {});
@@ -1285,13 +1579,41 @@
   function liveFirePopup(props) {
     const acres = props.acres === null || props.acres === '' ? NaN : Number(props.acres);
     const containment = props.containment === null || props.containment === '' ? NaN : Number(props.containment);
-    const location = [props.county ? `${props.county} County` : '', props.state || ''].filter(Boolean).join(', ');
+    const location = [props.city || '', props.county ? `${props.county} County` : '', props.state || ''].filter(Boolean).join(', ');
     return [
       `<h4>${escapeHtml(props.name || 'Current wildfire')}</h4>`,
       location ? `<p>${escapeHtml(location)}</p>` : '',
       `<p>${Number.isFinite(acres) ? `${Math.round(acres).toLocaleString()} acres` : 'Acreage not reported'} · ${Number.isFinite(containment) ? `${Math.round(containment)}% contained` : 'Containment not reported'}</p>`,
+      props.stageOfControl ? `<p>Stage of control: ${escapeHtml(props.stageOfControl)}</p>` : '',
       props.updatedAt ? `<p>Updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
       popupSourceLink(props.evacuationSourceUrl || props.sourceUrl, props.evacuationSourceUrl ? 'Official evacuation source' : 'Official fire source'),
+    ].join('');
+  }
+
+  function windObservationPopup(props) {
+    const speed = Number(props.speedKmh);
+    const gust = props.gustKmh === null || props.gustKmh === '' ? NaN : Number(props.gustKmh);
+    const direction = Number(props.direction);
+    const windFrom = props.directionCardinal || (Number.isFinite(direction) ? `${Math.round(direction)}°` : 'an unreported direction');
+    return [
+      `<h4>${escapeHtml(props.stationName || 'Wind observation')}</h4>`,
+      `<p>Wind from ${escapeHtml(windFrom)}${Number.isFinite(direction) ? ` (${Math.round(direction)}°)` : ''} at ${Number.isFinite(speed) ? `${Math.round(speed)} km/h` : 'an unreported speed'}${Number.isFinite(gust) ? `, gusting to ${Math.round(gust)} km/h` : ''}.</p>`,
+      props.observedAt ? `<p>Observed ${escapeHtml(formatObservationAge(props.observedAt))} · ${escapeHtml(formatPopupDate(props.observedAt))}</p>` : '',
+      '<p>Station observation, not a continuous wind field or forecast. Nearby terrain can produce very different wind.</p>',
+      popupSourceLink(props.sourceUrl, 'Official observation source'),
+    ].join('');
+  }
+
+  function forecastPointPopup(data) {
+    const speed = Number(data.speedKmh);
+    const direction = Number(data.directionDegrees);
+    const windFrom = data.directionCardinal || (Number.isFinite(direction) ? `${Math.round(direction)}°` : 'an unreported direction');
+    return [
+      '<h4>Forecast wind</h4>',
+      `<p>Wind from ${escapeHtml(windFrom)}${Number.isFinite(direction) ? ` (${Math.round(direction)}°)` : ''} at ${Number.isFinite(speed) ? `${Math.round(speed)} km/h` : 'an unreported speed'}.</p>`,
+      data.validAt ? `<p>Valid ${escapeHtml(formatPopupDate(data.validAt))} · Model run ${escapeHtml(formatPopupDate(data.runAt))}</p>` : '',
+      `<p>${Number(data.resolutionKm) || 10} km model guidance, not an observation or a prediction of fire or smoke movement. The model smooths mountain terrain; local wind and gusts can differ sharply.</p>`,
+      popupSourceLink(data.sourceUrl, 'Official forecast source'),
     ].join('');
   }
 
@@ -1391,6 +1713,14 @@
     });
   }
 
+  function formatObservationAge(value) {
+    const timestamp = Date.parse(value || '');
+    if (!Number.isFinite(timestamp)) return 'at an unreported time';
+    const minutes = Math.max(0, Math.round((Date.now() - timestamp) / 60_000));
+    if (minutes < 60) return minutes <= 1 ? 'just now' : `${minutes} minutes ago`;
+    return `${Math.round(minutes / 60)} hours ago`;
+  }
+
   function initIntroModal() {
     const dialog = document.querySelector('[data-atlas-intro]');
     if (!dialog) return;
@@ -1417,6 +1747,34 @@
         dialog.setAttribute('open', '');
       }
     }, 120);
+  }
+
+  function initCaveatsModal() {
+    const dialog = document.querySelector('[data-atlas-caveats]');
+    const openButton = atlas.querySelector('[data-atlas-caveats-open]');
+    if (!dialog || !openButton) return;
+
+    const closeButton = dialog.querySelector('[data-atlas-caveats-close]');
+    const closeDialog = () => {
+      if (typeof dialog.close === 'function') {
+        dialog.close();
+      } else {
+        dialog.removeAttribute('open');
+      }
+    };
+
+    openButton.addEventListener('click', () => {
+      if (dialog.open) return;
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+      }
+    });
+    closeButton?.addEventListener('click', closeDialog);
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) closeDialog();
+    });
   }
 
   function escapeHtml(value) {
@@ -1461,6 +1819,7 @@
         setLayerVisibility(layer, true);
       } else {
         setLayerVisibility(layer, false);
+        if (layer === 'forecast-wind') forecastPointAbort?.abort();
       }
     });
   });
@@ -1506,9 +1865,14 @@
     applyFilteredLayer('fires');
   });
 
+  forecastOffsetControl?.addEventListener('change', () => {
+    applyFilteredLayer('forecast-wind');
+  });
+
   syncQuakeSummary();
   syncFireSummary();
   setLayerControlState(false);
   initIntroModal();
+  initCaveatsModal();
   observeAtlas();
 })();

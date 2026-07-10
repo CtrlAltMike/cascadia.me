@@ -10,6 +10,8 @@
   <meta name="theme-color" content="#faf8f5">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
+  <meta name="cascadia-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind">
+  <meta name="cascadia-forecast-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind/forecast?model=rdps-10km">
   <link rel="canonical" href="https://cascadia.me/atlas.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
@@ -32,7 +34,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css?v=20260710-ui">
+  <link rel="stylesheet" href="css/components.css?v=20260710-rdps-wind">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -101,7 +103,7 @@
           "publisher": {
             "@id": "https://cascadia.me/#organization"
           },
-          "dateModified": "2026-06-26",
+          "dateModified": "2026-07-10",
           "breadcrumb": {
             "@id": "https://cascadia.me/atlas.html#breadcrumb"
           },
@@ -140,7 +142,7 @@
             <h1>Regional hazard atlas</h1>
             <p>
               See current official conditions alongside the historical hazards that
-              shape life in Cascadia. Live coverage begins with Washington and Oregon.
+              shape life in Cascadia. Official feed coverage varies by place and layer.
             </p>
           </div>
 
@@ -164,6 +166,26 @@
                   <span class="atlas-toggle-subtitle" data-atlas-quake-summary>Magnitude 5.0+ since 1900</span>
                 </span>
                 <input type="checkbox" data-atlas-layer="earthquakes">
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+
+              <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-wind"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Observed wind</span>
+                  <span class="atlas-toggle-subtitle">Recent station reports across Cascadia</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="wind">
+                <span class="atlas-switch" aria-hidden="true"></span>
+              </label>
+
+              <label class="atlas-toggle">
+                <span class="atlas-swatch atlas-swatch-forecast-wind"></span>
+                <span class="atlas-toggle-copy">
+                  <span class="atlas-toggle-title">Forecast wind</span>
+                  <span class="atlas-toggle-subtitle">10 km regional model guidance across Cascadia</span>
+                </span>
+                <input type="checkbox" data-atlas-layer="forecast-wind">
                 <span class="atlas-switch" aria-hidden="true"></span>
               </label>
 
@@ -232,6 +254,20 @@
                   </select>
                 </label>
               </div>
+
+              <div class="atlas-filter-block">
+                <div class="atlas-filter-title">Forecast wind</div>
+                <label class="atlas-field">
+                  <span>Forecast time</span>
+                  <select data-atlas-forecast-offset aria-label="Forecast wind time">
+                    <option value="0" selected>Latest available</option>
+                    <option value="3">3 hours ahead</option>
+                    <option value="6">6 hours ahead</option>
+                    <option value="12">12 hours ahead</option>
+                  </select>
+                </label>
+                <p class="atlas-filter-note" data-atlas-forecast-note>Turn on Forecast wind to load current model guidance.</p>
+              </div>
             </div>
           </div>
 
@@ -244,14 +280,19 @@
             <p class="atlas-status" data-atlas-status aria-live="polite">Map waiting to load.</p>
             <ul class="atlas-status-list">
               <li data-atlas-status-key="live">Current conditions waiting.</li>
+              <li data-atlas-status-key="wind">Observed wind off. Turn on for recent station reports.</li>
+              <li data-atlas-status-key="forecast-wind">Forecast wind off. Turn on for model guidance.</li>
               <li data-atlas-status-key="earthquakes">Earthquakes off. Turn on to explore USGS records.</li>
               <li data-atlas-status-key="fires">Historical wildfires off. Turn on to explore past perimeters.</li>
               <li data-atlas-status-key="floods">Floods off. Turn on for river corridors + FEMA zones.</li>
             </ul>
             <p class="atlas-latency-note">Public source layers load on demand and may briefly lag while the map fetches and draws them.</p>
             <p class="atlas-updated">For situational awareness only. Follow local officials and evacuation orders.</p>
+            <button type="button" class="atlas-caveats-button" data-atlas-caveats-open aria-haspopup="dialog">
+              Data limits &amp; caveats
+            </button>
             <p class="atlas-source">
-              Sources: NIFC/WFIGS, NWS, connected county emergency managers, USGS, FEMA, WSDOT when configured, OpenStreetMap.
+              Sources: ECCC, BCWS, NIFC/WFIGS, NOAA/NWS, connected county emergency managers, USGS, FEMA, WSDOT when configured, OpenStreetMap.
             </p>
           </div>
         </aside>
@@ -266,6 +307,8 @@
               <span><span class="atlas-legend-live-fire"></span> Current fire</span>
               <span><span class="atlas-legend-evac"></span> Evacuation</span>
               <span><span class="atlas-legend-weather"></span> Weather alert</span>
+              <span><span class="atlas-legend-wind">&#8593;</span> Observed wind</span>
+              <span><span class="atlas-legend-forecast-wind"></span> Forecast wind speed</span>
               <span><span class="atlas-legend-ring"></span> Earthquake magnitude</span>
               <span><span class="atlas-legend-fire"></span> Historical fire</span>
               <span><span class="atlas-legend-flood"></span> Flood zone</span>
@@ -289,6 +332,36 @@
         local emergency manager, fire district, weather service, or evacuation order.
       </p>
       <button type="button" class="btn btn-primary" data-atlas-intro-close>Enter the atlas</button>
+    </div>
+  </dialog>
+
+  <dialog class="atlas-intro atlas-caveats" data-atlas-caveats aria-labelledby="atlas-caveats-title">
+    <div class="atlas-intro-panel">
+      <h2 id="atlas-caveats-title">How to read the Atlas data</h2>
+      <p><strong>Official feeds checked. Conditions can change faster than a map updates.</strong></p>
+      <div class="atlas-caveats-list">
+        <section>
+          <h3>Coverage has gaps</h3>
+          <p>Not every place publishes the same live data. An empty area can mean no report, no connected feed, or no mapped geometry—not necessarily no hazard.</p>
+        </section>
+        <section>
+          <h3>Fire reports and perimeters can lag</h3>
+          <p>Known “Out” fires are excluded during ingestion, but incident status, size, and mapped edges can still be delayed or incomplete. A fire point may appear before a perimeter does.</p>
+        </section>
+        <section>
+          <h3>Wind layers have different meanings</h3>
+          <p>Observed arrows are station reports, not a continuous wind field. Forecast shading is 10 km model guidance, not an observation or a prediction of fire or smoke movement. The model smooths mountain terrain; both layers can differ sharply from local wind across ridges, canyons, mountain passes, shorelines, and exposed slopes.</p>
+        </section>
+        <section>
+          <h3>Planning layers are generalized</h3>
+          <p>Historical fire and flood layers are simplified for regional viewing. They do not show parcel-level risk, current inundation depth, or a predicted fire path.</p>
+        </section>
+        <section>
+          <h3>Official instructions come first</h3>
+          <p>Use this map for orientation. During an event, follow evacuation orders and instructions from local emergency managers, fire agencies, and weather services.</p>
+        </section>
+      </div>
+      <button type="button" class="btn btn-primary" data-atlas-caveats-close>Back to the Atlas</button>
     </div>
   </dialog>
 
@@ -333,7 +406,7 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
-  <script src="js/atlas.js?v=20260710-ui"></script>
+  <script src="js/atlas.js?v=20260710-rdps-wind"></script>
   <script src="js/feedback.js"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

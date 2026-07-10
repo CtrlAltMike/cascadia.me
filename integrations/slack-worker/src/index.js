@@ -1,4 +1,11 @@
 import { conditionsPreflightResponse, handleConditionsRequest } from "./conditions.js";
+import {
+  forecastPreflightResponse,
+  handleForecastMetadataRequest,
+  handleForecastPointRequest,
+  handleForecastTileRequest,
+} from "./forecast-wind.js";
+import { handleWindRequest, windPreflightResponse } from "./wind.js";
 
 const MAX_KOFI_BYTES = 64 * 1024;
 const MAX_FEEDBACK_BYTES = 4096;
@@ -58,6 +65,35 @@ export default {
 
     if (request.method === "GET" && url.pathname === "/conditions") {
       return handleConditionsRequest(request, env, ctx);
+    }
+
+    if (request.method === "OPTIONS" && url.pathname === "/conditions/wind") {
+      return windPreflightResponse(env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/conditions/wind") {
+      return handleWindRequest(request, env, ctx);
+    }
+
+    if (request.method === "OPTIONS" && url.pathname.startsWith("/conditions/wind/forecast")) {
+      return forecastPreflightResponse(env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/conditions/wind/forecast") {
+      return handleForecastMetadataRequest(request, env, ctx);
+    }
+
+    if (request.method === "GET" && url.pathname === "/conditions/wind/forecast/point") {
+      return handleForecastPointRequest(request, env, ctx);
+    }
+
+    const forecastTile = url.pathname.match(/^\/conditions\/wind\/forecast\/tiles\/(\d+)\/(\d+)\/(\d+)\.png$/);
+    if (request.method === "GET" && forecastTile) {
+      return handleForecastTileRequest(request, env, ctx, {
+        z: Number(forecastTile[1]),
+        x: Number(forecastTile[2]),
+        y: Number(forecastTile[3]),
+      });
     }
 
     if (request.method === "OPTIONS" && url.pathname === "/feedback") {

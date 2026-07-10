@@ -2,8 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check src/index.js && node --check src/conditions.js",
+    "check": "node --check src/index.js && node --check src/conditions.js && node --check src/wind.js && node --check src/forecast-wind.js",
     "test:conditions": "node test/conditions.test.js",
+    "test:wind": "node test/wind.test.js",
+    "test:forecast-wind": "node test/forecast-wind.test.js",
+    "test": "npm run check && npm run test:conditions && npm run test:wind && npm run test:forecast-wind",
     "deploy": "wrangler deploy",
     "dev": "wrangler dev"
   }

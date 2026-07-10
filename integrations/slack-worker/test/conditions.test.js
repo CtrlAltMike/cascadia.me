@@ -56,6 +56,94 @@ function fixtureFetch(url) {
     }));
   }
 
+  if (url.includes("BCWS_ActiveFires_PublicView")) {
+    const requestUrl = new URL(url);
+    assert.equal(requestUrl.searchParams.get("where"), "FIRE_YEAR = 2026");
+    assert.doesNotMatch(requestUrl.searchParams.get("where"), /FIRE_STATUS/i);
+    return Promise.resolve(jsonResponse({
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [-121.45, 50.72] },
+          properties: {
+            FIRE_YEAR: 2026,
+            FIRE_STATUS: "Out of Control",
+            IGNITION_DATE: RECENT,
+            CURRENT_SIZE: 500,
+            INCIDENT_NAME: "CAYOOSE CREEK",
+            FIRE_NUMBER: "K70001",
+            GEOGRAPHIC_DESCRIPTION: "west of Lillooet",
+            FIRE_URL: "https://wildfiresituation.nrs.gov.bc.ca/incidents?fireYear=2026&incidentNumber=K70001",
+          },
+        },
+        {
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [-121.55, 50.75] },
+          properties: {
+            FIRE_YEAR: 2026,
+            FIRE_STATUS: "Out",
+            IGNITION_DATE: RECENT,
+            CURRENT_SIZE: 20,
+            INCIDENT_NAME: "CLOSED FIRE",
+            FIRE_NUMBER: "K70002",
+          },
+        },
+      ],
+    }));
+  }
+
+  if (url.includes("BCWS_FirePerimeters_PublicView")) {
+    const requestUrl = new URL(url);
+    assert.equal(requestUrl.searchParams.get("where"), "FIRE_YEAR = 2026");
+    assert.doesNotMatch(requestUrl.searchParams.get("where"), /FIRE_STATUS/i);
+    const geometry = {
+      type: "Polygon",
+      coordinates: [[[-121.5, 50.7], [-121.4, 50.7], [-121.4, 50.8], [-121.5, 50.7]]],
+    };
+    return Promise.resolve(jsonResponse({
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry,
+          properties: {
+            FIRE_NUMBER: "K70001",
+            VERSION_NUMBER: 1,
+            FIRE_YEAR: 2026,
+            FIRE_SIZE_HECTARES: 480,
+            TRACK_DATE: RECENT - 60_000,
+            FIRE_STATUS: "Out of Control",
+          },
+        },
+        {
+          type: "Feature",
+          geometry,
+          properties: {
+            FIRE_NUMBER: "K70001",
+            VERSION_NUMBER: 2,
+            FIRE_YEAR: 2026,
+            FIRE_SIZE_HECTARES: 500,
+            TRACK_DATE: RECENT,
+            FIRE_STATUS: "Out of Control",
+          },
+        },
+        {
+          type: "Feature",
+          geometry,
+          properties: {
+            FIRE_NUMBER: "K70002",
+            VERSION_NUMBER: 1,
+            FIRE_YEAR: 2026,
+            FIRE_SIZE_HECTARES: 20,
+            TRACK_DATE: RECENT,
+            FIRE_STATUS: "Out",
+          },
+        },
+      ],
+    }));
+  }
+
   if (url.includes("Emergency_Management_Layers_View")) {
     return Promise.resolve(jsonResponse({
       type: "FeatureCollection",
@@ -101,15 +189,19 @@ function fixtureFetch(url) {
 
 const payload = await buildConditions({}, { fetchImpl: fixtureFetch, now: NOW });
 assert.equal(payload.schemaVersion, 1);
-assert.equal(payload.availableSources, 4);
+assert.equal(payload.availableSources, 6);
 assert.equal(payload.degraded, false);
-assert.equal(payload.summary.fireCount, 1);
-assert.equal(payload.summary.perimeterCount, 1);
+assert.equal(payload.summary.fireCount, 2);
+assert.equal(payload.summary.perimeterCount, 2);
 assert.equal(payload.summary.evacuationCount, 1);
 assert.equal(payload.summary.weatherAlertCount, 1);
 assert.equal(payload.summary.roadAlertCount, 0);
 assert.equal(payload.fires.features[0].properties.name, "RYEGRASS COULEE");
 assert.equal(payload.fires.features[0].properties.evacuationSourceName, "Kittitas County Emergency Management");
+assert.equal(payload.fires.features.some((feature) => feature.properties.name === "CLOSED FIRE"), false);
+assert.equal(payload.fires.features.find((feature) => feature.properties.name === "CAYOOSE CREEK").properties.stageOfControl, "Out of Control");
+assert.equal(payload.perimeters.features.filter((feature) => feature.properties.sourceName === "BC Wildfire Service").length, 1);
+assert.equal(payload.perimeters.features.find((feature) => feature.properties.sourceName === "BC Wildfire Service").properties.version, 2);
 assert.equal(payload.evacuations.features[0].properties.label, "Level 3 — Go now");
 assert.equal(payload.sources.find((source) => source.id === "wsdot-highway-alerts").status, "not_configured");
 
@@ -120,9 +212,9 @@ const degradedFetch = (url) => {
   return fixtureFetch(url);
 };
 const degraded = await buildConditions({}, { fetchImpl: degradedFetch, now: NOW });
-assert.equal(degraded.availableSources, 3);
+assert.equal(degraded.availableSources, 5);
 assert.equal(degraded.degraded, true);
-assert.equal(degraded.summary.fireCount, 1);
+assert.equal(degraded.summary.fireCount, 2);
 assert.equal(degraded.summary.weatherAlertCount, 0);
 
 const originalFetch = globalThis.fetch;
@@ -137,7 +229,7 @@ try {
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
   assert.match(response.headers.get("cache-control"), /max-age=120/);
   const routedPayload = await response.json();
-  assert.equal(routedPayload.summary.fireCount, 1);
+  assert.equal(routedPayload.summary.fireCount, 2);
 
   const preflight = await worker.fetch(
     new Request("https://conditions.example/conditions", { method: "OPTIONS" }),

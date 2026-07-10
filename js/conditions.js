@@ -9,7 +9,6 @@
 
   const endpoint = document.querySelector('meta[name="cascadia-conditions-endpoint"]')?.content;
   const REFRESH_MS = 5 * 60 * 1000;
-  const TICKER_ROTATE_MS = 8 * 1000;
   const officialFallbacks = [
     ['Chelan County', 'https://www.co.chelan.wa.us/emergency-management/pages/active-emergencies'],
     ['Kittitas County', 'https://www.co.kittitas.wa.us/sheriff/emergency.aspx'],
@@ -149,20 +148,21 @@
   }
 
   function renderTicker(section, entries, statusText) {
-    const items = [
-      {
-        kind: 'status',
-        kicker: 'Feed status',
-        text: statusText,
-        sourceUrl: null,
-      },
-      ...entries.map((entry) => ({
+    const items = entries.map((entry) => ({
         kind: 'condition',
         kicker: entry.badge,
         text: tickerEntryText(entry),
         sourceUrl: entry.sourceUrl,
-      })),
-    ];
+      }));
+
+    const feedStatus = {
+      kind: 'status',
+      kicker: 'Feed status',
+      text: statusText,
+      sourceUrl: null,
+    };
+
+    items.unshift(feedStatus);
 
     if (items.length === 1) {
       items.push({
@@ -173,11 +173,7 @@
       });
     }
 
-    const controller = tickerController(section);
-    controller.items = items;
-    controller.index = 0;
-    showTickerItem(controller, false);
-    startTicker(controller);
+    renderTickerTrack(section, items);
   }
 
   function tickerController(section) {
@@ -186,73 +182,75 @@
 
     const controller = {
       section,
-      item: section.querySelector('[data-conditions-ticker-item]'),
-      kicker: section.querySelector('[data-conditions-ticker-kicker]'),
-      text: section.querySelector('[data-conditions-ticker-text]'),
-      source: section.querySelector('[data-conditions-ticker-source]'),
+      track: section.querySelector('[data-conditions-ticker-track]'),
       toggle: section.querySelector('[data-conditions-ticker-toggle]'),
-      items: [],
-      index: 0,
       paused: false,
-      timer: null,
+      measureFrame: null,
     };
 
     controller.toggle.addEventListener('click', () => {
       controller.paused = !controller.paused;
+      controller.section.dataset.tickerPaused = String(controller.paused);
       controller.toggle.setAttribute('aria-pressed', String(controller.paused));
       controller.toggle.setAttribute(
         'aria-label',
         controller.paused ? 'Resume current conditions ticker' : 'Pause current conditions ticker',
       );
       controller.toggle.textContent = controller.paused ? 'Resume' : 'Pause';
-      if (controller.paused) {
-        window.clearInterval(controller.timer);
-        controller.timer = null;
-      } else {
-        startTicker(controller);
-      }
     });
 
     tickerControllers.set(section, controller);
     return controller;
   }
 
-  function startTicker(controller) {
-    window.clearInterval(controller.timer);
-    controller.timer = null;
-    if (controller.paused || controller.items.length < 2) return;
+  function renderTickerTrack(section, items) {
+    const controller = tickerController(section);
+    const group = document.createElement('div');
+    group.className = 'conditions-ticker-group';
+    items.forEach((entry) => group.appendChild(tickerItem(entry)));
 
-    controller.timer = window.setInterval(() => {
-      if (document.hidden) return;
-      controller.index = (controller.index + 1) % controller.items.length;
-      showTickerItem(controller, true);
-    }, TICKER_ROTATE_MS);
+    const duplicate = group.cloneNode(true);
+    duplicate.setAttribute('aria-hidden', 'true');
+    duplicate.querySelectorAll('a').forEach((link) => {
+      link.tabIndex = -1;
+    });
+
+    section.removeAttribute('data-ticker-ready');
+    controller.track.replaceChildren(group, duplicate);
+    window.cancelAnimationFrame(controller.measureFrame);
+    controller.measureFrame = window.requestAnimationFrame(() => {
+      const distance = group.getBoundingClientRect().width;
+      const duration = Math.max(32, distance / 42);
+      controller.track.style.setProperty('--conditions-ticker-duration', `${duration.toFixed(2)}s`);
+      section.dataset.tickerReady = 'true';
+    });
   }
 
-  function showTickerItem(controller, animate) {
-    const entry = controller.items[controller.index];
-    if (!entry) return;
+  function tickerItem(entry) {
+    const item = document.createElement('span');
+    item.className = 'conditions-ticker-item';
+    item.dataset.kind = entry.kind || 'condition';
 
-    if (animate) controller.item.classList.add('is-changing');
-    const update = () => {
-      controller.kicker.textContent = entry.kicker;
-      controller.text.textContent = entry.text;
-      controller.item.dataset.kind = entry.kind || 'condition';
-      if (entry.sourceUrl) {
-        controller.source.href = entry.sourceUrl;
-        controller.source.hidden = false;
-      } else {
-        controller.source.hidden = true;
-        controller.source.removeAttribute('href');
-      }
-      controller.item.classList.remove('is-changing');
-    };
+    const kicker = document.createElement('span');
+    kicker.className = 'conditions-ticker-kicker';
+    kicker.textContent = entry.kicker;
 
-    if (animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.setTimeout(update, 160);
-    } else {
-      update();
+    const text = document.createElement('span');
+    text.className = 'conditions-ticker-text';
+    text.textContent = entry.text;
+    item.append(kicker, text);
+
+    if (entry.sourceUrl) {
+      const source = document.createElement('a');
+      source.className = 'conditions-ticker-source';
+      source.href = entry.sourceUrl;
+      source.target = '_blank';
+      source.rel = 'noopener';
+      source.textContent = 'Official source';
+      item.appendChild(source);
     }
+
+    return item;
   }
 
   function tickerEntryText(entry) {
@@ -342,16 +340,12 @@
     section.dataset.state = 'error';
 
     if (section.dataset.display === 'ticker') {
-      const controller = tickerController(section);
-      controller.items = [{
+      renderTickerTrack(section, [{
         kind: 'status',
         kicker: 'Feed status',
         text: status.textContent,
         sourceUrl: null,
-      }];
-      controller.index = 0;
-      showTickerItem(controller, false);
-      startTicker(controller);
+      }]);
       section.setAttribute('aria-busy', 'false');
       return;
     }

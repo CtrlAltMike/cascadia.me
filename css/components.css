@@ -1014,22 +1014,49 @@
   overflow: hidden;
   padding-left: var(--space-2);
   border-left: 1px solid rgba(107, 94, 79, 0.2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.8rem, #000 calc(100% - 0.8rem), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 0.8rem, #000 calc(100% - 0.8rem), transparent);
+}
+
+.conditions-ticker-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: conditions-ticker-scroll var(--conditions-ticker-duration, 60s) linear infinite;
+  animation-play-state: paused;
+}
+
+.conditions-ticker-section[data-ticker-ready="true"] .conditions-ticker-track {
+  animation-play-state: running;
+}
+
+.conditions-ticker-section[data-ticker-paused="true"] .conditions-ticker-track,
+.conditions-ticker-viewport:focus-within .conditions-ticker-track {
+  animation-play-state: paused;
+}
+
+.conditions-ticker-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: max-content;
 }
 
 .conditions-ticker-item {
-  display: flex;
+  display: inline-flex;
+  flex: 0 0 auto;
   align-items: baseline;
   gap: 0.55rem;
-  min-width: 0;
   color: var(--color-timber);
   font-size: var(--text-sm);
   line-height: var(--leading-snug);
-  opacity: 1;
-  transition: opacity 160ms ease;
+  white-space: nowrap;
 }
 
-.conditions-ticker-item.is-changing {
-  opacity: 0;
+.conditions-ticker-item::after {
+  content: '•';
+  margin: 0 1.35rem;
+  color: rgba(107, 94, 79, 0.46);
 }
 
 .conditions-ticker-item[data-kind="status"] .conditions-ticker-text {
@@ -1047,9 +1074,6 @@
 }
 
 .conditions-ticker-text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -1096,6 +1120,16 @@
 
 .conditions-ticker-atlas {
   color: var(--color-water);
+}
+
+@keyframes conditions-ticker-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .conditions-section {
@@ -1990,8 +2024,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .conditions-ticker-item {
-    transition: none;
+  .conditions-ticker-viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .conditions-ticker-track {
+    animation: none;
+    transform: none;
+  }
+
+  .conditions-ticker-group[aria-hidden="true"] {
+    display: none;
   }
 
   .atlas-loading-spinner {

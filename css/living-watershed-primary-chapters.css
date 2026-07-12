@@ -104,6 +104,15 @@
   margin-top: 1.35rem;
 }
 
+.chapter-prose > .chapter-kicker {
+  margin-bottom: 0.8rem;
+}
+
+.chapter-prose > .chapter-kicker + h2,
+.chapter-prose > .chapter-kicker + h3 {
+  margin-top: 0;
+}
+
 .chapter-prose a {
   font-family: var(--font-body);
   font-size: 0.82em;

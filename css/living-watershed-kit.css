@@ -106,6 +106,10 @@
   line-height: 0.95;
 }
 
+.lw-workbook-reading > .lw-workbook-kicker {
+  margin-bottom: 0.85rem;
+}
+
 .lw-workbook-section-heading {
   max-width: 42rem;
 }
@@ -858,7 +862,7 @@
     display: block;
     min-height: 0;
     order: 1;
-    padding-block: clamp(3.5rem, 9vw, 5rem);
+    padding-block: calc(var(--nav-height) + clamp(2.5rem, 7vw, 4rem)) clamp(3.5rem, 9vw, 5rem);
   }
 
   .lw-workbook-hero-copy {

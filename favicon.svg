@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path
-    d="M24 14a8 8 0 0 1 16 0v3h5a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1.5l-2.9 27.1A4 4 0 0 1 36.6 56H27.4a4 4 0 0 1-4-3.9L20.5 25H19a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h5zm4 0v3h8v-3a4 4 0 0 0-8 0z"
-    fill="#3d3a36"
-  />
-  <path d="M27 26h10l3 22H24z" fill="#c8913a" />
-  <rect x="31" y="28" width="2" height="18" rx="1" fill="#faf8f5" />
-  <rect x="26" y="36" width="12" height="2" rx="1" fill="#faf8f5" />
+  <title>Cascadia.me — mountain and living watershed</title>
+  <rect width="64" height="64" rx="14" fill="#063b5c" />
+  <circle cx="46" cy="17" r="8" fill="#e8b934" />
+  <path d="M2 45 21 18l12 17 8-12 21 23v18H2Z" fill="#fbf7ee" />
+  <path d="m12 31 9-13 7 10-5-3-3 6-3-4Zm22 5 7-13 10 11-7-5-3 7-3-5Z" fill="#c9d3da" />
+  <path d="M2 45 17 34l9 7 8-7 9 7 8-8 11 13v18H2Z" fill="#2f5a43" />
+  <path d="M34 34c-1 7-10 8-9 14 1 5 10 5 9 16h13c1-12-10-12-9-17 1-5 8-6 8-13Z" fill="#2faab3" />
+  <path d="M37 38c-1 5-7 7-7 10 0 4 7 5 8 10" fill="none" stroke="#fbf7ee" stroke-width="2.5" stroke-linecap="round" />
 </svg>

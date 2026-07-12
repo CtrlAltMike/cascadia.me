@@ -1,0 +1,1079 @@
+/* ============================================================
+   Cascadia.me — Living Watershed primary chapters
+   Phase 4: Wildfire, Flooding, and Winter Storm
+   Shared reading grammar; hazard-specific pacing and color.
+   ============================================================ */
+
+.primary-chapter-page {
+  --chapter-accent: var(--lw-ocean-700);
+  --chapter-deep: var(--lw-ocean-900);
+  --chapter-soft: var(--lw-cream-100);
+  --chapter-wash: rgba(47, 170, 179, 0.08);
+  --chapter-alert: var(--lw-coral-600);
+  color: var(--lw-text);
+  background: var(--lw-cream-50);
+}
+
+.wildfire-chapter-page {
+  --chapter-accent: #17624f;
+  --chapter-deep: #123f35;
+  --chapter-soft: #f2ead7;
+  --chapter-wash: rgba(218, 164, 62, 0.11);
+  --chapter-alert: #c44737;
+}
+
+.flooding-chapter-page {
+  --chapter-accent: var(--lw-ocean-700);
+  --chapter-deep: var(--lw-ocean-900);
+  --chapter-soft: #e8f0eb;
+  --chapter-wash: rgba(47, 170, 179, 0.11);
+  --chapter-alert: #b8492e;
+}
+
+.winter-chapter-page {
+  --chapter-accent: #2d7390;
+  --chapter-deep: #102f4a;
+  --chapter-soft: #e8eef0;
+  --chapter-wash: rgba(101, 82, 154, 0.09);
+  --chapter-alert: #c44b37;
+}
+
+.primary-chapter-page main {
+  overflow: visible;
+}
+
+.primary-chapter-page .guide {
+  padding-top: 0;
+}
+
+.primary-chapter-page h1,
+.primary-chapter-page h2,
+.primary-chapter-page h3,
+.primary-chapter-page h4 {
+  color: var(--chapter-deep);
+}
+
+.primary-chapter-page a {
+  color: var(--chapter-accent);
+  text-underline-offset: 0.2em;
+}
+
+.primary-chapter-page a:focus-visible,
+.primary-chapter-page button:focus-visible {
+  outline: 3px solid var(--lw-cream-50);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--chapter-deep);
+}
+
+.chapter-container {
+  width: min(100% - clamp(2rem, 6vw, 6rem), 90rem);
+  margin-inline: auto;
+}
+
+.chapter-reading {
+  width: min(100%, 46rem);
+  margin-inline: auto;
+}
+
+.chapter-reading--wide {
+  width: min(100%, 58rem);
+}
+
+.chapter-kicker {
+  margin: 0 0 0.8rem;
+  color: var(--chapter-accent);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chapter-prose {
+  font-family: var(--font-display);
+  font-size: clamp(1.16rem, 1.55vw, 1.32rem);
+  line-height: 1.72;
+}
+
+.chapter-prose > * {
+  margin-block: 0;
+}
+
+.chapter-prose > * + * {
+  margin-top: 1.35rem;
+}
+
+.chapter-prose a {
+  font-family: var(--font-body);
+  font-size: 0.82em;
+  font-weight: 700;
+}
+
+.chapter-prose strong {
+  color: var(--chapter-deep);
+  font-weight: 650;
+}
+
+.chapter-lede {
+  color: var(--chapter-deep);
+  font-size: clamp(1.42rem, 2.15vw, 1.82rem);
+  line-height: 1.5;
+}
+
+.chapter-section {
+  padding-block: clamp(4.25rem, 7vw, 6.75rem);
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
+}
+
+.chapter-section + .chapter-section {
+  border-top: 1px solid rgba(6, 59, 92, 0.08);
+}
+
+.chapter-section-heading {
+  width: min(100%, 58rem);
+  margin: 0 auto clamp(2rem, 4vw, 3.5rem);
+}
+
+.chapter-section-heading h2 {
+  max-width: 54rem;
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.052em;
+  line-height: 0.95;
+}
+
+.chapter-section-heading > p:last-child:not(.chapter-kicker) {
+  max-width: 45rem;
+  margin: 1.35rem 0 0;
+  color: var(--lw-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.62;
+}
+
+/* Hero */
+
+.chapter-hero {
+  position: relative;
+  min-height: clamp(43rem, 67vw, 52rem);
+  padding-top: var(--nav-height);
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--lw-cream-50);
+}
+
+.chapter-hero-picture {
+  position: absolute;
+  inset: var(--nav-height) 0 0;
+  z-index: -2;
+}
+
+.chapter-hero-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.chapter--wildfire .chapter-hero-picture img {
+  object-position: 55% center;
+}
+
+.chapter--flooding .chapter-hero-picture img {
+  object-position: 56% center;
+}
+
+.chapter--winter .chapter-hero-picture img {
+  object-position: 57% center;
+}
+
+.chapter-hero::after {
+  content: '';
+  position: absolute;
+  inset: var(--nav-height) 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 247, 238, 0.995) 0%,
+    rgba(251, 247, 238, 0.97) 29%,
+    rgba(251, 247, 238, 0.77) 43%,
+    rgba(251, 247, 238, 0.12) 62%,
+    rgba(251, 247, 238, 0) 74%
+  );
+}
+
+.chapter-hero-inner {
+  display: flex;
+  min-height: clamp(38.75rem, calc(67vw - var(--nav-height)), 47.75rem);
+  align-items: center;
+  padding-block: clamp(4.5rem, 8vw, 7rem) 3.5rem;
+}
+
+.chapter-hero-copy {
+  width: min(49%, 43rem);
+}
+
+.chapter-hero h1 {
+  margin: 0;
+  color: var(--chapter-deep);
+  font-size: clamp(5.1rem, 8.4vw, 8.5rem);
+  font-weight: 500;
+  letter-spacing: -0.062em;
+  line-height: 0.86;
+}
+
+.chapter--winter .chapter-hero h1 {
+  font-size: clamp(4.6rem, 7.5vw, 7.6rem);
+}
+
+.chapter-hero-lede {
+  max-width: 39rem;
+  margin: clamp(1.5rem, 3vw, 2.2rem) 0 0;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 1.7vw, 1.45rem);
+  line-height: 1.58;
+}
+
+.chapter-hero-note {
+  max-width: 38rem;
+  margin: 2rem 0 0;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(6, 59, 92, 0.18);
+  color: var(--lw-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.chapter-now-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.35rem;
+  color: var(--chapter-deep);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.chapter-now-link span {
+  font-size: 1.15em;
+}
+
+/* Immediate reference bypass */
+
+.chapter-bypass {
+  padding-block: clamp(3.75rem, 6vw, 5.75rem);
+  color: rgba(251, 247, 238, 0.8);
+  background-color: var(--chapter-deep);
+  background-image:
+    repeating-radial-gradient(ellipse at 12% 115%, transparent 0 30px, rgba(47, 170, 179, 0.07) 31px 32px, transparent 33px 58px),
+    repeating-radial-gradient(ellipse at 88% -20%, transparent 0 34px, rgba(218, 164, 62, 0.06) 35px 36px, transparent 37px 66px);
+  scroll-margin-top: var(--nav-height);
+}
+
+.chapter-bypass .chapter-kicker {
+  color: var(--lw-glacial-on-ocean);
+}
+
+.chapter-bypass h2 {
+  max-width: 58rem;
+  margin: 0;
+  color: var(--lw-cream-50);
+  font-size: clamp(2.75rem, 5vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.048em;
+  line-height: 0.96;
+}
+
+.chapter-bypass-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  border-block: 1px solid rgba(251, 247, 238, 0.2);
+  list-style: none;
+}
+
+.chapter-bypass-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chapter-bypass-grid li {
+  padding: clamp(1.65rem, 3.5vw, 2.75rem);
+}
+
+.chapter-bypass-grid li + li {
+  border-left: 1px solid rgba(251, 247, 238, 0.2);
+}
+
+.chapter-bypass-label {
+  display: block;
+  color: var(--lw-sun-400);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chapter-bypass-grid h3 {
+  margin: 0.65rem 0 0;
+  color: var(--lw-cream-50);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+  font-weight: 750;
+  line-height: 1.15;
+}
+
+.chapter-bypass-grid p {
+  margin: 0.8rem 0 0;
+  color: rgba(251, 247, 238, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.chapter-bypass-note {
+  max-width: 64rem;
+  margin: 1.5rem 0 0;
+  color: rgba(251, 247, 238, 0.75);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.chapter-bypass-note strong {
+  color: var(--lw-cream-50);
+}
+
+.chapter-bypass-link {
+  margin: 1.25rem 0 0;
+}
+
+.chapter-bypass-link a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--lw-cream-50);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+/* Narrative forms */
+
+.chapter-opening {
+  background: var(--lw-cream-50);
+}
+
+.chapter-field-note {
+  max-width: 41rem;
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  padding: 1.5rem 1.75rem;
+  border-left: 4px solid var(--chapter-accent);
+  background: var(--chapter-wash);
+}
+
+.chapter-field-note h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chapter-field-note p {
+  margin: 0.7rem 0 0;
+  color: var(--lw-text);
+  font-size: 0.85rem;
+  line-height: 1.62;
+}
+
+.chapter-story {
+  background:
+    linear-gradient(135deg, var(--chapter-wash), transparent 38%),
+    var(--chapter-soft);
+}
+
+.chapter-story .chapter-section-heading {
+  margin-left: 0;
+}
+
+.chapter-disclosure {
+  max-width: 44rem;
+  margin: 0 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(6, 59, 92, 0.2);
+  color: var(--lw-muted);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.chapter-disclosure strong {
+  color: var(--chapter-deep);
+}
+
+.chapter-plate {
+  width: min(100% - clamp(2rem, 4vw, 4rem), 90rem);
+  margin: clamp(3rem, 6vw, 5.5rem) auto 0;
+}
+
+.chapter-plate picture,
+.chapter-plate img {
+  display: block;
+  width: 100%;
+}
+
+.chapter-plate img {
+  height: auto;
+  background: var(--chapter-soft);
+}
+
+.chapter-plate figcaption {
+  max-width: 58rem;
+  margin: 0.9rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.chapter-story-after {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.chapter-pull {
+  width: min(100%, 58rem);
+  margin: clamp(2.5rem, 5vw, 4rem) auto;
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  border-block: 1px solid rgba(6, 59, 92, 0.18);
+  color: var(--chapter-deep);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+  line-height: 1.22;
+}
+
+.chapter-process {
+  background: var(--lw-cream-50);
+}
+
+.chapter-process-copy {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.chapter-threads {
+  width: min(100%, 58rem);
+  margin: clamp(2.75rem, 5vw, 4.5rem) auto 0;
+  border-top: 1px solid var(--lw-line);
+}
+
+.chapter-thread {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.34fr) minmax(0, 1fr);
+  gap: 1.25rem 3rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.chapter-thread dt {
+  color: var(--chapter-accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.chapter-thread dd {
+  margin: 0;
+}
+
+.chapter-thread h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
+  font-weight: 500;
+  line-height: 1.16;
+}
+
+.chapter-thread p {
+  margin: 0.55rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+
+.chapter-decisions {
+  background: linear-gradient(180deg, var(--lw-cream-50), var(--chapter-soft));
+}
+
+.chapter-questions {
+  width: min(100%, 58rem);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  padding: 0;
+  border-top: 1px solid rgba(6, 59, 92, 0.2);
+  list-style: none;
+}
+
+.chapter-questions li {
+  padding-block: 1.15rem;
+  border-bottom: 1px solid rgba(6, 59, 92, 0.16);
+  color: var(--chapter-deep);
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 1.8vw, 1.35rem);
+  line-height: 1.45;
+}
+
+.chapter-continuation {
+  margin-top: 2rem;
+  color: var(--lw-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.chapter-continuation a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-weight: 750;
+}
+
+.chapter-conclusion {
+  color: var(--lw-cream-50);
+  background: var(--chapter-deep);
+}
+
+.chapter-conclusion h2,
+.chapter-conclusion .chapter-kicker,
+.chapter-conclusion .chapter-prose,
+.chapter-conclusion .chapter-prose strong {
+  color: var(--lw-cream-50);
+}
+
+.chapter-conclusion .chapter-prose {
+  color: rgba(251, 247, 238, 0.82);
+}
+
+/* Wildfire live instrument */
+
+.chapter-live {
+  padding-block: clamp(3.75rem, 6vw, 5.75rem);
+  background: var(--lw-cream-100);
+  border-block: 1px solid var(--lw-line);
+  scroll-margin-top: var(--nav-height);
+}
+
+.chapter-live-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem 3rem;
+  align-items: end;
+}
+
+.chapter-live-heading h2 {
+  max-width: 56rem;
+  margin: 0;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.chapter-live-heading p:last-child {
+  max-width: 48rem;
+  margin: 1rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.chapter-live-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.chapter-live .lw-guide-live-status {
+  margin-top: 1.75rem;
+  font-size: 0.85rem;
+}
+
+.chapter-live .lw-guide-live-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2.5rem;
+  margin-top: 1.1rem;
+  padding: 0;
+  background: transparent;
+  border-top: 1px solid var(--lw-line);
+}
+
+.chapter-live .lw-guide-live-item {
+  min-height: 0;
+  padding: 1.4rem 0;
+  background: transparent;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.chapter-live .lw-guide-live-item > strong {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+}
+
+.chapter-live .lw-guide-live-badge {
+  font-size: 0.75rem;
+}
+
+.chapter-live .lw-guide-live-item > p {
+  font-size: 0.85rem;
+}
+
+.chapter-live .lw-guide-live-item-footer {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+}
+
+.chapter-live .lw-guide-live-notes {
+  margin-top: 1.4rem;
+}
+
+.chapter-live .lw-guide-live-notes p {
+  font-size: 0.8rem;
+}
+
+/* Quick reference */
+
+.chapter-reference {
+  padding-block: clamp(4.5rem, 7vw, 7rem);
+  color: rgba(251, 247, 238, 0.8);
+  background: var(--lw-basalt-900);
+  scroll-margin-top: var(--nav-height);
+}
+
+.chapter-reference .chapter-kicker {
+  color: var(--lw-glacial-on-ocean);
+}
+
+.chapter-reference h2 {
+  max-width: 64rem;
+  margin: 0;
+  color: var(--lw-cream-50);
+  font-size: clamp(3.2rem, 6.5vw, 6.25rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.chapter-reference-intro {
+  max-width: 45rem;
+  margin: 1.4rem 0 0;
+  color: rgba(251, 247, 238, 0.7);
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  line-height: 1.62;
+}
+
+.chapter-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(2.75rem, 5vw, 4rem);
+  border-block: 1px solid rgba(251, 247, 238, 0.2);
+}
+
+.chapter-reference-grid > section {
+  padding: clamp(1.6rem, 3vw, 2.5rem);
+}
+
+.chapter-reference-grid > section + section {
+  border-left: 1px solid rgba(251, 247, 238, 0.2);
+}
+
+.chapter-reference-grid h3 {
+  margin: 0;
+  color: var(--lw-cream-50);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chapter-reference-grid ul {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.chapter-reference-grid li {
+  color: rgba(251, 247, 238, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.chapter-reference-grid li + li {
+  margin-top: 0.65rem;
+}
+
+.chapter-reference-grid li::marker {
+  color: var(--lw-sun-400);
+}
+
+/* Sources */
+
+.chapter-sources {
+  background: var(--lw-cream-100);
+}
+
+.chapter-sources-layout {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.chapter-sources-intro {
+  position: sticky;
+  top: calc(var(--nav-height) + 2rem);
+}
+
+.chapter-sources-intro h2 {
+  margin: 0;
+  font-size: clamp(2.8rem, 5.2vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.048em;
+  line-height: 0.96;
+}
+
+.chapter-sources-intro > p:not(.chapter-kicker) {
+  margin: 1.2rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.82rem;
+  line-height: 1.62;
+}
+
+.chapter-source-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 3rem;
+}
+
+.chapter-source-group h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.chapter-source-group ul {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--lw-line);
+  list-style: none;
+}
+
+.chapter-source-group li {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.chapter-source-group a {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--chapter-deep);
+  font-size: 0.85rem;
+  line-height: 1.48;
+}
+
+.chapter-source-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 1rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--lw-line);
+}
+
+.chapter-source-footer p {
+  margin: 0;
+  color: var(--lw-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.chapter-source-footer a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+@media (max-width: 1050px) {
+  .chapter-bypass-grid,
+  .chapter-reference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-bypass-grid li + li,
+  .chapter-reference-grid > section + section {
+    border-top: 1px solid rgba(251, 247, 238, 0.2);
+    border-left: 0;
+  }
+
+  .chapter-sources-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-sources-intro {
+    position: static;
+  }
+}
+
+@media (max-width: 860px) {
+  .chapter-hero {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+  }
+
+  .chapter-hero::after {
+    display: none;
+  }
+
+  .chapter-hero-inner {
+    display: block;
+    min-height: 0;
+    order: 1;
+    padding-block: clamp(3.5rem, 9vw, 5rem);
+  }
+
+  .chapter-hero-copy {
+    width: 100%;
+  }
+
+  .chapter-hero h1,
+  .chapter--winter .chapter-hero h1 {
+    font-size: clamp(4.25rem, 19vw, 7rem);
+  }
+
+  .chapter-hero-picture {
+    position: static;
+    order: 2;
+    height: auto;
+  }
+
+  .chapter-hero-picture img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .chapter-live-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-live .lw-guide-live-list,
+  .chapter-source-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-thread {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .chapter-container,
+  .chapter-plate {
+    width: min(100% - 2rem, 90rem);
+  }
+
+  .chapter-hero .chapter-container {
+    width: min(100% - 2rem, 90rem);
+  }
+
+  .chapter-hero h1,
+  .chapter--winter .chapter-hero h1 {
+    font-size: clamp(3.9rem, 18vw, 5.4rem);
+  }
+
+  .chapter-hero-lede {
+    font-size: 1.18rem;
+  }
+
+  .chapter-section {
+    padding-block: 4.25rem;
+  }
+
+  .chapter-section-heading h2,
+  .chapter-bypass h2,
+  .chapter-reference h2,
+  .chapter-sources-intro h2 {
+    font-size: clamp(2.8rem, 13.5vw, 4.25rem);
+  }
+
+  .chapter-prose {
+    font-size: 1.16rem;
+    line-height: 1.68;
+  }
+
+  .chapter-bypass-grid li,
+  .chapter-reference-grid > section {
+    padding-inline: 0;
+  }
+
+  .chapter-field-note {
+    padding: 1.25rem;
+  }
+
+  .chapter-source-footer {
+    display: block;
+  }
+
+  .chapter-source-footer a {
+    margin-top: 0.75rem;
+  }
+
+  .primary-chapter-page .feedback-widget {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-now-link,
+  .chapter-live-link,
+  .chapter-continuation a,
+  .chapter-source-footer a {
+    transition: none;
+  }
+}
+
+@media print {
+  .primary-chapter-page {
+    color: #111;
+    background: #fff;
+  }
+
+  .primary-chapter-page .site-header,
+  .primary-chapter-page .site-footer,
+  .primary-chapter-page .feedback-widget,
+  .chapter-now-link,
+  .chapter-live-link,
+  .chapter-source-footer {
+    display: none !important;
+  }
+
+  .chapter-hero,
+  .chapter-hero-inner,
+  .chapter-section,
+  .chapter-bypass,
+  .chapter-live,
+  .chapter-reference {
+    min-height: 0;
+    padding: 1.5rem 0;
+    color: #111;
+    background: #fff;
+  }
+
+  .chapter-hero {
+    display: block;
+  }
+
+  .chapter-hero::after {
+    display: none;
+  }
+
+  .chapter-hero-picture {
+    position: static;
+    height: auto;
+  }
+
+  .chapter-hero-picture img {
+    height: auto;
+    max-height: 4.5in;
+    object-fit: contain;
+  }
+
+  .chapter-hero-copy {
+    width: auto;
+  }
+
+  .chapter-bypass,
+  .chapter-reference {
+    border-block: 2px solid #333;
+  }
+
+  .chapter-bypass h2,
+  .chapter-bypass h3,
+  .chapter-reference h2,
+  .chapter-reference h3,
+  .chapter-bypass-grid p,
+  .chapter-bypass-note,
+  .chapter-reference-grid li,
+  .chapter-reference-intro,
+  .chapter-conclusion h2,
+  .chapter-conclusion .chapter-kicker,
+  .chapter-conclusion .chapter-prose,
+  .chapter-conclusion .chapter-prose strong,
+  .chapter-bypass .chapter-kicker,
+  .chapter-bypass-label,
+  .chapter-reference .chapter-kicker {
+    color: #111;
+  }
+
+  .chapter-bypass-grid,
+  .chapter-reference-grid,
+  .chapter-source-columns,
+  .chapter-sources-layout,
+  .chapter-live .lw-guide-live-list {
+    display: block;
+  }
+
+  .chapter-bypass-grid li,
+  .chapter-reference-grid > section,
+  .chapter-live .lw-guide-live-item {
+    break-inside: avoid;
+    border-top: 1px solid #bbb;
+    border-left: 0;
+  }
+
+  .chapter-plate {
+    break-inside: avoid;
+    width: 100%;
+  }
+
+  .chapter-plate img {
+    max-height: 6in;
+    object-fit: contain;
+  }
+
+  .chapter-source-group,
+  .chapter-field-note,
+  .chapter-thread {
+    break-inside: avoid;
+  }
+
+  .chapter-sources-intro {
+    position: static;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,5 +1,5 @@
 /* ============================================================
-   PREP.SUPPLY — Share Controls
+   Cascadia.me — Share Controls
    Native share sheet with clipboard fallback
    ============================================================ */
 
@@ -23,7 +23,7 @@
     const description = document.querySelector('meta[name="description"]');
 
     return {
-      title: document.title.replace(/\s+—\s+Cascadia\.me$/, ''),
+      title: document.title.replace(/\s+(?:—|\|)\s+Cascadia\.me$/i, ''),
       text: description ? description.content : '',
       url: window.location.href
     };

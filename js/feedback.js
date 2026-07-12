@@ -63,11 +63,11 @@
 
         <label for="feedback-widget-message">Your feedback</label>
         <textarea id="feedback-widget-message" name="message" maxlength="${MAX_MESSAGE_LENGTH}" required placeholder="What helped, what was unclear, or what should be added?"></textarea>
-        <div class="feedback-widget-count" aria-live="polite">0/${MAX_MESSAGE_LENGTH}</div>
+        <div class="feedback-widget-count">0/${MAX_MESSAGE_LENGTH}</div>
 
         <label class="feedback-widget-check">
           <input name="canQuote" type="checkbox">
-          <span>Quote may be used publicly.</span>
+          <span>You may quote this note publicly with the name or initials above.</span>
         </label>
 
         <div class="feedback-widget-actions">

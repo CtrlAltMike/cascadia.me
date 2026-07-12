@@ -1,0 +1,1989 @@
+/* ============================================================
+   Cascadia.me — Living Watershed Regional Hazard Atlas
+   Phase 6: map-first instrument, progressive layer controls,
+   contextual legend, source status, and honest mobile sheet.
+   ============================================================ */
+
+.living-watershed-atlas {
+  --lw-cream-50: #fbf7ee;
+  --lw-cream-100: #f2e9d7;
+  --lw-ocean-900: #063b5c;
+  --lw-ocean-700: #075a78;
+  --lw-glacial-500: #2faab3;
+  --lw-glacial-on-ocean: #45b6be;
+  --lw-camas-600: #65529a;
+  --lw-coral-600: #b63d31;
+  --lw-sun-400: #e8b934;
+  --lw-spruce-700: #2f5a43;
+  --lw-basalt-900: #232d31;
+  --lw-rain-300: #c9d3da;
+  --lw-line: #d8cfbc;
+  --lw-text: #24343b;
+  --lw-muted: #53656b;
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --nav-height: 4.25rem;
+  color: var(--lw-text);
+  background: var(--lw-cream-50);
+}
+
+.living-watershed-atlas,
+.living-watershed-atlas .atlas-page {
+  overflow-x: clip;
+}
+
+.living-watershed-atlas [hidden] {
+  display: none !important;
+}
+
+.living-watershed-atlas h1,
+.living-watershed-atlas h2,
+.living-watershed-atlas h3,
+.living-watershed-atlas h4 {
+  color: var(--lw-ocean-900);
+}
+
+.living-watershed-atlas button,
+.living-watershed-atlas select,
+.living-watershed-atlas input,
+.living-watershed-atlas summary {
+  font: inherit;
+}
+
+.living-watershed-atlas a:focus-visible,
+.living-watershed-atlas button:focus-visible,
+.living-watershed-atlas summary:focus-visible,
+.living-watershed-atlas select:focus-visible,
+.living-watershed-atlas input:focus-visible,
+.living-watershed-atlas .atlas-map:focus-visible,
+.living-watershed-atlas .maplibregl-canvas:focus-visible {
+  outline: 3px solid var(--lw-cream-50);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--lw-ocean-900);
+}
+
+.atlas-skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.75rem 1rem;
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 180ms ease-out;
+}
+
+.atlas-skip-link:focus {
+  color: var(--lw-cream-50);
+  transform: translateY(0);
+}
+
+/* Site frame */
+
+.living-watershed-atlas .site-header {
+  background: rgba(251, 247, 238, 0.95);
+  border-bottom-color: rgba(6, 59, 92, 0.11);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.living-watershed-atlas .site-header.scrolled {
+  border-bottom-color: rgba(6, 59, 92, 0.18);
+  box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
+}
+
+.living-watershed-atlas .nav-inner {
+  max-width: 90rem;
+  gap: 1rem;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.living-watershed-atlas .nav-logo {
+  color: var(--lw-ocean-900);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 600;
+}
+
+.living-watershed-atlas .nav-logo span {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.living-watershed-atlas .nav-logo:hover,
+.living-watershed-atlas .nav-links a:hover,
+.living-watershed-atlas .nav-links a.active {
+  color: var(--lw-coral-600);
+}
+
+.living-watershed-atlas .nav-links {
+  gap: clamp(1.25rem, 2.7vw, 2.75rem);
+}
+
+.living-watershed-atlas .nav-links a {
+  color: var(--lw-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.living-watershed-atlas .nav-links a.active {
+  border-bottom-color: var(--lw-coral-600);
+}
+
+.living-watershed-atlas .nav-toggle {
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.living-watershed-atlas .floating-share-btn {
+  display: none;
+}
+
+.living-watershed-atlas .atlas-page {
+  min-height: 100svh;
+  padding-top: var(--nav-height);
+  background: var(--lw-cream-50);
+}
+
+.living-watershed-atlas .atlas-page-section {
+  --atlas-gutter: clamp(0.85rem, 1.75vw, 1.5rem);
+  padding: 0 var(--atlas-gutter) var(--atlas-gutter);
+  border-top: 0;
+  background: var(--lw-cream-100);
+}
+
+.atlas-trust-strip {
+  display: flex;
+  min-height: 2.1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-inline: calc(-1 * var(--atlas-gutter));
+  padding: 0.4rem clamp(1rem, 4vw, 3rem);
+  color: var(--lw-ocean-900);
+  background: linear-gradient(90deg, var(--lw-sun-400), #d8d69c 36%, var(--lw-glacial-on-ocean) 72%, #78aebc);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.atlas-trust-strip strong {
+  font-weight: 800;
+}
+
+.atlas-trust-strip strong::after {
+  content: '·';
+  margin-left: 0.45rem;
+}
+
+/* Canonical instrument order: title, map, controls in the DOM.
+   Desktop places title + controls in one rail; mobile preserves DOM order. */
+
+.living-watershed-atlas .atlas-page-layout {
+  display: grid;
+  grid-template-columns: minmax(19.5rem, 21rem) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0;
+  width: 100%;
+  max-width: 90rem;
+  height: clamp(34rem, calc(100svh - 7.6rem), 54rem);
+  min-height: 0;
+  margin: var(--atlas-gutter) auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 0.45rem;
+  background: var(--lw-cream-50);
+  box-shadow: 0 18px 48px rgba(6, 59, 92, 0.08);
+}
+
+/* Editorial orientation is concise; operational controls use Inter below it. */
+
+.living-watershed-atlas .atlas-copy {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  padding: 1.15rem 1.2rem 1rem;
+  border-right: 1px solid rgba(6, 59, 92, 0.16);
+  border-bottom: 1px solid var(--lw-line);
+  background:
+    repeating-radial-gradient(ellipse at -20% 115%, transparent 0 28px, rgba(6, 59, 92, 0.035) 29px 30px, transparent 31px 56px),
+    var(--lw-cream-50);
+}
+
+.atlas-eyebrow,
+.atlas-controls-kicker,
+.atlas-dialog-kicker {
+  margin: 0;
+  color: var(--lw-spruce-700);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.living-watershed-atlas .atlas-copy h1 {
+  max-width: 18rem;
+  margin: 0.25rem 0 0.55rem;
+  color: var(--lw-ocean-900);
+  font-size: clamp(2.35rem, 3.1vw, 3.35rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.living-watershed-atlas .atlas-copy h1::after {
+  display: none;
+}
+
+.living-watershed-atlas .atlas-copy > p:not(.atlas-eyebrow) {
+  max-width: 19rem;
+  margin: 0;
+  color: var(--lw-text);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.atlas-availability {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+.atlas-availability-copy {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.atlas-availability-copy strong {
+  color: var(--lw-ocean-900);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.atlas-availability-copy > span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.atlas-source-indicator {
+  display: inline-block;
+  width: 0.65rem;
+  min-width: 0.65rem;
+  height: 0.65rem;
+  margin-top: 0.22rem;
+  border: 2px solid var(--lw-cream-50);
+  border-radius: 999px;
+  background: var(--lw-rain-300);
+  box-shadow: 0 0 0 2px rgba(6, 59, 92, 0.13);
+}
+
+.atlas-source-indicator[data-state='loading'] {
+  background: var(--lw-sun-400);
+  animation: atlas-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.atlas-source-indicator[data-state='available'] {
+  background: var(--lw-spruce-700);
+}
+
+.atlas-source-indicator[data-state='partial'] {
+  background: var(--lw-sun-400);
+}
+
+.atlas-source-indicator[data-state='issue'],
+.atlas-source-indicator[data-state='unavailable'] {
+  background: var(--lw-coral-600);
+}
+
+@keyframes atlas-pulse {
+  to { opacity: 0.48; }
+}
+
+/* Layer rail */
+
+.living-watershed-atlas .atlas-sidebar {
+  display: block;
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  border-right: 1px solid rgba(6, 59, 92, 0.16);
+  background: var(--lw-cream-50);
+}
+
+.atlas-control-sheet {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.atlas-sheet-summary {
+  display: none;
+}
+
+.atlas-sheet-body {
+  position: absolute;
+  inset: 0;
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  height: 100%;
+  min-height: 0;
+}
+
+.atlas-controls-heading {
+  display: flex;
+  min-height: 3.3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 1rem 0.4rem 1.2rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.atlas-controls-heading h2 {
+  margin: 0.1rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.atlas-reset-layers {
+  min-width: 3.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 0.2rem;
+  color: var(--lw-ocean-700);
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.atlas-reset-layers:hover {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+.atlas-layer-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(6, 59, 92, 0.26) transparent;
+}
+
+.atlas-layer-family {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--lw-line);
+  background: transparent;
+}
+
+.atlas-layer-family > summary {
+  display: grid;
+  grid-template-columns: 0.25rem minmax(0, 1fr) auto 1rem;
+  gap: 0.7rem;
+  min-height: 3.15rem;
+  align-items: center;
+  padding: 0.35rem 1rem 0.35rem 1.2rem;
+  color: var(--lw-ocean-900);
+  list-style: none;
+  cursor: pointer;
+}
+
+.atlas-layer-family > summary::-webkit-details-marker,
+.atlas-refine > summary::-webkit-details-marker,
+.atlas-record-index > summary::-webkit-details-marker,
+.atlas-map-legend > summary::-webkit-details-marker,
+.atlas-sheet-summary::-webkit-details-marker {
+  display: none;
+}
+
+.atlas-layer-family > summary::after {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 160ms ease;
+}
+
+.atlas-layer-family[open] > summary::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.atlas-family-mark {
+  width: 0.25rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--lw-ocean-700);
+}
+
+.atlas-layer-family-forecast .atlas-family-mark {
+  background: var(--lw-camas-600);
+}
+
+.atlas-layer-family-planning .atlas-family-mark {
+  background: var(--lw-spruce-700);
+}
+
+.atlas-family-summary-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+
+.atlas-family-summary-copy strong {
+  color: var(--lw-ocean-900);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.atlas-family-summary-copy small {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.atlas-family-count {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.atlas-family-body {
+  padding: 0 1rem 0.45rem 1.2rem;
+  background: rgba(242, 233, 215, 0.28);
+}
+
+.living-watershed-atlas .atlas-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  min-height: 3.25rem;
+  align-items: center;
+  margin: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(216, 207, 188, 0.72);
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.living-watershed-atlas .atlas-toggle:last-of-type {
+  border-bottom: 0;
+}
+
+.living-watershed-atlas .atlas-toggle:hover {
+  background: linear-gradient(90deg, rgba(47, 170, 179, 0.075), transparent 88%);
+}
+
+.living-watershed-atlas .atlas-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.living-watershed-atlas .atlas-toggle:has(input:focus-visible) {
+  outline: 3px solid var(--lw-cream-50);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--lw-ocean-900);
+}
+
+.living-watershed-atlas .atlas-toggle:has(input:disabled) {
+  cursor: wait;
+  opacity: 0.64;
+}
+
+.living-watershed-atlas .atlas-swatch {
+  display: inline-grid;
+  width: 1.85rem;
+  height: 1.85rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: var(--lw-ocean-700);
+  background: var(--lw-cream-50);
+}
+
+.living-watershed-atlas .atlas-swatch::before {
+  content: '';
+  width: 1rem;
+  height: 1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.atlas-swatch-live { color: var(--lw-coral-600) !important; background: #fff1e9 !important; }
+.atlas-swatch-live::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.5v7' stroke='%23b63d31' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='12.7' r='1.2' fill='%23b63d31'/%3E%3C/svg%3E"); }
+.atlas-swatch-wind { color: var(--lw-ocean-700) !important; background: #e5f4f3 !important; }
+.atlas-swatch-wind::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 13V3M4.5 6.5 8 3l3.5 3.5' fill='none' stroke='%23075a78' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.atlas-swatch-forecast-wind { color: var(--lw-camas-600) !important; background: #eeeaf8 !important; }
+.atlas-swatch-forecast-wind::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5c2-2 4 2 6 0s4 2 7 0M1.5 9c2-2 4 2 6 0s4 2 7 0' fill='none' stroke='%2365529a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.atlas-swatch-quake { color: var(--lw-camas-600) !important; background: #f0ecf8 !important; }
+.atlas-swatch-quake::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5.2' fill='none' stroke='%2365529a' stroke-width='1.4'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%2365529a'/%3E%3C/svg%3E"); }
+.atlas-swatch-fire { color: var(--lw-coral-600) !important; background: #fff1e9 !important; }
+.atlas-swatch-fire::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.2 1.7c1.7 2.5-.2 3.2 1.4 5.1.8-.9.9-1.8.7-2.7 2 1.8 3.3 4 3 6.2-.3 2.4-2.3 4-5.2 4S3 12.7 2.8 10.3C2.6 8.4 3.7 6.4 6 4.4c-.1 1.8.5 3 1.6 3.8-1-2.4.8-3.8.6-6.5Z' fill='%23b63d31'/%3E%3C/svg%3E"); }
+.atlas-swatch-flood { color: var(--lw-ocean-700) !important; background: #e5f4f3 !important; }
+.atlas-swatch-flood::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5c2-2 4 2 6 0s4 2 8 0M1 9c2-2 4 2 6 0s4 2 8 0' fill='none' stroke='%23075a78' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+
+.atlas-toggle-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+
+.atlas-toggle-heading {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.atlas-toggle-title {
+  color: var(--lw-text);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.atlas-toggle-subtitle {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.atlas-layer-state {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+[data-atlas-toggle-row][data-state='ready'] .atlas-layer-state { color: var(--lw-spruce-700); }
+[data-atlas-toggle-row][data-state='partial'] .atlas-layer-state { color: #795a00; }
+[data-atlas-toggle-row][data-state='error'] .atlas-layer-state { color: var(--lw-coral-600); }
+[data-atlas-toggle-row][data-state='error'] .atlas-switch { box-shadow: inset 0 0 0 2px var(--lw-coral-600); }
+
+.living-watershed-atlas .atlas-switch {
+  position: relative;
+  width: 2.65rem;
+  height: 1.48rem;
+  border-radius: 999px;
+  background: #c9c4b9;
+  box-shadow: inset 0 0 0 1px rgba(6, 59, 92, 0.14);
+}
+
+.living-watershed-atlas .atlas-switch::after {
+  content: '';
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.08rem;
+  height: 1.08rem;
+  border-radius: 999px;
+  background: var(--lw-cream-50);
+  box-shadow: 0 1px 3px rgba(6, 59, 92, 0.2);
+  transition: transform 160ms ease;
+}
+
+.living-watershed-atlas .atlas-toggle input:checked + .atlas-switch {
+  background: var(--lw-ocean-900);
+}
+
+.living-watershed-atlas .atlas-toggle input:checked + .atlas-switch::after {
+  transform: translateX(1.17rem);
+}
+
+/* Contextual settings belong to the active layer. */
+
+.atlas-layer-options,
+.atlas-refine {
+  margin: 0 0 0.55rem 2.7rem;
+  border: 1px solid rgba(6, 59, 92, 0.13);
+  border-radius: 0.2rem;
+  background: rgba(251, 247, 238, 0.84);
+}
+
+.atlas-layer-options {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.75rem;
+}
+
+.atlas-refine > summary {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--lw-ocean-700);
+  font-size: 0.75rem;
+  font-weight: 750;
+  list-style: none;
+  cursor: pointer;
+}
+
+.atlas-refine > summary::after {
+  content: '+';
+  font-size: 1.05rem;
+}
+
+.atlas-refine[open] > summary::after {
+  content: '−';
+}
+
+.atlas-refine-body {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.15rem 0.7rem 0.75rem;
+  border-top: 1px solid rgba(6, 59, 92, 0.1);
+}
+
+.atlas-field,
+.atlas-range-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.atlas-field > span,
+.atlas-range-heading {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.atlas-range-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.atlas-range-heading output {
+  color: var(--lw-ocean-900);
+  font-weight: 750;
+}
+
+.atlas-field select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.45rem 2rem 0.45rem 0.65rem;
+  border: 1px solid var(--lw-line);
+  border-radius: 0.2rem;
+  color: var(--lw-text);
+  background-color: var(--lw-cream-50);
+  font-size: 0.75rem;
+}
+
+.atlas-range-field input[type='range'] {
+  width: 100%;
+  min-height: 2.75rem;
+  accent-color: var(--lw-camas-600);
+}
+
+.atlas-filter-note {
+  margin: 0;
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.atlas-control-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  padding: 0.25rem 1rem 0.3rem 1.2rem;
+  border-top: 1px solid var(--lw-line);
+  background: rgba(242, 233, 215, 0.55);
+}
+
+.atlas-source-button,
+.atlas-notes-button {
+  min-height: 2.85rem;
+  border: 1px solid rgba(6, 59, 92, 0.18);
+  border-radius: 0.2rem;
+  color: var(--lw-ocean-900);
+  background: rgba(251, 247, 238, 0.92);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.atlas-source-button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+}
+
+.atlas-source-button > span:last-child {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.atlas-source-button strong {
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.atlas-source-button small {
+  overflow: hidden;
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.atlas-notes-button {
+  padding: 0.5rem 0.7rem;
+  font-weight: 700;
+}
+
+.atlas-source-button:hover,
+.atlas-notes-button:hover {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+.atlas-record-index {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--lw-line);
+  background: rgba(251, 247, 238, 0.96);
+}
+
+.atlas-record-index > summary {
+  display: flex;
+  min-height: 2.9rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem 0.55rem 1.2rem;
+  color: var(--lw-ocean-900);
+  font-size: 0.78rem;
+  font-weight: 750;
+  list-style: none;
+  cursor: pointer;
+}
+
+.atlas-record-index > summary strong {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.atlas-record-index > summary::after {
+  content: '+';
+  color: var(--lw-ocean-700);
+  font-size: 1rem;
+}
+
+.atlas-record-index[open] > summary::after {
+  content: '−';
+}
+
+.atlas-record-index > p,
+.atlas-center-forecast {
+  margin: 0;
+  padding: 0 1.2rem 0.65rem;
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.atlas-record-index > ul {
+  max-height: 12rem;
+  margin: 0 1rem 0.75rem 1.2rem;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.atlas-record-index > ul li {
+  padding: 0.55rem 0;
+  border-top: 1px solid rgba(6, 59, 92, 0.1);
+  color: var(--lw-text);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.atlas-center-forecast {
+  display: grid;
+  gap: 0.55rem;
+  padding-top: 0.15rem;
+}
+
+.atlas-center-forecast p {
+  margin: 0;
+}
+
+.atlas-center-forecast button {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--lw-ocean-700);
+  border-radius: 0.2rem;
+  color: var(--lw-ocean-900);
+  background: var(--lw-cream-50);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.atlas-center-forecast button:hover {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+/* Map surface */
+
+.living-watershed-atlas .atlas-panel {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #d6dfca;
+  box-shadow: none;
+}
+
+.living-watershed-atlas .atlas-map {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  background:
+    linear-gradient(180deg, rgba(47, 170, 179, 0.24), rgba(242, 233, 215, 0.68)),
+    repeating-radial-gradient(ellipse at 16% 110%, transparent 0 28px, rgba(6, 59, 92, 0.055) 29px 30px, transparent 31px 58px);
+}
+
+.atlas-noscript {
+  display: grid;
+  width: min(100% - 2rem, 42rem);
+  margin: clamp(2rem, 8vh, 5rem) auto;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 0.35rem;
+  background: rgba(251, 247, 238, 0.96);
+  box-shadow: 0 12px 30px rgba(6, 59, 92, 0.1);
+}
+
+.atlas-noscript h2,
+.atlas-noscript p {
+  margin: 0;
+}
+
+.atlas-noscript p {
+  margin-top: 0.8rem;
+  line-height: 1.6;
+}
+
+html:not(.js) .living-watershed-atlas .atlas-placeholder,
+html:not(.js) .living-watershed-atlas .atlas-map-utility-dock,
+html:not(.js) .living-watershed-atlas .atlas-map-legend,
+html:not(.js) .living-watershed-atlas .atlas-sidebar {
+  display: none !important;
+}
+
+/* The shared component sheet gives MapLibre's control container a relative,
+   zero-height box. Re-establish the full map surface here so native controls
+   stay inside the instrument and remain reliably clickable. */
+.living-watershed-atlas .atlas-map .maplibregl-control-container {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-bottom-right {
+  right: clamp(9.75rem, 13vw, 11rem);
+}
+
+.living-watershed-atlas .atlas-map::after {
+  background:
+    repeating-radial-gradient(ellipse at 8% 116%, transparent 0 27px, rgba(6, 59, 92, 0.045) 28px 29px, transparent 30px 55px),
+    repeating-radial-gradient(ellipse at 88% -18%, transparent 0 31px, rgba(101, 82, 154, 0.04) 32px 33px, transparent 34px 62px);
+  mix-blend-mode: multiply;
+  opacity: 0.28;
+}
+
+.living-watershed-atlas .atlas-placeholder {
+  z-index: 1;
+  color: var(--lw-ocean-900);
+  background:
+    radial-gradient(circle at 42% 40%, rgba(47, 170, 179, 0.2), transparent 27%),
+    linear-gradient(145deg, #d9e7df, #f2e9d7 55%, #d7cfae);
+}
+
+.living-watershed-atlas .atlas-placeholder h2 {
+  margin-bottom: 0.35rem;
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.living-watershed-atlas .atlas-placeholder p {
+  max-width: 28rem;
+  color: var(--lw-muted);
+}
+
+.living-watershed-atlas .atlas-load-btn {
+  min-height: 2.85rem;
+  margin-top: 0.85rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--lw-ocean-900);
+  border-radius: 0.2rem;
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.atlas-map-utility-dock {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 5;
+  display: flex;
+  gap: 0.45rem;
+}
+
+.atlas-map-utility {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(6, 59, 92, 0.22);
+  border-radius: 0.2rem;
+  color: var(--lw-ocean-900);
+  background: rgba(251, 247, 238, 0.94);
+  font-size: 0.75rem;
+  font-weight: 750;
+  line-height: 1.2;
+  box-shadow: 0 6px 18px rgba(6, 59, 92, 0.1);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.atlas-map-utility:hover {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-group,
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-attrib {
+  border: 1px solid rgba(6, 59, 92, 0.14);
+  border-radius: 0.2rem;
+  background: rgba(251, 247, 238, 0.94);
+  box-shadow: 0 8px 24px rgba(6, 59, 92, 0.13);
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl button {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-attrib-button {
+  width: 2.75rem;
+  height: 2.75rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1.35rem 1.35rem;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-attrib.maplibregl-compact:not([open]) {
+  box-sizing: border-box;
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-ctrl-attrib[open] {
+  max-width: min(32rem, calc(100vw - 1.5rem));
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content {
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(6, 59, 92, 0.18);
+  border-radius: 0.2rem;
+  background: var(--lw-cream-50);
+  color: var(--lw-text);
+  box-shadow: 0 16px 42px rgba(6, 59, 92, 0.18);
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content h4 {
+  padding-right: 1.75rem;
+  color: var(--lw-ocean-900);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content p {
+  color: var(--lw-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-close-button {
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  color: var(--lw-ocean-900);
+  font-size: 1.3rem;
+}
+
+/* Contextual legend: closed by default, active keys only. */
+
+.atlas-map-legend {
+  position: absolute;
+  top: 0.75rem;
+  right: auto;
+  bottom: auto;
+  left: 0.75rem;
+  z-index: 6;
+  display: block;
+  width: min(22rem, calc(100% - 1.5rem));
+  max-width: none;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--lw-text);
+  font-size: 0.75rem;
+  transform: none;
+}
+
+.atlas-map-legend > summary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(6, 59, 92, 0.22);
+  border-radius: 0.2rem;
+  color: var(--lw-ocean-900);
+  background: rgba(251, 247, 238, 0.94);
+  box-shadow: 0 6px 18px rgba(6, 59, 92, 0.1);
+  font-size: 0.75rem;
+  font-weight: 750;
+  list-style: none;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.atlas-map-legend > summary::after {
+  content: '+';
+  font-size: 1rem;
+}
+
+.atlas-map-legend[open] > summary::after {
+  content: '−';
+}
+
+.atlas-map-legend > summary [data-atlas-legend-count] {
+  color: var(--lw-muted);
+  font-weight: 600;
+}
+
+.atlas-legend-panel {
+  display: grid;
+  max-height: min(30rem, calc(100svh - 12rem));
+  margin-top: 0.4rem;
+  overflow-y: auto;
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 0.2rem;
+  background: rgba(251, 247, 238, 0.96);
+  box-shadow: 0 12px 36px rgba(6, 59, 92, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.atlas-legend-family {
+  display: grid;
+  gap: 0;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.atlas-legend-family:last-child {
+  border-bottom: 0;
+}
+
+.atlas-legend-family > strong {
+  margin-bottom: 0.25rem;
+  color: var(--lw-ocean-900);
+  font-size: 0.75rem;
+  letter-spacing: 0.07em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.atlas-legend-family > span {
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--lw-text);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.atlas-legend-ring,
+.atlas-legend-live-fire,
+.atlas-legend-evac,
+.atlas-legend-weather,
+.atlas-legend-road,
+.atlas-legend-wind,
+.atlas-legend-forecast-wind,
+.atlas-legend-fire,
+.atlas-legend-flood {
+  display: inline-flex;
+  width: 1.05rem;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+}
+
+.atlas-legend-live-fire { border-radius: 999px; color: var(--lw-coral-600); background: var(--lw-coral-600); }
+.atlas-legend-evac { color: #852b24; background: rgba(182, 61, 49, 0.55); }
+.atlas-legend-weather { color: #8a610f; background: rgba(232, 185, 52, 0.3); }
+.atlas-legend-road { border-radius: 999px; color: var(--lw-ocean-700); background: var(--lw-ocean-700); }
+.atlas-legend-wind { border-radius: 999px; color: var(--lw-ocean-700); background: #e5f4f3; }
+.atlas-legend-forecast-wind { width: 4.25rem; min-width: 4.25rem; background: linear-gradient(90deg, #081d78 0%, #183fd2 20%, #08bfe0 40%, #75e75b 55%, #ffe500 68%, #ff8c00 80%, #df0000 92%, #780000 100%); }
+.atlas-legend-ring { border-radius: 999px; color: var(--lw-camas-600); background: transparent; box-shadow: 0 0 0 3px rgba(101, 82, 154, 0.15); }
+.atlas-legend-fire { color: var(--lw-coral-600); background: rgba(182, 61, 49, 0.25); }
+.atlas-legend-flood { color: var(--lw-ocean-700); background: rgba(7, 90, 120, 0.68); }
+
+/* Wind uses one shared speed language: arrows are station observations;
+   shading is model guidance. The key remains visible without opening Legend. */
+
+.atlas-wind-key {
+  position: absolute;
+  top: auto;
+  bottom: 4rem;
+  left: 0.75rem;
+  z-index: 5;
+  display: grid;
+  width: min(20.5rem, calc(100% - 1.5rem));
+  gap: 0.25rem;
+  padding: 0.65rem 0.75rem 0.7rem;
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 0.2rem;
+  color: var(--lw-text);
+  background: rgba(251, 247, 238, 0.95);
+  box-shadow: 0 10px 28px rgba(6, 59, 92, 0.14);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: opacity 140ms ease, visibility 140ms ease;
+}
+
+.atlas-map-legend[open] ~ .atlas-wind-key {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.atlas-wind-key-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: var(--lw-ocean-900);
+}
+
+.atlas-wind-key-heading strong {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.atlas-wind-key-heading span {
+  color: var(--lw-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.atlas-wind-scale {
+  height: 0.55rem;
+  margin-top: 0.05rem;
+  border: 1px solid rgba(6, 59, 92, 0.18);
+  background: linear-gradient(90deg, #081d78 0%, #183fd2 20%, #08bfe0 40%, #75e75b 55%, #ffe500 68%, #ff8c00 80%, #df0000 92%, #780000 100%);
+}
+
+.atlas-wind-scale-labels {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  color: var(--lw-muted);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.atlas-wind-scale-labels span:not(:first-child):not(:last-child) {
+  text-align: center;
+}
+
+.atlas-wind-scale-labels span:last-child {
+  text-align: right;
+}
+
+.atlas-wind-key p {
+  margin: 0.25rem 0 0;
+  color: var(--lw-muted);
+}
+
+.atlas-wind-key p + p {
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--lw-line);
+}
+
+.atlas-wind-key-arrow {
+  display: inline-grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: 0.25rem;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--lw-cream-50);
+  background: #08a9c2;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  vertical-align: -0.18rem;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content .atlas-wind-reading {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0.65rem 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 0.25rem solid var(--lw-glacial-500);
+  background: rgba(47, 170, 179, 0.09);
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content .atlas-wind-reading strong {
+  color: var(--lw-ocean-900);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content .atlas-wind-reading span {
+  color: var(--lw-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Dialogs are voluntary, readable secondary surfaces. */
+
+.atlas-dialog {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: min(90svh, 52rem);
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.25rem;
+  color: var(--lw-text);
+  background: var(--lw-cream-50);
+}
+
+.atlas-dialog::backdrop {
+  background: rgba(6, 35, 51, 0.42);
+  backdrop-filter: blur(5px);
+}
+
+.atlas-dialog-panel {
+  max-height: min(90svh, 52rem);
+  padding: clamp(1.4rem, 4vw, 2.35rem);
+  overflow-y: auto;
+  border: 1px solid rgba(6, 59, 92, 0.22);
+  background:
+    linear-gradient(135deg, rgba(47, 170, 179, 0.075), transparent 38%),
+    var(--lw-cream-50);
+}
+
+.atlas-dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.atlas-dialog-panel h2 {
+  margin: 0.1rem 0 0.65rem;
+  color: var(--lw-ocean-900);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.atlas-dialog-panel > p,
+.atlas-dialog-lede {
+  max-width: 42rem;
+  color: var(--lw-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.atlas-dialog-panel p strong {
+  color: var(--lw-ocean-900);
+}
+
+.atlas-dialog-close {
+  display: inline-grid;
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgba(6, 59, 92, 0.2);
+  border-radius: 999px;
+  color: var(--lw-ocean-900);
+  background: transparent;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+
+.atlas-dialog-close:hover {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+.atlas-dialog-panel .btn {
+  min-height: 3rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid var(--lw-ocean-900);
+  border-radius: 0.2rem;
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.atlas-dialog-panel .btn:hover {
+  background: var(--lw-ocean-700);
+}
+
+.atlas-loading-note {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.9rem 0;
+  padding: 0.7rem 0.8rem;
+  border-left: 3px solid var(--lw-sun-400);
+  color: var(--lw-ocean-900);
+  background: rgba(232, 185, 52, 0.09);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.atlas-loading-spinner {
+  width: 1rem;
+  min-width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(47, 170, 179, 0.22);
+  border-top-color: var(--lw-glacial-500);
+  border-radius: 999px;
+  animation: atlas-spin 700ms linear infinite;
+}
+
+@keyframes atlas-spin {
+  to { transform: rotate(360deg); }
+}
+
+.atlas-status-list {
+  display: grid;
+  gap: 0;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--lw-line);
+  list-style: none;
+}
+
+.atlas-status-list li {
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0.72rem 0.75rem 0.72rem 1.65rem;
+  border-bottom: 1px solid var(--lw-line);
+  color: var(--lw-text);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.atlas-status-list li::before {
+  content: '';
+  position: absolute;
+  top: 1.05rem;
+  left: 0.45rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--lw-rain-300);
+}
+
+.atlas-status-list li[data-state='loading']::before { background: var(--lw-sun-400); }
+.atlas-status-list li[data-state='ready']::before { background: var(--lw-spruce-700); }
+.atlas-status-list li[data-state='partial']::before { background: var(--lw-sun-400); }
+.atlas-status-list li[data-state='error']::before { background: var(--lw-coral-600); }
+
+.atlas-source-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.atlas-source-detail {
+  min-width: 0;
+  padding-top: 0.85rem;
+  border-top: 3px solid var(--lw-glacial-500);
+}
+
+.atlas-source-detail h3 {
+  margin: 0 0 0.5rem;
+  color: var(--lw-ocean-900);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.atlas-source-detail ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atlas-source-detail li,
+.atlas-source-detail p {
+  color: var(--lw-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.atlas-source-detail li {
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(216, 207, 188, 0.65);
+}
+
+.atlas-source-detail a {
+  color: var(--lw-ocean-700);
+  font-weight: 650;
+}
+
+.atlas-updated {
+  margin: 1.5rem 0 0;
+  padding: 0.75rem 0 0.75rem 0.9rem;
+  border-left: 3px solid var(--lw-sun-400);
+  color: var(--lw-text) !important;
+  font-weight: 650;
+}
+
+.atlas-source {
+  font-size: 0.75rem !important;
+}
+
+.atlas-caveats {
+  width: min(48rem, calc(100vw - 2rem));
+}
+
+.atlas-caveats-list {
+  display: grid;
+  gap: 0;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--lw-line);
+}
+
+.atlas-caveats-list section,
+.atlas-caveats-list section:last-child {
+  grid-column: auto;
+  padding: 1rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.atlas-caveats-list h3 {
+  margin: 0 0 0.35rem;
+  color: var(--lw-ocean-900);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.atlas-caveats-list p {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--lw-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+/* Footer */
+
+.living-watershed-atlas .site-footer {
+  background: var(--lw-basalt-900);
+  color: var(--lw-cream-100);
+}
+
+.living-watershed-atlas .footer-inner {
+  max-width: 90rem;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.living-watershed-atlas .footer-brand h3,
+.living-watershed-atlas .footer-col h4,
+.living-watershed-atlas .footer-col a {
+  color: var(--lw-cream-50);
+}
+
+.living-watershed-atlas .footer-brand h3 span {
+  color: inherit;
+}
+
+.living-watershed-atlas .footer-col h4 {
+  color: var(--lw-glacial-on-ocean);
+}
+
+.living-watershed-atlas .footer-col a:hover {
+  color: var(--lw-sun-400);
+}
+
+.living-watershed-atlas .footer-brand p,
+.living-watershed-atlas .footer-bottom,
+.living-watershed-atlas .footer-bottom p {
+  color: rgba(251, 247, 238, 0.72);
+}
+
+/* Mobile: honest disclosure sheet, matching visual and keyboard order. */
+
+@media (max-width: 960px) {
+  .living-watershed-atlas .atlas-page-section {
+    --atlas-gutter: 0;
+    padding: 0;
+    background: var(--lw-cream-50);
+  }
+
+  .atlas-trust-strip {
+    margin: 0;
+  }
+
+  .living-watershed-atlas .atlas-page-layout {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    flex-direction: column;
+    margin: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .living-watershed-atlas .atlas-copy {
+    order: 1;
+    width: 100%;
+    padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 5vw, 2.5rem);
+    border-right: 0;
+  }
+
+  .living-watershed-atlas .atlas-copy h1 {
+    max-width: none;
+    font-size: clamp(2.7rem, 8vw, 4.5rem);
+  }
+
+  .living-watershed-atlas .atlas-copy > p:not(.atlas-eyebrow) {
+    max-width: 42rem;
+    font-size: 0.86rem;
+  }
+
+  .atlas-availability {
+    max-width: 42rem;
+  }
+
+  .atlas-availability-copy > span {
+    display: none;
+  }
+
+  .living-watershed-atlas .atlas-panel {
+    order: 2;
+    width: 100%;
+    height: max(52svh, 24rem);
+    min-height: max(52svh, 24rem);
+    border-top: 1px solid rgba(6, 59, 92, 0.16);
+    border-bottom: 1px solid rgba(6, 59, 92, 0.18);
+  }
+
+  .living-watershed-atlas .atlas-sidebar {
+    display: block;
+    order: 3;
+    position: sticky;
+    bottom: 0;
+    z-index: 7;
+    width: 100%;
+    min-height: 0;
+    margin-top: -4rem;
+    border: 0;
+    border-radius: 0.85rem 0.85rem 0 0;
+    background: var(--lw-cream-50);
+    box-shadow: 0 -12px 30px rgba(6, 59, 92, 0.1);
+    overflow: visible;
+  }
+
+  .living-watershed-atlas .atlas-map .maplibregl-ctrl-bottom-right,
+  .living-watershed-atlas .atlas-map .maplibregl-ctrl-bottom-left {
+    bottom: 4.2rem;
+  }
+
+  .living-watershed-atlas .atlas-map .maplibregl-ctrl-bottom-right {
+    right: 0;
+  }
+
+  .atlas-control-sheet {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .atlas-sheet-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 1rem;
+    gap: 0.8rem;
+    min-height: 4rem;
+    align-items: center;
+    padding: 0.75rem clamp(1rem, 5vw, 2rem);
+    color: var(--lw-ocean-900);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .atlas-sheet-summary-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    font-weight: 750;
+  }
+
+  .atlas-sheet-summary-title strong {
+    color: var(--lw-muted);
+    font-size: 0.75rem;
+    font-weight: 650;
+  }
+
+  .atlas-sheet-summary-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--lw-muted);
+    font-size: 0.75rem;
+    font-weight: 650;
+  }
+
+  .atlas-sheet-chevron {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+  }
+
+  .atlas-control-sheet[open] .atlas-sheet-chevron {
+    transform: rotate(225deg) translate(-2px, -2px);
+  }
+
+  .atlas-sheet-body {
+    position: static;
+    inset: auto;
+    display: none !important;
+    height: auto;
+  }
+
+  .atlas-control-sheet[open] > .atlas-sheet-body {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    max-height: min(56svh, 34rem);
+    border-top: 1px solid var(--lw-line);
+  }
+
+  .atlas-controls-heading {
+    min-height: 4rem;
+    padding-inline: clamp(1rem, 5vw, 2rem);
+  }
+
+  .atlas-layer-scroll {
+    overflow-y: auto;
+  }
+
+  .atlas-layer-family > summary,
+  .atlas-family-body,
+  .atlas-control-footer,
+  .atlas-record-index > summary,
+  .atlas-record-index > p,
+  .atlas-center-forecast {
+    padding-right: clamp(1rem, 5vw, 2rem);
+    padding-left: clamp(1rem, 5vw, 2rem);
+  }
+
+  .atlas-toggle {
+    min-height: 4rem !important;
+  }
+
+  .atlas-control-footer {
+    padding-block: 0.7rem;
+  }
+
+  .atlas-source-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .atlas-field select {
+    font-size: 1rem;
+  }
+
+  .atlas-trust-strip {
+    min-height: 2.35rem;
+    flex-wrap: wrap;
+    gap: 0 0.35rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .living-watershed-atlas .atlas-copy {
+    padding-top: 1.05rem;
+    padding-bottom: 1.15rem;
+  }
+
+  .living-watershed-atlas .atlas-copy h1 {
+    margin-top: 0.2rem;
+    font-size: clamp(2.55rem, 13vw, 3.8rem);
+    line-height: 0.9;
+  }
+
+  .living-watershed-atlas .atlas-copy > p:not(.atlas-eyebrow) {
+    font-size: 0.8rem;
+  }
+
+  .living-watershed-atlas .atlas-panel {
+    height: max(52svh, 22rem);
+    min-height: max(52svh, 22rem);
+  }
+
+  .atlas-map-utility-dock {
+    top: 0.55rem;
+    right: 0.55rem;
+    gap: 0.3rem;
+  }
+
+  .atlas-map-utility {
+    padding-inline: 0.55rem;
+  }
+
+  .atlas-map-legend {
+    top: 0.55rem;
+    left: 0.55rem;
+    width: calc(100% - 1.1rem);
+  }
+
+  .atlas-wind-key {
+    top: 3.8rem;
+    bottom: auto;
+    left: 0.55rem;
+    width: calc(100% - 1.1rem);
+    padding: 0.6rem 0.65rem;
+  }
+
+  .atlas-map-legend > summary {
+    padding-inline: 0.55rem;
+  }
+
+  .atlas-legend-panel {
+    max-width: 100%;
+  }
+
+  .atlas-sheet-summary-status > span:last-child {
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .atlas-layer-family > summary {
+    grid-template-columns: 0.25rem minmax(0, 1fr) auto 0.8rem;
+    gap: 0.55rem;
+  }
+
+  .atlas-family-summary-copy small {
+    display: none;
+  }
+
+  .atlas-layer-options,
+  .atlas-refine {
+    margin-left: 2.55rem;
+  }
+
+  .atlas-control-footer {
+    grid-template-columns: 1fr auto;
+  }
+
+  .atlas-dialog {
+    width: calc(100vw - 1rem);
+    max-height: 94svh;
+  }
+
+  .atlas-dialog-panel {
+    max-height: 94svh;
+    padding: 1.2rem;
+  }
+
+  .atlas-dialog-panel h2 {
+    font-size: 2.15rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .atlas-sheet-summary {
+    grid-template-columns: minmax(0, 1fr) auto 0.8rem;
+    gap: 0.55rem;
+  }
+
+  .atlas-sheet-summary-status > span:last-child {
+    display: none;
+  }
+
+  .atlas-map-utility {
+    font-size: 0.75rem;
+  }
+
+  .atlas-map-legend > summary [data-atlas-legend-count] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-skip-link,
+  .atlas-layer-family > summary::after,
+  .atlas-switch::after,
+  .atlas-source-indicator,
+  .atlas-loading-spinner {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .atlas-source-indicator,
+  .atlas-family-mark,
+  .atlas-legend-live-fire,
+  .atlas-legend-road {
+    border: 2px solid currentColor;
+  }
+
+  .atlas-switch {
+    border: 1px solid currentColor;
+  }
+}
+
+@media print {
+  .living-watershed-atlas .site-header,
+  .living-watershed-atlas .atlas-trust-strip,
+  .living-watershed-atlas .atlas-sidebar,
+  .living-watershed-atlas .atlas-map-utility-dock,
+  .living-watershed-atlas .atlas-map-legend,
+  .living-watershed-atlas .site-footer {
+    display: none !important;
+  }
+
+  .living-watershed-atlas .atlas-page {
+    padding: 0;
+  }
+
+  .living-watershed-atlas .atlas-page-layout {
+    display: block;
+    height: auto;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .living-watershed-atlas .atlas-copy {
+    display: block;
+    border: 0;
+  }
+
+  .living-watershed-atlas .atlas-panel {
+    display: block;
+    height: 42rem;
+    border: 1px solid #777;
+  }
+}

@@ -2050,6 +2050,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header.nav-hidden {
+    transform: none;
+    transition: none;
+  }
+
   .conditions-ticker-viewport {
     overflow-x: auto;
     -webkit-mask-image: none;

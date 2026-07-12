@@ -89,6 +89,32 @@ function fixtureFetch(url) {
             FIRE_NUMBER: "K70002",
           },
         },
+        {
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [-121.35, 50.68] },
+          properties: {
+            FIRE_YEAR: 2026,
+            FIRE_STATUS: "New",
+            IGNITION_DATE: RECENT,
+            CURRENT_SIZE: 4,
+            INCIDENT_NAME: "MARBLE CANYON",
+            FIRE_NUMBER: "K70003",
+            GEOGRAPHIC_DESCRIPTION: "near Pavilion",
+          },
+        },
+        {
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [-121.62, 50.81] },
+          properties: {
+            FIRE_YEAR: 2026,
+            FIRE_STATUS: "Under Control",
+            IGNITION_DATE: RECENT,
+            CURRENT_SIZE: 12,
+            INCIDENT_NAME: "PAVILION LAKE",
+            FIRE_NUMBER: "K70004",
+            GEOGRAPHIC_DESCRIPTION: "near Pavilion Lake",
+          },
+        },
       ],
     }));
   }
@@ -190,8 +216,8 @@ function fixtureFetch(url) {
 const payload = await buildConditions({}, { fetchImpl: fixtureFetch, now: NOW });
 assert.equal(payload.schemaVersion, 1);
 assert.equal(payload.availableSources, 6);
-assert.equal(payload.degraded, false);
-assert.equal(payload.summary.fireCount, 2);
+assert.equal(payload.degraded, true);
+assert.equal(payload.summary.fireCount, 4);
 assert.equal(payload.summary.perimeterCount, 2);
 assert.equal(payload.summary.evacuationCount, 1);
 assert.equal(payload.summary.weatherAlertCount, 1);
@@ -200,10 +226,15 @@ assert.equal(payload.fires.features[0].properties.name, "RYEGRASS COULEE");
 assert.equal(payload.fires.features[0].properties.evacuationSourceName, "Kittitas County Emergency Management");
 assert.equal(payload.fires.features.some((feature) => feature.properties.name === "CLOSED FIRE"), false);
 assert.equal(payload.fires.features.find((feature) => feature.properties.name === "CAYOOSE CREEK").properties.stageOfControl, "Out of Control");
+assert.equal(payload.fires.features.find((feature) => feature.properties.name === "MARBLE CANYON").properties.stageOfControl, "New");
+assert.equal(payload.fires.features.find((feature) => feature.properties.name === "PAVILION LAKE").properties.stageOfControl, "Under Control");
 assert.equal(payload.perimeters.features.filter((feature) => feature.properties.sourceName === "BC Wildfire Service").length, 1);
 assert.equal(payload.perimeters.features.find((feature) => feature.properties.sourceName === "BC Wildfire Service").properties.version, 2);
 assert.equal(payload.evacuations.features[0].properties.label, "Level 3 — Go now");
 assert.equal(payload.sources.find((source) => source.id === "wsdot-highway-alerts").status, "not_configured");
+assert.equal(payload.sources.find((source) => source.id === "nifc-fires").label, "WA/OR current fire incidents");
+assert.equal(payload.sources.find((source) => source.id === "bcws-fires").label, "Southern B.C. current fire incidents");
+assert.equal(payload.sources.find((source) => source.id === "nws-alerts").label, "Selected Washington NWS alerts");
 
 const degradedFetch = (url) => {
   if (url.includes("api.weather.gov")) {
@@ -214,7 +245,7 @@ const degradedFetch = (url) => {
 const degraded = await buildConditions({}, { fetchImpl: degradedFetch, now: NOW });
 assert.equal(degraded.availableSources, 5);
 assert.equal(degraded.degraded, true);
-assert.equal(degraded.summary.fireCount, 2);
+assert.equal(degraded.summary.fireCount, 4);
 assert.equal(degraded.summary.weatherAlertCount, 0);
 
 const originalFetch = globalThis.fetch;
@@ -229,7 +260,7 @@ try {
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
   assert.match(response.headers.get("cache-control"), /max-age=120/);
   const routedPayload = await response.json();
-  assert.equal(routedPayload.summary.fireCount, 2);
+  assert.equal(routedPayload.summary.fireCount, 4);
 
   const preflight = await worker.fetch(
     new Request("https://conditions.example/conditions", { method: "OPTIONS" }),

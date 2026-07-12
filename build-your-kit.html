@@ -3,252 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026 Emergency Kit Checklist for the Pacific Northwest | Cascadia.me</title>
-  <meta name="description" content="Updated June 2026: Printable emergency kit checklists for earthquake, wildfire, flooding, and winter storms, with Pacific Northwest-specific priorities.">
+  <title>Build Your Kit: A Household Workbook | Cascadia.me</title>
+  <meta name="description" content="A public, printable household preparedness workbook for Cascadia: map daily needs, make home systems more resilient, plan how to leave and reconnect, and test one ordinary interruption at a time.">
   <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#faf8f5">
+  <meta name="theme-color" content="#fbf7ee">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <link rel="canonical" href="https://cascadia.me/build-your-kit.html">
   <meta property="og:site_name" content="Cascadia.me">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="2026 Emergency Kit Checklist for the Pacific Northwest | Cascadia.me">
-  <meta property="og:description" content="Updated June 2026: Printable emergency kit checklists for earthquake, wildfire, flooding, and winter storms, with Pacific Northwest-specific priorities.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Household Workbook | Cascadia.me">
+  <meta property="og:description" content="Begin with an ordinary day. Make a public, printable preparedness plan around the people, animals, routines, and places that already shape your household.">
   <meta property="og:url" content="https://cascadia.me/build-your-kit.html">
-  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
-  <meta property="og:image:width" content="1536">
-  <meta property="og:image:height" content="1024">
-  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta property="og:image" content="https://cascadia.me/assets/living-watershed/kit/household-capability-social.jpg">
+  <meta property="og:image:width" content="1733">
+  <meta property="og:image:height" content="908">
+  <meta property="og:image:alt" content="Cascadian homes connected through water, warmth, communication, health, animals, and neighboring households.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="2026 Emergency Kit Checklist for the Pacific Northwest | Cascadia.me">
-  <meta name="twitter:description" content="Updated June 2026: Printable emergency kit checklists for earthquake, wildfire, flooding, and winter storms, with Pacific Northwest-specific priorities.">
-  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
-  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:title" content="The Household Workbook | Cascadia.me">
+  <meta name="twitter:description" content="Begin with an ordinary day. Make a public, printable preparedness plan around the life your household already lives.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/kit/household-capability-social.jpg">
+  <meta name="twitter:image:alt" content="Cascadian homes connected through water, warmth, communication, health, animals, and neighboring households.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <style>
-    /* Kit-page-specific styles (Limn owns) */
-    .kit-section { scroll-margin-top: calc(var(--nav-height) + 4.5rem); }
-
-    .kit-nav-shell {
-      position: sticky;
-      top: var(--sticky-header-offset);
-      z-index: 80;
-      background: rgba(250, 248, 245, 0.94);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(232, 228, 222, 0.32);
-      border-bottom: 1px solid rgba(232, 228, 222, 0.9);
-      transition: top var(--duration) var(--ease-out);
-    }
-
-    .kit-nav-shell .container {
-      padding-top: var(--space-2);
-      padding-bottom: var(--space-2);
-    }
-
-    .kit-header { margin-bottom: var(--space-6); }
-    .kit-header h2 { margin-bottom: var(--space-1); }
-    .kit-header .kit-desc { color: var(--color-timber); }
-
-    .kit-banner {
-      margin: 0 0 var(--space-4);
-      overflow: hidden;
-      border-radius: 1rem;
-      border: 1px solid rgba(107, 94, 79, 0.18);
-      box-shadow: 0 18px 40px rgba(61, 58, 54, 0.08);
-      background: var(--color-fog);
-    }
-
-    .kit-banner img {
-      display: block;
-      width: 100%;
-      height: 132px;
-      object-fit: cover;
-      object-position: left center;
-    }
-
-    .kit-tier { margin-bottom: var(--space-6); }
-    .kit-tier-header { margin-bottom: var(--space-4); }
-    .kit-tier-header h3 { margin-bottom: var(--space-1); }
-    .kit-tier-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--color-timber);
-      font-size: var(--text-sm);
-      margin-top: var(--space-1);
-    }
-
-    .supply-quantity {
-      font-size: var(--text-sm);
-      margin-bottom: 0.25em;
-    }
-
-    .kit-print-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-top: var(--space-4);
-      padding-top: var(--space-3);
-      border-top: 1px solid var(--color-fog);
-    }
-
-    .kit-print-row-top {
-      margin-top: 0;
-      margin-bottom: var(--space-4);
-      padding-top: 0;
-      border-top: none;
-    }
-
-    .kit-back-top {
-      margin-top: var(--space-2);
-      text-align: right;
-    }
-
-    .kit-back-top a {
-      font-size: var(--text-sm);
-      font-weight: 500;
-      text-decoration: none;
-    }
-
-    .kit-nav {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-2);
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .kit-nav::-webkit-scrollbar { display: none; }
-
-    .kit-nav-link {
-      flex: 0 0 auto;
-      white-space: nowrap;
-      padding: 0.72em 1.15em;
-      background: rgba(250, 248, 245, 0.94);
-      border-color: rgba(107, 94, 79, 0.2);
-      box-shadow: 0 10px 24px rgba(61, 58, 54, 0.06);
-    }
-
-    .kit-nav-link:hover {
-      background: var(--color-stone);
-      border-color: var(--color-stone);
-      color: var(--color-white);
-      box-shadow: 0 14px 28px rgba(61, 58, 54, 0.12);
-    }
-
-    .kit-nav-link:focus-visible {
-      outline: 2px solid var(--color-lantern);
-      outline-offset: 2px;
-    }
-
-    .kit-start-grid,
-    .kit-universal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: var(--space-3);
-      margin-top: var(--space-4);
-    }
-
-    .kit-start-grid {
-      list-style: none;
-      padding: 0;
-    }
-
-    .kit-start-item,
-    .kit-universal-item {
-      padding: var(--space-3);
-      background: var(--color-white);
-      border: 1px solid var(--color-fog);
-      border-radius: 0.9rem;
-      box-shadow: 0 12px 32px rgba(61, 58, 54, 0.05);
-    }
-
-    .kit-start-step {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      margin-bottom: var(--space-2);
-      border-radius: 999px;
-      background: var(--color-lantern-glow);
-      color: var(--color-lantern-dim);
-      font-size: var(--text-sm);
-      font-weight: 700;
-    }
-
-    .kit-start-item h3,
-    .kit-universal-item h3 {
-      font-size: var(--text-lg);
-      margin-bottom: 0.35em;
-    }
-
-    .kit-start-item p,
-    .kit-universal-item p {
-      font-size: var(--text-sm);
-      color: var(--color-timber);
-    }
-
-    .kit-universal-item p + p {
-      margin-top: var(--space-1);
-      font-size: var(--text-xs);
-    }
-
-    .kit-forgotten {
-      margin-top: 0;
-      margin-bottom: var(--space-4);
-    }
-
-    .kit-forgotten h4 {
-      margin-bottom: 0.4em;
-    }
-
-    .kit-forgotten ul {
-      margin: 0;
-      padding-left: 1.1rem;
-    }
-
-    .kit-forgotten li {
-      margin-bottom: 0.35rem;
-      color: var(--color-timber);
-      font-size: var(--text-sm);
-    }
-
-    /* Utility page: keep checklist content visible instead of waiting on scroll reveal */
-    .kit-section .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-
-    @media print {
-      .kit-print-row, .kit-nav-shell, .hero, .how-to-use, .kit-start, .kit-universal, .kit-banner, .kit-forgotten, .site-header, .site-footer { display: none; }
-      .kit-section { page-break-inside: avoid; }
-    }
-
-    @media (max-width: 768px) {
-      .kit-nav {
-        justify-content: flex-start;
-      }
-
-      .kit-start-grid,
-      .kit-universal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .kit-banner img {
-        height: 112px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/base.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/components.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/living-watershed-guide.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/living-watershed-kit.css?v=20260712-phase8">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -259,18 +44,14 @@
           "name": "Cascadia.me",
           "url": "https://cascadia.me/",
           "inLanguage": "en-US",
-          "publisher": {
-            "@id": "https://cascadia.me/#organization"
-          }
+          "publisher": { "@id": "https://cascadia.me/#organization" }
         },
         {
           "@type": "Organization",
           "@id": "https://cascadia.me/#organization",
           "name": "Cascadia.me",
           "url": "https://cascadia.me/",
-          "founder": {
-            "@id": "https://cascadia.me/#author"
-          },
+          "founder": { "@id": "https://cascadia.me/#author" },
           "publishingPrinciples": "https://cascadia.me/approach.html"
         },
         {
@@ -278,69 +59,57 @@
           "@id": "https://cascadia.me/#author",
           "name": "Michael Hendrick",
           "description": "Washington State resident and founder of Cascadia.me.",
-          "homeLocation": {
-            "@type": "Place",
-            "name": "Washington State, USA"
-          }
+          "homeLocation": { "@type": "Place", "name": "Washington State, USA" }
         },
         {
           "@type": "BreadcrumbList",
           "@id": "https://cascadia.me/build-your-kit.html#breadcrumb",
           "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://cascadia.me/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Build Your Kit",
-              "item": "https://cascadia.me/build-your-kit.html"
-            }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cascadia.me/" },
+            { "@type": "ListItem", "position": 2, "name": "The Household Workbook", "item": "https://cascadia.me/build-your-kit.html" }
           ]
         },
         {
           "@type": "WebPage",
           "@id": "https://cascadia.me/build-your-kit.html#webpage",
           "url": "https://cascadia.me/build-your-kit.html",
-          "name": "2026 Emergency Kit Checklist for the Pacific Northwest",
-          "description": "Updated June 2026: Printable emergency kit checklists for earthquake, wildfire, flooding, and winter storms, with Pacific Northwest-specific priorities.",
+          "name": "Build Your Kit: A Household Workbook",
+          "description": "A public, printable Pacific Northwest household preparedness workbook organized around daily life, home continuity, leaving and reconnecting, and safe rehearsals.",
           "inLanguage": "en-US",
-          "isPartOf": {
-            "@id": "https://cascadia.me/#website"
-          },
-          "author": {
-            "@id": "https://cascadia.me/#author"
-          },
-          "publisher": {
-            "@id": "https://cascadia.me/#organization"
-          },
-          "breadcrumb": {
-            "@id": "https://cascadia.me/build-your-kit.html#breadcrumb"
-          },
-          "dateModified": "2026-06-26",
-          "about": "Emergency kit checklist for Pacific Northwest households"
+          "isPartOf": { "@id": "https://cascadia.me/#website" },
+          "author": { "@id": "https://cascadia.me/#author" },
+          "publisher": { "@id": "https://cascadia.me/#organization" },
+          "breadcrumb": { "@id": "https://cascadia.me/build-your-kit.html#breadcrumb" },
+          "dateModified": "2026-07-12",
+          "about": [
+            "Household emergency preparedness",
+            "Emergency water",
+            "Safe backup heat",
+            "Critical power planning",
+            "Evacuation planning",
+            "Medical continuity",
+            "Neighbor support"
+          ]
         }
       ]
     }
   </script>
 </head>
-<body id="top">
+<body class="living-watershed-page lw-kit-page">
 
-  <!-- Nav -->
+  <a class="lw-skip-link" href="#main-content">Skip to main content</a>
+
   <header class="site-header">
-    <nav class="nav-inner">
-      <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
+    <nav class="nav-inner" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
       </button>
       <ul class="nav-links" id="site-nav-links">
         <li><a href="guides.html">Guides</a></li>
-        <li><a href="build-your-kit.html" class="active">Build Your Kit</a></li>
+        <li><a href="build-your-kit.html" class="active" aria-current="page">Build Your Kit</a></li>
         <li><a href="atlas.html">Atlas</a></li>
         <li><a href="approach.html">The Approach</a></li>
         <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
@@ -348,339 +117,419 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-content reveal">
-      <h1>Build Your Kit</h1>
-      <p class="hero-subtitle">
-        A hardware store, a pharmacy, a Saturday afternoon, and this list.
-        Everything here is something you can find locally and assemble yourself.
-      </p>
-    </div>
-  </section>
+  <main id="main-content">
+    <article
+      class="lw-workbook"
+      data-readyplan-scope="household-capabilities"
+      data-readyplan-version="1"
+      aria-labelledby="workbook-title"
+    >
 
-  <section class="kit-nav-shell">
-    <div class="container">
-      <nav class="kit-nav" aria-label="Jump to kit sections">
-        <a href="#earthquake" class="btn btn-outline kit-nav-link">Earthquake</a>
-        <a href="#wildfire" class="btn btn-outline kit-nav-link">Wildfire</a>
-        <a href="#winter-storm" class="btn btn-outline kit-nav-link">Winter Storm</a>
-        <a href="#flooding" class="btn btn-outline kit-nav-link">Flooding</a>
-      </nav>
-    </div>
-  </section>
-
-  <!-- How to use this page -->
-  <section class="section how-to-use" style="background: var(--color-cloud);">
-    <div class="container content-width reveal">
-      <h2>How this works</h2>
-      <p>
-        Each kit below is organized by priority. <strong>Critical</strong> items are
-        the ones that matter most — start there. <strong>Important</strong> items add
-        depth and resilience. <strong>Recommended</strong> items are nice to have.
-      </p>
-      <p>
-        Every item includes why you need it and where to find it. Most of this is at
-        your local hardware store and grocery store.
-      </p>
-      <p>
-        Two tiers for each threat: <strong>Essentials</strong> (the minimum, for 1–2 people)
-        and <strong>Complete</strong> (scaled for a family or longer duration). Start with
-        essentials. Add depth when you can.
-      </p>
-      <div class="callout callout-info" style="margin-top: var(--space-3);">
-        <h4>Print your checklists</h4>
-        <p>
-          Each kit has a print button that opens a clean, formatted checklist you can take
-          to the store. Checkboxes included. We also have a printable family communication
-          plan template — fill it out together and keep copies in every kit.
-        </p>
-        <div style="margin-top: var(--space-2);">
-          <button class="btn btn-outline" onclick="kits.printFamilyPlan()">Print family communication plan</button>
-        </div>
-        <p class="support-inline" style="margin-top: var(--space-2);">
-          If this plan is useful, <a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">support Cascadia.me</a>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section kit-universal" id="universal-items">
-    <div class="container content-width reveal">
-      <p class="guide-section-label">Buy once, use everywhere</p>
-      <h2>Universal items that show up in almost every kit</h2>
-      <p>
-        These are the cross-cutting basics. Buy them once, decide where they live,
-        and then duplicate only what truly needs to be in a car, go-bag, or second location.
-      </p>
-      <div class="kit-universal-grid">
-        <div class="kit-universal-item">
-          <h3>Water + containers</h3>
-          <p>Earthquakes, storms, and floods all mess with safe water fast. Wildfire evacuations are easier when water is already in the car.</p>
-          <p class="text-muted">Start with three days. More if you have kids, pets, or long drive times.</p>
-        </div>
-        <div class="kit-universal-item">
-          <h3>First aid + medications</h3>
-          <p>Delayed medical care is common across every scenario on this site. A real first aid kit and backup prescriptions are universal readiness.</p>
-          <p class="text-muted">Add personal meds before you buy another multitool.</p>
-        </div>
-        <div class="kit-universal-item">
-          <h3>Light + batteries</h3>
-          <p>Power loss is not a niche case here. Headlamps or flashlights belong in every hazard plan, not just winter storm prep.</p>
-          <p class="text-muted">Put one near each bed, not only in a storage tote.</p>
-        </div>
-        <div class="kit-universal-item">
-          <h3>Radio + alerts</h3>
-          <p>Information changes outcomes. Emergency radio, county alerts, and evacuation warnings matter in quakes, smoke, floods, and winter outages.</p>
-          <p class="text-muted">Set alerts now. Do not rely on remembering later.</p>
-        </div>
-        <div class="kit-universal-item">
-          <h3>Documents + cash</h3>
-          <p>Recovery starts with IDs, insurance info, and small bills. Those matter whether you are evacuating, checking into a motel, or filing a claim.</p>
-          <p class="text-muted">Paper copies plus digital backups is the right combination.</p>
-        </div>
-        <div class="kit-universal-item">
-          <h3>Masks, gloves, and work clothes</h3>
-          <p>Smoke, dust, broken glass, wet debris, and cleanup all punish bare hands and lungs. Protective basics carry across every hazard.</p>
-          <p class="text-muted">N95s, work gloves, and sturdy shoes do more than most novelty gear.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== EARTHQUAKE KIT ===== -->
-  <section class="section kit-section" id="earthquake">
-    <div class="container content-width">
-      <div class="kit-header reveal">
-        <figure class="kit-banner">
+      <header class="lw-workbook-hero">
+        <picture class="lw-workbook-hero-picture">
+          <source media="(max-width: 620px)" srcset="assets/living-watershed/kit/household-capability-hero-mobile.webp" type="image/webp">
+          <source media="(max-width: 620px)" srcset="assets/living-watershed/kit/household-capability-hero-mobile.jpg">
+          <source srcset="assets/living-watershed/kit/household-capability-hero-960.webp 960w, assets/living-watershed/kit/household-capability-hero.webp 1774w" sizes="100vw" type="image/webp">
           <img
-            src="assets/quake.webp"
-            alt="Panoramic earthquake banner with cracked ground, evergreens, foothills, and a mountain behind nearby homes."
-            width="1420"
-            height="120"
-            loading="lazy"
+            src="assets/living-watershed/kit/household-capability-hero.jpg"
+            srcset="assets/living-watershed/kit/household-capability-hero-960.jpg 960w, assets/living-watershed/kit/household-capability-hero.jpg 1774w"
+            sizes="100vw"
+            alt="A home beside a Cascadian river and coast, connected to water, warmth, radio, health, animals, and neighboring households."
+            width="1774"
+            height="887"
+            fetchpriority="high"
             decoding="async"
           >
-        </figure>
-        <h2>Earthquake Kit</h2>
-        <p class="kit-desc">
-          What to have ready when the ground moves. Sized for the reality that municipal
-          water, power, and roads may be out for days — especially west of the Cascades.
-        </p>
-        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
-          Read the full <a href="earthquake.html">earthquake guide</a> for context.
-        </p>
-      </div>
-      <div class="callout callout-info kit-forgotten reveal">
-        <h4>What most people forget</h4>
-        <ul>
-          <li>Shoes by the bed, not just at the front door.</li>
-          <li>A manual can opener and the wrench to shut off gas.</li>
-          <li>Pet supplies and a printed family communication plan.</li>
-        </ul>
-      </div>
-      <div class="kit-print-row kit-print-row-top reveal">
-        <button class="btn btn-outline" onclick="kits.print('earthquake')">Print earthquake checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <div id="earthquake-kit" class="reveal"></div>
-      <div class="kit-print-row reveal">
-        <button class="btn btn-outline" onclick="kits.print('earthquake')">Print earthquake checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
-    </div>
-  </section>
-
-  <!-- ===== WILDFIRE KIT ===== -->
-  <section class="section kit-section" id="wildfire" style="background: var(--color-cloud);">
-    <div class="container content-width">
-      <div class="kit-header reveal">
-        <figure class="kit-banner">
-          <img
-            src="assets/fire.webp"
-            alt="Panoramic wildfire banner with flames moving through a forested hillside toward a house in the distance."
-            width="1415"
-            height="140"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-        <h2>Wildfire Evacuation Kit</h2>
-        <p class="kit-desc">
-          When wildfire threatens, you may have minutes to leave. This kit lives by
-          your door or in your vehicle — ready to grab.
-        </p>
-        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
-          Read the full <a href="wildfire.html">wildfire guide</a> for context.
-        </p>
-      </div>
-      <div class="callout callout-info kit-forgotten reveal">
-        <h4>What most people forget</h4>
-        <ul>
-          <li>A half-full gas tank is not an evacuation plan.</li>
-          <li>Pet carriers and document pouches need to be packed before the alert.</li>
-          <li>Printed routes matter when smoke and dead cell data make navigation worse.</li>
-        </ul>
-      </div>
-      <div class="kit-print-row kit-print-row-top reveal">
-        <button class="btn btn-outline" onclick="kits.print('wildfire')">Print wildfire checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <div id="wildfire-kit" class="reveal"></div>
-      <div class="kit-print-row reveal">
-        <button class="btn btn-outline" onclick="kits.print('wildfire')">Print wildfire checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
-    </div>
-  </section>
-
-  <!-- ===== WINTER STORM KIT ===== -->
-  <section class="section kit-section" id="winter-storm">
-    <div class="container content-width">
-      <div class="kit-header reveal">
-        <figure class="kit-banner">
-          <img
-            src="assets/storm.webp"
-            alt="Panoramic winter storm banner with heavy snow over pines, a frozen valley, and a snow-covered house."
-            width="1420"
-            height="140"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-        <h2>Winter Storm Kit</h2>
-        <p class="kit-desc">
-          Power outages. Downed trees. Roads that don't get plowed for days. This kit
-          is for riding it out at home when the grid goes down and nobody's coming to
-          fix it quickly.
-        </p>
-        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
-          Read the full <a href="winter-storm.html">winter storm guide</a> for context.
-        </p>
-      </div>
-      <div class="callout callout-info kit-forgotten reveal">
-        <h4>What most people forget</h4>
-        <ul>
-          <li>Carbon monoxide detector batteries before backup heat comes out.</li>
-          <li>A manual can opener and a real outside cooking plan.</li>
-          <li>Traction material and a winter car kit, not just extra blankets.</li>
-        </ul>
-      </div>
-      <div class="kit-print-row kit-print-row-top reveal">
-        <button class="btn btn-outline" onclick="kits.print('winter-storm')">Print winter storm checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <div id="winter-storm-kit" class="reveal"></div>
-      <div class="kit-print-row reveal">
-        <button class="btn btn-outline" onclick="kits.print('winter-storm')">Print winter storm checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
-    </div>
-  </section>
-
-  <!-- ===== FLOODING KIT ===== -->
-  <section class="section kit-section" id="flooding" style="background: var(--color-cloud);">
-    <div class="container content-width">
-      <div class="kit-header reveal">
-        <figure class="kit-banner">
-          <img
-            src="assets/flood.webp"
-            alt="Panoramic flooding banner with swollen river water, bridge, city skyline, and homes standing in rising water."
-            width="1420"
-            height="150"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-        <h2>Flood Preparedness Kit</h2>
-        <p class="kit-desc">
-          River flooding gives you hours of warning, not minutes. This kit is about
-          using that time well — protecting what you can, moving what matters, and
-          being ready to leave.
-        </p>
-        <p class="text-muted text-sm" style="margin-top: var(--space-1);">
-          Read the full <a href="flooding.html">flooding guide</a> for context.
-        </p>
-      </div>
-      <div class="callout callout-info kit-forgotten reveal">
-        <h4>What most people forget</h4>
-        <ul>
-          <li>Flood insurance has a waiting period, so it has to happen before storm season.</li>
-          <li>Move photos, hard drives, documents, and keepsakes first.</li>
-          <li>Cleanup gear matters: boots, gloves, masks, and disinfectant, not just sandbags.</li>
-        </ul>
-      </div>
-      <div class="kit-print-row kit-print-row-top reveal">
-        <button class="btn btn-outline" onclick="kits.print('flooding')">Print flooding checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <div id="flooding-kit" class="reveal"></div>
-      <div class="kit-print-row reveal">
-        <button class="btn btn-outline" onclick="kits.print('flooding')">Print flooding checklist</button>
-        <span class="text-muted text-sm">Opens a printable version with checkboxes</span>
-      </div>
-      <p class="kit-back-top reveal"><a href="#top">Back to top &uarr;</a></p>
-    </div>
-  </section>
-
-  <!-- One more thing -->
-  <section class="section" style="background: var(--color-fog);">
-    <div class="container content-width text-center reveal">
-      <h2>The best time was last year. The second best time is now.</h2>
-      <p style="margin-top: var(--space-2); margin-bottom: var(--space-4);">
-        You don't have to do everything at once. Start with the critical items for
-        whichever threat is most relevant to where you live. Add depth over time.
-        The point isn't perfection — it's being meaningfully more ready than you
-        were yesterday.
-      </p>
-      <a href="guides.html" class="btn btn-primary">Back to the guides</a>
-    </div>
-  </section>
-
-  <section class="section" style="background: var(--color-cloud);">
-    <div class="container content-width">
-      <div class="editorial-note reveal">
-        <p class="editorial-note-meta">Checklist review • Updated June 26, 2026</p>
-        <h2>How this kit list is grounded</h2>
-        <p>This checklist is written by Michael Hendrick and cross-checked against official emergency kit guidance, household planning guidance, and the regional hazard pages on Cascadia.me.</p>
-        <p>For the June 26, 2026 review, the practical reset is water rotation, daily medications, first-aid refills, pet supplies, charged power banks, N95 or better masks, and clean HVAC or portable air filters before heavy smoke days.</p>
-        <p>It is intentionally independent: no affiliate links, no product rankings, and no pressure to buy gear you do not need before covering water, medications, light, heat, and communication.</p>
-        <ul>
-          <li><a href="approach.html">Read the author and sourcing approach</a></li>
-          <li><a href="https://www.ready.gov/kit" target="_blank" rel="noopener">Ready.gov emergency supply kit guidance</a></li>
-          <li><a href="https://www.ready.gov/plan" target="_blank" rel="noopener">Ready.gov household plan guidance</a></li>
-          <li><a href="https://www.weather.gov/nwr/" target="_blank" rel="noopener">NOAA Weather Radio overview</a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container content-width">
-      <div class="support-card reveal">
-        <p class="support-card-eyebrow">Support this site</p>
-        <h3>If this site helped, keep it going.</h3>
-        <p>No ads. No affiliate links. If this made your planning clearer, you can support the project.</p>
-        <div class="support-card-actions">
-          <a href="https://ko-fi.com/mikehen" class="btn btn-outline" target="_blank" rel="noopener">Support on Ko-fi</a>
+        </picture>
+        <div class="lw-workbook-container lw-workbook-hero-inner">
+          <div class="lw-workbook-hero-copy">
+            <p class="lw-workbook-kicker">The household workbook</p>
+            <h1 id="workbook-title">Begin with an ordinary day.</h1>
+            <p class="lw-workbook-hero-lede">Preparedness begins with the water you drink, the medicine someone takes before bed, the route home from school, the animal who will not enter a carrier, and the neighbor who keeps your spare key.</p>
+            <p class="lw-workbook-hero-note">A public, printable workbook for households across Cascadia · No account required · Reviewed July 12, 2026</p>
+            <a class="lw-workbook-start" href="#ordinary-day">Read from the beginning <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </header>
 
-  <!-- Footer -->
+      <section class="lw-workbook-section lw-workbook-opening" id="ordinary-day" aria-labelledby="ordinary-day-title">
+        <div class="lw-workbook-container lw-workbook-opening-layout">
+          <div class="lw-workbook-section-heading">
+            <p class="lw-workbook-kicker">Before the bins and bags</p>
+            <h2 id="ordinary-day-title">A kit is the visible part of a much larger plan.</h2>
+          </div>
+          <div class="lw-workbook-prose">
+            <p>Before breakfast, a household has already used water, light, heat, medication, eyeglasses, a phone, a kettle, a stairway, a bus route, a pet door, or somebody else’s help. By afternoon, the people who began the day together may be spread across a school, a job site, a ferry, an apartment building, a clinic, and two sides of a river.</p>
+            <p>That ordinary day is the useful starting point. The goal is not to imagine a perfect household or buy a perfect container. It is to notice what the household quietly depends on and give the most important things another way to work.</p>
+            <p>Some of that work costs nothing: putting shoes beside the bed, writing a phone number on paper, asking a building manager how the exit works without an elevator, learning which local authority sends alerts, or letting a neighbor know exactly what help has—and has not—been offered. Some of it happens slowly, one familiar grocery item, charged battery, water container, or seasonal layer at a time.</p>
+            <p>A smaller plan that works is more useful than a large pile no one has tested. Begin with what the household already owns and uses. Then add time, another route, another contact, or another safe way to continue.</p>
+          </div>
+        </div>
+        <div class="lw-workbook-container lw-workbook-print-band">
+          <div>
+            <p class="lw-workbook-print-title">Make a working copy.</p>
+            <p>Cascadia.me does not save or transmit typed entries. Type before printing, or print blank pages and write by hand. Browsers and printers may retain history; clear fields on shared devices and keep paper copies secure.</p>
+          </div>
+          <button class="lw-workbook-print-button" type="button" data-print-workbook>Print the four workbook pages</button>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-table" aria-labelledby="table-title">
+        <div class="lw-workbook-container">
+          <div class="lw-workbook-reading lw-workbook-prose">
+            <p class="lw-workbook-kicker">Put the household on paper</p>
+            <h2 id="table-title">Write the day before you write the disaster.</h2>
+            <p>Choose a weekday and name where everyone usually is. Include the child who moves between two homes, the adult who works nights, the person who cannot use the stairs, the service animal who travels with its handler, the cat who hides when the carrier appears, and anyone outside the home whose care depends on this household.</p>
+            <p>Then follow the day. What must happen before someone can leave? What has to remain cool, charged, dry, unlocked, or close at hand? Which task depends on one person’s memory or strength? Where are the keys, identification, medication list, school authorization, carrier, cane, and weather radio when no one is thinking about an emergency?</p>
+          </div>
+        </div>
+
+        <figure class="lw-workbook-plate">
+          <picture>
+            <source srcset="assets/living-watershed/kit/household-rehearsal.webp" type="image/webp">
+            <img
+              src="assets/living-watershed/kit/household-rehearsal.jpg"
+              alt="Four people and a cat gathered around a route map with water, medicine, a radio, lantern, sturdy shoes, pet carrier, and departure bag."
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <figcaption>The objects are useful only because the people can find, carry, power, and share them.</figcaption>
+        </figure>
+
+        <div class="lw-workbook-container lw-workbook-after-plate">
+          <div class="lw-workbook-reading lw-workbook-prose">
+            <p>A map on the table changes the conversation. The route may cross a bridge that closes in wind, depend on a ferry that stops running, or begin with an elevator. The water may be stored where one person cannot lift it. The neighbor with a key may be away all winter. The bag may fit in the car but not beside a walker and animal carrier.</p>
+            <p>Nothing about that discovery is failure. It is the plan becoming specific enough to help. The first printable page records the people, places, animals, routines, and daily dependencies that every other page must serve.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-home" aria-labelledby="home-title">
+        <div class="lw-workbook-container">
+          <div class="lw-workbook-section-heading lw-workbook-section-heading--wide">
+            <p class="lw-workbook-kicker">Home continuity</p>
+            <h2 id="home-title">Notice what the house quietly does for you.</h2>
+            <p>Water arrives under pressure. Rooms remain warm. Food stays cold. Toilets carry waste away. Phones charge while everyone sleeps. The workbook does not assume these systems will all fail together; it asks which loss would matter first in this particular home.</p>
+          </div>
+
+          <div class="lw-workbook-capabilities">
+            <section class="lw-workbook-capability" id="household-water" data-readyplan-scope="household-capabilities" data-readyplan-capability="household-water">
+              <div class="lw-workbook-capability-title">
+                <span>Water</span>
+                <h3>Safe water has to be reachable as well as stored.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>The U.S. planning baseline is at least one gallon per person per day for three days; PreparedBC uses four litres per person per day. Both include more than drinking. Cooking, brushing teeth, illness, heat, pregnancy, nursing, pets, and service animals can increase the amount.</p>
+                <p>Quantity is only half the plan. Can each person reach, lift, open, and pour the container? Is some water kept in more than one place? Is the rotation date visible? Stored water and treatment equipment have different limits; follow the container, filter, health authority, and local water notice rather than improvising a treatment method.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> the number of people and animals, the local duration goal, where water is kept, who can handle each container, and the next rotation date.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="safe-warmth" data-readyplan-scope="household-capabilities" data-readyplan-capability="safe-warmth">
+              <div class="lw-workbook-capability-title">
+                <span>Safe warmth</span>
+                <h3>A warm room also has to be a safe one.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Choose the room that can be kept tolerable without blocking an exit, vent, flue, or required appliance clearance. Begin with dry layers, blankets, sleeping bags, draft reduction that preserves ventilation, and equipment approved for indoor use and installed as required.</p>
+                <p>Never use a gas range or oven to heat a home. Never use a grill, charcoal device, camp stove, outdoor heater, engine, or vehicle in an enclosed or partly enclosed space for any purpose. Keep smoke and carbon-monoxide alarms working. Review the room on paper or briefly on a mild day; do not disable medically necessary heat to test a plan.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> the safest room, the indoor-approved heat and layers available there, alarm-test dates, and the temperature or household condition that means it is time to seek a confirmed heated place.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="critical-power" data-readyplan-scope="household-capabilities" data-readyplan-capability="critical-power">
+              <div class="lw-workbook-capability-title">
+                <span>Light and critical power</span>
+                <h3>Know what cannot simply stop.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>List lights, phones, hearing aids, mobility equipment, refrigerated medicine, well pumps, electronic entry, elevators, oxygen, and home medical devices separately. A utility medical program may offer notices or other benefits, but it does not guarantee continuous service or first restoration. The household still needs tested backup or an early relocation plan.</p>
+                <p>Test phones, lights, and noncritical batteries. For medical equipment, use only a procedure approved by the clinician, manufacturer, or device supplier; do not disconnect treatment to discover the runtime. Medication and food have different temperature rules. Follow the medicine label and pharmacist or manufacturer guidance.</p>
+                <p>If a portable generator is part of the plan, run it outdoors at least 20 ft / 6 m from every building and opening, with exhaust pointed away and working CO alarms inside. Keep it dry and let it cool before refueling. Never plug a generator into a wall outlet. A house connection requires approved transfer equipment and qualified installation.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> each essential powered item, tested runtime, approved backup method, the person who can operate it, and the point at which the household will ask for help or relocate.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="food-sanitation" data-readyplan-scope="household-capabilities" data-readyplan-capability="food-sanitation">
+              <div class="lw-workbook-capability-title">
+                <span>Food and sanitation</span>
+                <h3>Familiar food and sanitation draw from the same water.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Begin with food the household already eats, including dietary, texture, infant-feeding, and cultural needs. Favor a first day that needs little water, power, or cooking, and keep a manual way to open what is stored. Outdoor fuel-burning cooking equipment stays outdoors and away from openings.</p>
+                <p>Hand hygiene, menstrual supplies, diapers, cleaning, dishes, animal care, garbage, and toilet waste can use more water than expected. Sewer, septic, apartment, and rural systems fail differently, so local utility or health guidance belongs in the plan. If refrigeration is lost, use an appliance thermometer and current food-safety guidance rather than smell or appearance.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> one familiar no-power day of food, the water it requires, opening and preparation tools, dietary needs, and the local toilet and waste plan.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="medication-medical-devices" data-readyplan-scope="household-capabilities" data-readyplan-capability="medication-medical-devices">
+              <div class="lw-workbook-capability-title">
+                <span>Medication and medical devices</span>
+                <h3>Daily care needs instructions another person can follow.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Ask a clinician or pharmacist how to maintain an appropriate emergency supply. Keep a current paper list of medications, doses, allergies, devices, consumables, prescribers, suppliers, and the best way to communicate or provide assistance. Store it securely enough to protect privacy and plainly enough that a trusted person can find it.</p>
+                <p>Storage limits are product-specific. Food-refrigerator timelines do not determine whether medicine remains safe. Follow the label and pharmacist, clinician, manufacturer, or device-supplier instructions. If care depends on power, cooling, oxygen, an elevator, or accessible transport, decide on the relocation threshold before backup is nearly gone.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> where the current list is kept, who can use it, approved storage and power instructions, supply contacts, transport needs, and the early relocation point.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-moving" aria-labelledby="moving-title">
+        <div class="lw-workbook-container">
+          <div class="lw-workbook-section-heading lw-workbook-section-heading--wide">
+            <p class="lw-workbook-kicker">Leaving and reconnecting</p>
+            <h2 id="moving-title">A household rarely begins an emergency in one room.</h2>
+            <p>The useful departure plan reaches into schools, workplaces, vehicles, ferries, transit, care arrangements, apartment buildings, and neighboring homes. It also leaves enough room for official instructions to change the route.</p>
+          </div>
+
+          <div class="lw-workbook-capabilities">
+            <section class="lw-workbook-capability" id="communication" data-readyplan-scope="household-capabilities" data-readyplan-capability="communication">
+              <div class="lw-workbook-capability-title">
+                <span>Communication</span>
+                <h3>Every person needs one message and more than one way to receive it.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Enroll in the local opt-in alert system where one exists. In the United States, keep Wireless Emergency Alerts enabled; in Canada, know how Alert Ready reaches the devices and broadcasters you use. Save the official emergency website, road or ferry source, and broadcast source for the exact place.</p>
+                <p>Choose a nearby meeting place, a farther destination, and an out-of-area contact who can relay a short message when local networks are crowded. Keep the names and numbers on paper. A rehearsal should always leave at least one working way to receive real alerts and call for help.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> alert sources, the short household message, two meeting places, the out-of-area contact, and where paper copies will live.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="mobility-evacuation" data-readyplan-scope="household-capabilities" data-readyplan-capability="mobility-evacuation">
+              <div class="lw-workbook-capability-title">
+                <span>Mobility and evacuation</span>
+                <h3>The route has to work for everyone who will use it.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Plan more than one route and destination when the geography allows it. Not every household has two roads, a private vehicle, or a place to stay. Record accessible transport, transit and ferry limits, fuel or charging needs, pickup authorizations, building exits without elevators, and the smallest useful load each person can actually move.</p>
+                <p>Keep medication, mobility and communication equipment, identification, keys, seasonal clothing, and care instructions reachable. Renters and people in multi-unit housing should know who controls utilities, how emergency access works, where the manager’s number is kept, and what help has been agreed if stairs replace the elevator.</p>
+                <p>Do not shut off natural gas simply because an evacuation order arrives, and never delay departure to work on utilities. Follow an explicit local or utility instruction. If gas is shut off at the meter, do not turn it back on yourself. If you smell or hear escaping gas, leave without operating switches or using a phone indoors, then call 911 and the gas utility from outside.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> routes, transport, destinations, pickup permissions, building constraints, the departure load, and the household condition that means moving earlier.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="pets-dependents" data-readyplan-scope="household-capabilities" data-readyplan-capability="pets-dependents">
+              <div class="lw-workbook-capability-title">
+                <span>Children, care, pets, and service animals</span>
+                <h3>Everyone who relies on the plan belongs in it from the beginning.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Include school and childcare pickup, feeding, medication, communication, sensory and comfort needs, and a backup caregiver who has agreed and can reach what they need. Disabled adults are participants in the plan, not a generic dependent category; record the communication, medical, independence, support, and transportation details they identify as useful.</p>
+                <p>Pets need species-appropriate food, water, medication, identification, current photos, records, waste supplies, and practiced transport. Confirm pet-friendly destinations separately. Service animals generally remain with their handlers and need their own food, water, equipment, records, and relief plan.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> authorized pickups, backup care, communication and accessibility instructions, animal transport, pet-friendly destinations, and service-animal needs.</p>
+              </div>
+            </section>
+
+            <section class="lw-workbook-capability" id="neighbor-support" data-readyplan-scope="household-capabilities" data-readyplan-capability="neighbor-support">
+              <div class="lw-workbook-capability-title">
+                <span>Neighbor support</span>
+                <h3>The household extends past the front door.</h3>
+              </div>
+              <div class="lw-workbook-capability-copy lw-workbook-prose">
+                <p>Ask specific questions. Who can text after an outage? Who has offered a ride, animal care, language help, a place to charge, or an accessible room? Who has a key, and under what conditions may it be used? What help can this household offer without entering a closed road, downed-line area, floodwater, smoke, or another unsafe condition?</p>
+                <p>Agreements should be mutual, consent-based, and bounded. Nobody has to disclose a diagnosis to explain a practical need. A missed check-in begins the contact chain you agreed on; it does not require someone to make a hazardous trip.</p>
+                <p class="lw-workbook-prompt"><strong>Put on the page:</strong> the first check-in, backup contact, help offered in each direction, access or key permission, privacy boundaries, and the conditions that make an in-person check unsafe.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-rehearsal" id="rehearsal" aria-labelledby="rehearsal-title">
+        <div class="lw-workbook-container lw-workbook-rehearsal-layout">
+          <div class="lw-workbook-section-heading">
+            <p class="lw-workbook-kicker">A twenty-minute rehearsal</p>
+            <h2 id="rehearsal-title">Try one ordinary interruption.</h2>
+          </div>
+          <div class="lw-workbook-prose">
+            <p>Choose no tap water, no household power, no mobile data, or one unavailable route. Begin by naming what already works. Then find, lift, open, charge, carry, or explain the actual thing in the plan.</p>
+            <p>Keep the exercise safe. Darkness, blocked roads, poor weather, elevator loss, and separation can be discussed or simulated. Do not interrupt treatment, disable essential heat or medical power, drive a risky route, enter an unsafe space, or give up every working way to receive alerts and call for help.</p>
+            <p>Record one adjustment, give it a person rather than a vague household, and choose a date to look again. The next rehearsal can change the time of day, the person at home, the vehicle available, or the animal that has to move. It does not need to become a performance.</p>
+
+            <section class="lw-workbook-duration" aria-labelledby="duration-title">
+              <h3 id="duration-title">One day, then three, then the local goal.</h3>
+              <p>Make one day work first. Three days is a useful early milestone, not a promise that a major Cascadia interruption will be over. Washington and Oregon direct households toward two weeks. PreparedBC lists at least three days to one week of food and four litres of water per person per day. Follow the goal used by your local authority and the realities of rural, island, coastal, urban, and multi-unit life.</p>
+              <p>Build gradually. Use the food, clothing, blankets, bags, tools, and chargers already in the home. Add one regular-use item when the budget allows and rotate it through ordinary life. Share only what has been agreed; community depth can reduce storage and cost without making one household responsible for everyone.</p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-hazards" aria-labelledby="hazards-title">
+        <div class="lw-workbook-container lw-workbook-hazards-layout">
+          <div>
+            <p class="lw-workbook-kicker">The same household, different timing</p>
+            <h2 id="hazards-title">A bag does not decide the first move.</h2>
+          </div>
+          <div class="lw-workbook-prose">
+            <p><a href="earthquake.html">Earthquake</a> begins with the body: Drop, Cover, and Hold On before reaching for supplies. <a href="wildfire.html">Wildfire</a> may turn a prepared household toward the road while time remains. <a href="flooding.html">Flooding</a> asks whether a local threshold can move people before the route is wet. <a href="winter-storm.html">Winter Storm</a> measures safe warmth, power, water, and the clocks inside a long outage.</p>
+            <p>The first action changes. The household underneath it does not. Water, medication, mobility, communication, animals, documents, and neighbor agreements travel from one chapter to the next.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-sheets" id="workbook-sheets" aria-labelledby="sheets-title">
+        <div class="lw-workbook-container lw-workbook-sheets-intro">
+          <div>
+            <p class="lw-workbook-kicker">The working pages</p>
+            <h2 id="sheets-title">Four working sheets.</h2>
+            <p>Type before printing, or print blank sheets and write by hand. Cascadia.me does not save or transmit entries. Browsers and printers may retain page or print history; clear fields on shared devices and store printed copies with the same care as medication, contact, key, and pickup information.</p>
+          </div>
+          <button class="lw-workbook-print-button lw-workbook-print-button--dark" type="button" data-print-workbook>Print the four workbook pages</button>
+        </div>
+
+        <div class="lw-workbook-container lw-workbook-sheet-stack">
+          <section class="lw-workbook-sheet" aria-labelledby="sheet-one-title">
+            <header class="lw-workbook-sheet-header">
+              <span>01</span>
+              <div><p>The ordinary day</p><h3 id="sheet-one-title">Who, where, and what must continue.</h3></div>
+            </header>
+            <div class="lw-workbook-fields">
+              <label class="lw-workbook-field lw-workbook-field--wide"><span>People in this household and the places they usually are on a weekday</span><textarea rows="3" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Children, care responsibilities, pets, and service animals</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Medication, equipment, communication, mobility, feeding, and daily care that cannot simply stop</span><textarea rows="3" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Work, school, childcare, transit, ferry, elevator, or building constraints</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>What already has another way to work</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>One ordinary dependency that deserves another path</span><textarea rows="2" autocomplete="off"></textarea></label>
+            </div>
+            <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 1 of 4</footer>
+          </section>
+
+          <section class="lw-workbook-sheet" aria-labelledby="sheet-two-title">
+            <header class="lw-workbook-sheet-header">
+              <span>02</span>
+              <div><p>Home continuity</p><h3 id="sheet-two-title">Water, warmth, power, food, sanitation, and medicine.</h3></div>
+            </header>
+            <div class="lw-workbook-fields lw-workbook-fields--compact">
+              <label class="lw-workbook-field"><span>Water: people and animals, duration goal, amount, locations, access, rotation date</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Safe warmth: room, layers, indoor-approved heat, alarms, and relocation point</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Critical power: essential items, runtime, approved backup, operator, and relocation point</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Food and sanitation: one-day menu, water used, opening/preparation tools, toilet and waste plan</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Medication and devices: list location, storage and power instructions, contacts, transport</span><textarea rows="2" autocomplete="off"></textarea></label>
+            </div>
+            <aside class="lw-workbook-sheet-safety"><strong>CO and generator reminder:</strong> Outdoor fuel-burning equipment stays outside. Keep working CO alarms inside. A portable generator remains dry and at least 20 ft / 6 m from buildings and openings, with exhaust away; let it cool before refueling and never plug it into a wall outlet.</aside>
+            <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 2 of 4</footer>
+          </section>
+
+          <section class="lw-workbook-sheet" aria-labelledby="sheet-three-title">
+            <header class="lw-workbook-sheet-header">
+              <span>03</span>
+              <div><p>Leave and reconnect</p><h3 id="sheet-three-title">Instructions, contacts, routes, destinations, and support.</h3></div>
+            </header>
+            <div class="lw-workbook-fields lw-workbook-fields--compact">
+              <label class="lw-workbook-field"><span>Official alerts, emergency website, road/ferry source, and broadcast source</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Short household message, nearby meeting place, and farther meeting place</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Out-of-area contact: name, number, and paper-copy locations</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Routes, transport, destinations, pickup permissions, accessibility, and building constraints</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Departure load: medication, aids, identification, records, keys, clothes, animal supplies, where kept</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span>Neighbor agreements: check-in, help offered each way, key permission, privacy and safety boundaries</span><textarea rows="2" autocomplete="off"></textarea></label>
+            </div>
+            <aside class="lw-workbook-sheet-safety"><strong>Departure reminder:</strong> Official instructions govern. Do not delay an evacuation to pack or work on utilities. Do not shut off natural gas merely because an order arrives.</aside>
+            <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 3 of 4</footer>
+          </section>
+
+          <section class="lw-workbook-sheet" aria-labelledby="sheet-four-title">
+            <header class="lw-workbook-sheet-header">
+              <span>04</span>
+              <div><p>Rehearse and add time</p><h3 id="sheet-four-title">One safe exercise and the next practical adjustment.</h3></div>
+            </header>
+            <div class="lw-workbook-rehearsal-fields">
+              <label><span>Interruption discussed or safely simulated</span><textarea rows="1" autocomplete="off"></textarea></label>
+              <label><span>Date</span><textarea rows="1" autocomplete="off"></textarea></label>
+              <label><span>What already worked</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label><span>One adjustment</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label><span>Person responsible</span><textarea rows="1" autocomplete="off"></textarea></label>
+              <label><span>Review date</span><textarea rows="1" autocomplete="off"></textarea></label>
+            </div>
+            <table class="lw-workbook-depth-table">
+              <caption>Build duration gradually</caption>
+              <thead><tr><th scope="col">Capability</th><th scope="col">One day works</th><th scope="col">Three-day milestone</th><th scope="col">Local goal</th><th scope="col">Where / rotation</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Water</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: local goal"></label></td><td><textarea rows="1" aria-label="Water location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Food + sanitation</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: local goal"></label></td><td><textarea rows="1" aria-label="Food and sanitation location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Medication + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: local goal"></label></td><td><textarea rows="1" aria-label="Medication and care location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Light + power</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: local goal"></label></td><td><textarea rows="1" aria-label="Light and power location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Animals + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: local goal"></label></td><td><textarea rows="1" aria-label="Animals and care location and rotation" autocomplete="off"></textarea></td></tr>
+              </tbody>
+            </table>
+            <aside class="lw-workbook-sheet-safety"><strong>Safe rehearsal:</strong> Do not interrupt treatment or essential heat/power, travel a risky route, enter unsafe conditions, or disable every way to receive alerts and call for help.</aside>
+            <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 4 of 4</footer>
+          </section>
+        </div>
+      </section>
+
+      <section class="lw-workbook-section lw-workbook-sources" id="sources" aria-labelledby="sources-title">
+        <div class="lw-workbook-container lw-workbook-sources-layout">
+          <div class="lw-workbook-sources-intro">
+            <p class="lw-workbook-kicker">Sources and limits</p>
+            <h2 id="sources-title">The workbook supplies questions. Local authorities supply the particulars.</h2>
+            <p>Water notices, evacuation terms, building systems, utilities, transport, medication, medical equipment, food safety, animal access, and assistance programs vary by place and household. Follow the current issuing authority and the professionals responsible for the equipment or care involved.</p>
+            <p>Written by Michael Hendrick · Reviewed July 12, 2026 · No affiliate links or product rankings</p>
+          </div>
+          <div class="lw-workbook-source-columns">
+            <section aria-labelledby="source-baselines-title">
+              <h3 id="source-baselines-title">Water and regional depth</h3>
+              <ul>
+                <li><a href="https://www.cdc.gov/water-emergency/about/how-to-create-and-store-an-emergency-water-supply.html" target="_blank" rel="noopener">CDC: Create and store an emergency water supply</a></li>
+                <li><a href="https://mil.wa.gov/personal" target="_blank" rel="noopener">Washington Emergency Management: Individual and household preparedness</a></li>
+                <li><a href="https://www.oregon.gov/oem/hazardsprep/pages/2-weeks-ready.aspx" target="_blank" rel="noopener">Oregon Emergency Management: Be 2 Weeks Ready</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/build-an-emergency-kit-and-grab-and-go-bag" target="_blank" rel="noopener">PreparedBC: Emergency kit and grab-and-go bag</a></li>
+              </ul>
+            </section>
+            <section aria-labelledby="source-household-title">
+              <h3 id="source-household-title">Household planning and access</h3>
+              <ul>
+                <li><a href="https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/make-your-plan" target="_blank" rel="noopener">PreparedBC: Make your emergency plan</a></li>
+                <li><a href="https://www.cdc.gov/prepare-your-health/take-action/personal-needs.html" target="_blank" rel="noopener">CDC: Personal needs in an emergency</a></li>
+                <li><a href="https://www.canada.ca/en/services/policing/emergencies/preparedness/get-prepared/emergency-planning-resources/persons-disabilities.html" target="_blank" rel="noopener">Government of Canada: Emergency planning for persons with disabilities</a></li>
+                <li><a href="https://www.ready.gov/plan" target="_blank" rel="noopener">Ready.gov: Make a communication plan</a></li>
+                <li><a href="https://www.ready.gov/alerts" target="_blank" rel="noopener">Ready.gov: Emergency alerts and warnings</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/safety/public-safety/emergency-alerts/how-alerts-work" target="_blank" rel="noopener">British Columbia: How emergency alerts work</a></li>
+                <li><a href="https://www.ready.gov/pets" target="_blank" rel="noopener">Ready.gov: Include pets in emergency planning</a></li>
+              </ul>
+            </section>
+            <section aria-labelledby="source-health-title">
+              <h3 id="source-health-title">Medicine, power, and carbon monoxide</h3>
+              <ul>
+                <li><a href="https://www.fda.gov/medical-devices/emergency-situations-medical-devices/fda-offers-tips-about-medical-devices-and-natural-disasters" target="_blank" rel="noopener">FDA: Medical devices and natural disasters</a></li>
+                <li><a href="https://www.fda.gov/drugs/emergency-preparedness-drugs/safe-drug-use-after-natural-disaster" target="_blank" rel="noopener">FDA: Safe drug use after a natural disaster</a></li>
+                <li><a href="https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center" target="_blank" rel="noopener">U.S. CPSC: Carbon monoxide and generator safety</a></li>
+                <li><a href="https://www.canada.ca/en/health-canada/services/air-quality/pollutants/carbon-monoxide/preventing-exposure.html" target="_blank" rel="noopener">Health Canada: Prevent carbon-monoxide exposure</a></li>
+                <li><a href="https://www.bchydro.com/news/conservation/2020/backup-power-safety.html" target="_blank" rel="noopener">BC Hydro: Backup-power safety</a></li>
+                <li><a href="https://www.pse.com/en/Customer-Service/life-support-and-medical-emergencies" target="_blank" rel="noopener">Puget Sound Energy: Life-support status and backup planning</a></li>
+              </ul>
+            </section>
+            <section aria-labelledby="source-food-title">
+              <h3 id="source-food-title">Food, documents, and low-cost progress</h3>
+              <ul>
+                <li><a href="https://www.fda.gov/food/buy-store-serve-safe-food/food-and-water-safety-during-power-outages-and-floods" target="_blank" rel="noopener">FDA: Food and water safety during outages and floods</a></li>
+                <li><a href="https://www.ready.gov/sites/default/files/2020-03/ready_emergency-financial-first-aid-toolkit-checklists-and-forms.pdf" target="_blank" rel="noopener">FEMA: Emergency Financial First Aid Kit</a></li>
+                <li><a href="https://www.ready.gov/low-and-no-cost" target="_blank" rel="noopener">Ready.gov: Low- and no-cost preparedness</a></li>
+              </ul>
+            </section>
+            <div class="lw-workbook-support">
+              <p>Cascadia.me is independently written. Support follows usefulness, never urgency.</p>
+              <a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support this work →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
           <h3>Cascadia<span>.me</span></h3>
-          <p>
-            A Pacific Northwest preparedness guide. Regional, specific,
-            and written by your neighbor.
-          </p>
+          <p>An illustrated field guide for people who live here.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
@@ -688,13 +537,14 @@
             <ul>
               <li><a href="earthquake.html">Earthquake</a></li>
               <li><a href="wildfire.html">Wildfire</a></li>
-              <li><a href="winter-storm.html">Winter Storm</a></li>
               <li><a href="flooding.html">Flooding</a></li>
+              <li><a href="winter-storm.html">Winter Storm</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Resources</h4>
+            <h4>Explore</h4>
             <ul>
+              <li><a href="atlas.html">Regional Hazard Atlas</a></li>
               <li><a href="build-your-kit.html">Build Your Kit</a></li>
               <li><a href="approach.html">The Approach</a></li>
             </ul>
@@ -708,18 +558,11 @@
     </div>
   </footer>
 
-  <script src="js/kits.js"></script>
   <script src="js/share.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/animations.js"></script>
-  <script>
-    // Render all kit sections
-    kits.render('earthquake', 'earthquake-kit');
-    kits.render('wildfire', 'wildfire-kit');
-    kits.render('winter-storm', 'winter-storm-kit');
-    kits.render('flooding', 'flooding-kit');
-  </script>
-  <script src="js/feedback.js"></script>
+  <script src="js/nav.js?v=20260712-phase8"></script>
+  <script src="js/animations.js?v=20260712-phase8"></script>
+  <script src="js/household-workbook.js"></script>
+  <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

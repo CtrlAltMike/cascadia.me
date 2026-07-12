@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Regional Hazard Atlas | Cascadia.me</title>
-  <meta name="description" content="Explore a Cascadia hazard atlas with historical earthquakes, major wildfire perimeters, and flood hazard zones across the Pacific Northwest.">
+  <meta name="description" content="Read current official conditions, observed and forecast wind, and historical and planning layers together across Cascadia.">
   <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#faf8f5">
+  <meta name="theme-color" content="#fbf7ee">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
   <meta name="cascadia-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind">
@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Regional Hazard Atlas | Cascadia.me">
-  <meta property="og:description" content="A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.">
+  <meta property="og:description" content="Current reports, forecast guidance, and planning layers for reading land, water, weather, and risk across Cascadia.">
   <meta property="og:url" content="https://cascadia.me/atlas.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
   <meta property="og:image:width" content="1536">
@@ -24,17 +24,18 @@
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Regional Hazard Atlas | Cascadia.me">
-  <meta name="twitter:description" content="A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.">
+  <meta name="twitter:description" content="Current reports, forecast guidance, and planning layers for reading land, water, weather, and risk across Cascadia.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
   <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css?v=20260710-rdps-wind">
+  <link rel="stylesheet" href="css/base.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/components.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260712-phase8">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -92,7 +93,7 @@
           "@id": "https://cascadia.me/atlas.html#webpage",
           "url": "https://cascadia.me/atlas.html",
           "name": "Regional Hazard Atlas",
-          "description": "A Cascadia map of historical earthquakes, major wildfire perimeters, and flood hazard zones.",
+          "description": "A regional atlas separating current official reports, observed and forecast wind, historical records, and planning layers across Cascadia.",
           "inLanguage": "en-US",
           "isPartOf": {
             "@id": "https://cascadia.me/#website"
@@ -103,7 +104,7 @@
           "publisher": {
             "@id": "https://cascadia.me/#organization"
           },
-          "dateModified": "2026-07-10",
+          "dateModified": "2026-07-12",
           "breadcrumb": {
             "@id": "https://cascadia.me/atlas.html#breadcrumb"
           },
@@ -113,13 +114,15 @@
     }
   </script>
 </head>
-<body class="atlas-body">
+<body class="atlas-body living-watershed-atlas">
+
+  <a class="atlas-skip-link" href="#main-content">Skip to the Atlas</a>
 
   <!-- Nav -->
   <header class="site-header">
-    <nav class="nav-inner">
-      <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
+    <nav class="nav-inner" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -127,238 +130,351 @@
       <ul class="nav-links" id="site-nav-links">
         <li><a href="guides.html">Guides</a></li>
         <li><a href="build-your-kit.html">Build Your Kit</a></li>
-        <li><a href="atlas.html" class="active">Atlas</a></li>
+        <li><a href="atlas.html" class="active" aria-current="page">Atlas</a></li>
         <li><a href="approach.html">The Approach</a></li>
         <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="atlas-page">
+  <main class="atlas-page" id="main-content">
     <section class="atlas-page-section atlas-section" data-atlas>
+      <div class="atlas-trust-strip" role="note">
+        <strong>Official feeds checked.</strong>
+        <span>Conditions can change faster than a map updates.</span>
+      </div>
+
       <div class="atlas-page-layout">
-        <aside class="atlas-sidebar">
-          <div class="atlas-copy">
-            <h1>Regional hazard atlas</h1>
-            <p>
-              See current official conditions alongside the historical hazards that
-              shape life in Cascadia. Official feed coverage varies by place and layer.
-            </p>
+        <header class="atlas-copy">
+          <p class="atlas-eyebrow">Regional instrument</p>
+          <h1>Regional Hazard Atlas</h1>
+          <p>Start with official reports. Add observations, forecasts, or planning context as needed.</p>
+          <div class="atlas-availability" role="status">
+            <span class="atlas-source-indicator" data-atlas-source-indicator data-state="loading" aria-hidden="true"></span>
+            <span class="atlas-availability-copy">
+              <strong data-atlas-source-state>Checking sources</strong>
+              <span data-atlas-status>Map waiting to load.</span>
+            </span>
           </div>
-
-          <div class="atlas-control-group">
-            <h2>Hazard layers</h2>
-            <div class="atlas-toolbar" role="group" aria-label="Hazard layers">
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-live"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Current conditions</span>
-                  <span class="atlas-toggle-subtitle">Fire records, perimeters, weather alerts, connected evacuations</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="live" checked>
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-quake"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Earthquakes</span>
-                  <span class="atlas-toggle-subtitle" data-atlas-quake-summary>Magnitude 5.0+ since 1900</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="earthquakes">
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-wind"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Observed wind</span>
-                  <span class="atlas-toggle-subtitle">Recent station reports across Cascadia</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="wind">
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-forecast-wind"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Forecast wind</span>
-                  <span class="atlas-toggle-subtitle">10 km regional model guidance across Cascadia</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="forecast-wind">
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-fire"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Historical wildfires</span>
-                  <span class="atlas-toggle-subtitle" data-atlas-fire-summary>10,000+ acres since 2000</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="fires">
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-
-              <label class="atlas-toggle">
-                <span class="atlas-swatch atlas-swatch-flood"></span>
-                <span class="atlas-toggle-copy">
-                  <span class="atlas-toggle-title">Flood zones</span>
-                  <span class="atlas-toggle-subtitle">River corridors plus local FEMA zones</span>
-                </span>
-                <input type="checkbox" data-atlas-layer="floods">
-                <span class="atlas-switch" aria-hidden="true"></span>
-              </label>
-            </div>
-          </div>
-
-          <div class="atlas-filter-group" aria-label="Filter map">
-            <h2>Filter map</h2>
-            <div class="atlas-filter-stack">
-              <div class="atlas-filter-block">
-                <div class="atlas-filter-title">Earthquakes</div>
-                <label class="atlas-field">
-                  <span>Time window</span>
-                  <select data-atlas-quake-window aria-label="Earthquake time window">
-                    <option value="30d">Last 30 days</option>
-                    <option value="1y">Last year</option>
-                    <option value="2000">Since 2000</option>
-                    <option value="1900" selected>Historical since 1900</option>
-                  </select>
-                </label>
-                <label class="atlas-range-field">
-                  <span class="atlas-range-heading">
-                    <span>Minimum magnitude</span>
-                    <output data-atlas-quake-mag-output aria-label="M5.0+">M5.0+</output>
-                  </span>
-                  <input type="range" min="2.5" max="7" step="0.5" value="5" data-atlas-quake-min-mag>
-                </label>
-                <p class="atlas-filter-note" data-atlas-quake-note>Historical searches use M5.0+ minimum to stay readable.</p>
-              </div>
-
-              <div class="atlas-filter-block">
-                <div class="atlas-filter-title">Historical wildfires</div>
-                <label class="atlas-range-field">
-                  <span class="atlas-range-heading">
-                    <span>Since year</span>
-                    <output data-atlas-fire-year-output aria-label="2000">2000</output>
-                  </span>
-                  <input type="range" min="2000" max="2026" step="1" value="2000" data-atlas-fire-year>
-                </label>
-                <label class="atlas-field">
-                  <span>Minimum size</span>
-                  <select data-atlas-fire-acres aria-label="Minimum wildfire size">
-                    <option value="10000" selected>10,000+ acres</option>
-                    <option value="25000">25,000+ acres</option>
-                    <option value="50000">50,000+ acres</option>
-                    <option value="100000">100,000+ acres</option>
-                  </select>
-                </label>
-              </div>
-
-              <div class="atlas-filter-block">
-                <div class="atlas-filter-title">Forecast wind</div>
-                <label class="atlas-field">
-                  <span>Forecast time</span>
-                  <select data-atlas-forecast-offset aria-label="Forecast wind time">
-                    <option value="0" selected>Latest available</option>
-                    <option value="3">3 hours ahead</option>
-                    <option value="6">6 hours ahead</option>
-                    <option value="12">12 hours ahead</option>
-                  </select>
-                </label>
-                <p class="atlas-filter-note" data-atlas-forecast-note>Turn on Forecast wind to load current model guidance.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="atlas-data">
-            <h2>Data status</h2>
-            <div class="atlas-loading-note" data-atlas-loading-note hidden>
-              <span class="atlas-loading-spinner" aria-hidden="true"></span>
-              <span>Fetching public data. Larger layers can take a few seconds to render.</span>
-            </div>
-            <p class="atlas-status" data-atlas-status aria-live="polite">Map waiting to load.</p>
-            <ul class="atlas-status-list">
-              <li data-atlas-status-key="live">Current conditions waiting.</li>
-              <li data-atlas-status-key="wind">Observed wind off. Turn on for recent station reports.</li>
-              <li data-atlas-status-key="forecast-wind">Forecast wind off. Turn on for model guidance.</li>
-              <li data-atlas-status-key="earthquakes">Earthquakes off. Turn on to explore USGS records.</li>
-              <li data-atlas-status-key="fires">Historical wildfires off. Turn on to explore past perimeters.</li>
-              <li data-atlas-status-key="floods">Floods off. Turn on for river corridors + FEMA zones.</li>
-            </ul>
-            <p class="atlas-latency-note">Public source layers load on demand and may briefly lag while the map fetches and draws them.</p>
-            <p class="atlas-updated">For situational awareness only. Follow local officials and evacuation orders.</p>
-            <button type="button" class="atlas-caveats-button" data-atlas-caveats-open aria-haspopup="dialog">
-              Data limits &amp; caveats
-            </button>
-            <p class="atlas-source">
-              Sources: ECCC, BCWS, NIFC/WFIGS, NOAA/NWS, connected county emergency managers, USGS, FEMA, WSDOT when configured, OpenStreetMap.
-            </p>
-          </div>
-        </aside>
+        </header>
 
         <div class="atlas-panel" id="regional-hazard-atlas-map" aria-label="Regional hazard atlas">
-          <div class="atlas-map" id="cascadia-atlas-map" role="region" aria-label="Interactive map of Cascadia hazard data">
+          <div class="atlas-map" id="cascadia-atlas-map" role="region" aria-label="Interactive map of Cascadia hazard data" aria-describedby="atlas-map-instructions">
+            <p class="sr-only" id="atlas-map-instructions">Use the map controls to zoom or restore the regional view. Keyboard users can focus the map and use arrow keys to pan. Use the Layers panel to change data and the Legend control to read active symbols.</p>
+            <noscript>
+              <section class="atlas-noscript" aria-labelledby="atlas-noscript-title">
+                <h2 id="atlas-noscript-title">The interactive Atlas needs JavaScript.</h2>
+                <p>For current instructions, go directly to the authority responsible for your location. These regional starting points do not replace local alerts.</p>
+                <p><a href="https://mil.wa.gov/alerts">Washington alerts</a> · <a href="https://www.oregon.gov/oem/pages/default.aspx">Oregon Emergency Management</a> · <a href="https://www.emergencyinfobc.gov.bc.ca/">EmergencyInfoBC</a> · <a href="https://www.weather.gov/alerts">U.S. weather alerts</a></p>
+              </section>
+            </noscript>
             <div class="atlas-placeholder" data-atlas-placeholder>
               <h2>Regional hazard atlas</h2>
-              <p>Centered on the Cascadian bioregion from northern California to coastal British Columbia.</p>
+              <p>Loading a regional view from northern California to coastal British Columbia.</p>
+              <button type="button" class="atlas-load-btn" data-atlas-load>Load the Atlas</button>
             </div>
-            <div class="atlas-map-legend" aria-label="Map legend">
-              <span><span class="atlas-legend-live-fire"></span> Current fire</span>
-              <span><span class="atlas-legend-evac"></span> Evacuation</span>
-              <span><span class="atlas-legend-weather"></span> Weather alert</span>
-              <span><span class="atlas-legend-wind">&#8593;</span> Observed wind</span>
-              <span><span class="atlas-legend-forecast-wind"></span> Forecast wind speed</span>
-              <span><span class="atlas-legend-ring"></span> Earthquake magnitude</span>
-              <span><span class="atlas-legend-fire"></span> Historical fire</span>
-              <span><span class="atlas-legend-flood"></span> Flood zone</span>
+            <div class="atlas-map-utility-dock" aria-label="Map utilities">
+              <button type="button" class="atlas-map-utility" data-atlas-reset-view>Reset view</button>
+              <button type="button" class="atlas-map-utility" data-atlas-caveats-open aria-haspopup="dialog" aria-controls="atlas-caveats-dialog">Data notes</button>
             </div>
+            <details class="atlas-map-legend" data-atlas-legend>
+              <summary><span>Legend</span><span data-atlas-legend-count>4 keys</span></summary>
+              <div class="atlas-legend-panel">
+                <div class="atlas-legend-family" data-legend-family="current">
+                  <strong>Current &amp; observed</strong>
+                  <span data-legend-layer="live" data-legend-requires="live-fire"><span class="atlas-legend-live-fire"></span> Current fire</span>
+                  <span data-legend-layer="live" data-legend-requires="live-evac"><span class="atlas-legend-evac"></span> Evacuation</span>
+                  <span data-legend-layer="live" data-legend-requires="live-weather"><span class="atlas-legend-weather"></span> Weather alert</span>
+                  <span data-legend-layer="live" data-legend-requires="live-roads"><span class="atlas-legend-road"></span> Road report</span>
+                  <span data-legend-layer="wind" hidden><span class="atlas-legend-wind">&#8593;</span> Station arrows · travel direction</span>
+                </div>
+                <div class="atlas-legend-family" data-legend-family="forecast" hidden>
+                  <strong>Forecast guidance</strong>
+                  <span data-legend-layer="forecast-wind" hidden><span class="atlas-legend-forecast-wind"></span> Forecast speed shading · km/h</span>
+                </div>
+                <div class="atlas-legend-family" data-legend-family="planning" hidden>
+                  <strong>Historical &amp; planning</strong>
+                  <span data-legend-layer="earthquakes" hidden><span class="atlas-legend-ring"></span> Earthquake record</span>
+                  <span data-legend-layer="fires" hidden><span class="atlas-legend-fire"></span> Historical fire</span>
+                  <span data-legend-layer="floods" hidden><span class="atlas-legend-flood"></span> Flood planning</span>
+                </div>
+              </div>
+            </details>
+            <section class="atlas-wind-key" data-atlas-wind-key hidden aria-label="Wind speed map key">
+              <div class="atlas-wind-key-heading">
+                <strong>Wind speed</strong>
+                <span>km/h</span>
+              </div>
+              <div class="atlas-wind-scale" aria-hidden="true"></div>
+              <div class="atlas-wind-scale-labels" aria-hidden="true">
+                <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100+</span>
+              </div>
+              <p data-atlas-wind-key-observed hidden><span class="atlas-wind-key-arrow" aria-hidden="true">&#8593;</span> Arrows are station readings and point where air is moving. Faded arrows are older.</p>
+              <p data-atlas-wind-key-forecast hidden>Shading is a 10 km forecast. Select the map for a point value, or use Visible map records to read the map center. <span data-atlas-forecast-key-time>Loading model time.</span></p>
+            </section>
           </div>
         </div>
+
+        <aside class="atlas-sidebar" aria-label="Atlas controls">
+          <details class="atlas-control-sheet" open>
+            <summary class="atlas-sheet-summary">
+              <span class="atlas-sheet-summary-title">Layers <strong data-atlas-active-count>1 active</strong></span>
+              <span class="atlas-sheet-summary-status"><span class="atlas-source-indicator" data-atlas-source-indicator data-state="loading" aria-hidden="true"></span><span data-atlas-source-state>Checking sources</span></span>
+              <span class="atlas-sheet-chevron" aria-hidden="true"></span>
+            </summary>
+
+            <div class="atlas-sheet-body">
+              <div class="atlas-controls-heading">
+                <div>
+                  <p class="atlas-controls-kicker">Map layers</p>
+                  <h2 id="atlas-layers-title">Choose what to compare</h2>
+                </div>
+                <button type="button" class="atlas-reset-layers" data-atlas-reset-layers aria-label="Reset layers and filters">Reset</button>
+              </div>
+
+              <div class="atlas-layer-scroll" aria-labelledby="atlas-layers-title">
+                <details class="atlas-layer-family atlas-layer-family-current" data-atlas-family="current" open>
+                  <summary>
+                    <span class="atlas-family-mark" aria-hidden="true"></span>
+                    <span class="atlas-family-summary-copy"><strong>Current &amp; observed</strong><small>Reports and station observations</small></span>
+                    <span class="atlas-family-count" data-atlas-family-count="current">1 on</span>
+                  </summary>
+                  <div class="atlas-family-body" role="group" aria-label="Current and observed layers">
+                    <label class="atlas-toggle" data-atlas-toggle-row="live">
+                      <span class="atlas-swatch atlas-swatch-live" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Current reports</span><span class="atlas-layer-state" data-atlas-layer-state="live" aria-hidden="true">Checking</span></span>
+                        <span class="atlas-toggle-subtitle">Fire · evacuation · weather · roads</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="live" checked>
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+
+                    <label class="atlas-toggle" data-atlas-toggle-row="wind">
+                      <span class="atlas-swatch atlas-swatch-wind" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Observed wind</span><span class="atlas-layer-state" data-atlas-layer-state="wind" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle">Recent station observations</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="wind">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+                  </div>
+                </details>
+
+                <details class="atlas-layer-family atlas-layer-family-forecast" data-atlas-family="forecast">
+                  <summary>
+                    <span class="atlas-family-mark" aria-hidden="true"></span>
+                    <span class="atlas-family-summary-copy"><strong>Forecast guidance</strong><small>Regional model, not observation</small></span>
+                    <span class="atlas-family-count" data-atlas-family-count="forecast">0 on</span>
+                  </summary>
+                  <div class="atlas-family-body" role="group" aria-label="Forecast layers">
+                    <label class="atlas-toggle" data-atlas-toggle-row="forecast-wind">
+                      <span class="atlas-swatch atlas-swatch-forecast-wind" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Forecast wind</span><span class="atlas-layer-state" data-atlas-layer-state="forecast-wind" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle">ECCC RDPS · 10 km model</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="forecast-wind">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+                    <div class="atlas-layer-options" data-atlas-layer-options="forecast-wind" hidden>
+                      <label class="atlas-field">
+                        <span>Forecast time</span>
+                        <select data-atlas-forecast-offset aria-label="Forecast wind time">
+                          <option value="0" selected>Latest available</option>
+                          <option value="3">3 hours after model time</option>
+                          <option value="6">6 hours after model time</option>
+                          <option value="12">12 hours after model time</option>
+                        </select>
+                      </label>
+                      <p class="atlas-filter-note" data-atlas-forecast-note>Model run and valid time appear here after the layer loads.</p>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="atlas-layer-family atlas-layer-family-planning" data-atlas-family="planning">
+                  <summary>
+                    <span class="atlas-family-mark" aria-hidden="true"></span>
+                    <span class="atlas-family-summary-copy"><strong>Historical &amp; planning</strong><small>Past records and exposure context</small></span>
+                    <span class="atlas-family-count" data-atlas-family-count="planning">0 on</span>
+                  </summary>
+                  <div class="atlas-family-body" role="group" aria-label="Historical and planning layers">
+                    <label class="atlas-toggle" data-atlas-toggle-row="earthquakes">
+                      <span class="atlas-swatch atlas-swatch-quake" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Earthquake records</span><span class="atlas-layer-state" data-atlas-layer-state="earthquakes" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle" data-atlas-quake-summary>M5.0+ · since 1900</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="earthquakes">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+                    <details class="atlas-refine" data-atlas-layer-options="earthquakes" hidden>
+                      <summary>Refine earthquake records</summary>
+                      <div class="atlas-refine-body">
+                        <label class="atlas-field">
+                          <span>Time window</span>
+                          <select data-atlas-quake-window aria-label="Earthquake time window">
+                            <option value="30d">Last 30 days</option>
+                            <option value="1y">Last year</option>
+                            <option value="2000">Since 2000</option>
+                            <option value="1900" selected>Historical since 1900</option>
+                          </select>
+                        </label>
+                        <label class="atlas-range-field">
+                          <span class="atlas-range-heading"><span>Minimum magnitude</span><output data-atlas-quake-mag-output aria-label="M5.0+">M5.0+</output></span>
+                          <input type="range" min="2.5" max="7" step="0.5" value="5" data-atlas-quake-min-mag>
+                        </label>
+                        <p class="atlas-filter-note" data-atlas-quake-note>Historical searches use M5.0+ minimum to stay readable.</p>
+                      </div>
+                    </details>
+
+                    <label class="atlas-toggle" data-atlas-toggle-row="fires">
+                      <span class="atlas-swatch atlas-swatch-fire" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Historical fires</span><span class="atlas-layer-state" data-atlas-layer-state="fires" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle" data-atlas-fire-summary>10,000+ acres · since 2000</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="fires">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+                    <details class="atlas-refine" data-atlas-layer-options="fires" hidden>
+                      <summary>Refine historical fires</summary>
+                      <div class="atlas-refine-body">
+                        <label class="atlas-range-field">
+                          <span class="atlas-range-heading"><span>Since year</span><output data-atlas-fire-year-output aria-label="2000">2000</output></span>
+                          <input type="range" min="2000" max="2026" step="1" value="2000" data-atlas-fire-year>
+                        </label>
+                        <label class="atlas-field">
+                          <span>Minimum size</span>
+                          <select data-atlas-fire-acres aria-label="Minimum wildfire size">
+                            <option value="10000" selected>10,000+ acres</option>
+                            <option value="25000">25,000+ acres</option>
+                            <option value="50000">50,000+ acres</option>
+                            <option value="100000">100,000+ acres</option>
+                          </select>
+                        </label>
+                      </div>
+                    </details>
+
+                    <label class="atlas-toggle" data-atlas-toggle-row="floods">
+                      <span class="atlas-swatch atlas-swatch-flood" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Flood planning</span><span class="atlas-layer-state" data-atlas-layer-state="floods" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle">River corridors · FEMA where mapped</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="floods">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
+                  </div>
+                </details>
+              </div>
+
+              <div class="atlas-control-footer">
+                <button type="button" class="atlas-source-button" data-atlas-sources-open aria-haspopup="dialog" aria-controls="atlas-source-dialog">
+                  <span class="atlas-source-indicator" data-atlas-source-indicator data-state="loading" aria-hidden="true"></span>
+                  <span><strong>Source status</strong><small data-atlas-source-state>Checking sources</small></span>
+                </button>
+                <button type="button" class="atlas-notes-button" data-atlas-caveats-open aria-haspopup="dialog" aria-controls="atlas-caveats-dialog">Data notes</button>
+              </div>
+
+              <details class="atlas-record-index" data-atlas-record-index>
+                <summary><span>Visible map records</span><strong data-atlas-record-count>Waiting</strong></summary>
+                <p>Text details for records currently drawn in the map view. Pan or zoom the map and this list updates.</p>
+                <ul data-atlas-record-list>
+                  <li>Load the Atlas to read visible records.</li>
+                </ul>
+                <div class="atlas-center-forecast" data-atlas-center-forecast hidden>
+                  <p>Forecast wind is a continuous model field rather than a set of records.</p>
+                  <button type="button" data-atlas-center-forecast-read>Read forecast at map center</button>
+                  <p data-atlas-center-forecast-output role="status"></p>
+                </div>
+              </details>
+            </div>
+          </details>
+        </aside>
       </div>
     </section>
   </main>
 
-  <dialog class="atlas-intro" data-atlas-intro aria-labelledby="atlas-intro-title">
-    <div class="atlas-intro-panel">
-      <h2 id="atlas-intro-title">Read the map calmly.</h2>
-      <p>
-        This atlas is not here to create anxiety. It is a way to understand the
-        landscape we already live in: faults, fire country, river valleys, and
-        the places where preparation is practical.
-      </p>
-      <p>
-        Use it for orientation and planning. During an active event, follow your
-        local emergency manager, fire district, weather service, or evacuation order.
-      </p>
-      <button type="button" class="btn btn-primary" data-atlas-intro-close>Enter the atlas</button>
+  <dialog class="atlas-dialog atlas-source-dialog" id="atlas-source-dialog" data-atlas-sources aria-labelledby="atlas-source-title">
+    <div class="atlas-dialog-panel">
+      <div class="atlas-dialog-heading">
+        <div>
+          <p class="atlas-dialog-kicker">Source status</p>
+          <h2 id="atlas-source-title">What the Atlas reached</h2>
+        </div>
+        <button type="button" class="atlas-dialog-close" data-atlas-sources-close aria-label="Close source status">&#215;</button>
+      </div>
+      <p class="atlas-dialog-lede">Only layers switched on are checked. Each source is labeled available, partial, or unavailable&mdash;and sources this site has not connected are named as such.</p>
+      <div class="atlas-loading-note" data-atlas-loading-note hidden>
+        <span class="atlas-loading-spinner" aria-hidden="true"></span>
+        <span>Fetching public data. Larger layers can take a few seconds to render.</span>
+      </div>
+      <ul class="atlas-status-list">
+        <li data-atlas-status-key="map">Map waiting to load.</li>
+        <li data-atlas-status-key="live">Current reports waiting.</li>
+        <li data-atlas-status-key="wind" hidden>Observed wind not requested.</li>
+        <li data-atlas-status-key="forecast-wind" hidden>Forecast wind not requested.</li>
+        <li data-atlas-status-key="earthquakes" hidden>Earthquake records not requested.</li>
+        <li data-atlas-status-key="fires" hidden>Historical fires not requested.</li>
+        <li data-atlas-status-key="floods" hidden>Flood planning not requested.</li>
+      </ul>
+
+      <div class="atlas-source-detail-grid">
+        <section class="atlas-source-detail" data-atlas-source-panel="live">
+          <h3>Connected current-report sources</h3>
+          <p>Connected reports cover Washington and Oregon current fires, southern-B.C. current fires, selected Washington weather alerts, and Chelan County mapped evacuations. Northern California is outside the current-report feed.</p>
+          <ul data-atlas-source-list="live"><li>Waiting for current-report sources.</li></ul>
+          <p data-atlas-evacuation-coverage></p>
+        </section>
+        <section class="atlas-source-detail" data-atlas-source-panel="wind" hidden>
+          <h3>Observed-wind sources</h3>
+          <ul data-atlas-source-list="wind"><li>Turn on Observed wind to check its sources.</li></ul>
+        </section>
+        <section class="atlas-source-detail" data-atlas-source-panel="forecast-wind" hidden>
+          <h3>Forecast source</h3>
+          <ul data-atlas-source-list="forecast-wind"><li>Turn on Forecast wind to check its model source.</li></ul>
+        </section>
+      </div>
+
+      <p class="atlas-updated">For situational awareness only. Follow local officials and evacuation orders.</p>
+      <p class="atlas-source">Other on-demand sources: USGS earthquake catalog, NIFC historical fire perimeters, FEMA flood zones, generalized river corridors, and OpenStreetMap basemap data.</p>
+      <button type="button" class="btn btn-primary" data-atlas-sources-close>Back to the Atlas</button>
     </div>
   </dialog>
 
-  <dialog class="atlas-intro atlas-caveats" data-atlas-caveats aria-labelledby="atlas-caveats-title">
-    <div class="atlas-intro-panel">
-      <h2 id="atlas-caveats-title">How to read the Atlas data</h2>
+  <dialog class="atlas-dialog atlas-caveats" id="atlas-caveats-dialog" data-atlas-caveats aria-labelledby="atlas-caveats-title">
+    <div class="atlas-dialog-panel">
+      <div class="atlas-dialog-heading">
+        <h2 id="atlas-caveats-title">How to read the Atlas data</h2>
+        <button type="button" class="atlas-dialog-close" data-atlas-caveats-close aria-label="Close data notes">&#215;</button>
+      </div>
       <p><strong>Official feeds checked. Conditions can change faster than a map updates.</strong></p>
       <div class="atlas-caveats-list">
         <section>
-          <h3>Coverage has gaps</h3>
-          <p>Not every place publishes the same live data. An empty area can mean no report, no connected feed, or no mapped geometry—not necessarily no hazard.</p>
+          <h3>Current reports have different clocks and boundaries</h3>
+          <p>Sources update on different schedules, and live coverage is partial across jurisdictions. A missing marker can mean no report, no connected feed, delayed geometry, or a source outage. It does not prove that a place is safe.</p>
         </section>
         <section>
-          <h3>Fire reports and perimeters can lag</h3>
-          <p>Known “Out” fires are excluded during ingestion, but incident status, size, and mapped edges can still be delayed or incomplete. A fire point may appear before a perimeter does.</p>
+          <h3>Observed wind is a set of points</h3>
+          <p>Observed arrows come from individual stations at reported times. They are not a continuous wind field, and nearby ridges, canyons, passes, shorelines, vegetation, and structures can produce very different local wind.</p>
         </section>
         <section>
-          <h3>Wind layers have different meanings</h3>
-          <p>Observed arrows are station reports, not a continuous wind field. Forecast shading is 10 km model guidance, not an observation or a prediction of fire or smoke movement. The model smooths mountain terrain; both layers can differ sharply from local wind across ridges, canyons, mountain passes, shorelines, and exposed slopes.</p>
+          <h3>Forecast wind is a model field</h3>
+          <p>Forecast shading is 10 km model guidance, not an observation. Values are interpolated between model points, and the model smooths mountain terrain. Forecast timing, speed, and direction are uncertain—especially near ridges, canyons, passes, shorelines, and exposed slopes.</p>
         </section>
         <section>
-          <h3>Planning layers are generalized</h3>
-          <p>Historical fire and flood layers are simplified for regional viewing. They do not show parcel-level risk, current inundation depth, or a predicted fire path.</p>
+          <h3>Fire perimeters describe a reported edge</h3>
+          <p>A fire point may appear before a perimeter. Incident status, size, and mapped edges can be delayed or incomplete. A perimeter is not a forecast of fire or smoke spread.</p>
+        </section>
+        <section>
+          <h3>Flood and historical layers support planning</h3>
+          <p>Regional river corridors are generalized, and FEMA zones cover U.S. communities only where mapped. These layers do not show current inundation, depth, parcel-level safety, or what will happen in the next storm. Historical records show past events, not a prediction.</p>
         </section>
         <section>
           <h3>Official instructions come first</h3>
-          <p>Use this map for orientation. During an event, follow evacuation orders and instructions from local emergency managers, fire agencies, and weather services.</p>
+          <p>Use this map for orientation and planning. During an event, follow evacuation orders and instructions from your local emergency manager, fire agency, weather service, road authority, and utility.</p>
         </section>
       </div>
       <button type="button" class="btn btn-primary" data-atlas-caveats-close>Back to the Atlas</button>
@@ -371,10 +487,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <h3>Cascadia<span>.me</span></h3>
-          <p>
-            A Pacific Northwest preparedness guide. Regional, specific,
-            and written by your neighbor.
-          </p>
+          <p>An illustrated field guide for people who live here.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
@@ -387,9 +500,9 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Resources</h4>
+            <h4>Explore</h4>
             <ul>
-              <li><a href="atlas.html">Atlas</a></li>
+              <li><a href="atlas.html">Regional Hazard Atlas</a></li>
               <li><a href="build-your-kit.html">Build Your Kit</a></li>
               <li><a href="approach.html">The Approach</a></li>
             </ul>
@@ -404,10 +517,10 @@
   </footer>
 
   <script src="js/share.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/atlas.js?v=20260710-rdps-wind"></script>
-  <script src="js/feedback.js"></script>
+  <script src="js/nav.js?v=20260712-phase8"></script>
+  <script src="js/animations.js?v=20260712-phase8"></script>
+  <script src="js/atlas.js?v=20260712-phase8"></script>
+  <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

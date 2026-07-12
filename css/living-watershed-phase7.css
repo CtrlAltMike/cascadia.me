@@ -1,0 +1,502 @@
+/* ============================================================
+   Cascadia.me — Living Watershed Phase 7
+   Book-like supporting surfaces: illustrated contents and
+   authorial approach. Loaded after living-watershed-surfaces.css.
+   ============================================================ */
+
+/* Guides: an illustrated frontispiece followed by a real table of contents. */
+
+.guidebook-hero {
+  padding-bottom: 0;
+}
+
+.guidebook-hero .guide-hub-hero-heading {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.guidebook-hero .guide-hub-hero-lede {
+  max-width: 30rem;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  line-height: 1.48;
+}
+
+.guidebook-hero .guide-hub-hero-art img {
+  aspect-ratio: 2 / 1;
+  height: auto;
+  object-fit: contain;
+}
+
+.guidebook-frontispiece-note {
+  max-width: 58rem;
+  margin-block: 0;
+  padding-block: 1.25rem;
+  color: var(--lw-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.55;
+}
+
+.guidebook-contents {
+  padding-top: clamp(4rem, 7vw, 6.5rem);
+}
+
+.guidebook-opening,
+.guidebook-coda-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.43fr) minmax(0, 0.57fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.guidebook-opening {
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+
+.guidebook-opening h2,
+.guidebook-coda h2 {
+  max-width: 36rem;
+  margin: 0;
+  font-size: clamp(3rem, 5.5vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.guidebook-opening-copy,
+.guidebook-coda-copy {
+  max-width: 42rem;
+  color: var(--lw-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 1.55vw, 1.3rem);
+  line-height: 1.75;
+}
+
+.guidebook-opening-copy p,
+.guidebook-coda-copy p {
+  margin-top: 0;
+}
+
+.guidebook-toc {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--lw-line);
+  list-style: none;
+}
+
+.guidebook-entry {
+  --chapter-color: var(--lw-ocean-700);
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.43fr) minmax(0, 0.57fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  padding-block: clamp(3rem, 6vw, 5.25rem);
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.guidebook-entry-earthquake { --chapter-color: var(--lw-camas-600); }
+.guidebook-entry-wildfire { --chapter-color: var(--lw-coral-600); }
+.guidebook-entry-flooding { --chapter-color: var(--lw-ocean-700); }
+.guidebook-entry-winter { --chapter-color: var(--lw-glacial-text); }
+
+.guidebook-entry-heading {
+  position: relative;
+  align-self: start;
+}
+
+.guidebook-number {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--chapter-color);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.guidebook-entry-heading > p {
+  margin: 0 0 0.6rem;
+  color: var(--chapter-color);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.guidebook-entry h3 {
+  margin: 0;
+  font-size: clamp(3.25rem, 6vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.88;
+}
+
+.guidebook-entry h3 a {
+  color: var(--lw-ocean-900);
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.guidebook-entry h3 a:hover {
+  color: var(--chapter-color);
+  text-decoration-color: currentColor;
+}
+
+.guidebook-entry-copy {
+  max-width: 44rem;
+  align-self: center;
+}
+
+.guidebook-entry-copy p {
+  margin: 0 0 1.35rem;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.55vw, 1.34rem);
+  line-height: 1.72;
+}
+
+.guidebook-entry-copy a,
+.guidebook-coda-copy a {
+  color: var(--chapter-color, var(--lw-ocean-700));
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+}
+
+.guidebook-entry-copy a span {
+  display: inline-block;
+  transition: transform 150ms ease;
+}
+
+.guidebook-entry-copy a:hover span {
+  transform: translateX(0.25rem);
+}
+
+.guidebook-coda {
+  color: var(--lw-cream-50);
+  background: var(--lw-basalt-900);
+}
+
+.guidebook-coda h2 {
+  color: var(--lw-cream-50);
+}
+
+.guidebook-coda .surface-eyebrow {
+  color: var(--lw-glacial-500);
+}
+
+.guidebook-coda-copy {
+  color: var(--lw-rain-300);
+}
+
+.guidebook-coda-copy a {
+  color: var(--lw-cream-50);
+}
+
+@media (max-width: 760px) {
+  .guidebook-hero .guide-hub-hero-art img {
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+  }
+
+  .guidebook-opening,
+  .guidebook-entry,
+  .guidebook-coda-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .guidebook-opening h2,
+  .guidebook-coda h2 {
+    font-size: clamp(2.8rem, 13vw, 4.25rem);
+  }
+
+  .guidebook-entry {
+    padding-block: 3rem;
+  }
+
+  .guidebook-entry h3 {
+    font-size: clamp(3.3rem, 16vw, 4.8rem);
+  }
+
+  .guidebook-number {
+    margin-bottom: 0.9rem;
+  }
+}
+
+@media print {
+  .guidebook-hero .guide-hub-hero-art {
+    display: block !important;
+  }
+
+  .guidebook-entry,
+  .guidebook-opening,
+  .guidebook-coda-layout {
+    display: grid;
+    grid-template-columns: 0.38fr 0.62fr;
+  }
+}
+
+/* Approach: author first, one evidence instrument, then sustained prose. */
+
+.approach-author-hero {
+  padding-bottom: clamp(4rem, 7vw, 6.5rem);
+}
+
+.approach-author-hero .approach-trust-copy {
+  align-self: end;
+  min-width: 0;
+}
+
+.approach-author-hero .approach-trust-art {
+  min-width: 0;
+}
+
+.approach-author-hero .approach-trust-art picture,
+.approach-author-hero .approach-trust-art img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.approach-author-hero .approach-trust-art img {
+  height: auto;
+}
+
+.approach-author-hero h1 {
+  font-size: clamp(4rem, 6.8vw, 7rem);
+}
+
+.approach-author-hero .approach-trust-lede {
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  line-height: 1.55;
+}
+
+.approach-essay-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.35fr) minmax(0, 0.65fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: start;
+}
+
+.approach-essay-layout h2,
+.approach-method-heading h2,
+.approach-appendix-heading h2 {
+  margin: 0;
+  font-size: clamp(3rem, 5.4vw, 5.2rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.approach-prose {
+  max-width: 47rem;
+  color: var(--lw-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.13rem, 1.5vw, 1.3rem);
+  line-height: 1.78;
+}
+
+.approach-prose p {
+  margin-top: 0;
+  margin-bottom: 1.35rem;
+}
+
+.approach-prose a {
+  color: var(--lw-ocean-700);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.approach-prose-lead {
+  color: var(--lw-ocean-900);
+  font-size: clamp(1.55rem, 2.4vw, 2.05rem);
+  line-height: 1.5;
+}
+
+.approach-method-section {
+  color: var(--lw-cream-50);
+  background: var(--lw-ocean-900);
+}
+
+.approach-method-heading {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.32fr) minmax(18rem, 0.38fr) minmax(18rem, 0.3fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.approach-method-section .surface-eyebrow {
+  color: var(--lw-glacial-on-ocean);
+}
+
+.approach-method-heading h2,
+.approach-method-section .trust-flow h3 {
+  color: var(--lw-cream-50);
+}
+
+.approach-method-heading > p:last-child,
+.approach-method-section .trust-flow p {
+  color: #d5e2e4;
+}
+
+.approach-method-section .trust-flow {
+  border-color: rgba(251, 247, 238, 0.22);
+}
+
+.approach-method-section .trust-flow article {
+  border-right-color: rgba(251, 247, 238, 0.22);
+}
+
+.approach-evidence-essay .approach-prose section {
+  padding-block: 0 2.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.approach-evidence-essay .approach-prose section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.approach-prose h3 {
+  margin: 0 0 0.85rem;
+  color: var(--lw-ocean-900);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.approach-reader-promise {
+  color: var(--lw-cream-50);
+  background: var(--lw-basalt-900);
+}
+
+.approach-reader-promise h2,
+.approach-reader-promise .approach-prose h3 {
+  color: var(--lw-cream-50);
+}
+
+.approach-reader-promise .surface-eyebrow {
+  color: var(--lw-glacial-500);
+}
+
+.approach-reader-promise .approach-prose {
+  color: var(--lw-rain-300);
+}
+
+.approach-readyplan-note {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(251, 247, 238, 0.22);
+  color: var(--lw-cream-50);
+  font-style: italic;
+}
+
+.approach-source-appendix {
+  background: var(--lw-cream-100);
+}
+
+.approach-appendix-heading {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.62fr) minmax(18rem, 0.38fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: end;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.approach-appendix-heading > p {
+  margin: 0 0 0.3rem;
+  color: var(--lw-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 1.5vw, 1.3rem);
+  line-height: 1.65;
+}
+
+.approach-source-notes {
+  margin: 0;
+  border-top: 1px solid var(--lw-line);
+}
+
+.approach-source-notes > div {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.24fr) minmax(0, 0.76fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: 1.4rem;
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.approach-source-notes dt {
+  color: var(--lw-ocean-900);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.approach-source-notes dd {
+  max-width: 50rem;
+  margin: 0;
+  color: var(--lw-muted);
+  line-height: 1.65;
+}
+
+.approach-source-appendix .source-links a {
+  color: var(--lw-ocean-700);
+  border-bottom-color: rgba(7, 90, 120, 0.35);
+}
+
+.approach-review-line span:last-child {
+  margin-left: auto;
+}
+
+@media (max-width: 980px) {
+  .approach-method-heading {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .approach-method-heading > p:last-child {
+    grid-column: 1 / -1;
+    max-width: 44rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .approach-author-hero h1 {
+    font-size: clamp(3rem, 15vw, 4.2rem);
+  }
+
+  .approach-essay-layout,
+  .approach-method-heading,
+  .approach-appendix-heading,
+  .approach-source-notes > div {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .approach-method-heading > p:last-child {
+    grid-column: auto;
+  }
+
+  .approach-essay-layout h2,
+  .approach-method-heading h2,
+  .approach-appendix-heading h2 {
+    font-size: clamp(2.8rem, 13vw, 4.25rem);
+  }
+
+  .approach-review-line span:last-child {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .guides-surface .feedback-widget,
+  .approach-surface .feedback-widget {
+    display: none;
+  }
+}

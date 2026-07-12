@@ -1,7 +1,6 @@
 /* ============================================================
-   PREP.SUPPLY — Animations
-   Scroll reveals, nav scroll behavior
-   Owner: Keel
+   Cascadia.me — Shared motion and seasonal orientation
+   Scroll reveals, nav scroll behavior, calm seasonal prompts
    ============================================================ */
 
 function initReveals() {
@@ -18,21 +17,29 @@ function initReveals() {
     return;
   }
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
+  try {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
 
-  reveals.forEach((el) => {
-    revealObserver.observe(el);
-  });
+    document.documentElement.classList.add('reveal-enabled');
+    reveals.forEach((el) => {
+      revealObserver.observe(el);
+    });
+  } catch (_error) {
+    document.documentElement.classList.remove('reveal-enabled');
+    reveals.forEach((el) => {
+      el.classList.add('revealed');
+    });
+  }
 }
 
 // --- Nav scroll behavior ---
@@ -43,6 +50,8 @@ function initNavScroll() {
   let lastScroll = 0;
   const root = document.documentElement;
   const mobileNavQuery = window.matchMedia('(max-width: 768px)');
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const navLinks = document.querySelector('.nav-links');
 
   function syncStickyOffset() {
     const hidden = header.classList.contains('nav-hidden');
@@ -50,7 +59,7 @@ function initNavScroll() {
   }
 
   function updateNavVisibility(currentScroll) {
-    if (!mobileNavQuery.matches) {
+    if (!mobileNavQuery.matches || reducedMotionQuery.matches || navLinks?.classList.contains('open')) {
       header.classList.remove('nav-hidden');
       return;
     }
@@ -89,8 +98,10 @@ function initNavScroll() {
 
   if (mobileNavQuery.addEventListener) {
     mobileNavQuery.addEventListener('change', handleNavBreakpointChange);
+    reducedMotionQuery.addEventListener('change', handleNavBreakpointChange);
   } else if (mobileNavQuery.addListener) {
     mobileNavQuery.addListener(handleNavBreakpointChange);
+    reducedMotionQuery.addListener(handleNavBreakpointChange);
   }
 
   updateNavVisibility(window.scrollY);
@@ -104,21 +115,21 @@ function initSeasonalFooter() {
 
   const month = new Date().getMonth();
   const lines = [
-    'January. Storm season. Check your kit, check on your neighbors.',
-    'February. Ice can still come. Is your backup heat ready?',
-    'March. Spring thaw. A good time to rotate your stored water.',
-    'April. Wildfire season is closer than you think. Start defensible space work.',
-    'May. Replace batteries. Restock first aid. Update your household plan.',
-    'June. Fire season begins east of the Cascades. Pack your go-bag.',
-    'July. Peak fire risk. Know your evacuation route. Monitor AirNow.',
-    'August. The driest month. If you can see a smoke column, leave early.',
-    'September. Fire season isn\'t over. The 2020 Labor Day fires came this month.',
-    'October. Earthquake preparedness month. Bolt your foundation. Strap the water heater.',
-    'November. Winter storm season. Check your woodstove, stock your firewood, test your radio.',
-    'December. The quiet season. A good time to build the kit you\'ve been meaning to build.',
+    'January. Notice how your household stays warm, lit, and connected during an outage.',
+    'February. Check backup power and carbon-monoxide alarms before the next cold spell.',
+    'March. Spring thaw is a useful time to rotate stored water and review nearby river sources.',
+    'April. Begin seasonal wildfire work while weather and time are still on your side.',
+    'May. Confirm official alerts, household contacts, and the needs that travel with you.',
+    'June. Walk the route, gather medicines and documents, and include animals in the plan.',
+    'July. Use official fire and air-quality information; know where local evacuation notices arrive.',
+    'August. Review the smallest departure load your household can actually carry and use.',
+    'September. Fire weather can continue into autumn. Keep official alerts on and routes familiar.',
+    'October. Rehearse Drop, Cover, and Hold On, then check the place where everyone will meet.',
+    'November. Choose the room that can stay warm and test the power path for essential devices.',
+    'December. Choose one household capability, rehearse it together, and improve the weakest link.',
   ];
 
-  el.textContent = lines[month];
+  el.textContent = `Seasonal note — ${lines[month]}`;
 }
 
 // --- Init ---

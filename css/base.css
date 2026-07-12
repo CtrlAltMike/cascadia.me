@@ -15,12 +15,12 @@
 
   /* Accent — lantern amber: preparedness as warmth */
   --color-lantern:      #c8913a;
-  --color-lantern-dim:  #a67628;
+  --color-lantern-dim:  #865c12;
   --color-lantern-glow: #f5e6cc;
 
   /* Functional — accessible, no red/green reliance */
   --color-water:        #3d6a7a;   /* links, interactive */
-  --color-alert:        #b85c3a;   /* urgent callouts — burnt orange, NOT red */
+  --color-alert:        #a84a2d;   /* urgent callouts — burnt orange, NOT red */
   --color-safe:         #4a7a5e;   /* confirmation — muted forest, value-contrast safe */
 
   /* Typography */
@@ -211,13 +211,13 @@ small, .text-sm {
   transform: none;
 }
 
-.js .reveal {
+.reveal-enabled .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
-.js .reveal.revealed {
+.reveal-enabled .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -282,8 +282,8 @@ small, .text-sm {
     scroll-behavior: auto;
   }
 
-  .js .reveal,
-  .js .reveal.revealed {
+  .reveal-enabled .reveal,
+  .reveal-enabled .reveal.revealed {
     opacity: 1;
     transform: none;
     transition: none;

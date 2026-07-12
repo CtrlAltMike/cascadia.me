@@ -10,6 +10,7 @@ const HECTARES_TO_ACRES = 2.47105;
 const ACTIVE_BC_FIRE_STATUSES = new Set([
   "being held",
   "fire of note",
+  "new",
   "out of control",
   "under control",
 ]);
@@ -31,32 +32,32 @@ const WSDOT_ALERTS =
 const SOURCE_DEFINITIONS = {
   fires: {
     id: "nifc-fires",
-    label: "NIFC current fire incidents",
+    label: "WA/OR current fire incidents",
     url: "https://www.nifc.gov/fire-information/maps",
   },
   perimeters: {
     id: "nifc-perimeters",
-    label: "NIFC current fire perimeters",
+    label: "WA/OR current fire perimeters",
     url: "https://www.nifc.gov/fire-information/maps",
   },
   bcFires: {
     id: "bcws-fires",
-    label: "BC Wildfire Service current fire incidents",
+    label: "Southern B.C. current fire incidents",
     url: "https://www2.gov.bc.ca/gov/content/safety/wildfire-status/wildfire-situation",
   },
   bcPerimeters: {
     id: "bcws-perimeters",
-    label: "BC Wildfire Service current fire perimeters",
+    label: "Southern B.C. current fire perimeters",
     url: "https://www2.gov.bc.ca/gov/content/safety/wildfire-status/wildfire-situation",
   },
   alerts: {
     id: "nws-alerts",
-    label: "National Weather Service alerts",
+    label: "Selected Washington NWS alerts",
     url: "https://www.weather.gov/alerts",
   },
   evacuations: {
     id: "chelan-evacuations",
-    label: "Chelan County evacuation zones",
+    label: "Chelan County mapped evacuation areas",
     url: "https://www.co.chelan.wa.us/emergency-management/pages/active-emergencies",
   },
   roads: {
@@ -202,7 +203,9 @@ export async function buildConditions(env = {}, options = {}) {
   delete collections.bcFires;
   delete collections.bcPerimeters;
 
-  const unavailableSources = sources.filter((source) => source.status === "unavailable").length;
+  const incompleteSources = sources.filter((source) =>
+    source.status === "unavailable" || source.status === "not_configured"
+  ).length;
   const availableSources = sources.filter((source) => source.status === "available").length;
 
   return {
@@ -214,7 +217,7 @@ export async function buildConditions(env = {}, options = {}) {
       bounds: CASCADIA_BOUNDS,
     },
     availableSources,
-    degraded: unavailableSources > 0,
+    degraded: incompleteSources > 0,
     summary: {
       fireCount: collections.fires.features.length,
       perimeterCount: collections.perimeters.features.length,
@@ -498,7 +501,10 @@ function normalizeBcFireFeature(feature) {
       stageOfControl,
       discoveredAt: toIso(properties.IGNITION_DATE),
       updatedAt: null,
-      status: stageOfControl.toLowerCase() === "under control" ? "contained" : "current",
+      // BCWS continues to publish Under Control fires in its active layer.
+      // Preserve that official stage and exclude only records rejected by the
+      // fail-closed active-stage allowlist above.
+      status: "current",
       stale: false,
       sourceName: "BC Wildfire Service",
       sourceUrl,

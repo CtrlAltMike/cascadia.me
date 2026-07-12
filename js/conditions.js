@@ -9,10 +9,11 @@
 
   const endpoint = document.querySelector('meta[name="cascadia-conditions-endpoint"]')?.content;
   const REFRESH_MS = 5 * 60 * 1000;
+  const TICKER_PX_PER_SECOND = 28;
   const officialFallbacks = [
-    ['Chelan County', 'https://www.co.chelan.wa.us/emergency-management/pages/active-emergencies'],
-    ['Kittitas County', 'https://www.co.kittitas.wa.us/sheriff/emergency.aspx'],
-    ['Okanogan County', 'https://www.okanogancounty.gov/1861/ACTIVE-INCIDENTS'],
+    { county: 'Chelan', mode: 'official_link', status: 'official_link_only', sourceUrl: 'https://www.co.chelan.wa.us/emergency-management/pages/active-emergencies' },
+    { county: 'Kittitas', mode: 'official_link', status: 'official_link_only', sourceUrl: 'https://www.co.kittitas.wa.us/sheriff/emergency.aspx' },
+    { county: 'Okanogan', mode: 'official_link', status: 'official_link_only', sourceUrl: 'https://www.okanogancounty.gov/1861/ACTIVE-INCIDENTS' },
   ];
   let lastChecked = 0;
   let loading = false;
@@ -29,6 +30,7 @@
       const props = feature.properties || {};
       const level = Number(props.level) || 1;
       entries.push({
+        category: 'evacuation',
         priority: Math.max(0, 4 - level),
         badge: props.label || `Evacuation level ${level}`,
         tone: level >= 3 ? 'urgent' : level === 2 ? 'warning' : 'ready',
@@ -45,6 +47,7 @@
       const props = feature.properties || {};
       const severityRank = { Extreme: 5, Severe: 6, Moderate: 7, Minor: 8 }[props.severity] ?? 9;
       entries.push({
+        category: alertCategory(props.event, props.kind),
         priority: severityRank,
         badge: props.event || 'Weather alert',
         tone: props.kind === 'fire-weather' ? 'warning' : 'weather',
@@ -60,6 +63,7 @@
     featureList(data.roads).forEach((feature) => {
       const props = feature.properties || {};
       entries.push({
+        category: 'road',
         priority: 12,
         badge: props.event || 'Highway alert',
         tone: 'road',
@@ -84,10 +88,13 @@
           ? Number(props.containment)
           : null;
         entries.push({
+          category: 'fire',
           priority: hasLocalSource ? 18 : 24,
           secondaryPriority: props.status === 'current' ? 0 : 1,
           acres: Number(props.acres) || 0,
-          badge: props.stale ? 'Reported wildfire' : 'Current wildfire',
+          badge: props.stageOfControl
+            ? `B.C. wildfire · ${props.stageOfControl}`
+            : props.stale ? 'Reported wildfire' : 'Current wildfire',
           tone: 'fire',
           title: incidentTitle(props.name),
           summary: fireLocation(props),
@@ -96,9 +103,12 @@
             containment === null ? 'Containment not reported' : `${Math.round(containment)}% contained`,
           ].filter(Boolean),
           updatedAt: props.updatedAt || props.discoveredAt,
+          timeLabel: props.updatedAt ? 'Updated' : props.discoveredAt ? 'Discovered' : null,
           sourceName: props.evacuationSourceName || props.sourceName,
           sourceUrl: props.evacuationSourceUrl || props.sourceUrl,
-          sourceAction: props.evacuationSourceUrl ? 'Check official evacuation source' : 'Open official fire source',
+          sourceAction: props.evacuationSourceUrl
+            ? `Official evacuation source: ${props.evacuationSourceName || props.sourceName || 'open'}`
+            : `Official fire source: ${props.sourceName || 'open'}`,
         });
       });
 
@@ -113,22 +123,66 @@
     });
   }
 
+  function filterEntries(section, entries) {
+    const requested = String(section.dataset.conditionKinds || '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean);
+    if (!requested.length) return entries;
+    const allowed = new Set(requested);
+    return entries.filter((entry) => allowed.has(entry.category));
+  }
+
   function renderSection(section, data) {
     const status = section.querySelector('[data-conditions-status]');
     const limit = Math.max(1, Number(section.dataset.limit) || 4);
-    const entries = buildEntries(data).slice(0, limit);
+    const entries = filterEntries(section, buildEntries(data)).slice(0, limit);
 
     const unavailable = (data.sources || []).filter((source) => source.status === 'unavailable').length;
     const notConfigured = (data.sources || []).filter((source) => source.status === 'not_configured').length;
-    const statusText = unavailable
-      ? `${unavailable} source${unavailable === 1 ? '' : 's'} temporarily unavailable. ${section.dataset.display === 'ticker' ? 'Available official feeds remain in rotation.' : 'Available official feeds are shown below.'}`
-      : 'Official feeds checked. Conditions can change faster than a map updates.';
+    const guideStrip = section.dataset.display === 'guide-strip';
+    const recordSummary = entries.length
+      ? `${entries.length} matching current record${entries.length === 1 ? '' : 's'} shown; review the list.`
+      : 'No matching current records were returned.';
+    let statusText;
+    if (unavailable) {
+      const availableMessage = guideStrip
+        ? `${recordSummary} Coverage remains partial.`
+        : section.dataset.display === 'ticker'
+          ? 'Available official feeds remain in rotation.'
+          : 'Available official feeds are shown below.';
+      statusText = `${unavailable} source${unavailable === 1 ? '' : 's'} temporarily unavailable. ${availableMessage}`;
+    } else if (guideStrip) {
+      statusText = `Connected feeds checked; coverage remains partial. ${recordSummary}`;
+    } else {
+      statusText = 'Official feeds checked. Conditions can change faster than a map updates.';
+    }
     status.textContent = statusText;
-    status.dataset.state = unavailable ? 'warning' : 'ready';
-    section.dataset.state = unavailable ? 'warning' : 'ready';
+    status.dataset.state = unavailable ? 'warning' : guideStrip ? 'partial' : 'ready';
+    section.dataset.state = unavailable ? 'warning' : guideStrip ? 'partial' : 'ready';
 
     if (section.dataset.display === 'ticker') {
+      const freshness = section.querySelector('[data-conditions-freshness]');
+      if (freshness) {
+        const selection = entries.length
+          ? `${entries.length} selected priority record${entries.length === 1 ? '' : 's'} shown.`
+          : 'No matching priority records returned.';
+        freshness.textContent = `Connected feeds checked ${formatTime(data.checkedAt)}. ${selection} This is not a complete regional alert service; coverage and record times vary by source.`;
+      }
       renderTicker(section, entries, statusText);
+      section.setAttribute('aria-busy', 'false');
+      return;
+    }
+
+    if (section.dataset.display === 'guide-strip') {
+      const list = section.querySelector('[data-conditions-list]');
+      const freshness = section.querySelector('[data-conditions-freshness]');
+      const coverage = section.querySelector('[data-conditions-coverage]');
+      list.replaceChildren();
+      entries.forEach((entry) => list.appendChild(guideStripItem(entry)));
+      if (!entries.length) list.appendChild(emptyGuideStripItem());
+      freshness.textContent = `Checked ${formatTime(data.checkedAt)}. Connected coverage varies by jurisdiction.`;
+      renderCoverage(coverage, data.evacuationCoverage || []);
       section.setAttribute('aria-busy', 'false');
       return;
     }
@@ -152,7 +206,9 @@
         kind: 'condition',
         kicker: entry.badge,
         text: tickerEntryText(entry),
+        sourceName: entry.sourceName,
         sourceUrl: entry.sourceUrl,
+        sourceAction: entry.sourceAction,
       }));
 
     const feedStatus = {
@@ -220,7 +276,7 @@
     window.cancelAnimationFrame(controller.measureFrame);
     controller.measureFrame = window.requestAnimationFrame(() => {
       const distance = group.getBoundingClientRect().width;
-      const duration = Math.max(32, distance / 42);
+      const duration = Math.max(42, distance / TICKER_PX_PER_SECOND);
       controller.track.style.setProperty('--conditions-ticker-duration', `${duration.toFixed(2)}s`);
       section.dataset.tickerReady = 'true';
     });
@@ -246,7 +302,8 @@
       source.href = entry.sourceUrl;
       source.target = '_blank';
       source.rel = 'noopener';
-      source.textContent = 'Official source';
+      source.textContent = entry.sourceAction
+        || (entry.sourceName ? `Official source: ${entry.sourceName}` : 'Official source');
       item.appendChild(source);
     }
 
@@ -256,6 +313,55 @@
   function tickerEntryText(entry) {
     const details = [entry.summary, ...(entry.facts || [])].filter(Boolean);
     return [entry.title, ...details].join(' · ');
+  }
+
+  function guideStripItem(entry) {
+    const item = document.createElement('li');
+    item.className = 'lw-guide-live-item';
+    item.dataset.tone = entry.tone;
+    item.dataset.category = entry.category || 'condition';
+
+    const badge = document.createElement('span');
+    badge.className = 'lw-guide-live-badge';
+    badge.textContent = entry.badge;
+
+    const title = document.createElement('strong');
+    title.textContent = entry.title;
+
+    const summary = document.createElement('p');
+    summary.textContent = entry.summary || 'Open the official source for the affected area and current instructions.';
+
+    const footer = document.createElement('div');
+    footer.className = 'lw-guide-live-item-footer';
+    const updated = document.createElement('span');
+    updated.textContent = recordTimeText(entry);
+    footer.appendChild(updated);
+
+    if (entry.sourceUrl) {
+      const source = document.createElement('a');
+      source.href = entry.sourceUrl;
+      source.target = '_blank';
+      source.rel = 'noopener';
+      source.textContent = entry.sourceAction || 'Official source';
+      footer.appendChild(source);
+    }
+
+    item.append(badge, title, summary, footer);
+    return item;
+  }
+
+  function emptyGuideStripItem() {
+    const item = document.createElement('li');
+    item.className = 'lw-guide-live-item lw-guide-live-item-empty';
+    const badge = document.createElement('span');
+    badge.className = 'lw-guide-live-badge';
+    badge.textContent = 'Feed check';
+    const title = document.createElement('strong');
+    title.textContent = 'No matching current records returned';
+    const body = document.createElement('p');
+    body.textContent = 'Local conditions can still change quickly. Follow the issuing emergency agency for your location.';
+    item.append(badge, title, body);
+    return item;
   }
 
   function conditionCard(entry) {
@@ -316,19 +422,25 @@
   function renderCoverage(node, coverage) {
     node.replaceChildren();
     const label = document.createElement('span');
-    label.textContent = 'Official evacuation sources: ';
+    label.textContent = 'Connected evacuation coverage: ';
     node.appendChild(label);
 
     const items = coverage.length
-      ? coverage.map((item) => [item.county, item.sourceUrl])
+      ? coverage
       : officialFallbacks;
-    items.forEach(([name, url], index) => {
+    items.forEach((item, index) => {
       if (index) node.appendChild(document.createTextNode(' • '));
       const link = document.createElement('a');
-      link.href = url;
+      link.href = item.sourceUrl;
       link.target = '_blank';
       link.rel = 'noopener';
-      link.textContent = name;
+      if (item.mode === 'live_polygons') {
+        link.textContent = item.status === 'available'
+          ? `${item.county} live polygons`
+          : `${item.county} live layer unavailable`;
+      } else {
+        link.textContent = `${item.county} official link only`;
+      }
       node.appendChild(link);
     });
   }
@@ -340,12 +452,27 @@
     section.dataset.state = 'error';
 
     if (section.dataset.display === 'ticker') {
+      const freshness = section.querySelector('[data-conditions-freshness]');
+      if (freshness) {
+        freshness.textContent = 'Connected feeds could not be reached. No live records are being shown; use the responsible local authority.';
+      }
       renderTickerTrack(section, [{
         kind: 'status',
         kicker: 'Feed status',
         text: status.textContent,
         sourceUrl: null,
       }]);
+      section.setAttribute('aria-busy', 'false');
+      return;
+    }
+
+    if (section.dataset.display === 'guide-strip') {
+      const list = section.querySelector('[data-conditions-list]');
+      const freshness = section.querySelector('[data-conditions-freshness]');
+      const coverage = section.querySelector('[data-conditions-coverage]');
+      list.replaceChildren(errorGuideStripItem());
+      freshness.textContent = 'No live records are being shown on this page.';
+      renderCoverage(coverage, []);
       section.setAttribute('aria-busy', 'false');
       return;
     }
@@ -369,6 +496,20 @@
     body.textContent = 'Do not use this page to decide whether to evacuate. Follow local emergency alerts and public safety instructions.';
     article.append(title, body);
     return article;
+  }
+
+  function errorGuideStripItem() {
+    const item = document.createElement('li');
+    item.className = 'lw-guide-live-item lw-guide-live-item-error';
+    const badge = document.createElement('span');
+    badge.className = 'lw-guide-live-badge';
+    badge.textContent = 'Feed unavailable';
+    const title = document.createElement('strong');
+    title.textContent = 'Use official local sources';
+    const body = document.createElement('p');
+    body.textContent = 'Do not use this page to decide whether to evacuate. Follow local alerts and public-safety instructions.';
+    item.append(badge, title, body);
+    return item;
   }
 
   async function loadConditions() {
@@ -405,7 +546,10 @@
     if (!Number.isFinite(timestamp)) return 'time not reported';
     const minutes = Math.round((Date.now() - timestamp) / 60_000);
     if (minutes >= 0 && minutes < 60) return minutes <= 1 ? 'just now' : `${minutes} minutes ago`;
-    if (minutes >= 0 && minutes < 24 * 60) return `${Math.round(minutes / 60)} hours ago`;
+    if (minutes >= 0 && minutes < 24 * 60) {
+      const hours = Math.round(minutes / 60);
+      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    }
     return new Intl.DateTimeFormat('en-US', {
       month: 'short',
       day: 'numeric',
@@ -413,6 +557,11 @@
       minute: '2-digit',
       timeZoneName: 'short',
     }).format(new Date(timestamp));
+  }
+
+  function recordTimeText(entry) {
+    if (!entry.updatedAt) return 'Time not reported';
+    return `${entry.timeLabel || 'Updated'} ${formatTime(entry.updatedAt)}`;
   }
 
   function incidentTitle(value) {
@@ -443,6 +592,15 @@
       hour: 'numeric',
       minute: '2-digit',
     }).format(new Date(timestamp))}`;
+  }
+
+  function alertCategory(event, kind) {
+    if (kind === 'fire-weather') return 'fire-weather';
+    const label = `${event || ''} ${kind || ''}`.toLowerCase();
+    if (/flood|hydrolog|high water/.test(label)) return 'flood';
+    if (/high wind|wind advisory|wind warning|storm force wind|hurricane force wind/.test(label)) return 'wind';
+    if (/winter|snow|ice|blizzard|freez|wind chill|cold/.test(label)) return 'winter';
+    return 'weather';
   }
 
   loadConditions();

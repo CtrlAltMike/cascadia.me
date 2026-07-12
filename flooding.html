@@ -3,36 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026 Pacific Northwest Flood Preparedness Guide | Cascadia.me</title>
-  <meta name="description" content="Updated June 2026: Pacific Northwest flood preparedness for river gauges, floodplain planning, home protection, evacuation timing, and recovery.">
+  <title>Flood Preparedness in Cascadia | Cascadia.me</title>
+  <meta name="description" content="An illustrated, place-based Cascadian guide to flooding: understand local water signals, move while routes are dry, and return carefully after water recedes.">
   <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#faf8f5">
+  <meta name="theme-color" content="#fbf7ee">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <link rel="canonical" href="https://cascadia.me/flooding.html">
   <meta property="og:site_name" content="Cascadia.me">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="2026 Pacific Northwest Flood Preparedness Guide | Cascadia.me">
-  <meta property="og:description" content="Updated June 2026: Pacific Northwest flood preparedness for river gauges, floodplain planning, home protection, evacuation timing, and recovery.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Flooding | Cascadia.me">
+  <meta property="og:description" content="A Cascadian chapter about water gathering across a basin, the local thresholds that matter, and leaving while the familiar road is still dry.">
   <meta property="og:url" content="https://cascadia.me/flooding.html">
-  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
-  <meta property="og:image:width" content="1536">
-  <meta property="og:image:height" content="1024">
-  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta property="og:image" content="https://cascadia.me/assets/living-watershed/flooding/flooding-social.jpg">
+  <meta property="og:image:width" content="1731">
+  <meta property="og:image:height" content="909">
+  <meta property="og:image:alt" content="Flooding. Watch the river. Move early. Never drive through floodwater. Cascadia.me, illustrated across a Pacific Northwest watershed.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="2026 Pacific Northwest Flood Preparedness Guide | Cascadia.me">
-  <meta name="twitter:description" content="Updated June 2026: Pacific Northwest flood preparedness for river gauges, floodplain planning, home protection, evacuation timing, and recovery.">
-  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
-  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:title" content="Flooding | Cascadia.me">
+  <meta name="twitter:description" content="A Cascadian chapter about water gathering across a basin, the local thresholds that matter, and leaving while the familiar road is still dry.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/flooding/flooding-social.jpg">
+  <meta name="twitter:image:alt" content="Flooding. Watch the river. Move early. Never drive through floodwater. Cascadia.me, illustrated across a Pacific Northwest watershed.">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/effects.css">
+  <link rel="stylesheet" href="css/base.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/components.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/living-watershed-guide.css?v=20260712-phase8">
+  <link rel="stylesheet" href="css/living-watershed-primary-chapters.css?v=20260711-phase4">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -43,18 +44,14 @@
           "name": "Cascadia.me",
           "url": "https://cascadia.me/",
           "inLanguage": "en-US",
-          "publisher": {
-            "@id": "https://cascadia.me/#organization"
-          }
+          "publisher": { "@id": "https://cascadia.me/#organization" }
         },
         {
           "@type": "Organization",
           "@id": "https://cascadia.me/#organization",
           "name": "Cascadia.me",
           "url": "https://cascadia.me/",
-          "founder": {
-            "@id": "https://cascadia.me/#author"
-          },
+          "founder": { "@id": "https://cascadia.me/#author" },
           "publishingPrinciples": "https://cascadia.me/approach.html"
         },
         {
@@ -62,68 +59,43 @@
           "@id": "https://cascadia.me/#author",
           "name": "Michael Hendrick",
           "description": "Washington State resident and founder of Cascadia.me.",
-          "homeLocation": {
-            "@type": "Place",
-            "name": "Washington State, USA"
-          }
+          "homeLocation": { "@type": "Place", "name": "Washington State, USA" }
         },
         {
           "@type": "BreadcrumbList",
           "@id": "https://cascadia.me/flooding.html#breadcrumb",
           "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://cascadia.me/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Guides",
-              "item": "https://cascadia.me/guides.html"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "Flood preparedness guide",
-              "item": "https://cascadia.me/flooding.html"
-            }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cascadia.me/" },
+            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://cascadia.me/guides.html" },
+            { "@type": "ListItem", "position": 3, "name": "Flooding", "item": "https://cascadia.me/flooding.html" }
           ]
         },
         {
           "@type": "WebPage",
           "@id": "https://cascadia.me/flooding.html#webpage",
           "url": "https://cascadia.me/flooding.html",
-          "name": "2026 Pacific Northwest Flood Preparedness Guide",
-          "description": "Updated June 2026: Pacific Northwest flood preparedness for river gauges, floodplain planning, home protection, evacuation timing, and recovery.",
+          "name": "Flood Preparedness in Cascadia",
+          "description": "An illustrated, place-based guide to river and flash flooding, local thresholds, evacuation routes, household planning, and careful return in Cascadia.",
           "inLanguage": "en-US",
-          "isPartOf": {
-            "@id": "https://cascadia.me/#website"
-          },
-          "author": {
-            "@id": "https://cascadia.me/#author"
-          },
-          "publisher": {
-            "@id": "https://cascadia.me/#organization"
-          },
-          "breadcrumb": {
-            "@id": "https://cascadia.me/flooding.html#breadcrumb"
-          },
-          "dateModified": "2026-06-26",
-          "about": "Pacific Northwest flood preparedness"
+          "isPartOf": { "@id": "https://cascadia.me/#website" },
+          "author": { "@id": "https://cascadia.me/#author" },
+          "publisher": { "@id": "https://cascadia.me/#organization" },
+          "breadcrumb": { "@id": "https://cascadia.me/flooding.html#breadcrumb" },
+          "dateModified": "2026-07-12",
+          "about": ["Flood preparedness", "River flooding", "Flash flooding", "Floodplain planning"]
         }
       ]
     }
   </script>
 </head>
-<body>
+<body class="living-watershed-page living-watershed-guide primary-chapter-page flooding-chapter-page">
 
-  <!-- Nav -->
+  <a class="lw-skip-link" href="#main-content">Skip to main content</a>
+
   <header class="site-header">
-    <nav class="nav-inner">
-      <a href="index.html" class="nav-logo">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
+    <nav class="nav-inner" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -138,622 +110,334 @@
     </nav>
   </header>
 
-  <!-- Guide -->
-  <article class="guide" data-threat="flooding">
+  <main id="main-content">
+    <article class="guide lw-guide lw-longform chapter chapter--flooding" data-threat="flooding" data-guide-template="living-watershed-chapter-v2" data-hazard="flooding">
 
-    <!-- Hero -->
-    <header class="guide-hero guide-hero-flooding">
-      <div class="fx-layer" aria-hidden="true">
-        <div class="fx-flood-line"></div>
-      </div>
-      <div class="container">
-        <div class="guide-meta reveal">
-          <span class="guide-meta-item">River valleys &amp; floodplains, WA/OR/BC</span>
-          <span class="guide-meta-item">2025: Leavenworth, western WA devastated</span>
-          <span class="guide-meta-item">Season: November – March</span>
-          <span class="guide-meta-item">Reviewed June 26, 2026</span>
-        </div>
-        <h1 class="reveal">Flooding</h1>
-        <p class="hero-subtitle reveal">
-          River flooding usually gives you hours of warning — not minutes. The question
-          isn't whether you'll have time. It's whether you'll use it. Here's how to
-          read the signs, protect what you can, and leave when it's time.
-        </p>
-      </div>
-    </header>
-
-    <!-- Scene: The First Hours -->
-    <section class="guide-scene guide-section">
-      <div class="container">
-        <div class="content-width">
-          <p class="guide-section-label reveal">The hours before the water</p>
-
-          <div class="reveal">
-            <p>
-              Tom wakes at 4 AM on a Wednesday in December because he can't sleep when
-              it rains like this. He and Maria live on Prindle Street in Centralia, half
-              a mile from the Chehalis River, in a house built in 1958 on a street that
-              was platted before anyone in Lewis County cared about floodplains. The
-              house has flooded twice — 2007 and 2009. Both times, two feet of brown
-              water in the living room. Both times, everything below knee height was
-              ruined. After the second time, they raised the furnace and the electrical
-              panel. They couldn't raise the house. Too expensive. So they learned to
-              read the river instead.
-            </p>
-            <p>
-              Tom opens his phone and checks the USGS gauge at the Grand Mound station.
-              The Chehalis is at 67.2 feet and rising. Flood stage is 65 feet. Major
-              flood stage is 70. The National Weather Service forecast shows the crest
-              at 71.5 feet by 7 AM. That's worse than 2009.
-            </p>
-            <p>
-              He wakes Maria. They don't argue about it. They've had this conversation
-              twice before and once more in practice, last October, when the river hit
-              64 feet and they did a dry run. The dry run is why the next four hours go
-              the way they do.
-            </p>
-            <p>
-              First: the basement. Tom moves the plastic bins — documents, photo albums,
-              the kids' school projects Maria can't let go of — from the basement shelves
-              to the truck bed. The bins are already packed. They've been packed since
-              September. After the second flood, Maria said: "I'm not going to lose the
-              same things three times." She meant it. Everything below three feet is
-              either replaceable or already in a bin.
-            </p>
-            <p>
-              Second: the house. Maria unplugs everything at the wall. Moves the couch
-              cushions upstairs. Puts the floor lamps on the dining table. Turns off the
-              water main, the gas, and the breaker panel — she does this in the order
-              Tom wrote on the card taped to the panel box. The card has been there since
-              2010. The tape is yellowed. The instructions still work.
-            </p>
-            <p>
-              Third: the neighbors. Tom walks to the Ortegas' house next door. They moved
-              in last year. They've never seen the river this high. He tells them: it's
-              going to flood, probably by late morning, and they should move anything they
-              care about off the ground floor. He says it calmly, because panic is
-              contagious and calm is useful. The Ortegas' faces change when they
-              understand he's serious.
-            </p>
-            <p>
-              By 6:30 AM, Tom and Maria are in the truck. The bins are in the back,
-              covered with a tarp. The dog is in the cab. They drive east on Highway 6
-              toward Maria's sister's place in Morton, thirty miles upriver and 400 feet
-              higher. The rain hasn't stopped.
-            </p>
-            <p>
-              The water reaches Prindle Street at 9:15 AM. It peaks at fourteen inches
-              inside the house — less than 2009, because the city's upstream retention
-              work took some of the crest. The Ortegas get two inches. They'd moved
-              everything off the floor by 7 AM. They tell Tom later that they almost
-              didn't.
-            </p>
+      <header class="chapter-hero" aria-labelledby="flooding-title">
+        <picture class="chapter-hero-picture">
+          <source srcset="assets/living-watershed/flooding/flooding-hero-960.webp 960w, assets/living-watershed/flooding/flooding-hero.webp 1774w" sizes="100vw" type="image/webp">
+          <img
+            src="assets/living-watershed/flooding/flooding-hero.jpg"
+            srcset="assets/living-watershed/flooding/flooding-hero-960.jpg 960w, assets/living-watershed/flooding/flooding-hero.jpg 1774w"
+            sizes="100vw"
+            alt="Rain and snowmelt moving from Cascade mountains through tributaries into a broad forested river floodplain."
+            width="1774"
+            height="887"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </picture>
+        <div class="chapter-container chapter-hero-inner">
+          <div class="chapter-hero-copy">
+            <p class="chapter-kicker">Chapter three · Flooding</p>
+            <h1 id="flooding-title">Flooding</h1>
+            <p class="chapter-hero-lede">A river begins rising long before water reaches a door. The household advantage is the time before a familiar road changes character.</p>
+            <p class="chapter-hero-note">River valleys, floodplains, steep drainages, and low ground across Washington, Oregon, and British Columbia · Flood clocks vary by place · Reviewed July 12, 2026</p>
+            <a class="chapter-now-link" href="#flood-now">If water is rising or an evacuation instruction is active <span aria-hidden="true">↓</span></a>
           </div>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <!-- Understand: The Hydrology -->
-    <section class="guide-understand guide-section">
-      <div class="container content-width">
-        <p class="guide-section-label reveal">What's happening in the watershed</p>
-
-        <div class="reveal">
-          <h2>Flooding in the Pacific Northwest</h2>
-          <p>
-            The Pacific Northwest floods because of its geography. Steep mountain
-            ranges catch moisture-laden air from the Pacific and wring it out as
-            rain — sometimes extraordinary amounts. The water runs off into river
-            systems that pass through populated valleys on their way to the coast
-            or the Sound. When the rainfall exceeds what the soil can absorb and
-            the rivers can carry, the water goes where it always goes: the
-            floodplain. The floodplain is where we built.
-          </p>
-          <p>
-            The primary driver of PNW flooding is the atmospheric river — a narrow
-            band of tropical moisture that can deliver a month's rainfall in 48 hours.
-            The winter of 2025-2026 demonstrated what happens when multiple atmospheric
-            rivers hit in sequence: saturated soil, full reservoirs, and rivers that
-            have nowhere to put the water. Leavenworth, a town beloved for its Bavarian
-            holiday village, was gutted. Communities across western Washington saw
-            levels not reached in decades.
-          </p>
-        </div>
-
-        <div class="reveal" style="margin-top: var(--space-6);">
-          <h3>Why the same places flood again</h3>
-          <p>
-            Flooding in the PNW is not random. The Chehalis basin floods because it's
-            a broad, low-gradient valley with inadequate channel capacity. The Skagit
-            River floods because its headwaters drain the western Cascades and the
-            river passes through some of the flattest agricultural land in the state.
-            The Snoqualmie floods because the falls create a natural bottleneck that
-            backs water up into the valley.
-          </p>
-          <p>
-            If your property has flooded before, it will flood again. This is not
-            pessimism — it's hydrology. The FEMA flood maps show the 100-year and
-            500-year floodplains, but "100-year flood" doesn't mean once a century.
-            It means a 1% chance in any given year. The Chehalis basin has had
-            "100-year floods" three times since 2007.
-          </p>
-
-          <div class="callout callout-info">
-            <h4>The warning you actually get</h4>
-            <p>
-              Unlike earthquakes, floods give you time. The National Weather Service
-              issues flood watches (conditions favorable) and warnings (flooding
-              expected or occurring). USGS river gauges provide real-time water levels
-              for most major rivers. If you live in a floodplain, you can monitor the
-              gauge for your river and know, within hours, when the water will reach
-              your property. That time is your advantage — but only if you've planned
-              what to do with it.
-            </p>
-          </div>
-        </div>
-
-        <div class="reveal" style="margin-top: var(--space-6);">
-          <h3>Climate and the trend line</h3>
-          <p>
-            Warmer air holds more moisture. Atmospheric rivers are getting wetter.
-            Rain-on-snow events — where warm rain falls on an existing snowpack and
-            melts it, doubling the runoff — are increasing as the snow line rises.
-            The trend is toward more frequent and more severe flooding in the river
-            valleys of Washington, Oregon, and British Columbia.
-          </p>
-          <p>
-            This isn't a reason to panic. It's a reason to prepare. If you live
-            in a floodplain, preparation isn't optional — it's the cost of living
-            where the water goes.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Actions: What To Do -->
-    <section class="guide-actions guide-section">
-      <div class="container content-width">
-        <p class="guide-section-label reveal">What to do</p>
-        <h2 class="reveal">Before, during, and after</h2>
-
-        <div class="reveal" style="margin-top: var(--space-5);">
-          <h3>Before flood season</h3>
-          <ol class="action-list">
-            <li class="action-item">
-              <h4>Know your floodplain</h4>
-              <p>
-                Check FEMA flood maps for your property. If you're in a 100-year or
-                500-year floodplain, flood insurance is strongly recommended — and
-                may be required by your mortgage. Standard homeowner's insurance does
-                not cover flood damage. This surprises people every single time.
-              </p>
+      <section class="chapter-bypass" id="flood-now" aria-labelledby="flood-now-title">
+        <div class="chapter-container">
+          <p class="chapter-kicker">Immediate reference</p>
+          <h2 id="flood-now-title">If water is rising now.</h2>
+          <ul class="chapter-bypass-grid chapter-bypass-grid--two">
+            <li>
+              <span class="chapter-bypass-label">Move now</span>
+              <h3>Flash Flood Warning, rapid rise, or evacuation instruction affecting your location</h3>
+              <p>Follow the notice. If a Flash Flood Warning affects a flood-prone location, move immediately to higher ground; do not wait for a route to be named. A B.C. Evacuation Order means leave immediately; U.S. local terminology varies.</p>
             </li>
-            <li class="action-item">
-              <h4>Know your gauge</h4>
-              <p>
-                Find the USGS river gauge closest to your property at
-                <a href="https://waterdata.usgs.gov/nwis" target="_blank" rel="noopener">waterdata.usgs.gov</a>.
-                Learn the flood stage and major flood stage for your gauge. Bookmark it.
-                When heavy rain starts, checking the gauge every few hours tells you
-                exactly how much time you have. Tom checks Grand Mound. You should know
-                your equivalent.
-              </p>
+            <li>
+              <span class="chapter-bypass-label">Stop at water</span>
+              <h3>A flooded route is closed</h3>
+              <p>Do not walk, drive, swim, move a barricade, or try to judge the depth. Opaque water can conceal current, debris, electricity, or a missing road.</p>
             </li>
-            <li class="action-item">
-              <h4>Elevate what you can</h4>
-              <p>
-                Furnace, water heater, electrical panel, washer/dryer — if they're in
-                a basement or on a ground floor that has flooded before, raise them.
-                This costs money, but replacing a furnace after a flood costs more.
-                If you can't raise them, know how to shut them off quickly.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Pack your bins</h4>
-              <p>
-                Anything irreplaceable that lives below potential water level should be
-                in a waterproof bin, ready to move. Documents, photos, keepsakes, hard
-                drives. Pack them now, in the dry season, when you're not rushed. Maria's
-                rule: "I'm not going to lose the same things three times."
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Write a shutdown card</h4>
-              <p>
-                A laminated card taped to your breaker panel: the order in which you
-                shut off water, gas, and electricity. Under stress, sequence matters.
-                Write it down when you're calm so you can follow it when you're not.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Get flood insurance</h4>
-              <p>
-                Through the National Flood Insurance Program or a private insurer.
-                There is typically a 30-day waiting period before a new policy takes
-                effect — you cannot buy it when the river is already rising. Buy it
-                now. If your property has flooded before, this is not optional.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Know your neighbors</h4>
-              <p>
-                Especially new ones. The Ortegas had never seen the Chehalis high.
-                Tom's calm warning at 5 AM gave them four hours they wouldn't have
-                had. If you've been through a flood, you know what it looks like.
-                Your new neighbor doesn't.
-              </p>
-            </li>
-          </ol>
-        </div>
-
-        <div class="reveal" style="margin-top: var(--space-6);">
-          <h3>When the water is coming</h3>
-          <div class="callout callout-alert">
-            <h4>Never drive through floodwater</h4>
-            <p>
-              Six inches of moving water can knock you down. Twelve inches can carry
-              a car. More than half of all flood deaths in the US happen in vehicles.
-              If the road is flooded, turn around. "Turn around, don't drown" exists
-              as a slogan because people keep dying doing the thing it says not to do.
-            </p>
-          </div>
-          <ol class="action-list">
-            <li class="action-item">
-              <h4>Monitor the gauge and NWS alerts</h4>
-              <p>
-                Sign up for emergency alerts from your county. Watch the USGS gauge.
-                When the river passes flood stage, start your plan. You know the
-                number. You know how fast it's rising. Use the time.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Move irreplaceable items to high ground</h4>
-              <p>
-                The bins go in the truck. Everything else on the ground floor goes
-                up — to the second floor, onto tables, into the attic. You have hours.
-                Use them. Furniture can be replaced. Photo albums cannot.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Shut down the house</h4>
-              <p>
-                Follow the card. Unplug appliances. Turn off water main, gas, and
-                breakers. This prevents electrical damage, gas leaks, and contamination
-                of your water system when floodwater enters.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Warn your neighbors</h4>
-              <p>
-                Walk over. Tell them what you know. Be calm and specific: "The river
-                is at 67 feet and forecast to crest at 71. That means water on our
-                street by mid-morning. You should move your things off the floor."
-                Information, delivered calmly, saves more than panic.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Leave before the water arrives</h4>
-              <p>
-                Do not wait to see if it's as bad as forecast. If you're in the
-                floodplain and the crest is predicted above your property level,
-                leave. Go to family, friends, or a shelter on higher ground. Take
-                your bins, your pets, your medications, your go-bag. The house will
-                be there when the water goes down. You need to be somewhere it isn't.
-              </p>
-            </li>
-          </ol>
-        </div>
-
-        <div class="reveal" style="margin-top: var(--space-6);">
-          <h3>After the water recedes</h3>
-          <ol class="action-list">
-            <li class="action-item">
-              <h4>Don't enter until it's safe</h4>
-              <p>
-                Floodwater is contaminated — sewage, chemicals, debris. Wear rubber
-                boots and gloves. Don't turn on electricity until an electrician has
-                inspected the panel. Check for structural damage: shifted foundation,
-                buckled floors, waterlogged walls.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Document everything before cleaning</h4>
-              <p>
-                Take photos and video of all damage before you move or clean anything.
-                This is your insurance claim. Photograph water lines on walls, damaged
-                belongings, structural issues. Your insurance adjuster needs to see
-                what the water did, not what it looks like after you've cleaned up.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Dry out within 48 hours</h4>
-              <p>
-                Mold starts growing on wet materials within 24-48 hours. Open windows,
-                run fans, use dehumidifiers if you have power. Remove waterlogged
-                drywall, carpet, and insulation. Anything that absorbed floodwater and
-                can't be thoroughly cleaned needs to go. This is the hard part — but
-                mold damage is worse than flood damage if you let it establish.
-              </p>
-            </li>
-            <li class="action-item">
-              <h4>Keep records for insurance and FEMA</h4>
-              <p>
-                Save receipts for everything — cleanup supplies, temporary housing,
-                repairs. If a federal disaster is declared, FEMA assistance may be
-                available. File your insurance claim immediately. The process is slow.
-                Starting early matters.
-              </p>
-            </li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <!-- Supplies -->
-    <section class="guide-supplies guide-section" style="background: var(--color-cloud);">
-      <div class="container content-width">
-        <p class="guide-section-label reveal">What to have ready</p>
-        <div class="reveal">
-          <h2>Your flood supplies</h2>
-          <p>
-            Flood preparedness is different from earthquake or wildfire prep. You're not
-            surprised — you're racing a clock. The supplies that matter most are the ones
-            that let you use your warning time well: pre-packed bins, a shutdown routine,
-            and a plan that doesn't require decisions under stress.
-          </p>
-          <p>
-            For the full checklist with quantities, see our
-            <a href="build-your-kit.html#flooding">Build Your Kit</a> page.
-          </p>
-        </div>
-
-        <ul class="supply-list reveal" style="margin-top: var(--space-4);">
-          <li class="supply-item">
-            <span class="supply-priority critical">Critical</span>
-            <div class="supply-details">
-              <h5>Waterproof bins (pre-packed)</h5>
-              <p class="supply-why">
-                Everything irreplaceable goes in sealed bins: documents, photos, hard
-                drives, keepsakes. Pack them now, store them where you can grab them fast.
-                The bins ARE the preparation. When the gauge hits flood stage, you move
-                them to the truck and go.
-              </p>
-              <p class="supply-where">
-                Hardware store. Heavy-duty plastic bins with locking lids. Label them.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority critical">Critical</span>
-            <div class="supply-details">
-              <h5>Flood insurance</h5>
-              <p class="supply-why">
-                Homeowner's insurance does not cover flood damage. NFIP or private
-                flood insurance does. 30-day waiting period on new policies — buy it
-                before you need it. If your home has flooded before, this is not optional.
-              </p>
-              <p class="supply-where">
-                Through your insurance agent, or directly via floodsmart.gov for NFIP.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority critical">Critical</span>
-            <div class="supply-details">
-              <h5>Shutdown card (laminated)</h5>
-              <p class="supply-why">
-                A laminated card taped to your breaker panel with the sequence: unplug,
-                water off, gas off, breakers off. Under stress, you follow the card.
-                You don't think. You execute.
-              </p>
-              <p class="supply-where">
-                Write it yourself. Laminate at an office supply store. Tape it to the panel.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority important">Important</span>
-            <div class="supply-details">
-              <h5>Rubber boots and waterproof gloves</h5>
-              <p class="supply-why">
-                Floodwater is contaminated — sewage, chemicals, fuel, debris. You'll
-                need these for re-entry and cleanup. Do not wade in floodwater in
-                regular shoes.
-              </p>
-              <p class="supply-where">
-                Hardware store. Knee-high rubber boots. Heavy-duty waterproof gloves.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority important">Important</span>
-            <div class="supply-details">
-              <h5>Sump pump (if applicable)</h5>
-              <p class="supply-why">
-                If your basement floods, a portable sump pump gets the water out faster
-                than gravity. Battery-backup or generator-powered, since the power may
-                be out.
-              </p>
-              <p class="supply-where">
-                Hardware store. Size it for your space. Test it before you need it.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority important">Important</span>
-            <div class="supply-details">
-              <h5>Camera / phone (charged) for documentation</h5>
-              <p class="supply-why">
-                Your insurance claim starts with photos. Document damage before cleanup.
-                Photograph water lines, damaged items, structural issues. Video is even
-                better.
-              </p>
-              <p class="supply-where">
-                Your phone. Keep a portable charger in your go-bag.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority recommended">Recommended</span>
-            <div class="supply-details">
-              <h5>Dehumidifier and fans</h5>
-              <p class="supply-why">
-                Mold starts within 48 hours of flooding. Drying the house fast is
-                critical. A dehumidifier and box fans in every affected room.
-              </p>
-              <p class="supply-where">
-                Hardware store. If power is out, a generator running a dehumidifier
-                is a smart use of fuel.
-              </p>
-            </div>
-          </li>
-          <li class="supply-item">
-            <span class="supply-priority recommended">Recommended</span>
-            <div class="supply-details">
-              <h5>Sandbags or flood barriers</h5>
-              <p class="supply-why">
-                Sandbags buy you inches, not feet. They're useful for diverting
-                shallow water away from doorways, not for holding back a river. Know
-                their limits. Many counties provide free sandbags before flood events.
-              </p>
-              <p class="supply-where">
-                Your county emergency management office usually distributes
-                free sand and bags before major events. Check before flood season.
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Resolution -->
-    <section class="guide-resolution guide-section">
-      <div class="container">
-        <div class="content-width">
-          <p class="guide-section-label reveal">What Tom and Maria did right</p>
-          <div class="reveal">
-            <p>
-              They come back on Friday. The water is gone but the smell isn't — river
-              mud and something chemical, a sharp undertone Tom recognizes from the last
-              two times. Maria puts on the rubber boots she keeps in the truck and walks
-              through the front door. Fourteen inches. She can see the water line on the
-              wall, a brown stripe across the living room like a ruled line in a notebook.
-            </p>
-            <p>
-              The couch cushions are upstairs, dry. The floor lamps are on the dining
-              table, dry. The furnace, raised in 2010, is above the line. The electrical
-              panel, also raised, is dry. The bins — the documents, the photo albums, the
-              kids' school projects — are in Morton at Maria's sister's house, forty
-              miles away and 400 feet higher. Dry.
-            </p>
-            <p>
-              The carpet is ruined. The drywall below eighteen inches is ruined. The
-              baseboard trim is ruined. Tom has his phone out, photographing everything
-              before they touch it. The insurance adjuster will come Monday. The FEMA
-              inspector, if the disaster declaration comes through, sometime after that.
-            </p>
-            <p>
-              Maria calls the Ortegas. Two inches on their ground floor. They caught it
-              in time — everything was off the floor by 7 AM, four hours before the
-              water arrived. They say thank you. Maria says don't thank us, just tell
-              the next new neighbor.
-            </p>
-            <p>
-              By Saturday, Tom has the carpet pulled and the baseboards out. The
-              dehumidifier is running. Two box fans. Windows open. He'll have the drywall
-              cut back to two feet by Monday. Mold doesn't get 48 hours. Not this time.
-            </p>
-            <p>
-              This is their third flood. It'll happen again. The river doesn't care about
-              the retention project or the levee improvements or the floodplain zoning
-              debates in Olympia. It does what water does. Tom and Maria can't change
-              that. But they can be ready. And being ready means fourteen inches of water
-              is a week of cleanup, not a catastrophe. It means the photo albums are in
-              Morton. It means the Ortegas knew.
-            </p>
-            <p>
-              You can be Tom and Maria. Bins, a shutdown card, a gauge bookmarked on your
-              phone, and a neighbor you've talked to before the rain starts. The river
-              gives you hours. Use them.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="guide-section">
-      <div class="container content-width">
-        <div class="editorial-note reveal">
-          <p class="editorial-note-meta">Written by Michael Hendrick • Reviewed June 26, 2026</p>
-          <h3>Primary references for this guide</h3>
-          <p>This page combines regional floodplain experience with official river monitoring, flood safety, and mapping sources. Use it to prepare and set thresholds now, then follow local alerts and evacuation instructions when water is rising.</p>
-          <p>As of June 26, 2026, this guide remains focused on thresholds you can set before the rain: know your floodplain, bookmark gauges, choose when to move vehicles and valuables, and decide when you will leave.</p>
-          <ul>
-            <li><a href="approach.html">Read the author and sourcing approach</a></li>
-            <li><a href="https://www.weather.gov/safety/flood" target="_blank" rel="noopener">National Weather Service flood safety guidance</a></li>
-            <li><a href="https://waterdata.usgs.gov/" target="_blank" rel="noopener">USGS water data and river gauges</a></li>
-            <li><a href="https://msc.fema.gov/portal/home" target="_blank" rel="noopener">FEMA Flood Map Service Center</a></li>
-            <li><a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov flood guidance</a></li>
           </ul>
+          <p class="chapter-bypass-note"><strong>For slower river flooding:</strong> read the complete notice and the relevant local forecast point. A written household threshold can help you move earlier; it never replaces an official warning, order, or instruction. Do utility work only from a dry, safe location and according to the responsible utility or emergency authority.</p>
+          <p class="chapter-bypass-link"><a href="#flood-reference">Read the complete flooding quick reference</a></p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="guide-section">
-      <div class="container content-width">
-        <div class="support-card reveal">
-          <p class="support-card-eyebrow">Support this guide</p>
-          <h3>If this guide helped, keep it going.</h3>
-          <p>If this page saved you time or made the decision-making clearer, you can support the work and help keep Cascadia.me independent.</p>
-          <div class="support-card-actions">
-            <a href="https://ko-fi.com/mikehen" class="btn btn-outline" target="_blank" rel="noopener">Support on Ko-fi</a>
+      <section class="chapter-section chapter-opening" aria-labelledby="flood-memory-title">
+        <div class="chapter-container">
+          <div class="chapter-reading chapter-prose">
+            <p class="chapter-kicker">A basin remembering water</p>
+            <h2 id="flood-memory-title" class="chapter-lede">Every river valley keeps a memory of where water can go.</h2>
+            <p>The memory is visible in broad flat fields, side channels, wetlands, old oxbows, raised roadbeds, and the way a town gathers on the slightly higher ground. A floodplain is not empty land waiting for a river to misbehave. It is part of the river system, occupied between events by farms, homes, schools, warehouses, roads, and ordinary life.</p>
+            <p>Water begins gathering above the place where it is eventually noticed. Pacific storms meet mountains. Soil becomes saturated. Snow absorbs rain, melts, or stores it. Tributaries rise on different clocks. Culverts and storm drains take what they can. On steep ground or in a small drainage, the transition from rain to dangerous water may be much shorter.</p>
+            <p>Some river floods provide hours or days in which forecasts can be watched and a household threshold used. Flash floods can develop in minutes, including where rain is falling somewhere else. The useful plan never assumes the river will always be generous with time.</p>
+          </div>
+          <aside class="chapter-field-note" aria-labelledby="flood-gauge-note">
+            <h3 id="flood-gauge-note">A gauge is one point, not a property-depth clock</h3>
+            <p>Stage and flow describe conditions at a station. They may not translate directly to water depth, arrival time, drainage, or road access at a home. Observations may be provisional, and forecasts change as rainfall and watershed conditions change.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="chapter-section chapter-story" aria-labelledby="flood-road-title">
+        <div class="chapter-container">
+          <div class="chapter-section-heading">
+            <p class="chapter-kicker">The route as a household threshold</p>
+            <h2 id="flood-road-title">The road can still look ordinary when it is time to leave.</h2>
+          </div>
+          <div class="chapter-reading chapter-prose">
+            <p class="chapter-disclosure"><strong>Composite household:</strong> This is not a report of one flood or family. It brings together common river-valley conditions, household constraints, and established preparedness guidance.</p>
+            <p>Asha and Eli share a rented single-story house with their friend Tomas near a rain-fed tributary west of the Cascades. The river is below the road, out of sight behind cottonwoods. Tomas works at the local library and uses a cane outdoors. Their cat travels in a carrier. The only easy route begins on a low county road, then climbs.</p>
+            <p>They began paying attention to the road after a neighbor described which culvert backs up first. That local memory was useful, but it was not enough for a plan. They subscribed to the county alert system, saved the forecast point used by local officials, and wrote down the category at which they would move the car and leave. They chose a friend on higher ground who could receive the cat and provide an accessible room.</p>
+            <p>On a long wet night, the rain changes from background sound to something everyone is listening to. The ditch outside fills. Their official forecast point rises into the category they chose. No water is over the road, and no one is knocking on the door. This is the moment the rehearsal was for.</p>
+            <p>Asha puts current medication, chargers, documents, dry clothing, and the cane in the car. The cat goes into her carrier. The waterproof bins already hold the photographs and school papers they decided mattered most. Eli calls the uphill friend and then the newer household next door, not to predict what the river will do, but to make sure they have seen the same official notice.</p>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Cross-links -->
-    <footer class="guide-next guide-section" style="background: var(--color-cloud);">
-      <div class="container content-width">
-        <h3 class="reveal">Keep going</h3>
-        <div class="guide-next-links reveal" style="margin-top: var(--space-3);">
-          <a href="earthquake.html" class="guide-next-card">
-            <h4>Earthquake &rarr;</h4>
-            <p>
-              The Cascadia Subduction Zone. No warning. What it means for your home
-              and the first fifteen minutes.
-            </p>
-          </a>
-          <a href="wildfire.html" class="guide-next-card">
-            <h4>Wildfire &rarr;</h4>
-            <p>
-              Minutes to leave, not hours. Defensible space, go-bags, and the
-              difference between early and too late.
-            </p>
-          </a>
-          <a href="winter-storm.html" class="guide-next-card">
-            <h4>Winter Storm &rarr;</h4>
-            <p>
-              Power outages, ice storms, and riding it out at home when the
-              grid goes down.
-            </p>
-          </a>
+        <figure class="chapter-plate">
+          <picture>
+            <source srcset="assets/living-watershed/flooding/flooding-vignette.webp" type="image/webp">
+            <img
+              src="assets/living-watershed/flooding/flooding-vignette.jpg"
+              alt="A home above a river valley with a vehicle on a dry uphill route and waterproof bins, medication, boots, a pet carrier, rain gear, a phone, and a mobility aid ready to move."
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <figcaption>The move begins while the uphill route is still dry and the household can load at its own pace.</figcaption>
+        </figure>
+
+        <div class="chapter-container chapter-story-after">
+          <div class="chapter-reading chapter-prose">
+            <p>They leave at their written household threshold, while the road is dry. That threshold can only move them earlier; it never replaces an evacuation instruction or other official direction. It is not the right threshold for every house or every river. They chose it because Tomas, the cat, one vehicle, and a low first mile mean waiting narrows their options.</p>
+            <p>From higher ground, they can keep reading the official notices without debating whether the road is still passable. They have not saved the house from a flood. They have protected the people, the animal, and the mobility they will need for whatever comes next.</p>
+          </div>
+          <p class="chapter-pull">A local threshold turns forecast time into usable time.</p>
         </div>
-      </div>
-    </footer>
+      </section>
 
-  </article>
+      <section class="chapter-section chapter-process" aria-labelledby="watershed-title">
+        <div class="chapter-container">
+          <div class="chapter-section-heading">
+            <p class="chapter-kicker">Storage, release, concentration, and spread</p>
+            <h2 id="watershed-title">A watershed brings many small changes to the same channel.</h2>
+            <p>Rain on a street and snow in a mountain basin are connected by slope, soil, tributaries, channels, wetlands, drainage, and time. Flooding begins before the water reaches the place where people notice it.</p>
+          </div>
+        </div>
 
-  <!-- Footer -->
+        <figure class="chapter-plate">
+          <picture>
+            <source srcset="assets/living-watershed/flooding/flooding-process.webp" type="image/webp">
+            <img
+              src="assets/living-watershed/flooding/flooding-process.jpg"
+              alt="Rain and snowmelt entering soil and tributaries, converging in a main river at one gauge, and spreading across low floodplain channels while a higher road remains dry."
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <figcaption>One gauge observes the main channel; water is also moving through tributaries, soil, drainage, side channels, and low ground.</figcaption>
+        </figure>
+
+        <div class="chapter-container">
+          <dl class="chapter-threads">
+            <div class="chapter-thread">
+              <dt>Catch and store</dt>
+              <dd>
+                <h3>Mountains, soil, snow, wetlands, and reservoirs hold water.</h3>
+                <p>How full, saturated, frozen, or warm those stores already are changes what the next storm or thaw can release.</p>
+              </dd>
+            </div>
+            <div class="chapter-thread">
+              <dt>Release and concentrate</dt>
+              <dd>
+                <h3>Tributaries arrive on different clocks.</h3>
+                <p>Heavy rain, snowmelt, urban drainage, and steep terrain can deliver water at very different speeds.</p>
+              </dd>
+            </div>
+            <div class="chapter-thread">
+              <dt>Spread</dt>
+              <dd>
+                <h3>High water occupies low ground.</h3>
+                <p>When a channel or drainage system can no longer carry the flow, water spreads through floodplains, side channels, and low routes. Each event draws a different edge.</p>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter-section" aria-labelledby="reading-water-title">
+        <div class="chapter-container">
+          <div class="chapter-section-heading">
+            <p class="chapter-kicker">Reading the water</p>
+            <h2 id="reading-water-title">The signal matters only when it belongs to your place.</h2>
+            <p>Regional language is useful, but it cannot replace the local notice, forecast point, road authority, or evacuation instruction that connects water to a decision.</p>
+          </div>
+          <div class="chapter-reading chapter-prose">
+            <p>In the United States, a Flood Watch means flooding is possible; a Flood Warning means flooding is imminent or occurring; and a Flash Flood Warning calls for immediate protective action. In British Columbia, the River Forecast Centre uses High Streamflow Advisory, Flood Watch, and Flood Warning for increasing river concern. Evacuation terminology and authority still belong to the affected local jurisdiction.</p>
+            <p>A U.S. “100-year flood” is more clearly described as a 1%-annual-chance flood. It is a probability, not a once-per-century appointment. Flooding can also occur outside a mapped Special Flood Hazard Area, and an old map does not settle what a changed channel, drainage system, or larger event will do.</p>
+            <p>The Atlas cannot close those gaps. Its flood layer combines U.S. planning areas and generalized river-corridor cues. It does not show live depth, parcel certainty, every Canadian hazard area, or the route a household should take. The useful handoff is to the official source for the basin and road in front of you.</p>
+          </div>
+          <aside class="chapter-field-note" aria-labelledby="flood-clock-title">
+            <h3 id="flood-clock-title">When the clock changes</h3>
+            <p>A flash-flood warning, rapid rise, or evacuation instruction overrides bins, sandbags, photographs, furniture, and utility work. Leave by the current safe route.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="chapter-section chapter-decisions" id="household-capability" aria-labelledby="flood-decisions-title" data-readyplan-scope="flooding">
+        <div class="chapter-container">
+          <div class="chapter-section-heading">
+            <p class="chapter-kicker">Before the route changes</p>
+            <h2 id="flood-decisions-title">The plan belongs to the household, not the property.</h2>
+            <p>Buildings matter, but people, health, animals, transportation, and a dry route come first. Property work is useful only while it remains safe and does not consume the time needed to move.</p>
+          </div>
+          <div class="chapter-reading chapter-prose">
+            <p>Begin by identifying the flood type. River flooding and flash flooding do not share one signal or timeline, and even nearby basins can respond differently. Save the responsible local authority, alert system, forecast point, and road source. Choose two routes when the geography allows it, and a destination that works for mobility, medication, caregiving, children, pets, service animals, or livestock.</p>
+            <p>Renters can move documents, medication, electronics, and sentimental objects higher; photograph possessions; ask the landlord how utilities and re-entry will be handled; and learn what renter’s insurance does and does not cover. Owners can ask qualified local professionals about raising equipment, backflow protection, drainage, flood openings, fuel systems, electrical work, and the limits of barriers or sandbags. Nobody should enter water to reach a control.</p>
+            <p>Insurance and assistance differ across the border. U.S. NFIP coverage, private insurance, Canadian overland-flood products, waiting periods, exclusions, and temporary housing are not interchangeable. Read the actual policy before the wet season and keep the insurer, landlord, lender, and recovery contacts somewhere the household can reach away from home.</p>
+            <p>Re-entry requires a new kind of patience. Wait until the responsible authority permits return, then consider the building itself: structural movement, electricity, gas or fuel, sewage, well water, contaminated food, mold, and damaged heating or ventilation equipment. Enter in daylight when possible. Never stand in water to operate electricity. Fuel-powered pumps and generators stay outdoors at least 20 ft / 6 m from doors, windows, and vents, with exhaust pointed away from buildings.</p>
+          </div>
+
+          <ul class="chapter-questions" aria-label="Flood household planning questions">
+            <li data-readyplan-capability="flooding-risk-and-sources">Which water can reach the places where this household sleeps, works, stores vehicles, or uses a road?</li>
+            <li data-readyplan-capability="flooding-thresholds">Which official notice, forecast category, or route condition triggers a move before water arrives?</li>
+            <li data-readyplan-capability="flooding-mobility">Can everyone, including animals and mobility equipment, reach a safe destination while a planned route remains open and dry?</li>
+            <li data-readyplan-capability="flooding-property-and-utilities">Which mitigation and utility steps are qualified, specific, and safe—and which are abandoned when time shortens?</li>
+            <li data-readyplan-capability="flooding-communication">Who receives the first message, and which neighbor or caregiving check-in is already agreed?</li>
+            <li data-readyplan-capability="flooding-return-and-recovery">Where are the insurance, landlord, documentation, cleanup, health, and temporary-housing contacts kept?</li>
+          </ul>
+          <p class="chapter-continuation chapter-reading">A useful threshold can be written before the next storm. <a href="build-your-kit.html#mobility-evacuation">Continue with household capabilities →</a></p>
+        </div>
+      </section>
+
+      <section class="chapter-section chapter-conclusion" aria-labelledby="flood-conclusion-title">
+        <div class="chapter-container">
+          <div class="chapter-reading chapter-prose">
+            <p class="chapter-kicker">After the water</p>
+            <h2 id="flood-conclusion-title" class="chapter-lede">The water can be gone while the work is only beginning.</h2>
+            <p>Mud keeps the shape of a footprint. A waterline records a height nobody wanted measured. The familiar room may smell like river, fuel, sewage, or wet wallboard. Recovery asks for photographs, protective equipment, professional help, dry temporary space, and decisions about what can safely be cleaned or saved.</p>
+            <p>It also asks for memory. Which road went first? Which notice arrived in time? Which new neighbor had never seen the valley fill? A household plan cannot keep water in the channel. It can carry the people and knowledge of the place forward without asking anyone to prove their readiness by risking a life.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter-reference" id="flood-reference" aria-labelledby="flood-reference-title">
+        <div class="chapter-container">
+          <p class="chapter-kicker">Keep this part close</p>
+          <h2 id="flood-reference-title">Flooding quick reference.</h2>
+          <p class="chapter-reference-intro">Use the local notice, forecast point, and road authority. A generalized regional map cannot tell you that a route or building is safe.</p>
+          <div class="chapter-reference-grid">
+            <section aria-labelledby="flood-rising-ref">
+              <h3 id="flood-rising-ref">Water rising now</h3>
+              <ul>
+                <li>If a Flash Flood Warning affects your flood-prone location, follow it and move immediately to higher ground; do not wait for a route to be named.</li>
+                <li>A rapid rise or evacuation instruction overrides household thresholds and property work.</li>
+                <li>Never walk, drive, or swim through floodwater or bypass a barricade.</li>
+                <li>Leave before a familiar road changes; property work can wait.</li>
+                <li>Operate utilities only from a dry, safe location under local guidance.</li>
+              </ul>
+            </section>
+            <section aria-labelledby="flood-before-ref">
+              <h3 id="flood-before-ref">Before the wet season</h3>
+              <ul>
+                <li>Save the alert system, forecast point, road source, and local authority.</li>
+                <li>Write an earlier household threshold and identify every usable route; official instructions always take precedence.</li>
+                <li>Move documents and essential items higher; arrange qualified mitigation.</li>
+                <li>Read the actual insurance policy and keep contacts away from home.</li>
+              </ul>
+            </section>
+            <section aria-labelledby="flood-return-ref">
+              <h3 id="flood-return-ref">Returning home</h3>
+              <ul>
+                <li>Return when the responsible authority permits re-entry.</li>
+                <li>Stay out if structure, electricity, gas, fuel, sewage, well, or septic safety is uncertain.</li>
+                <li>Document damage before major cleanup when it is safe.</li>
+                <li>Dry and clean as soon as safely possible under current health guidance.</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter-section chapter-sources" id="sources" aria-labelledby="flood-sources-title">
+        <div class="chapter-container chapter-sources-layout">
+          <div class="chapter-sources-intro">
+            <p class="chapter-kicker">Sources and limits</p>
+            <h2 id="flood-sources-title">The source for your basin and road comes first.</h2>
+            <p>This page does not claim to show a live regional river level, rainfall total, or complete alert picture. The Atlas does not show live inundation, parcel certainty, or complete British Columbia flood mapping.</p>
+            <p>During an event, use the alert, forecast point, road authority, band office, municipality, regional district, Tribal or local emergency manager, and evacuation instruction for the exact location.</p>
+            <p>Written by Michael Hendrick · Reviewed July 12, 2026</p>
+          </div>
+
+          <div class="chapter-source-columns">
+            <section class="chapter-source-group" aria-labelledby="flood-water-sources">
+              <h3 id="flood-water-sources">Water and alerts</h3>
+              <ul>
+                <li><a href="https://www.weather.gov/safety/flood-watch-warning" target="_blank" rel="noopener">National Weather Service: Flood Watch and Warning</a></li>
+                <li><a href="https://www.weather.gov/safety/flood-products" target="_blank" rel="noopener">National Weather Service: Flood products and timelines</a></li>
+                <li><a href="https://water.noaa.gov/" target="_blank" rel="noopener">NOAA: National Water Prediction Service</a></li>
+                <li><a href="https://www.usgs.gov/tools/water-data-nation-wdfn" target="_blank" rel="noopener">USGS: Water Data for the Nation</a></li>
+              </ul>
+            </section>
+
+            <section class="chapter-source-group" aria-labelledby="flood-washington-sources">
+              <h3 id="flood-washington-sources">Washington</h3>
+              <ul>
+                <li><a href="https://mil.wa.gov/flood" target="_blank" rel="noopener">Washington Emergency Management: Flood</a></li>
+                <li><a href="https://mil.wa.gov/alerts" target="_blank" rel="noopener">Washington Emergency Management: Local alert systems</a></li>
+                <li><a href="https://ecology.wa.gov/water-shorelines/shoreline-coastal-management/hazards/floods-floodplain-planning" target="_blank" rel="noopener">Washington Ecology: Floods and floodplain planning</a></li>
+                <li><a href="https://wsdot.com/Travel/Real-time/Map/" target="_blank" rel="noopener">WSDOT: Real-time travel map</a></li>
+              </ul>
+            </section>
+
+            <section class="chapter-source-group" aria-labelledby="flood-oregon-sources">
+              <h3 id="flood-oregon-sources">Oregon</h3>
+              <ul>
+                <li><a href="https://www.oregon.gov/oem/hazardsprep/pages/floods.aspx" target="_blank" rel="noopener">Oregon Emergency Management: Floods</a></li>
+                <li><a href="https://www.oregon.gov/OWRD/programs/streamslakessanddams/surfacewater/SurfaceWaterData/Pages/default.aspx" target="_blank" rel="noopener">Oregon Water Resources: Surface-water data</a></li>
+                <li><a href="https://tripcheck.com/" target="_blank" rel="noopener">Oregon Department of Transportation: TripCheck</a></li>
+              </ul>
+            </section>
+
+            <section class="chapter-source-group" aria-labelledby="flood-bc-sources">
+              <h3 id="flood-bc-sources">British Columbia</h3>
+              <ul>
+                <li><a href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre" target="_blank" rel="noopener">B.C. River Forecast Centre</a></li>
+                <li><a href="https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/floods/during-flood" target="_blank" rel="noopener">PreparedBC: Flood advisories and warnings</a></li>
+                <li><a href="https://www.emergencyinfobc.gov.bc.ca/" target="_blank" rel="noopener">EmergencyInfoBC: Current verified emergencies</a></li>
+                <li><a href="https://wateroffice.ec.gc.ca/map/index_e.html?type=real-time" target="_blank" rel="noopener">ECCC Wateroffice: Real-time hydrometric map</a></li>
+                <li><a href="https://www.drivebc.ca/" target="_blank" rel="noopener">DriveBC: Road events and conditions</a></li>
+              </ul>
+            </section>
+
+            <section class="chapter-source-group" aria-labelledby="flood-recovery-sources">
+              <h3 id="flood-recovery-sources">Planning and recovery</h3>
+              <ul>
+                <li><a href="https://msc.fema.gov/portal/home" target="_blank" rel="noopener">FEMA: Flood Map Service Center</a></li>
+                <li><a href="https://www.floodsmart.gov/get-insured/buy-a-policy" target="_blank" rel="noopener">NFIP: Policy waiting periods and exceptions</a></li>
+                <li><a href="https://www.canada.ca/en/services/policing/emergencies/preparedness/get-prepared/hazards-emergencies/floods/flood-risk/overland-flood-insurance.html" target="_blank" rel="noopener">Canada Flood Ready: Overland flood insurance</a></li>
+                <li><a href="https://www.cdc.gov/floods/safety/reentering-your-flooded-home-safety.html" target="_blank" rel="noopener">CDC: Re-entering a flooded home</a></li>
+                <li><a href="https://www.epa.gov/flooded-homes" target="_blank" rel="noopener">EPA: Flooded-home cleanup</a></li>
+              </ul>
+            </section>
+
+            <div class="chapter-source-footer">
+              <p>Cascadia.me is independently written and carries no affiliate links. Support follows usefulness, never urgency.</p>
+              <a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support this work</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
           <h3>Cascadia<span>.me</span></h3>
-          <p>
-            A Pacific Northwest preparedness guide. Regional, specific,
-            and written by your neighbor.
-          </p>
+          <p>An illustrated field guide for people who live here.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
@@ -766,8 +450,9 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Resources</h4>
+            <h4>Explore</h4>
             <ul>
+              <li><a href="atlas.html">Regional Hazard Atlas</a></li>
               <li><a href="build-your-kit.html">Build Your Kit</a></li>
               <li><a href="approach.html">The Approach</a></li>
             </ul>
@@ -782,9 +467,9 @@
   </footer>
 
   <script src="js/share.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/feedback.js"></script>
+  <script src="js/nav.js?v=20260712-phase8"></script>
+  <script src="js/animations.js?v=20260712-phase8"></script>
+  <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

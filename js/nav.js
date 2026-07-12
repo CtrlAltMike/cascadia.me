@@ -35,6 +35,7 @@
         toggle.classList.remove('open');
         navLinks.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
       }
     });
   }

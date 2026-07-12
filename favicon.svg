@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <title>Cascadia.me — mountain and living watershed</title>
+  <title>Cascadia.me — two mountain peaks</title>
   <rect width="64" height="64" rx="14" fill="#063b5c" />
-  <circle cx="46" cy="17" r="8" fill="#e8b934" />
-  <path d="M2 45 21 18l12 17 8-12 21 23v18H2Z" fill="#fbf7ee" />
-  <path d="m12 31 9-13 7 10-5-3-3 6-3-4Zm22 5 7-13 10 11-7-5-3 7-3-5Z" fill="#c9d3da" />
-  <path d="M2 45 17 34l9 7 8-7 9 7 8-8 11 13v18H2Z" fill="#2f5a43" />
-  <path d="M34 34c-1 7-10 8-9 14 1 5 10 5 9 16h13c1-12-10-12-9-17 1-5 8-6 8-13Z" fill="#2faab3" />
-  <path d="M37 38c-1 5-7 7-7 10 0 4 7 5 8 10" fill="none" stroke="#fbf7ee" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M24 64 45 24l19 32v8Z" fill="#65529a" />
+  <path d="m37 40 8-16 10 17-7-5-3 7-4-6Z" fill="#fbf7ee" />
+  <path d="M-2 64 22 16l25 48Z" fill="#2f5a43" />
+  <path d="m12 36 10-20 11 21-7-6-4 8-4-7Z" fill="#fbf7ee" />
 </svg>

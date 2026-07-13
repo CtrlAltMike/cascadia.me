@@ -240,83 +240,150 @@
   }
 }
 
-/* Approach: author first, one evidence instrument, then sustained prose. */
+/* Approach v2: one author, one reader, and one continuous reading path. */
 
-.approach-author-hero {
-  padding-bottom: clamp(4rem, 7vw, 6.5rem);
+.approach-surface {
+  --approach-reading-width: 46rem;
+  --approach-art-width: 78rem;
 }
 
-.approach-author-hero .approach-trust-copy {
-  align-self: end;
-  min-width: 0;
+.approach-story {
+  background: var(--lw-cream-50);
 }
 
-.approach-author-hero .approach-trust-art {
-  min-width: 0;
-}
-
-.approach-author-hero .approach-trust-art picture,
-.approach-author-hero .approach-trust-art img {
-  display: block;
+.approach-reading {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--approach-reading-width);
+  margin-inline: auto;
 }
 
-.approach-author-hero .approach-trust-art img {
-  height: auto;
+.approach-masthead {
+  padding: calc(var(--nav-height) + clamp(3.5rem, 7vw, 6rem)) 0 clamp(4.5rem, 8vw, 7.5rem);
 }
 
-.approach-author-hero h1 {
-  font-size: clamp(4rem, 6.8vw, 7rem);
+.approach-masthead-copy h1 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--lw-ocean-900);
+  font-size: clamp(4.2rem, 8vw, 7.25rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
 }
 
-.approach-author-hero .approach-trust-lede {
+.approach-lede {
+  max-width: 39rem;
+  margin: 1.7rem 0 0;
   color: var(--lw-text);
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  font-size: clamp(1.3rem, 1.9vw, 1.62rem);
+  letter-spacing: -0.008em;
   line-height: 1.55;
 }
 
-.approach-essay-layout {
-  display: grid;
-  grid-template-columns: minmax(16rem, 0.35fr) minmax(0, 0.65fr);
-  gap: clamp(3rem, 8vw, 8rem);
-  align-items: start;
+.approach-byline {
+  margin: 1.4rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
 }
 
-.approach-essay-layout h2,
-.approach-method-heading h2,
-.approach-appendix-heading h2 {
-  margin: 0;
-  font-size: clamp(3rem, 5.4vw, 5.2rem);
+.approach-hero-figure {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, var(--approach-art-width));
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+}
+
+.approach-hero-figure::before {
+  content: '';
+  position: absolute;
+  inset: -0.9rem 1.15rem 0.9rem -0.9rem;
+  z-index: -1;
+  background: var(--lw-sun-400);
+}
+
+.approach-hero-figure picture,
+.approach-hero-figure img {
+  display: block;
+  width: 100%;
+}
+
+.approach-hero-figure img {
+  height: auto;
+  border: 1px solid rgba(6, 59, 92, 0.18);
+}
+
+.approach-hero-figure figcaption {
+  width: min(100%, var(--approach-reading-width));
+  margin: 0.9rem auto 0;
+  color: var(--lw-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.approach-chapter {
+  padding-inline: clamp(1rem, 3vw, 3rem);
+}
+
+.approach-chapter-inner {
+  padding-block: clamp(5rem, 8vw, 7.5rem);
+}
+
+.approach-origin .approach-chapter-inner {
+  border-top: 1px solid var(--lw-line);
+}
+
+.approach-chapter h2 {
+  max-width: 15ch;
+  margin: 0 0 clamp(1.8rem, 3vw, 2.5rem);
+  color: var(--lw-ocean-900);
+  font-size: clamp(3rem, 5.3vw, 4.65rem);
   font-weight: 500;
   letter-spacing: -0.045em;
-  line-height: 0.95;
+  line-height: 0.98;
 }
 
-.approach-prose {
-  max-width: 47rem;
-  color: var(--lw-muted);
+.approach-chapter h2[id],
+.approach-chapter h3[id] {
+  scroll-margin-top: calc(var(--nav-height) + 4.5rem);
+}
+
+.approach-copy,
+.approach-section-intro,
+.approach-method-intro > p,
+.approach-source-list > p {
+  color: var(--lw-text);
   font-family: var(--font-display);
-  font-size: clamp(1.13rem, 1.5vw, 1.3rem);
-  line-height: 1.78;
+  font-size: clamp(1.16rem, 1.5vw, 1.3rem);
+  letter-spacing: -0.004em;
+  line-height: 1.72;
 }
 
-.approach-prose p {
-  margin-top: 0;
-  margin-bottom: 1.35rem;
+.approach-copy p {
+  margin: 0;
 }
 
-.approach-prose a {
+.approach-copy p + p {
+  margin-top: 1.4em;
+}
+
+.approach-copy a {
   color: var(--lw-ocean-700);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.22em;
 }
 
-.approach-prose-lead {
+.approach-copy strong {
   color: var(--lw-ocean-900);
-  font-size: clamp(1.55rem, 2.4vw, 2.05rem);
-  line-height: 1.5;
+  font-weight: 600;
+}
+
+.approach-copy-lead {
+  color: var(--lw-ocean-900);
+  font-size: clamp(1.34rem, 1.85vw, 1.55rem);
+  line-height: 1.62;
 }
 
 .approach-method-section {
@@ -324,182 +391,219 @@
   background: var(--lw-ocean-900);
 }
 
-.approach-method-heading {
-  display: grid;
-  grid-template-columns: minmax(15rem, 0.32fr) minmax(18rem, 0.38fr) minmax(18rem, 0.3fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: end;
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
-}
-
-.approach-method-section .surface-eyebrow {
-  color: var(--lw-glacial-on-ocean);
-}
-
-.approach-method-heading h2,
-.approach-method-section .trust-flow h3 {
+.approach-method-section h2 {
+  max-width: 13ch;
   color: var(--lw-cream-50);
 }
 
-.approach-method-heading > p:last-child,
-.approach-method-section .trust-flow p {
+.approach-method-intro > p {
+  max-width: 40rem;
+  margin: 0;
   color: #d5e2e4;
 }
 
-.approach-method-section .trust-flow {
-  border-color: rgba(251, 247, 238, 0.22);
+.approach-method-list {
+  margin: clamp(2.8rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(251, 247, 238, 0.24);
+  list-style: none;
 }
 
-.approach-method-section .trust-flow article {
-  border-right-color: rgba(251, 247, 238, 0.22);
+.approach-method-list li {
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(251, 247, 238, 0.24);
 }
 
-.approach-evidence-essay .approach-prose section {
-  padding-block: 0 2.5rem;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--lw-line);
+.approach-method-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--lw-glacial-on-ocean);
+  font-size: 0.73rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
-.approach-evidence-essay .approach-prose section:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-
-.approach-evidence-essay .approach-prose section > p:last-child {
-  margin-bottom: 0;
-}
-
-.approach-prose h3 {
-  margin: 0 0 0.85rem;
-  color: var(--lw-ocean-900);
-  font-size: clamp(2rem, 3.2vw, 3rem);
+.approach-method-list h3 {
+  margin: 0 0 0.8rem;
+  color: var(--lw-cream-50);
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.05;
 }
 
-.approach-reader-promise {
-  color: var(--lw-cream-50);
-  background: var(--lw-basalt-900);
+.approach-method-list p {
+  margin: 0;
+  color: #d5e2e4;
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 1.45vw, 1.25rem);
+  line-height: 1.7;
 }
 
-.approach-reader-promise h2,
-.approach-reader-promise .approach-prose h3 {
-  color: var(--lw-cream-50);
+.approach-method-list p + p {
+  margin-top: 1.1em;
 }
 
-.approach-reader-promise .surface-eyebrow {
-  color: var(--lw-glacial-500);
-}
-
-.approach-reader-promise .approach-prose {
-  color: var(--lw-rain-300);
-}
-
-.approach-readyplan-note {
-  padding-top: 1rem;
-  border-top: 1px solid rgba(251, 247, 238, 0.22);
-  color: var(--lw-cream-50);
-  font-style: italic;
-}
-
-.approach-source-appendix {
+.approach-reference {
   background: var(--lw-cream-100);
 }
 
-.approach-appendix-heading {
-  display: grid;
-  grid-template-columns: minmax(18rem, 0.62fr) minmax(18rem, 0.38fr);
-  gap: clamp(2.5rem, 7vw, 7rem);
-  align-items: end;
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
-}
-
-.approach-appendix-heading > p {
-  margin: 0 0 0.3rem;
+.approach-section-intro {
+  margin: -0.7rem 0 0;
   color: var(--lw-muted);
-  font-family: var(--font-display);
-  font-size: clamp(1.12rem, 1.5vw, 1.3rem);
-  line-height: 1.65;
 }
 
 .approach-source-notes {
-  margin: 0;
+  margin: clamp(2.5rem, 5vw, 3.75rem) 0 0;
   border-top: 1px solid var(--lw-line);
 }
 
 .approach-source-notes > div {
-  display: grid;
-  grid-template-columns: minmax(10rem, 0.24fr) minmax(0, 0.76fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
-  padding-block: 1.4rem;
+  display: block;
+  padding-block: 1.55rem;
   border-bottom: 1px solid var(--lw-line);
 }
 
 .approach-source-notes dt {
   color: var(--lw-ocean-900);
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.35rem, 2vw, 1.55rem);
   font-weight: 600;
 }
 
 .approach-source-notes dd {
-  max-width: 50rem;
-  margin: 0;
-  color: var(--lw-muted);
+  max-width: 43rem;
+  margin: 0.45rem 0 0;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.08rem, 1.35vw, 1.18rem);
   line-height: 1.65;
 }
 
-.approach-source-appendix .source-links a {
+.approach-source-list {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.approach-source-list h3 {
+  margin: 0 0 0.7rem;
+  color: var(--lw-ocean-900);
+  font-size: clamp(2rem, 3.4vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.approach-source-list > p {
+  margin: 0;
+  color: var(--lw-muted);
+}
+
+.approach-source-links {
+  gap: 0.75rem 1.1rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.approach-source-links li {
+  display: inline-flex;
+}
+
+.approach-source-links a {
   color: var(--lw-ocean-700);
-  border-bottom-color: rgba(7, 90, 120, 0.35);
+  border-bottom-color: rgba(7, 90, 120, 0.38);
+  line-height: 1.5;
+}
+
+.approach-coverage-note {
+  margin: 1.8rem 0 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--lw-line);
+}
+
+.approach-promises {
+  background: var(--lw-cream-50);
+}
+
+.approach-pullquote {
+  max-width: 16ch;
+  margin: clamp(2.25rem, 4vw, 3.25rem) 0 clamp(2.5rem, 5vw, 3.75rem);
+  padding-left: clamp(1.2rem, 2.5vw, 1.8rem);
+  border-left: 4px solid var(--lw-coral-600);
+  color: var(--lw-ocean-900);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.approach-review-line {
+  margin-top: clamp(3.25rem, 6vw, 5rem);
 }
 
 .approach-review-line span:last-child {
-  margin-left: auto;
+  margin-left: 0;
 }
 
-@media (max-width: 980px) {
-  .approach-method-heading {
-    grid-template-columns: 1fr 1fr;
-  }
+.approach-review-line a {
+  color: var(--lw-ocean-700);
+  text-underline-offset: 0.2em;
+}
 
-  .approach-method-heading > p:last-child {
-    grid-column: 1 / -1;
-    max-width: 44rem;
-  }
+.approach-closing {
+  max-width: 40rem;
+  margin: clamp(2.5rem, 5vw, 3.75rem) 0 0;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.28rem, 1.8vw, 1.5rem);
+  line-height: 1.6;
+}
+
+.approach-closing strong {
+  color: var(--lw-ocean-900);
+  font-weight: 600;
 }
 
 @media (max-width: 760px) {
-  .approach-author-hero h1 {
-    font-size: clamp(3rem, 15vw, 4.2rem);
+  .approach-masthead {
+    padding-top: calc(var(--nav-height) + 3rem);
+    padding-bottom: 4.5rem;
   }
 
-  .approach-essay-layout,
-  .approach-method-heading,
-  .approach-appendix-heading,
-  .approach-source-notes > div {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+  .approach-masthead-copy h1 {
+    font-size: clamp(3.7rem, 16vw, 5rem);
   }
 
-  .approach-method-heading > p:last-child {
-    grid-column: auto;
+  .approach-hero-figure {
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
   }
 
-  .approach-method-heading > .surface-eyebrow {
-    margin-bottom: 0;
+  .approach-hero-figure::before {
+    inset: -0.45rem 0 0.45rem;
   }
 
-  .approach-essay-layout h2,
-  .approach-method-heading h2,
-  .approach-appendix-heading h2 {
-    font-size: clamp(2.8rem, 13vw, 4.25rem);
+  .approach-hero-figure figcaption {
+    padding-inline: 1rem;
   }
 
-  .approach-review-line span:last-child {
-    margin-left: 0;
+  .approach-chapter-inner {
+    padding-block: 4rem;
+  }
+
+  .approach-chapter h2 {
+    font-size: clamp(2.75rem, 12vw, 3.8rem);
+  }
+
+  .approach-method-list h3 {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+  }
+
+  .approach-review-line {
+    display: grid;
+    gap: 0.65rem;
   }
 }
 
@@ -507,5 +611,43 @@
   .guides-surface .feedback-widget,
   .approach-surface .feedback-widget {
     display: none;
+  }
+}
+
+@media print {
+  .approach-hero-figure {
+    display: none !important;
+  }
+
+  .approach-masthead {
+    padding: 2rem 0;
+  }
+
+  .approach-chapter {
+    padding-inline: 0;
+  }
+
+  .approach-chapter-inner {
+    padding-block: 2rem;
+  }
+
+  .approach-method-section,
+  .approach-reference,
+  .approach-promises {
+    color: #111;
+    background: #fff;
+  }
+
+  .approach-method-section h2,
+  .approach-method-list h3,
+  .approach-method-intro > p,
+  .approach-method-list p,
+  .approach-method-label {
+    color: #111;
+  }
+
+  .approach-method-list,
+  .approach-method-list li {
+    border-color: #aaa;
   }
 }

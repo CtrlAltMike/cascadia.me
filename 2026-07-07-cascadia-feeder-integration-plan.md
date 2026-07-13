@@ -1,6 +1,8 @@
 # Cascadia.me Feeder Integration Plan
 
-**Status:** planning
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated plan are preserved as historical context; active site hooks and links use NowWePlan.
+
+**Status:** historical plan — superseded by the NowWePlan.com integration
 **Date:** 2026-07-07
 **Scope:** Add ReadyPlan integration to Cascadia.me without disrupting an older, already-trusted free guide site.
 

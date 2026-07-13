@@ -1,5 +1,7 @@
 # Living Watershed
 
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated design package are preserved as historical context; active site hooks and links use NowWePlan.
+
 Living Watershed is the approved visual and editorial direction for Cascadia.me. This directory is the authoritative project package for carrying that direction through the site.
 
 ## Current status

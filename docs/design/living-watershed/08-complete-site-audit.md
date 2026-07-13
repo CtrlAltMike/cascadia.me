@@ -1,5 +1,7 @@
 # Phase 8: Complete-site binding and audit
 
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated audit are preserved as historical context; active site hooks and links use NowWePlan.
+
 **Status:** Completed July 12, 2026
 
 Phase 8 binds the finished Living Watershed work into one site. It does not introduce another visual direction. Every existing illustration remains locked; the work here removes end-to-end seams, tightens source and geographic truth, and makes the live instrument usable beyond a pointer-driven map.

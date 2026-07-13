@@ -1,5 +1,7 @@
 # Living Watershed Visual and Editorial System
 
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated design record are preserved as historical context; active site hooks and links use NowWePlan.
+
 **Status:** Working specification, version 0.6 — Phase 6 regional instrument proof
 
 **Date:** July 11, 2026

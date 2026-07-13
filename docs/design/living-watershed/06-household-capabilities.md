@@ -1,5 +1,7 @@
 # Living Watershed Household Workbook
 
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated design record are preserved as historical context; active site hooks and links use NowWePlan.
+
 **Status:** Phase 5 complete
 
 **Revision status:** Version 0.5 production record

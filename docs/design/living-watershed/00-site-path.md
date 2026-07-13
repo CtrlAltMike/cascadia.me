@@ -1,5 +1,7 @@
 # Living Watershed: An Illustrated Cascadian Reader
 
+> **Historical naming note (July 2026):** ReadyPlan.me was renamed NowWePlan.com. References to ReadyPlan in this dated design record are preserved as historical context; active site hooks and links use NowWePlan.
+
 **Status:** Approved strategic direction; Phases 1–8 complete
 
 **Date:** July 12, 2026

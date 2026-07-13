@@ -10,7 +10,7 @@ Phase 8 binds the finished Living Watershed work into one site. It does not intr
 - Guides no longer repeats one “Start here / This chapter” construction four times. Earthquake begins in the room, Wildfire at the dry edge of the year, Flooding upstream and out of sight, and Winter Storm with one Pacific system becoming several kinds of weather.
 - The homepage keeps the personal founding impulse without duplicating the full Approach origin story.
 - The four composite disclosures and households no longer read as one stamped template. Each remains explicitly non-documentary while preserving the assigned household artwork, safety constraints, and human detail.
-- Wildfire’s live opening uses ordinary coverage language; the exact technical inventory remains in Sources.
+- Wildfire no longer interrupts the chapter with a live-feed strip; immediate guidance returns directly to the illustrated prose, while the exact Atlas coverage inventory remains in Sources.
 - Winter Storm’s urgent reference no longer behaves like a three-link navigation bar or repeat the same Atlas/source links later.
 - One redundant workbook preview link and one repetitive Earthquake caption were removed or rewritten so the surrounding passages can continue without a needless task change.
 

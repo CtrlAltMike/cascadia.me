@@ -9,7 +9,6 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#fbf7ee">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
-  <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
   <link rel="canonical" href="https://cascadia.me/wildfire.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="article">
@@ -82,7 +81,7 @@
           "author": { "@id": "https://cascadia.me/#author" },
           "publisher": { "@id": "https://cascadia.me/#organization" },
           "breadcrumb": { "@id": "https://cascadia.me/wildfire.html#breadcrumb" },
-          "dateModified": "2026-07-12",
+          "dateModified": "2026-07-13",
           "about": ["Wildfire preparedness", "Wildfire evacuation", "Wildfire smoke", "Home ignition zones"]
         }
       ]
@@ -133,7 +132,7 @@
             <p class="chapter-kicker">Chapter two · Wildfire</p>
             <h1 id="wildfire-title">Wildfire</h1>
             <p class="chapter-hero-lede">By the dry edge of the year, the practical question is not how dramatic the smoke looks. It is how much usable time remains on the road.</p>
-            <p class="chapter-hero-note">A household guide for Washington, Oregon, and southern British Columbia · Conditions and terminology vary by jurisdiction · Reviewed July 12, 2026</p>
+            <p class="chapter-hero-note">A household guide for Washington, Oregon, and southern British Columbia · Conditions and terminology vary by jurisdiction · Reviewed July 13, 2026</p>
             <a class="chapter-now-link" href="#wildfire-now">If fire is close or an evacuation instruction is active <span aria-hidden="true">↓</span></a>
           </div>
         </div>
@@ -163,40 +162,6 @@
           </ul>
           <p class="chapter-bypass-note"><strong>A fire report is not an evacuation instruction.</strong> A Red Flag Warning describes dangerous fire-weather potential, not an order to leave. A perimeter is an observed boundary, not a forecast. The authority issuing instructions for your location outranks every regional map.</p>
           <p class="chapter-bypass-link"><a href="#wildfire-reference">Read the complete wildfire quick reference</a></p>
-        </div>
-      </section>
-
-      <section
-        class="chapter-live"
-        id="current-conditions"
-        data-signal-mode="live"
-        data-current-conditions
-        data-display="guide-strip"
-        data-condition-kinds="evacuation,fire-weather,fire"
-        data-limit="4"
-        aria-busy="true"
-        aria-labelledby="wildfire-data-title"
-      >
-        <div class="chapter-container">
-          <div class="chapter-live-heading">
-            <div>
-              <p class="chapter-kicker">Connected official sources</p>
-              <h2 id="wildfire-data-title">What the current feeds are reporting.</h2>
-              <p>This live strip checks connected fire, fire-weather, and evacuation sources for parts of Washington, Oregon, and southern British Columbia. Coverage is incomplete, update times differ, and a missing record is never an all-clear. The Sources section names exactly what is and is not connected.</p>
-            </div>
-            <a class="chapter-live-link" href="atlas.html">Open the live Atlas →</a>
-          </div>
-          <p class="lw-guide-live-status" data-conditions-status role="status">Checking connected official feeds…</p>
-          <ul class="lw-guide-live-list" data-conditions-list aria-label="Current connected wildfire conditions"></ul>
-          <div class="lw-guide-live-notes">
-            <p data-conditions-freshness>Connecting to public data feeds.</p>
-            <p>Incident points may be approximate and record times vary. The Atlas may show perimeters, which can lag field conditions. Follow the authority responsible for your location.</p>
-            <p data-conditions-coverage>Connected evacuation coverage is loading.</p>
-            <p>Official handoffs: <a href="https://mil.wa.gov/wildfire" target="_blank" rel="noopener">Washington</a> · <a href="https://wildfire.oregon.gov/Pages/evacuations.aspx" target="_blank" rel="noopener">Oregon</a> · <a href="https://www.emergencyinfobc.gov.bc.ca/" target="_blank" rel="noopener">British Columbia</a></p>
-          </div>
-          <noscript>
-            <p class="conditions-noscript">Live conditions require JavaScript. Use the official <a href="https://mil.wa.gov/wildfire">Washington</a>, <a href="https://wildfire.oregon.gov/Pages/evacuations.aspx">Oregon</a>, or <a href="https://www.emergencyinfobc.gov.bc.ca/">British Columbia</a> source for your location.</p>
-          </noscript>
         </div>
       </section>
 
@@ -390,9 +355,9 @@
           <div class="chapter-sources-intro">
             <p class="chapter-kicker">Sources and limits</p>
             <h2 id="wildfire-sources-title">The local issuer outranks the regional picture.</h2>
-            <p>The live display is partial. Northern California is outside the connected feed. Connected sources cover current fire reports for Washington, Oregon, and southern British Columbia, fire-weather alerts for Washington only, and mapped evacuation areas for Chelan County. For Kittitas and Okanogan counties, the site links directly to the official source. Oregon evacuation maps, B.C. evacuation orders, and complete regional road, smoke, and fire-weather coverage are not connected.</p>
-            <p>Incident points may be approximate. Perimeters can lag changing conditions. Containment does not determine household safety or road access. Follow the authority responsible for your exact location.</p>
-            <p>Reviewed July 12, 2026</p>
+            <p>The <a href="atlas.html">Regional Hazard Atlas</a> offers a partial regional view. Its connected wildfire layers cover current fire reports for Washington, Oregon, and southern British Columbia, fire-weather alerts for Washington only, and mapped evacuation areas for Chelan County. Kittitas and Okanogan counties are official-source handoffs. Oregon evacuation maps, B.C. evacuation orders, complete regional road, smoke, and fire-weather coverage, and northern California are not connected.</p>
+            <p>Current reports can be incomplete or delayed, incident points may be approximate, and perimeters can lag changing conditions. Containment does not determine household safety or road access. When conditions are changing, use the official links below and follow the authority responsible for your exact location.</p>
+            <p>Reviewed July 13, 2026</p>
           </div>
 
           <div class="chapter-source-columns">
@@ -486,7 +451,6 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js?v=20260712-phase8"></script>
   <script src="js/animations.js?v=20260712-phase8"></script>
-  <script src="js/conditions.js?v=20260711-phase4"></script>
   <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

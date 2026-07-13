@@ -49,11 +49,11 @@ The chapter treats carbon monoxide as the urgent hazard within a slower event. G
 
 ## Data contracts
 
-### Wildfire: partial connected coverage
+### Wildfire: live conditions stay in the Atlas
 
-Wildfire retains the exact `data-current-conditions` guide-strip contract and its status, list, freshness, and coverage mounts. The live instrument can show connected official incident, perimeter, fire-weather, and limited evacuation records, but it always identifies itself as partial.
+Wildfire does not mount the `data-current-conditions` guide strip. The page moves directly from the immediate-reference bypass into the illustrated chapter; connected regional conditions remain in the Atlas and in the original official sources linked from the guide.
 
-The page states the operational limits beside the instrument:
+The Atlas view remains partial and carries these operational limits:
 
 - Connected fire-weather alerts are Washington-only.
 - Chelan County is the only connected live evacuation-polygon source.
@@ -108,8 +108,8 @@ The hero establishes the physical setting. The household vignette carries the co
 ## Implementation
 
 - `wildfire.html`, `flooding.html`, and `winter-storm.html` carry the `living-watershed-chapter-v2` article marker.
-- `css/living-watershed-primary-chapters.css` is scoped to the Phase 4 body classes and contains the responsive, print, reference, live-instrument, and long-form reading treatments.
-- The legacy guide stylesheet remains loaded only where an existing component contract is still needed, including the Wildfire renderer.
+- `css/living-watershed-primary-chapters.css` is scoped to the Phase 4 body classes and contains the responsive, print, reference, and long-form reading treatments. Its original live-instrument selectors are now dormant because no chapter mounts that renderer.
+- The legacy guide stylesheet remains loaded where existing shared chapter contracts still need it; Wildfire no longer loads the live-conditions renderer.
 - No chapter depends on reveal animation for legibility.
 - All urgent and source routes have keyboard-visible focus and at least a 44-pixel interactive target.
 - ReadyPlan metadata remains inert. Nothing public is withheld or represented by an empty widget.
@@ -118,7 +118,7 @@ The hero establishes the physical setting. The household vignette carries the co
 
 The completed family was checked at 1280, 820, 390, and 320 CSS-pixel widths in a real browser. The pages have one `h1`, logical headings, valid internal targets, no duplicate IDs, no horizontal overflow, and no console warnings or errors. The early emergency route remains within the opening mobile viewport and meets the target-size standard.
 
-The Wildfire live instrument was also checked in partial state: it completed loading, announced the matching-record count, retained the explicit coverage limitations, and preserved its source links. Flooding and Winter Storm were confirmed to mount no synthetic live renderer.
+Wildfire, Flooding, and Winter Storm were confirmed to mount no synthetic live renderer. Wildfire retains a quiet Atlas handoff and its exact coverage limitations in Sources.
 
 Responsive hero, household, and process assets loaded at their intended intrinsic dimensions when reached. The Winter Storm phone composition is used only at phone width, while tablets retain the landscape hero. Print treatment preserves the prose and artwork while flattening dark reference sections to legible paper output.
 

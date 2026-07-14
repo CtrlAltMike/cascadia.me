@@ -393,6 +393,9 @@ const resources = [
   ...resource
 }));
 
+const DIRECTORY_UPDATED_ON = window.SIGNALS_AUTHORITY_META?.verifiedOn || "2026-07-13";
+const DIRECTORY_UPDATED_LABEL = formatDirectoryDate(DIRECTORY_UPDATED_ON);
+
 const coverageStore = new Map();
 const sourceState = {
   "census-jurisdictions": "checking",
@@ -1263,7 +1266,7 @@ function renderDirectory() {
 function renderViewDialog() {
   const viewRecords = document.querySelector("#view-records");
   viewRecords.replaceChildren();
-  document.querySelector("#view-summary").textContent = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"} applicable to ${describeViewport()}. Grouped by authority level and sorted by role, then name.`;
+  document.querySelector("#view-summary").textContent = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"} applicable to ${describeViewport()}. Directory last updated ${DIRECTORY_UPDATED_LABEL}. Grouped by authority level and sorted by role, then name.`;
 
   groupOrder.forEach((groupName) => {
     const groupResources = visibleResourcesForGroup(groupName);
@@ -1340,6 +1343,24 @@ function escapeHtml(value) {
     "'": "&#39;",
     '"': "&quot;"
   })[character]);
+}
+
+function formatDirectoryDate(value) {
+  const [year, month, day] = String(value).split("-").map(Number);
+  if (![year, month, day].every(Number.isFinite)) return String(value);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function renderDirectoryFreshness() {
+  const time = document.querySelector("#directory-last-updated");
+  if (!time) return;
+  time.dateTime = DIRECTORY_UPDATED_ON;
+  time.textContent = DIRECTORY_UPDATED_LABEL;
 }
 
 function sourceForResource(resource) {
@@ -1856,11 +1877,12 @@ function shareableUrl() {
 
 function buildLinkedList() {
   const title = `Cascadia Signals — ${visibleResources.length} resources for ${describeViewport()}`;
+  const freshness = `Directory last updated ${DIRECTORY_UPDATED_LABEL}.`;
   const htmlItems = visibleResources.map((resource) => `<li><a href="${escapeHtml(resource.url)}"><strong>${escapeHtml(resource.name)}</strong></a> — ${escapeHtml(resource.place)}<br><em>${escapeHtml(resource.authorityRole)}</em><br>${escapeHtml(resource.summary)}</li>`).join("");
   const plainItems = visibleResources.map((resource, index) => `${index + 1}. ${resource.name} — ${resource.place}\nRole: ${resource.authorityRole}\n${resource.summary}\n${resource.url}`).join("\n\n");
   return {
-    html: `<h2>${escapeHtml(title)}</h2><ol>${htmlItems}</ol><p>Shared from <a href="${escapeHtml(shareableUrl())}">${escapeHtml(shareableUrl())}</a></p>`,
-    text: `${title}\n\n${plainItems}\n\nFiltered map view: ${shareableUrl()}`
+    html: `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(freshness)}</p><ol>${htmlItems}</ol><p>Shared from <a href="${escapeHtml(shareableUrl())}">${escapeHtml(shareableUrl())}</a></p>`,
+    text: `${title}\n${freshness}\n\n${plainItems}\n\nFiltered map view: ${shareableUrl()}`
   };
 }
 
@@ -1890,7 +1912,7 @@ async function shareFilteredView() {
   const status = document.querySelector("#share-status");
   try {
     if (navigator.share) {
-      await navigator.share({ title: "Cascadia Signals", text: `${visibleResources.length} emergency resources for this map view`, url });
+      await navigator.share({ title: "Cascadia Signals", text: `${visibleResources.length} emergency resources for this map view. Directory last updated ${DIRECTORY_UPDATED_LABEL}.`, url });
       status.textContent = "Map view shared.";
     } else {
       await navigator.clipboard.writeText(url);
@@ -1916,7 +1938,7 @@ function preparePrint() {
     item.append(name, detail, link);
     printRecords.append(item);
   });
-  document.querySelector("#print-summary").textContent = `${visibleResources.length} resources applicable to ${describeViewport()}, printed ${new Date().toLocaleDateString()}.`;
+  document.querySelector("#print-summary").textContent = `${visibleResources.length} resources applicable to ${describeViewport()}. Directory last updated ${DIRECTORY_UPDATED_LABEL}; printed ${new Date().toLocaleDateString()}.`;
   window.print();
 }
 
@@ -1989,6 +2011,7 @@ document.querySelector("#close-card").addEventListener("click", () => {
 });
 
 restoreFiltersFromUrl();
+renderDirectoryFreshness();
 validateAuthorityRegistry();
 registerCachedBcProvinceCoverage();
 updateFilterSummaries();

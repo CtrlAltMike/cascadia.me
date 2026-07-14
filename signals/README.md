@@ -8,7 +8,7 @@ Signals is a permanent Cascadia.me beta surface. It is linked from the primary n
 - Federal, state, tribal, county/regional, city, and community listings that can overlap without implying a single administrative hierarchy.
 - Zoom- and viewport-dependent applicability: broad views include broad and local resources, while local views retain every higher-level service that applies there.
 - Final clusters and coincident listing markers fan out into individually selectable points; the temporary arrangement clears when the map moves or the directory changes.
-- Optional state/province, county/regional-district, city, NWS forecast-office, and tribal-reference overlays that never control whether a directory listing appears.
+- Optional state/province, county/regional-district, city, NWS office, ECCC public forecast-zone, and tribal-reference overlays that never control whether a directory listing appears. NWS and ECCC geography have separate controls and map colors; selecting either kind of weather-service perimeter reveals its name and official source.
 - Tribal nations as sovereign publishers alongside federal, state, county/regional, and local/community sources.
 - Selection-based perimeter highlighting when a defensible applicability geometry exists; listings remain available without invented geometry when it does not.
 - A mandatory beta acknowledgment on every page load.
@@ -32,9 +32,11 @@ The B.C. records follow the province's documented division of responsibility: a 
 
 ## Data boundary
 
-U.S. state, county, and municipal boundaries come from Census TIGERweb. B.C. province, regional-district, and selected municipal boundaries come from the Province of British Columbia legal administrative-boundary service. NWS County Warning Areas come from the official NOAA reference layer. Selected U.S. reservation/trust-land examples come from Census TIGERweb as optional legal/statistical reference geography.
+U.S. state, county, and municipal boundaries come from Census TIGERweb. B.C. province, regional-district, and selected municipal boundaries come from the Province of British Columbia legal administrative-boundary service. NWS County Warning Areas come from the official NOAA reference layer. B.C. public forecast zones come from Environment and Climate Change Canada’s official Public Standard Forecast Zones collection—the geography used for most public forecasts, warnings, watches, advisories, and special weather statements. Selected U.S. reservation/trust-land examples come from Census TIGERweb as optional legal/statistical reference geography.
 
 B.C. province, regional-district, and municipal requests are retried and handled independently. A temporary failure in one boundary tier no longer suppresses successfully returned province geometry; the geometry ledger reports a partial result when only some tiers are available. The province outline also has a local snapshot retrieved from the official B.C. service on 2026-07-14, so this foundational outline is immediately available while live geometry refreshes.
+
+The 52 B.C. ECCC public forecast zones also have a local snapshot retrieved from the official GeoMet OGC API on 2026-07-14. Signals validates the live or cached collection for unique Canadian Locator Codes, names, polygon geometry, B.C. coverage, and the expected minimum zone count before registering it. The overlay shows durable zone boundaries only; it does not imply that an alert is currently active.
 
 Legal geometry is a geographic index, not automatic proof of service coverage. This matters especially in B.C., where a regional district may serve rural electoral areas while member municipalities operate their own emergency programs. Each record's applicability note controls the interpretation. A tribal or treaty-land reference shape is never presented as ancestral territory or emergency-service coverage.
 

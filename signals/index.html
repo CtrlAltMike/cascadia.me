@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="styles.css?v=20260714-nav">
+  <link rel="stylesheet" href="styles.css?v=20260714-weather-areas">
 </head>
 <body>
   <a class="skip-link" href="#explorer">Skip to Signals</a>
@@ -52,7 +52,7 @@
         <p class="lede">A place-aware directory of official alerts, emergency services, support, and preparedness resources—showing who issues instructions, who transmits alerts, and who supplies hazard information.</p>
         <p class="directory-freshness">
           <span>Directory last updated</span>
-          <time id="directory-last-updated" datetime="2026-07-13">July 13, 2026</time>
+          <time id="directory-last-updated" datetime="2026-07-14">July 14, 2026</time>
           <small>Official programs can change before the next review.</small>
         </p>
       </div>
@@ -111,12 +111,13 @@
 
         <details class="filter-disclosure overlay-disclosure">
           <summary>Service-area overlays <span id="overlay-summary">None</span></summary>
-          <p class="overlay-note">Map-only reference layers. These checkboxes never remove a directory listing.</p>
+          <p class="overlay-note">Map-only reference layers. These checkboxes never remove a directory listing. <strong>Service geography only; no active alert is implied.</strong></p>
           <div class="overlay-grid">
             <label><input type="checkbox" name="overlay" value="state"><span class="overlay-chip overlay-state" aria-hidden="true"></span><span>State / province</span></label>
             <label><input type="checkbox" name="overlay" value="county"><span class="overlay-chip overlay-county" aria-hidden="true"></span><span>County / regional</span></label>
             <label><input type="checkbox" name="overlay" value="city"><span class="overlay-chip overlay-city" aria-hidden="true"></span><span>Municipal</span></label>
-            <label><input type="checkbox" name="overlay" value="forecast"><span class="overlay-chip overlay-forecast" aria-hidden="true"></span><span>Alert / forecast areas</span></label>
+            <label><input type="checkbox" name="overlay" value="forecast-us"><span class="overlay-chip overlay-forecast-us" aria-hidden="true"></span><span>NWS forecast office areas — U.S.</span></label>
+            <label><input type="checkbox" name="overlay" value="forecast-ca"><span class="overlay-chip overlay-forecast-ca" aria-hidden="true"></span><span>ECCC public forecast zones — B.C.</span></label>
             <label><input type="checkbox" name="overlay" value="tribal-reference"><span class="overlay-chip overlay-tribal" aria-hidden="true"></span><span>Tribal reference geography</span></label>
           </div>
           <button type="button" class="clear-overlays" id="clear-overlays">Clear overlays</button>
@@ -180,7 +181,8 @@
           <li><span class="legend-symbol legend-postal"></span><span><strong>Postal lookup area</strong><small>Approximate Census ZCTA or forward sortation area—not a service boundary</small></span></li>
           <li><span class="legend-symbol legend-state"></span><span><strong>State or province</strong><small>Official government boundary</small></span></li>
           <li><span class="legend-symbol legend-local"></span><span><strong>County, regional district, or city</strong><small>Official government boundary—not automatically the service area</small></span></li>
-          <li><span class="legend-symbol legend-forecast"></span><span><strong>Alert / forecast area</strong><small>Official NWS County Warning Area</small></span></li>
+          <li><span class="legend-symbol legend-forecast-us"></span><span><strong>NWS forecast office area</strong><small>U.S. weather-service geography; no active alert implied</small></span></li>
+          <li><span class="legend-symbol legend-forecast-ca"></span><span><strong>ECCC public forecast zone</strong><small>B.C. weather-service geography; no active alert implied</small></span></li>
           <li><span class="legend-symbol legend-tribal"></span><span><strong>Tribal reference</strong><small>Census legal/statistical geography—not service coverage</small></span></li>
         </ul>
         <p>Selecting a resource can highlight its verified area even when that overlay category is off. Listings without defensible geometry remain in the directory without an invented perimeter.</p>
@@ -196,6 +198,17 @@
           <a class="record-link" id="card-link" href="#" target="_blank" rel="noopener">Visit official resource <span aria-hidden="true">↗</span></a>
           <a class="record-link" id="card-registry-link" href="#" target="_blank" rel="noopener" hidden>Inspect registry / authority source <span aria-hidden="true">↗</span></a>
           <a class="record-link" id="card-geometry-link" href="#" target="_blank" rel="noopener" hidden>Inspect geometry source <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+
+      <aside class="record-card service-area-card" id="service-area-card" hidden aria-live="polite">
+        <button class="card-close" id="close-service-area" type="button" aria-label="Close weather-service area details">×</button>
+        <p class="record-kicker" id="service-area-kicker">Weather-service geography</p>
+        <h2 id="service-area-title"></h2>
+        <p class="record-summary" id="service-area-summary"></p>
+        <dl class="record-meta" id="service-area-meta"></dl>
+        <div class="record-links">
+          <a class="record-link" id="service-area-source" href="#" target="_blank" rel="noopener">Inspect official geometry source <span aria-hidden="true">↗</span></a>
         </div>
       </aside>
 
@@ -296,9 +309,14 @@
         <a href="https://delivery.maps.gov.bc.ca/arcgis/rest/services/whse/bcgw_pub_whse_legal_admin_boundaries/MapServer" target="_blank" rel="noopener">B.C. legal boundaries source ↗</a>
       </article>
       <article>
-        <div><strong>NWS alert and forecast areas</strong><span data-perimeter-source="noaa">Checking…</span></div>
+        <div><strong>NWS office forecast areas — U.S.</strong><span data-perimeter-source="noaa">Checking…</span></div>
         <p>Official NOAA/NWS County Warning Area geometry for the six forecast offices serving Washington and Oregon, simplified only for regional display.</p>
         <a href="https://mapservices.weather.noaa.gov/static/rest/services/nws_reference_maps/nws_reference_map/MapServer/1" target="_blank" rel="noopener">NOAA reference layer ↗</a>
+      </article>
+      <article>
+        <div><strong>ECCC public forecast zones — B.C.</strong><span data-perimeter-source="eccc-forecast">Checking…</span></div>
+        <p>Official Environment and Climate Change Canada public forecast-zone geometry used for most forecasts, warnings, watches, advisories, and special weather statements. These are durable service zones, not a display of current alerts.</p>
+        <a href="https://api.weather.gc.ca/collections/public-standard-forecast-zones?f=html" target="_blank" rel="noopener">ECCC / MSC forecast-zone source ↗</a>
       </article>
       <article>
         <div><strong>Tribal reference geography</strong><span data-perimeter-source="census-tribal">Checking…</span></div>
@@ -325,6 +343,7 @@
   <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
   <script src="authority-data.js?v=20260714" defer></script>
   <script src="bc-province-boundary.js?v=20260714" defer></script>
-  <script src="app.js?v=20260714-freshness" defer></script>
+  <script src="bc-forecast-zones.js?v=20260714" defer></script>
+  <script src="app.js?v=20260714-weather-areas" defer></script>
 </body>
 </html>

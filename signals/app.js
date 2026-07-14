@@ -7,6 +7,7 @@ const CENSUS_PLACES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGE
 const CENSUS_TRIBAL = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer";
 const CENSUS_ZCTA = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/1";
 const NOAA_CWA = "https://mapservices.weather.noaa.gov/static/rest/services/nws_reference_maps/nws_reference_map/MapServer/1";
+const ECCC_FORECAST_ZONES = "https://api.weather.gc.ca/collections/public-standard-forecast-zones";
 const BC_LEGAL_ADMIN = "https://delivery.maps.gov.bc.ca/arcgis/rest/services/whse/bcgw_pub_whse_legal_admin_boundaries/MapServer";
 const STATCAN_FSA = "https://geo.statcan.gc.ca/geo_wa/rest/services/2021/Digital_boundary_files/MapServer/14";
 
@@ -39,7 +40,8 @@ const familyLabels = {
   state: "State / province boundary",
   county: "County / regional boundary",
   city: "Municipal boundary",
-  forecast: "NWS alert / forecast area",
+  "forecast-us": "NWS forecast office area",
+  "forecast-ca": "ECCC public forecast zone",
   "tribal-reference": "Tribal reference geography"
 };
 
@@ -393,7 +395,7 @@ const resources = [
   ...resource
 }));
 
-const DIRECTORY_UPDATED_ON = window.SIGNALS_AUTHORITY_META?.verifiedOn || "2026-07-13";
+const DIRECTORY_UPDATED_ON = "2026-07-14";
 const DIRECTORY_UPDATED_LABEL = formatDirectoryDate(DIRECTORY_UPDATED_ON);
 
 const coverageStore = new Map();
@@ -401,6 +403,7 @@ const sourceState = {
   "census-jurisdictions": "checking",
   "bc-jurisdictions": "checking",
   noaa: "checking",
+  "eccc-forecast": "checking",
   "census-tribal": "checking"
 };
 
@@ -422,6 +425,7 @@ const scaleLabel = document.querySelector("#scale-label");
 const perimeterStatus = document.querySelector("#perimeter-status");
 const overlaySummary = document.querySelector("#overlay-summary");
 const recordCard = document.querySelector("#record-card");
+const serviceAreaCard = document.querySelector("#service-area-card");
 const mapLoading = document.querySelector("#map-loading");
 const viewDialog = document.querySelector("#view-dialog");
 const shareDialog = document.querySelector("#share-dialog");
@@ -431,6 +435,7 @@ const betaDialog = document.querySelector("#beta-dialog");
 let map;
 let mapReady = false;
 let selectedResourceId = null;
+let selectedServiceAreaKey = null;
 let visibleResources = [];
 let locationSelection = null;
 let awaitingMapConfirmation = false;
@@ -582,6 +587,54 @@ function registerCachedBcProvinceCoverage() {
     "Province of British Columbia · official local snapshot"
   );
   return true;
+}
+
+function validateEcccForecastCollection(collection) {
+  if (!Array.isArray(collection?.features)) throw new Error("ECCC forecast response did not contain features");
+  const expectedCount = Number(window.SIGNALS_BC_FORECAST_ZONES_META?.expectedCount) || 52;
+  const features = collection.features.filter((feature) => String(feature.properties?.PROVINCE_C || "").split(",").includes("BC"));
+  const codes = features.map((feature) => String(feature.properties?.CLC || "").trim()).filter(Boolean);
+  const uniqueCodes = new Set(codes);
+  const invalidFeatures = features.filter((feature) => !feature.properties?.CLC
+    || !feature.properties?.NAME
+    || feature.properties?.USAGE !== "PubStdZone"
+    || feature.properties?.DEPICTN !== "hybrid"
+    || !["Polygon", "MultiPolygon"].includes(feature.geometry?.type)
+    || !featureBounds(feature));
+  if (features.length < expectedCount) throw new Error(`Expected at least ${expectedCount} B.C. forecast zones; received ${features.length}`);
+  if (uniqueCodes.size !== features.length) throw new Error("ECCC forecast-zone CLC codes were missing or duplicated");
+  if (invalidFeatures.length) throw new Error(`${invalidFeatures.length} ECCC forecast zones had invalid metadata or geometry`);
+  const versions = [...new Set(features.map((feature) => feature.properties.version).filter(Boolean))];
+  if (versions.length !== 1) throw new Error("ECCC forecast zones had missing or mixed package versions");
+  return { features, version: versions[0] };
+}
+
+function registerEcccForecastCoverage(collection, sourceLabel) {
+  const validated = validateEcccForecastCollection(collection);
+  validated.features.forEach((feature) => {
+    const code = String(feature.properties.CLC);
+    registerCoverage(
+      `eccc-zone-${slugify(code)}`,
+      feature,
+      "forecast-ca",
+      `ECCC ${feature.properties.NAME}`,
+      ECCC_FORECAST_ZONES,
+      sourceLabel
+    );
+  });
+  return { count: validated.features.length, version: validated.version };
+}
+
+function registerCachedEcccForecastCoverage() {
+  try {
+    return registerEcccForecastCoverage(
+      window.SIGNALS_BC_FORECAST_ZONES,
+      "Environment and Climate Change Canada / Meteorological Service of Canada · official local snapshot"
+    );
+  } catch (error) {
+    console.warn("Signals cached ECCC forecast geometry:", error);
+    return null;
+  }
 }
 
 async function fetchArcGis(url, where, outFields = "*", maxAllowableOffset = "0.002") {
@@ -850,7 +903,7 @@ async function loadNoaaGeometry() {
       const code = String(feature.properties.cwa || feature.properties.CWA || "").toLowerCase();
       if (!code) return;
       const cityState = feature.properties.citystate || feature.properties.CITYSTATE || code.toUpperCase();
-      registerCoverage(`nws-${code}`, feature, "forecast", `NWS ${cityState}`, NOAA_CWA, "NOAA / National Weather Service");
+      registerCoverage(`nws-${code}`, feature, "forecast-us", `NWS ${cityState}`, NOAA_CWA, "NOAA / National Weather Service");
     });
     if (!expectedCodes.every((code) => coverageStore.has(`nws-${code}`))) {
       throw new Error("One or more expected NWS areas were absent");
@@ -859,6 +912,27 @@ async function loadNoaaGeometry() {
   } catch (error) {
     console.warn("Signals NOAA geometry:", error);
     markSource("noaa", "error", "Unavailable");
+  }
+}
+
+async function loadEcccForecastGeometry() {
+  const cached = [...coverageStore.keys()].filter((key) => key.startsWith("eccc-zone-")).length;
+  try {
+    const endpoint = new URL(`${ECCC_FORECAST_ZONES}/items`);
+    endpoint.searchParams.set("f", "json");
+    endpoint.searchParams.set("limit", "500");
+    endpoint.searchParams.set("filter", "properties.PROVINCE_C=BC");
+    const response = await fetch(endpoint);
+    if (!response.ok) throw new Error(`ECCC forecast-zone request failed (${response.status})`);
+    const result = registerEcccForecastCoverage(
+      await response.json(),
+      "Environment and Climate Change Canada / Meteorological Service of Canada"
+    );
+    markSource("eccc-forecast", "ready", `${result.count} B.C. zones · v${result.version}`);
+  } catch (error) {
+    console.warn("Signals ECCC forecast geometry:", error);
+    const version = window.SIGNALS_BC_FORECAST_ZONES_META?.version;
+    markSource("eccc-forecast", cached ? "partial" : "error", cached ? `${cached} cached zones${version ? ` · v${version}` : ""}` : "Unavailable");
   }
 }
 
@@ -1373,7 +1447,7 @@ function sourceForResource(resource) {
 
 function focusResourceCoverage(resource, coverage) {
   if (!mapReady || !coverage?.bbox) return;
-  const maxZoom = coverage.family === "state" ? 4.25 : coverage.family === "city" ? 10 : coverage.family === "county" ? 7.25 : coverage.family === "forecast" ? 5.75 : 8;
+  const maxZoom = coverage.family === "state" ? 4.25 : coverage.family === "city" ? 10 : coverage.family === "county" ? 7.25 : coverage.family.startsWith("forecast-") ? 5.75 : 8;
   map.fitBounds(
     [[coverage.bbox[0], coverage.bbox[1]], [coverage.bbox[2], coverage.bbox[3]]],
     { padding: { top: 92, right: 54, bottom: 54, left: 54 }, maxZoom, duration: 700 }
@@ -1394,6 +1468,36 @@ function displayPointForResource(resource, coverage) {
     : null;
   if (exactCenter && offset) return [exactCenter[0] + offset[0], exactCenter[1] + offset[1]];
   return exactCenter || resource.point || centerOfBounds(resource.fallbackBounds);
+}
+
+function closeServiceAreaDetails({ update = true } = {}) {
+  if (!selectedServiceAreaKey && serviceAreaCard.hidden) return;
+  selectedServiceAreaKey = null;
+  serviceAreaCard.hidden = true;
+  if (update) updateSelectedArea();
+}
+
+function selectServiceArea(feature) {
+  const key = feature?.properties?.key;
+  const coverage = coverageStore.get(key);
+  if (!coverage || !["forecast-us", "forecast-ca"].includes(coverage.family)) return;
+  closeResourceDetails({ rerender: false });
+  selectedServiceAreaKey = key;
+  const isCanadian = coverage.family === "forecast-ca";
+  const identifier = isCanadian ? coverage.feature.properties.CLC : coverage.feature.properties.CWA || coverage.feature.properties.cwa;
+  document.querySelector("#service-area-kicker").textContent = isCanadian ? "B.C. weather-service zone" : "U.S. weather-service area";
+  document.querySelector("#service-area-title").textContent = coverage.label;
+  document.querySelector("#service-area-summary").textContent = isCanadian
+    ? "An ECCC public forecast zone used for most forecasts, warnings, watches, advisories, and special weather statements."
+    : "A National Weather Service forecast-office area used to organize forecasts, warnings, and related weather services.";
+  document.querySelector("#service-area-meta").innerHTML = `
+    <dt>Boundary type</dt><dd>${escapeHtml(familyLabels[coverage.family])}</dd>
+    <dt>Official source</dt><dd>${escapeHtml(coverage.sourceLabel)}</dd>
+    ${identifier ? `<dt>Identifier</dt><dd>${escapeHtml(identifier)}</dd>` : ""}
+    <dt>Alert status</dt><dd>No active alert is implied by this outline.</dd>`;
+  document.querySelector("#service-area-source").href = coverage.sourceUrl;
+  serviceAreaCard.hidden = false;
+  updateSelectedArea();
 }
 
 function closeResourceDetails({ rerender = true } = {}) {
@@ -1490,6 +1594,7 @@ function spiderfyFeatures(features, centerCoordinates, { clusterId = null } = {}
 function selectResource(id) {
   const resource = resources.find((item) => item.id === id);
   if (!resource) return;
+  closeServiceAreaDetails({ update: false });
   selectedResourceId = id;
   document.querySelector("#card-kicker").textContent = `${publisherLabels[resource.publisher]} · ${resource.place}`;
   document.querySelector("#card-title").textContent = resource.name;
@@ -1563,6 +1668,8 @@ function updateOverlayAreas() {
   updateFilterSummaries();
   if (!mapReady || !map.getSource("overlay-areas")) return;
   const enabled = new Set(checkedValues("overlay"));
+  const selectedCoverage = selectedServiceAreaKey ? coverageStore.get(selectedServiceAreaKey) : null;
+  if (selectedCoverage && !enabled.has(selectedCoverage.family)) closeServiceAreaDetails();
   const features = [...coverageStore.values()]
     .filter((coverage) => enabled.has(coverage.family))
     .map((coverage) => coverage.feature);
@@ -1572,9 +1679,12 @@ function updateOverlayAreas() {
 function updateSelectedArea() {
   if (!mapReady || !map.getSource("selected-area")) return;
   const resource = resources.find((item) => item.id === selectedResourceId);
-  const features = resource
-    ? resource.coverageKeys.map((key) => coverageStore.get(key)?.feature).filter(Boolean)
-    : [];
+  const selectedServiceArea = selectedServiceAreaKey ? coverageStore.get(selectedServiceAreaKey)?.feature : null;
+  const features = selectedServiceArea
+    ? [selectedServiceArea]
+    : resource
+      ? resource.coverageKeys.map((key) => coverageStore.get(key)?.feature).filter(Boolean)
+      : [];
   map.getSource("selected-area").setData({ type: "FeatureCollection", features });
 }
 
@@ -1585,8 +1695,8 @@ function addMapDataLayers() {
     type: "fill",
     source: "overlay-areas",
     paint: {
-      "fill-color": ["match", ["get", "family"], "state", "#61725b", "county", "#c9903e", "city", "#b85635", "forecast", "#255f6a", "tribal-reference", "#8a6542", "#61725b"],
-      "fill-opacity": ["match", ["get", "family"], "state", 0.085, "tribal-reference", 0.08, 0.055]
+      "fill-color": ["match", ["get", "family"], "state", "#61725b", "county", "#c9903e", "city", "#b85635", "forecast-us", "#255f6a", "forecast-ca", "#65529a", "tribal-reference", "#8a6542", "#61725b"],
+      "fill-opacity": ["match", ["get", "family"], "state", 0.085, "forecast-ca", 0.045, "tribal-reference", 0.08, 0.055]
     }
   });
   map.addLayer({
@@ -1605,11 +1715,18 @@ function addMapDataLayers() {
     type: "line",
     source: "overlay-areas",
     paint: {
-      "line-color": ["match", ["get", "family"], "state", "#4e624b", "county", "#b77a27", "city", "#a7452b", "forecast", "#1f5968", "tribal-reference", "#7a5637", "#4e624b"],
-      "line-width": ["match", ["get", "family"], "state", 2.5, "city", 1.8, 1.2],
+      "line-color": ["match", ["get", "family"], "state", "#4e624b", "county", "#b77a27", "city", "#a7452b", "forecast-us", "#1f5968", "forecast-ca", "#65529a", "tribal-reference", "#7a5637", "#4e624b"],
+      "line-width": ["match", ["get", "family"], "state", 2.5, "city", 1.8, "forecast-us", 1.6, "forecast-ca", 1.3, 1.2],
       "line-opacity": ["match", ["get", "family"], "state", 0.98, 0.9],
       "line-dasharray": [2, 1.5]
     }
+  });
+  map.addLayer({
+    id: "weather-service-area-hit",
+    type: "fill",
+    source: "overlay-areas",
+    filter: ["in", ["get", "family"], ["literal", ["forecast-us", "forecast-ca"]]],
+    paint: { "fill-color": "#ffffff", "fill-opacity": 0.01 }
   });
 
   map.addSource("postal-area", { type: "geojson", data: EMPTY_COLLECTION });
@@ -1717,11 +1834,23 @@ function addMapDataLayers() {
     }
   });
 
+  map.on("click", "weather-service-area-hit", (event) => {
+    if (awaitingMapConfirmation) return;
+    const feature = event.features?.[0];
+    if (!feature) return;
+    mapFeatureClickHandled = true;
+    clearSpiderfy();
+    selectServiceArea(feature);
+  });
+  map.on("mouseenter", "weather-service-area-hit", () => { map.getCanvas().style.cursor = awaitingMapConfirmation ? "crosshair" : "pointer"; });
+  map.on("mouseleave", "weather-service-area-hit", () => { map.getCanvas().style.cursor = awaitingMapConfirmation ? "crosshair" : ""; });
+
   map.on("click", "resource-clusters", async (event) => {
     if (awaitingMapConfirmation) return;
     mapFeatureClickHandled = true;
     const feature = map.queryRenderedFeatures(event.point, { layers: ["resource-clusters"] })[0];
     if (!feature) return;
+    closeServiceAreaDetails();
     closeResourceDetails({ rerender: false });
     clearSpiderfy();
     const source = map.getSource("resource-points");
@@ -1774,6 +1903,7 @@ function addMapDataLayers() {
       return;
     }
     if (spiderfyActive) clearSpiderfy();
+    closeServiceAreaDetails();
     closeResourceDetails();
   });
   map.on("movestart", clearSpiderfy);
@@ -1845,6 +1975,10 @@ function restoreFiltersFromUrl() {
     const key = name === "publisher" ? "p" : name === "category" ? "c" : "o";
     if (!params.has(key)) return;
     const selected = new Set(params.get(key).split(",").filter(Boolean));
+    if (name === "overlay" && selected.has("forecast")) {
+      selected.add("forecast-us");
+      selected.add("forecast-ca");
+    }
     document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
       input.checked = selected.has(input.value);
     });
@@ -2009,17 +2143,21 @@ document.querySelector("#close-legend").addEventListener("click", () => {
 document.querySelector("#close-card").addEventListener("click", () => {
   closeResourceDetails();
 });
+document.querySelector("#close-service-area").addEventListener("click", () => {
+  closeServiceAreaDetails();
+});
 
 restoreFiltersFromUrl();
 renderDirectoryFreshness();
 validateAuthorityRegistry();
 registerCachedBcProvinceCoverage();
+registerCachedEcccForecastCoverage();
 updateFilterSummaries();
 renderDirectory();
 initMap();
 initBetaGate();
 
-Promise.allSettled([loadJurisdictionGeometry(), loadBcJurisdictionGeometry(), loadNoaaGeometry(), loadTribalReferenceGeometry()]).then(() => {
+Promise.allSettled([loadJurisdictionGeometry(), loadBcJurisdictionGeometry(), loadNoaaGeometry(), loadEcccForecastGeometry(), loadTribalReferenceGeometry()]).then(() => {
   updateOverlayAreas();
   updateSelectedArea();
   renderDirectory();

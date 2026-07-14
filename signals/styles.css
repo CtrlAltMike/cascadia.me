@@ -411,6 +411,12 @@ h1 em { color: var(--water); font-weight: 600; }
   line-height: 1.45;
 }
 
+.overlay-note strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--ember);
+}
+
 .overlay-grid {
   display: grid;
   gap: 6px;
@@ -443,7 +449,8 @@ h1 em { color: var(--water); font-weight: 600; }
 .overlay-state { border-color: #4e624b; }
 .overlay-county { border-color: #b77a27; }
 .overlay-city { border-color: #a7452b; }
-.overlay-forecast { border-color: #1f5968; }
+.overlay-forecast-us { border-color: #1f5968; }
+.overlay-forecast-ca { border-color: #65529a; }
 .overlay-tribal { border-color: #7a5637; }
 
 .clear-overlays {
@@ -853,7 +860,8 @@ dialog::backdrop {
 .legend-postal { background: rgba(201,144,62,0.18); border: 2px solid var(--amber); }
 .legend-state { background: rgba(97,114,91,0.08); border: 2px dashed #4e624b; }
 .legend-local { background: rgba(201,144,62,0.08); border: 2px dashed #b77a27; }
-.legend-forecast { background: rgba(37,95,106,0.08); border: 2px dashed #1f5968; }
+.legend-forecast-us { background: rgba(37,95,106,0.08); border: 2px dashed #1f5968; }
+.legend-forecast-ca { background: rgba(101,82,154,0.08); border: 2px dashed #65529a; }
 .legend-tribal { background: rgba(138,101,66,0.08); border: 2px dashed #7a5637; }
 .legend > p { margin: 12px 0 0; padding-top: 12px; color: var(--ink-soft); border-top: 1px solid var(--line); font-size: 9px; line-height: 1.5; }
 

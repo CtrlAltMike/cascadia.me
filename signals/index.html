@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#153f47">
+  <title>Cascadia Signals | Official Alerts &amp; Emergency Services Directory</title>
+  <meta name="description" content="Find place-aware official alert systems, emergency management agencies, transportation updates, hazard information, and support resources across Washington, Oregon, and British Columbia.">
+  <link rel="canonical" href="https://cascadia.me/signals/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cascadia Signals">
+  <meta property="og:description" content="A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.">
+  <meta property="og:url" content="https://cascadia.me/signals/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cascadia Signals">
+  <meta name="twitter:description" content="Find official alert systems and emergency resources for the place in view.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&amp;display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#explorer">Skip to Signals</a>
+
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
+    <div class="experiment-mark" aria-label="Signals beta">
+      <span class="experiment-dot" aria-hidden="true"></span>
+      Signals beta
+    </div>
+  </header>
+
+  <main class="app-shell" id="explorer">
+    <aside class="explorer-panel" aria-labelledby="explorer-title">
+      <div class="explorer-heading">
+        <p class="eyebrow">Cascadia Signals / beta</p>
+        <h1 id="explorer-title">Who can help, <em>here?</em></h1>
+        <p class="lede">A place-aware directory of official alerts, emergency services, support, and preparedness resources—showing who issues instructions, who transmits alerts, and who supplies hazard information.</p>
+      </div>
+
+      <form class="postal-lookup" id="postal-lookup" novalidate>
+        <div class="postal-heading">
+          <label for="postal-code">Find services by ZIP or postal code</label>
+          <span>Approximate locator</span>
+        </div>
+        <div class="postal-entry">
+          <input id="postal-code" name="postal-code" type="text" inputmode="text" maxlength="10" autocomplete="postal-code" placeholder="98101 or V6B 1A1" aria-describedby="postal-guidance postal-status">
+          <button type="submit" id="postal-submit">Locate</button>
+        </div>
+        <p class="postal-guidance" id="postal-guidance">U.S. lookups use five-digit Census ZCTAs. Canadian lookups use only the first three characters, called an FSA. Neither is an emergency-service boundary.</p>
+        <div class="postal-result" id="postal-result" hidden>
+          <p class="postal-result-label">Location match</p>
+          <strong id="postal-match-title"></strong>
+          <p id="postal-status" role="status" aria-live="polite"></p>
+          <p class="postal-jurisdictions" id="postal-jurisdictions"></p>
+          <div class="postal-actions">
+            <button type="button" id="confirm-postal-point">Choose exact spot on map</button>
+            <button type="button" id="clear-postal">Clear</button>
+          </div>
+        </div>
+      </form>
+
+      <form class="filters" id="filters" aria-label="Filter the Signals directory">
+        <label class="search-label" for="source-search">Find a service, place, or need</label>
+        <div class="search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="source-search" name="search" type="search" placeholder="Try “roads,” “Seattle,” or “support”" autocomplete="off">
+        </div>
+
+        <details class="filter-disclosure" open>
+          <summary>Publisher <span data-publisher-summary>All</span></summary>
+          <div class="check-grid">
+            <label><input type="checkbox" name="publisher" value="federal" checked><span>Federal</span></label>
+            <label><input type="checkbox" name="publisher" value="tribal" checked><span>Tribal nations</span></label>
+            <label><input type="checkbox" name="publisher" value="state" checked><span>State</span></label>
+            <label><input type="checkbox" name="publisher" value="county" checked><span>County / regional</span></label>
+            <label><input type="checkbox" name="publisher" value="local" checked><span>City / community</span></label>
+          </div>
+        </details>
+
+        <details class="filter-disclosure" open>
+          <summary>Need <span data-category-summary>All</span></summary>
+          <div class="topic-grid">
+            <label><input type="checkbox" name="category" value="alerts" checked><span>Alerts</span></label>
+            <label><input type="checkbox" name="category" value="emergency" checked><span>Emergency management</span></label>
+            <label><input type="checkbox" name="category" value="transport" checked><span>Transportation</span></label>
+            <label><input type="checkbox" name="category" value="hazards" checked><span>Weather &amp; hazards</span></label>
+            <label><input type="checkbox" name="category" value="support" checked><span>Health &amp; support</span></label>
+            <label><input type="checkbox" name="category" value="community" checked><span>Community readiness</span></label>
+          </div>
+        </details>
+
+        <details class="filter-disclosure overlay-disclosure">
+          <summary>Service-area overlays <span id="overlay-summary">None</span></summary>
+          <p class="overlay-note">Map-only reference layers. These checkboxes never remove a directory listing.</p>
+          <div class="overlay-grid">
+            <label><input type="checkbox" name="overlay" value="state"><span class="overlay-chip overlay-state" aria-hidden="true"></span><span>State / province</span></label>
+            <label><input type="checkbox" name="overlay" value="county"><span class="overlay-chip overlay-county" aria-hidden="true"></span><span>County / regional</span></label>
+            <label><input type="checkbox" name="overlay" value="city"><span class="overlay-chip overlay-city" aria-hidden="true"></span><span>Municipal</span></label>
+            <label><input type="checkbox" name="overlay" value="forecast"><span class="overlay-chip overlay-forecast" aria-hidden="true"></span><span>Alert / forecast areas</span></label>
+            <label><input type="checkbox" name="overlay" value="tribal-reference"><span class="overlay-chip overlay-tribal" aria-hidden="true"></span><span>Tribal reference geography</span></label>
+          </div>
+          <button type="button" class="clear-overlays" id="clear-overlays">Clear overlays</button>
+        </details>
+
+        <div class="filter-actions">
+          <button type="button" class="text-button" id="reset-filters">Reset directory filters</button>
+          <p id="perimeter-status" data-state="checking"><span class="status-light" aria-hidden="true"></span>Checking geometry</p>
+        </div>
+      </form>
+
+      <section class="results" aria-labelledby="results-heading">
+        <div class="results-heading">
+          <div>
+            <h2 id="results-heading">Signals for this view</h2>
+            <span id="result-count" aria-live="polite">0 resources</span>
+          </div>
+          <div class="list-actions" aria-label="List actions">
+            <button type="button" id="view-list">View</button>
+            <button type="button" id="print-list">Print</button>
+            <button type="button" id="share-list">Share</button>
+          </div>
+        </div>
+        <p class="results-context" id="results-context">Move or zoom the map to find resources that apply to another place.</p>
+        <div class="result-list" id="result-list"></div>
+      </section>
+    </aside>
+
+    <section class="map-stage" aria-label="Interactive map for finding applicable emergency resources">
+      <div class="map-toolbar">
+        <div>
+          <span class="toolbar-label">Directory scale</span>
+          <strong id="scale-label">Regional resources</strong>
+        </div>
+        <div class="map-toolbar-actions">
+          <button type="button" id="fit-region">Cascadia view</button>
+          <button type="button" id="show-perimeter-sources">Geometry</button>
+          <button type="button" id="toggle-legend" aria-expanded="false" aria-controls="map-legend">Legend</button>
+        </div>
+      </div>
+
+      <div id="map" class="map" role="application" aria-label="Map. Use arrow keys to move and plus or minus to zoom.">
+        <div class="map-loading" id="map-loading">
+          <span class="loading-ring" aria-hidden="true"></span>
+          <p>Drawing the regional directory…</p>
+        </div>
+      </div>
+
+      <div class="map-caption">
+        <span id="viewport-count">0 resources apply to this view</span>
+        <span>Move closer for county, regional-district, and city sources</span>
+      </div>
+
+      <aside class="legend" id="map-legend" hidden aria-label="Map legend">
+        <div class="legend-heading">
+          <strong>Map key</strong>
+          <button type="button" id="close-legend" aria-label="Close legend">×</button>
+        </div>
+        <ul>
+          <li><span class="legend-symbol legend-resource"></span><span><strong>Directory resource</strong><small>A representative listing location; overlapping listings fan out when selected</small></span></li>
+          <li><span class="legend-symbol legend-postal"></span><span><strong>Postal lookup area</strong><small>Approximate Census ZCTA or forward sortation area—not a service boundary</small></span></li>
+          <li><span class="legend-symbol legend-state"></span><span><strong>State or province</strong><small>Official government boundary</small></span></li>
+          <li><span class="legend-symbol legend-local"></span><span><strong>County, regional district, or city</strong><small>Official government boundary—not automatically the service area</small></span></li>
+          <li><span class="legend-symbol legend-forecast"></span><span><strong>Alert / forecast area</strong><small>Official NWS County Warning Area</small></span></li>
+          <li><span class="legend-symbol legend-tribal"></span><span><strong>Tribal reference</strong><small>Census legal/statistical geography—not service coverage</small></span></li>
+        </ul>
+        <p>Selecting a resource can highlight its verified area even when that overlay category is off. Listings without defensible geometry remain in the directory without an invented perimeter.</p>
+      </aside>
+
+      <aside class="record-card" id="record-card" hidden aria-live="polite">
+        <button class="card-close" id="close-card" type="button" aria-label="Close resource details">×</button>
+        <p class="record-kicker" id="card-kicker"></p>
+        <h2 id="card-title"></h2>
+        <p class="record-summary" id="card-summary"></p>
+        <dl class="record-meta" id="card-meta"></dl>
+        <div class="record-links">
+          <a class="record-link" id="card-link" href="#" target="_blank" rel="noopener">Visit official resource <span aria-hidden="true">↗</span></a>
+          <a class="record-link" id="card-registry-link" href="#" target="_blank" rel="noopener" hidden>Inspect registry / authority source <span aria-hidden="true">↗</span></a>
+          <a class="record-link" id="card-geometry-link" href="#" target="_blank" rel="noopener" hidden>Inspect geometry source <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+
+      <div class="data-note">
+        <strong>Jurisdiction rule</strong>
+        <span>Boundaries help locate sources; the applicability note identifies city exceptions and regional partnerships. First Nation authority is never inferred from a map boundary.</span>
+      </div>
+    </section>
+  </main>
+
+  <section class="print-sheet" id="print-sheet" aria-hidden="true">
+    <header>
+      <p>Cascadia.me</p>
+      <h1>Cascadia Signals</h1>
+      <p id="print-summary"></p>
+    </header>
+    <ol id="print-records"></ol>
+    <footer>Signals is a beta directory and may contain stale links, errors, or omissions. It does not report current emergencies. Verify urgent information with the responsible official source.</footer>
+  </section>
+
+  <dialog class="gate-dialog" id="beta-dialog" aria-labelledby="beta-title" aria-describedby="beta-description">
+    <div class="dialog-mark" aria-hidden="true"><span></span>Signals beta</div>
+    <h2 id="beta-title">Please read this before continuing.</h2>
+    <div id="beta-description" class="gate-copy">
+      <p>Signals is a very early directory assembled from official public registries, agency websites, and outside geometry services. Alert programs and responsibilities change; names, links, and service areas can still be incomplete, unavailable, out of date, or wrong.</p>
+      <p>Signals does not report current emergencies. Use it to reach responsible organizations, then follow official alerts and instructions for urgent decisions.</p>
+    </div>
+    <form method="dialog" id="beta-form">
+      <label class="acknowledgment">
+        <input type="checkbox" id="beta-ack">
+        <span><strong>I understand</strong> that Signals is experimental and may contain errors or omissions.</span>
+      </label>
+      <button class="dialog-primary" id="beta-okay" value="acknowledged" disabled>Okay</button>
+    </form>
+  </dialog>
+
+  <dialog class="view-dialog" id="view-dialog" aria-labelledby="view-title" aria-describedby="view-summary">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close formatted Signals list">×</button>
+    </form>
+    <header class="view-dialog-header">
+      <p class="dialog-eyebrow">Current directory</p>
+      <h2 id="view-title">Signals for this view</h2>
+      <p id="view-summary">A formatted list of the resources that match the current map view and filters.</p>
+    </header>
+    <div class="view-records" id="view-records"></div>
+    <form method="dialog" class="dialog-footer view-dialog-footer">
+      <button class="dialog-secondary" value="close">Done</button>
+    </form>
+  </dialog>
+
+  <dialog class="share-dialog" id="share-dialog" aria-labelledby="share-title">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close share dialog">×</button>
+    </form>
+    <p class="dialog-eyebrow">Pass it along</p>
+    <h2 id="share-title">Share your Signals list</h2>
+    <p class="share-intro" id="share-summary">Share the resources that apply to the current map view and filters.</p>
+    <div class="share-options">
+      <button type="button" class="share-option" id="copy-linked-list">
+        <span aria-hidden="true">⧉</span>
+        <span><strong>Copy linked list</strong><small>Best for email, documents, and messages. Clickable resource URLs are preserved.</small></span>
+      </button>
+      <button type="button" class="share-option" id="share-filtered-view">
+        <span aria-hidden="true">↗</span>
+        <span><strong>Share this map view</strong><small>Shares a page link that restores the location, zoom, filters, and overlays.</small></span>
+      </button>
+    </div>
+    <p class="share-status" id="share-status" role="status" aria-live="polite"></p>
+    <form method="dialog" class="dialog-footer">
+      <button class="dialog-secondary" value="close">Done</button>
+    </form>
+  </dialog>
+
+  <dialog class="perimeter-dialog" id="perimeter-dialog" aria-labelledby="perimeter-title">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close geometry sources">×</button>
+    </form>
+    <p class="dialog-eyebrow">Geometry provenance</p>
+    <h2 id="perimeter-title">What the optional outlines mean</h2>
+    <p class="perimeter-intro">Signals maps a service or jurisdiction outline only when an official, relevant geometry is available. Overlay checkboxes affect the map alone; the directory remains complete for the current view.</p>
+    <div class="source-ledger">
+      <article>
+        <div><strong>Alert-authority registry</strong><span data-authority-registry="status">Checking…</span></div>
+        <p>All 39 Washington counties and all 36 Oregon counties are drawn from their official state directories. B.C. records distinguish the local authority that requests or issues an alert from the provincial ministry that transmits a BC Emergency Alert.</p>
+        <a href="https://mil.wa.gov/alerts" target="_blank" rel="noopener">Washington directory ↗</a>
+        <a href="https://oralert.gov/" target="_blank" rel="noopener">OR-Alert directory ↗</a>
+        <a href="https://www2.gov.bc.ca/assets/gov/public-safety-and-emergency-services/emergency-preparedness-response-recovery/local-government/bc_emergency_alert_guidelines_for_fn-lgs.pdf" target="_blank" rel="noopener">B.C. alert guidelines ↗</a>
+      </article>
+      <article>
+        <div><strong>U.S. state, county, and municipal boundaries</strong><span data-perimeter-source="census-jurisdictions">Checking…</span></div>
+        <p>Current U.S. Census TIGERweb government geography for Washington, Oregon, all 75 counties, and the city alert sources included in this beta. Boundaries support applicability but do not describe every service arrangement.</p>
+        <a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer" target="_blank" rel="noopener">Census state and county source ↗</a>
+      </article>
+      <article>
+        <div><strong>B.C. province, regional-district, and municipal boundaries</strong><span data-perimeter-source="bc-jurisdictions">Checking…</span></div>
+        <p>Official Province of British Columbia legal administrative boundaries for the province, 27 regional districts, and mapped city alert sources. Regional-district geometry is never treated as proof that the district program serves every municipality inside it.</p>
+        <a href="https://delivery.maps.gov.bc.ca/arcgis/rest/services/whse/bcgw_pub_whse_legal_admin_boundaries/MapServer" target="_blank" rel="noopener">B.C. legal boundaries source ↗</a>
+      </article>
+      <article>
+        <div><strong>NWS alert and forecast areas</strong><span data-perimeter-source="noaa">Checking…</span></div>
+        <p>Official NOAA/NWS County Warning Area geometry for the six forecast offices serving Washington and Oregon, simplified only for regional display.</p>
+        <a href="https://mapservices.weather.noaa.gov/static/rest/services/nws_reference_maps/nws_reference_map/MapServer/1" target="_blank" rel="noopener">NOAA reference layer ↗</a>
+      </article>
+      <article>
+        <div><strong>Tribal reference geography</strong><span data-perimeter-source="census-tribal">Checking…</span></div>
+        <p>Selected U.S. Census TIGERweb reservation and trust-land legal/statistical areas. These are not ancestral-territory maps and are not assumed to be emergency-service boundaries.</p>
+        <a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">Census tribal geography source ↗</a>
+      </article>
+      <article>
+        <div><strong>Postal-area locator</strong><span id="postal-source-status">On demand</span></div>
+        <p>Five-digit U.S. lookups use 2020 Census ZIP Code Tabulation Areas. B.C. lookups use 2021 Statistics Canada census forward sortation areas—the first three postal-code characters. Both are approximate statistical geography and can cross service jurisdictions.</p>
+        <a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/1" target="_blank" rel="noopener">Census ZCTA source ↗</a>
+        <a href="https://geo.statcan.gc.ca/geo_wa/rest/services/2021/Digital_boundary_files/MapServer/14" target="_blank" rel="noopener">Statistics Canada FSA source ↗</a>
+      </article>
+    </div>
+    <div class="perimeter-policy">
+      <strong>No invented coverage</strong>
+      <p>When a resource has no defensible service geometry, Signals keeps the listing and omits its perimeter. Legal boundaries are only a geographic index; the record’s coverage note controls the interpretation. Signals contains no live-incident or hand-drawn emergency polygons.</p>
+    </div>
+    <form method="dialog" class="dialog-footer">
+      <button class="dialog-secondary" value="close">Done</button>
+    </form>
+  </dialog>
+
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
+  <script src="authority-data.js?v=20260714" defer></script>
+  <script src="bc-province-boundary.js?v=20260714" defer></script>
+  <script src="app.js?v=20260714" defer></script>
+</body>
+</html>

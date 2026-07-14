@@ -118,7 +118,7 @@ const coreResources = [
     categories: ["alerts", "hazards", "community"],
     summary: "Volcano status, monitoring, hazard science, and preparedness information for Cascade volcanoes.",
     url: "https://www.usgs.gov/observatories/cvo",
-    coverageKeys: [],
+    coverageKeys: ["region-cascade-range"],
     fallbackBounds: [-125.1, 40.8, -118.2, 49.15],
     coverageNote: "Regional relevance is broad; Signals does not substitute a single perimeter for volcano-specific hazard maps.",
     point: [-122.59, 45.62]
@@ -133,7 +133,7 @@ const coreResources = [
     categories: ["alerts", "hazards", "community"],
     summary: "Earthquake information, seismic monitoring, ShakeAlert education, and regional preparedness resources.",
     url: "https://pnsn.org/",
-    coverageKeys: [],
+    coverageKeys: ["region-cascadia"],
     fallbackBounds: REGION_BOUNDS,
     coverageNote: "Regional network relevance; no single service perimeter is asserted here.",
     point: [-122.31, 47.654]
@@ -259,6 +259,36 @@ const coreResources = [
     point: [-122.68, 45.52]
   },
   {
+    id: "drivebc",
+    name: "DriveBC",
+    organization: "British Columbia Ministry of Transportation and Transit",
+    publisher: "state",
+    group: "State & statewide",
+    place: "British Columbia",
+    categories: ["alerts", "transport"],
+    summary: "Official provincial highway conditions, closures, incidents, delays, cameras, and route-planning information.",
+    url: "https://www2.gov.bc.ca/gov/content/transportation",
+    coverageKeys: ["province-bc"],
+    fallbackBounds: [-139.2, 48.2, -114, 60.1],
+    coverageNote: "Province-wide transportation information for provincial highways.",
+    point: [-123.37, 48.43]
+  },
+  {
+    id: "bc-211",
+    name: "211 British Columbia",
+    organization: "United Way British Columbia",
+    publisher: "local",
+    group: "State & statewide",
+    place: "British Columbia",
+    categories: ["support", "community"],
+    summary: "Free, confidential connections to non-emergency community programs, social services, and urgent-response resources across British Columbia.",
+    url: "https://bc.211.ca/",
+    coverageKeys: ["province-bc"],
+    fallbackBounds: [-139.2, 48.2, -114, 60.1],
+    coverageNote: "Province-wide non-emergency support directory. Call 911 for an immediate threat to life or safety.",
+    point: [-123.12, 49.28]
+  },
+  {
     id: "grand-ronde-emergency",
     name: "Grand Ronde Emergency Services",
     organization: "Confederated Tribes of the Grand Ronde Community of Oregon",
@@ -268,7 +298,7 @@ const coreResources = [
     categories: ["emergency", "support", "community"],
     summary: "Tribal fire, emergency medical, hazardous-materials, and emergency-management services for the Grand Ronde and Willamina area.",
     url: "https://www.grandronde.org/government/emergency-services/",
-    coverageKeys: [],
+    coverageKeys: ["service-grand-ronde"],
     fallbackBounds: [-123.78, 44.88, -123.38, 45.18],
     coverageNote: "The official page names its service area, but Signals does not equate that area with a Census reservation boundary.",
     point: [-123.61, 45.06]
@@ -365,38 +395,156 @@ const coreResources = [
   }
 ];
 
-const coreRoleLabels = {
-  "fema-region-10": "Federal preparedness and recovery support",
-  "nws-seattle": "Weather warning issuer",
-  "nws-portland": "Weather warning issuer",
-  "nws-medford": "Weather warning issuer",
-  "usgs-cvo": "Volcano hazard information",
-  pnsn: "Earthquake information network",
-  "wa-emd-alerts": "Official alert-system directory",
-  "wsdot-alerts": "Transportation alert issuer",
-  "wa-dnr-wildfire": "Wildfire incident information",
-  "wa-211": "Community support directory",
-  "oregon-oem": "State emergency-management source",
-  "or-alert": "Official local-alert router",
-  tripcheck: "Transportation incident information",
-  "oregon-211": "Community support directory"
+const CORE_VERIFIED_ON = "2026-07-14";
+const coreRecordDetails = {
+  "fema-region-10": {
+    authorityRole: "Federal preparedness and recovery support",
+    primaryAction: { type: "support", label: "Find FEMA preparedness and recovery support", url: "https://www.fema.gov/about/regions/region-10", priority: 50 },
+    deliveryChannels: ["web"]
+  },
+  "nws-seattle": {
+    authorityRole: "Weather warning issuer",
+    primaryAction: { type: "monitor-weather", label: "Monitor NWS Seattle weather alerts", url: "https://www.weather.gov/sew/", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "nws-portland": {
+    authorityRole: "Weather warning issuer",
+    primaryAction: { type: "monitor-weather", label: "Monitor NWS Portland weather alerts", url: "https://www.weather.gov/pqr/", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "nws-medford": {
+    authorityRole: "Weather warning issuer",
+    primaryAction: { type: "monitor-weather", label: "Monitor NWS Medford weather alerts", url: "https://www.weather.gov/mfr/", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "usgs-cvo": {
+    authorityRole: "Volcano hazard information",
+    primaryAction: { type: "monitor-hazard", label: "Monitor Cascade volcano status", url: "https://www.usgs.gov/observatories/cvo", priority: 30 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  pnsn: {
+    authorityRole: "Earthquake information network",
+    primaryAction: { type: "monitor-hazard", label: "Monitor Pacific Northwest earthquake information", url: "https://pnsn.org/", priority: 35 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "wa-emd-alerts": {
+    authorityRole: "Official alert-system directory",
+    primaryAction: { type: "prepare", label: "Find Washington alert systems", url: "https://mil.wa.gov/alerts", priority: 10 },
+    deliveryChannels: ["web"]
+  },
+  "wsdot-alerts": {
+    authorityRole: "Transportation alert issuer",
+    primaryAction: { type: "transport", label: "Set up WSDOT travel alerts", url: "https://wsdot.wa.gov/travel/sign-wsdot-travel-alerts", priority: 10 },
+    deliveryChannels: ["email", "text", "app", "web"],
+    optInRequired: true
+  },
+  "wa-dnr-wildfire": {
+    authorityRole: "Wildfire incident information",
+    primaryAction: { type: "monitor-hazard", label: "Monitor Washington wildfire information", url: "https://dnr.wa.gov/wildfire-resources/current-wildfire-incident-information/wildfire-portal", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "wa-211": {
+    authorityRole: "Community support directory",
+    primaryAction: { type: "support", label: "Find help through Washington 211", url: "https://wa211.org/", priority: 10 },
+    deliveryChannels: ["web", "phone"]
+  },
+  "oregon-oem": {
+    authorityRole: "State emergency-management source",
+    primaryAction: { type: "prepare", label: "Review Oregon emergency guidance", url: "https://www.oregon.gov/oem/Pages/default.aspx", priority: 20 },
+    deliveryChannels: ["web"]
+  },
+  "or-alert": {
+    authorityRole: "Official local-alert router",
+    primaryAction: { type: "prepare", label: "Find your local OR-Alert system", url: "https://oralert.gov/", priority: 10 },
+    deliveryChannels: ["web"]
+  },
+  tripcheck: {
+    authorityRole: "Transportation incident information",
+    primaryAction: { type: "transport", label: "Check Oregon road conditions", url: "https://tripcheck.com/", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "oregon-211": {
+    authorityRole: "Community support directory",
+    primaryAction: { type: "support", label: "Find help through 211info", url: "https://www.211info.org/", priority: 10 },
+    deliveryChannels: ["web", "phone"]
+  },
+  drivebc: {
+    authorityRole: "Transportation incident information",
+    primaryAction: { type: "transport", label: "Check DriveBC road conditions", url: "https://www.drivebc.ca/", priority: 10 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "bc-211": {
+    authorityRole: "Community support directory",
+    primaryAction: { type: "support", label: "Find help through 211 British Columbia", url: "https://bc.211.ca/", priority: 10 },
+    deliveryChannels: ["web", "phone", "text", "chat", "email"],
+    phone: "2-1-1",
+    cost: "Free",
+    offlineFallback: "Call or text 2-1-1 during service hours; call 911 for an immediate threat to life or safety."
+  },
+  "grand-ronde-emergency": {
+    authorityRole: "Tribal emergency-services source",
+    primaryAction: { type: "prepare", label: "Review Grand Ronde emergency services", url: "https://www.grandronde.org/government/emergency-services/", priority: 20 },
+    deliveryChannels: ["web"]
+  },
+  "king-county-oem": {
+    authorityRole: "County emergency-management source",
+    primaryAction: { type: "prepare", label: "Review King County emergency guidance", url: "https://kingcounty.gov/ready", priority: 20 },
+    deliveryChannels: ["web"]
+  },
+  "king-county-ems": {
+    authorityRole: "Regional emergency medical support",
+    primaryAction: { type: "support", label: "Review King County EMS resources", url: "https://kingcounty.gov/en/dept/dph/health-safety/health-centers-programs-services/emergency-medical-services", priority: 30 },
+    deliveryChannels: ["web"],
+    offlineFallback: "Call 911 for an active emergency."
+  },
+  "seattle-oem": {
+    authorityRole: "City emergency-management source",
+    primaryAction: { type: "prepare", label: "Review Seattle emergency guidance", url: "https://www.seattle.gov/emergency-management", priority: 20 },
+    deliveryChannels: ["web"]
+  },
+  "seattle-hubs": {
+    authorityRole: "Neighborhood preparedness support",
+    primaryAction: { type: "support", label: "Find Seattle Community Emergency Hubs", url: "https://www.seattle.gov/emergency-management/prepare/prepare-your-neighborhood", priority: 20 },
+    deliveryChannels: ["web"]
+  }
 };
 
 const resources = [
-  ...coreResources.filter((resource) => !["alert-king-county", "alert-seattle"].includes(resource.id)),
+  ...coreResources
+    .filter((resource) => !["alert-king-county", "alert-seattle"].includes(resource.id))
+    .map((resource) => ({
+      ...resource,
+      ...coreRecordDetails[resource.id],
+      rolePriority: coreRecordDetails[resource.id]?.primaryAction.priority || 5,
+      sourceRegistry: "Direct official source",
+      registryUrl: resource.url,
+      sourceTier: "official-direct",
+      verifiedOn: CORE_VERIFIED_ON
+    })),
   ...(window.SIGNALS_AUTHORITY_RECORDS || [])
-].map((resource) => ({
-  authorityRole: resource.authorityRole || coreRoleLabels[resource.id] || (
-    resource.categories.includes("alerts") ? "Official information source" : "Preparedness and support source"
-  ),
-  rolePriority: resource.rolePriority || 5,
-  verifiedOn: resource.verifiedOn || "Prototype source review",
-  sourceTier: resource.sourceTier || "official-direct",
-  ...resource
-}));
+];
 
 const DIRECTORY_UPDATED_ON = "2026-07-14";
 const DIRECTORY_UPDATED_LABEL = formatDirectoryDate(DIRECTORY_UPDATED_ON);
+const PLAN_STORAGE_KEY = "cascadia-signals-plan-v1";
+const PLAN_VERSION = 1;
+const ACTION_TYPES = new Set(["enroll", "monitor-weather", "monitor-hazard", "transport", "support", "prepare"]);
+const actionTypeLabels = {
+  enroll: "Enroll now",
+  "monitor-weather": "Monitor weather",
+  "monitor-hazard": "Monitor hazards",
+  transport: "Travel and infrastructure",
+  support: "Get help",
+  prepare: "Prepare"
+};
 
 const coverageStore = new Map();
 const sourceState = {
@@ -426,6 +574,12 @@ const perimeterStatus = document.querySelector("#perimeter-status");
 const overlaySummary = document.querySelector("#overlay-summary");
 const recordCard = document.querySelector("#record-card");
 const serviceAreaCard = document.querySelector("#service-area-card");
+const startHere = document.querySelector("#start-here");
+const startHereStatus = document.querySelector("#start-here-status");
+const startHereActions = document.querySelector("#start-here-actions");
+const planProgress = document.querySelector("#plan-progress");
+const clearPlanButton = document.querySelector("#clear-plan");
+const exportPlanButton = document.querySelector("#export-plan");
 const mapLoading = document.querySelector("#map-loading");
 const viewDialog = document.querySelector("#view-dialog");
 const shareDialog = document.querySelector("#share-dialog");
@@ -442,18 +596,27 @@ let awaitingMapConfirmation = false;
 let initialPostalRestoreAttempted = false;
 let spiderfyActive = false;
 let mapFeatureClickHandled = false;
+let planState = loadPlanState();
 
 function validateAuthorityRegistry() {
-  const registryRecords = window.SIGNALS_AUTHORITY_RECORDS || [];
   const meta = window.SIGNALS_AUTHORITY_META;
   const ids = new Set();
+  const privatePlanKeys = new Set();
   const errors = [];
-  registryRecords.forEach((resource) => {
+  resources.forEach((resource) => {
     if (!resource.id || ids.has(resource.id)) errors.push(`Duplicate or missing id: ${resource.id || "(missing)"}`);
     ids.add(resource.id);
+    const planKey = privatePlanKey(resource.id);
+    if (privatePlanKeys.has(planKey)) errors.push(`Private plan key collision: ${resource.id}`);
+    privatePlanKeys.add(planKey);
     if (!/^https:\/\//.test(resource.url || "")) errors.push(`Non-HTTPS URL: ${resource.id}`);
     if (!resource.coverageKeys?.length) errors.push(`Missing coverage key: ${resource.id}`);
-    if (!resource.authorityRole || !resource.sourceRegistry || !resource.verifiedOn) errors.push(`Missing provenance fields: ${resource.id}`);
+    if (!resource.authorityRole || !resource.sourceRegistry || !resource.registryUrl || !resource.verifiedOn) errors.push(`Missing provenance fields: ${resource.id}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(resource.verifiedOn || "")) errors.push(`Invalid review date: ${resource.id}`);
+    const action = resource.primaryAction;
+    if (!action || !ACTION_TYPES.has(action.type) || !action.label || !/^https:\/\//.test(action.url || "") || !Number.isFinite(action.priority)) {
+      errors.push(`Invalid primary action: ${resource.id}`);
+    }
   });
   if (meta) {
     Object.keys(meta.expected).forEach((key) => {
@@ -462,13 +625,171 @@ function validateAuthorityRegistry() {
   } else {
     errors.push("Registry metadata unavailable");
   }
+  if (resources.length !== 144) errors.push(`Expected 144 total resources, found ${resources.length}`);
   const status = document.querySelector('[data-authority-registry="status"]');
   if (status) {
     status.dataset.state = errors.length ? "error" : "ready";
-    status.textContent = errors.length ? `${errors.length} integrity issue${errors.length === 1 ? "" : "s"}` : `${registryRecords.length} official records checked`;
+    status.textContent = errors.length ? `${errors.length} integrity issue${errors.length === 1 ? "" : "s"}` : `${resources.length} actionable records checked`;
   }
   if (errors.length) console.warn("Signals authority registry integrity:", errors);
+  window.SIGNALS_REGISTRY_VALIDATION = { checked: resources.length, errors };
   return errors;
+}
+
+function emptyPlanState() {
+  return { version: PLAN_VERSION, completed: {} };
+}
+
+function privatePlanKey(resourceId) {
+  let hash = 0xcbf29ce484222325n;
+  for (const character of String(resourceId)) {
+    hash ^= BigInt(character.codePointAt(0));
+    hash = BigInt.asUintN(64, hash * 0x100000001b3n);
+  }
+  return `r-${hash.toString(16).padStart(16, "0")}`;
+}
+
+function loadPlanState() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PLAN_STORAGE_KEY) || "null");
+    if (!parsed) return emptyPlanState();
+    const completed = Array.isArray(parsed.completed)
+      ? Object.fromEntries(parsed.completed.map((id) => [id, { completedAt: null }]))
+      : parsed.completed;
+    if (!completed || typeof completed !== "object") return emptyPlanState();
+    const legacyKeys = new Map(resources.map((resource) => [resource.id, privatePlanKey(resource.id)]));
+    const knownKeys = new Set(legacyKeys.values());
+    let migrated = false;
+    const state = {
+      version: PLAN_VERSION,
+      completed: Object.fromEntries(Object.entries(completed).flatMap(([key, value]) => {
+        if (knownKeys.has(key)) return [[key, value]];
+        const migratedKey = legacyKeys.get(key);
+        if (!migratedKey) return [];
+        migrated = true;
+        return [[migratedKey, value]];
+      }))
+    };
+    if (migrated) {
+      try {
+        localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        console.warn("Signals private plan migration:", error);
+      }
+    }
+    return state;
+  } catch (error) {
+    console.warn("Signals private plan:", error);
+    return emptyPlanState();
+  }
+}
+
+function savePlanState() {
+  try {
+    localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(planState));
+  } catch (error) {
+    console.warn("Signals private plan save:", error);
+    const status = document.querySelector("#plan-status");
+    if (status) status.textContent = "This browser could not save plan progress.";
+  }
+}
+
+function isActionComplete(resourceId) {
+  return Boolean(planState.completed[privatePlanKey(resourceId)]);
+}
+
+function setActionComplete(resourceId, complete) {
+  const resource = resources.find((item) => item.id === resourceId);
+  if (!resource) return;
+  const storageKey = privatePlanKey(resourceId);
+  if (complete) {
+    planState.completed[storageKey] = {
+      actionType: resource.primaryAction.type,
+      completedAt: new Date().toISOString()
+    };
+  } else {
+    delete planState.completed[storageKey];
+  }
+  savePlanState();
+  syncPlanControls();
+}
+
+function createPlanToggle(resource, className = "plan-toggle") {
+  const label = document.createElement("label");
+  label.className = className;
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.checked = isActionComplete(resource.id);
+  input.dataset.planResourceId = resource.id;
+  input.setAttribute("aria-label", `Mark complete: ${resource.primaryAction.label}`);
+  const copy = document.createElement("span");
+  copy.className = "plan-toggle-copy";
+  copy.textContent = input.checked ? "Completed" : "Mark complete";
+  input.addEventListener("change", () => setActionComplete(resource.id, input.checked));
+  label.append(input, copy);
+  return label;
+}
+
+function syncPlanControls() {
+  document.querySelectorAll("[data-plan-resource-id]").forEach((input) => {
+    input.checked = isActionComplete(input.dataset.planResourceId);
+    const copy = input.closest("label")?.querySelector(".plan-toggle-copy");
+    if (copy) copy.textContent = input.checked ? "Completed" : "Mark complete";
+  });
+  renderPlanProgress();
+}
+
+function renderPlanProgress(startResources = null) {
+  const completedCount = Object.keys(planState.completed).length;
+  const relevant = startResources || startHereResources();
+  const relevantComplete = relevant.filter((resource) => isActionComplete(resource.id)).length;
+  if (planProgress) {
+    planProgress.textContent = locationSelection && relevant.length
+      ? `${relevantComplete} of ${relevant.length} location actions complete`
+      : `${completedCount} action${completedCount === 1 ? "" : "s"} complete in this browser`;
+  }
+  if (clearPlanButton) clearPlanButton.disabled = completedCount === 0;
+  if (exportPlanButton) exportPlanButton.disabled = completedCount === 0;
+}
+
+function clearPrivatePlan() {
+  if (!Object.keys(planState.completed).length) return;
+  if (!window.confirm("Clear every completed action from this browser? Your map location and filters are not part of the private plan.")) return;
+  planState = emptyPlanState();
+  savePlanState();
+  syncPlanControls();
+  const status = document.querySelector("#plan-status");
+  if (status) status.textContent = "Private plan cleared.";
+}
+
+function exportPrivatePlan() {
+  const completedResources = resources
+    .filter((resource) => isActionComplete(resource.id))
+    .sort((a, b) => a.primaryAction.type.localeCompare(b.primaryAction.type) || a.name.localeCompare(b.name));
+  if (!completedResources.length) return;
+  const lines = [
+    "Cascadia Signals — private preparedness plan",
+    `Exported ${new Date().toLocaleString()}`,
+    "This export contains completed resource actions only. Signals did not store or export a location.",
+    "",
+    ...completedResources.flatMap((resource, index) => [
+      `${index + 1}. [completed] ${resource.primaryAction.label}`,
+      `${resource.name} — ${resource.place}`,
+      `Applies: ${resource.coverageNote}`,
+      ...operationalFactLines(resource),
+      `Reviewed: ${resource.verifiedOn}`,
+      resource.primaryAction.url,
+      ""
+    ])
+  ];
+  const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `cascadia-signals-plan-${new Date().toISOString().slice(0, 10)}.txt`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  const status = document.querySelector("#plan-status");
+  if (status) status.textContent = "Private plan exported without location data.";
 }
 
 function checkedValues(name) {
@@ -646,7 +967,7 @@ async function fetchArcGis(url, where, outFields = "*", maxAllowableOffset = "0.
   endpoint.searchParams.set("geometryPrecision", "5");
   endpoint.searchParams.set("maxAllowableOffset", maxAllowableOffset);
   endpoint.searchParams.set("f", "geojson");
-  const response = await fetch(endpoint);
+  const response = await fetch(endpoint, { signal: AbortSignal.timeout(15000) });
   if (!response.ok) throw new Error(`Geometry request failed (${response.status})`);
   const data = await response.json();
   if (!Array.isArray(data.features)) throw new Error("Geometry response did not contain features");
@@ -733,7 +1054,14 @@ function esriPolygonToGeoJson(geometry) {
     : { type: "MultiPolygon", coordinates: polygons };
 }
 
-function fetchArcGisJsonp(url, where, outFields = "*", maxAllowableOffset = "0.01") {
+function fetchArcGisJsonp(
+  url,
+  where,
+  outFields = "*",
+  maxAllowableOffset = "0.01",
+  timeoutMs = 20000,
+  timeoutMessage = "B.C. geometry request timed out"
+) {
   return new Promise((resolve, reject) => {
     const callbackName = `signalsArcGis${Date.now()}${Math.random().toString(36).slice(2)}`;
     const endpoint = new URL(`${url}/query`);
@@ -746,11 +1074,21 @@ function fetchArcGisJsonp(url, where, outFields = "*", maxAllowableOffset = "0.0
     endpoint.searchParams.set("f", "json");
     endpoint.searchParams.set("callback", callbackName);
     const script = document.createElement("script");
-    const timeout = window.setTimeout(() => finish(new Error("B.C. geometry request timed out")), 20000);
+    let settled = false;
+    const timeout = window.setTimeout(() => finish(new Error(timeoutMessage)), timeoutMs);
     function finish(error, value) {
+      if (settled) return;
+      settled = true;
       window.clearTimeout(timeout);
       script.remove();
-      delete window[callbackName];
+      if (error) {
+        // Removing a JSONP script does not always cancel its network request. Keep
+        // a temporary no-op callback so a late B.C. response cannot throw globally.
+        window[callbackName] = () => {};
+        window.setTimeout(() => delete window[callbackName], 60000);
+      } else {
+        delete window[callbackName];
+      }
       if (error) reject(error); else resolve(value);
     }
     window[callbackName] = (data) => {
@@ -1055,7 +1393,11 @@ function renderPostalResult() {
   postalResult.dataset.state = locationSelection.mode === "point" ? "confirmed" : ambiguous ? "ambiguous" : "matched";
   document.querySelector("#postal-match-title").textContent = `${locationSelection.label} · ${locationSelection.mode === "point" ? "map point confirmed" : "approximate census area"}`;
 
-  if (awaitingMapConfirmation) {
+  if (locationSelection.geometryPending) {
+    postalStatus.textContent = "Services match the shared map point while Signals verifies the official postal-area outline.";
+  } else if (locationSelection.geometryUnavailable) {
+    postalStatus.textContent = `Services match the shared map point. The official ${locationSelection.type === "fsa" ? "FSA" : "ZIP-area"} outline is unavailable, so Signals could not confirm that the point lies inside ${locationSelection.label}.`;
+  } else if (awaitingMapConfirmation) {
     postalStatus.textContent = "Click your exact location inside the highlighted postal area. The point stays in this browser unless you intentionally share the view.";
   } else if (locationSelection.mode === "point") {
     postalStatus.textContent = "Services now match the point you chose, rather than every jurisdiction touched by the postal area.";
@@ -1075,8 +1417,10 @@ function renderPostalResult() {
     ? `Mapped jurisdictions: ${jurisdictions.map((coverage) => coverage.label).join(" · ")}`
     : "Mapped jurisdiction boundaries are still loading or unavailable; the broader directory remains visible.";
   postalActions.hidden = false;
-  confirmPostalPointButton.disabled = !mapReady;
-  confirmPostalPointButton.textContent = locationSelection.mode === "point" ? "Change exact spot" : "Choose exact spot on map";
+  confirmPostalPointButton.disabled = !mapReady || !locationSelection.feature;
+  confirmPostalPointButton.textContent = locationSelection.geometryUnavailable
+    ? "Postal outline unavailable"
+    : locationSelection.mode === "point" ? "Change exact spot" : "Choose exact spot on map";
 }
 
 function showPostalError(message) {
@@ -1088,8 +1432,24 @@ function showPostalError(message) {
   postalActions.hidden = true;
 }
 
+function postalLookupErrorMessage(error) {
+  const message = String(error?.message || "");
+  if (/^(No matching census postal area|The postal source returned no usable geometry|That FSA is outside British Columbia|That ZIP area is outside Washington and Oregon)/.test(message)) {
+    return message;
+  }
+  if (error?.name === "TimeoutError" || /timed out/i.test(message)) {
+    return "The official postal-area source did not respond in time. Try again, or use the map while the source recovers.";
+  }
+  return "The official postal-area source is temporarily unavailable. Try again, or use the map while the source recovers.";
+}
+
 function fitPostalSelection() {
-  if (!mapReady || !locationSelection?.bbox) return;
+  if (!mapReady || !locationSelection) return;
+  if (!locationSelection.feature && locationSelection.point) {
+    map.easeTo({ center: locationSelection.point, zoom: Math.max(map.getZoom(), 9.5), duration: 700 });
+    return;
+  }
+  if (!locationSelection.bbox) return;
   map.fitBounds(
     [[locationSelection.bbox[0], locationSelection.bbox[1]], [locationSelection.bbox[2], locationSelection.bbox[3]]],
     { padding: { top: 96, right: 62, bottom: 62, left: 62 }, maxZoom: 10.5, duration: 700 }
@@ -1136,9 +1496,40 @@ async function runPostalLookup({ restoredPoint = null } = {}) {
   postalActions.hidden = true;
   postalSubmit.disabled = true;
   setPostalSourceStatus("checking", "Looking up…");
+  const pointCandidate = Array.isArray(restoredPoint)
+    && restoredPoint.length === 2
+    && restoredPoint.every(Number.isFinite)
+    && pointInBounds(restoredPoint, REGION_BOUNDS)
+    ? restoredPoint
+    : null;
+
+  if (pointCandidate) {
+    locationSelection = {
+      ...lookup,
+      feature: null,
+      bbox: [pointCandidate[0], pointCandidate[1], pointCandidate[0], pointCandidate[1]],
+      mode: "point",
+      point: pointCandidate,
+      geometryPending: true
+    };
+    postalInput.value = lookup.code;
+    updatePostalMap();
+    renderDirectory();
+    renderPostalResult();
+    fitPostalSelection();
+  }
 
   try {
-    const features = await fetchArcGis(lookup.source, lookup.where, lookup.outFields, "0.0005");
+    const features = lookup.type === "fsa"
+      ? await fetchArcGisJsonp(
+        lookup.source,
+        lookup.where,
+        lookup.outFields,
+        "0.0005",
+        15000,
+        "Postal lookup request timed out"
+      )
+      : await fetchArcGis(lookup.source, lookup.where, lookup.outFields, "0.0005");
     if (!features.length) throw new Error("No matching census postal area was returned.");
     const feature = combinePostalFeatures(features);
     const bbox = featureBounds(feature);
@@ -1152,16 +1543,15 @@ async function runPostalLookup({ restoredPoint = null } = {}) {
       throw new Error("That ZIP area is outside Washington and Oregon.");
     }
 
-    const validRestoredPoint = Array.isArray(restoredPoint)
-      && restoredPoint.length === 2
-      && restoredPoint.every(Number.isFinite)
-      && featureContainsPoint(feature, restoredPoint);
+    const validRestoredPoint = pointCandidate && featureContainsPoint(feature, pointCandidate);
     locationSelection = {
       ...lookup,
       feature,
       bbox,
       mode: validRestoredPoint ? "point" : "area",
-      point: validRestoredPoint ? restoredPoint : null
+      point: validRestoredPoint ? pointCandidate : null,
+      geometryPending: false,
+      geometryUnavailable: false
     };
     postalInput.value = lookup.code;
     setPostalSourceStatus("ready", lookup.type === "zcta" ? "Census ZCTA matched" : "Statistics Canada FSA matched");
@@ -1171,10 +1561,20 @@ async function runPostalLookup({ restoredPoint = null } = {}) {
     fitPostalSelection();
   } catch (error) {
     console.warn("Signals postal lookup:", error);
-    discardLocationSelection();
-    renderDirectory();
-    setPostalSourceStatus("error", "Lookup unavailable");
-    showPostalError(error.message || "The official postal-area source is temporarily unavailable.");
+    if (pointCandidate && locationSelection?.point === pointCandidate) {
+      locationSelection.geometryPending = false;
+      locationSelection.geometryUnavailable = true;
+      setPostalSourceStatus("error", "Point restored · outline unavailable");
+      updatePostalMap();
+      renderDirectory();
+      renderPostalResult();
+      fitPostalSelection();
+    } else {
+      discardLocationSelection();
+      renderDirectory();
+      setPostalSourceStatus("error", "Lookup unavailable");
+      showPostalError(postalLookupErrorMessage(error));
+    }
   } finally {
     postalSubmit.disabled = false;
   }
@@ -1250,6 +1650,87 @@ function filteredResources() {
   });
 }
 
+function actionSort(a, b) {
+  return a.primaryAction.priority - b.primaryAction.priority
+    || a.rolePriority - b.rolePriority
+    || a.name.localeCompare(b.name);
+}
+
+function startHereResources() {
+  if (!locationSelection) return [];
+  const applicable = resources.filter((resource) => resourceAppliesToLocation(resource));
+  const enrollment = applicable
+    .filter((resource) => resource.primaryAction.type === "enroll" && resource.startHereEligible !== false)
+    .sort(actionSort);
+  const selected = [...enrollment];
+  ["monitor-weather", "monitor-hazard", "transport", "support"].forEach((type) => {
+    const best = applicable.filter((resource) => resource.primaryAction.type === type).sort(actionSort)[0];
+    if (best) selected.push(best);
+  });
+  return selected.filter((resource, index, all) => all.findIndex((item) => item.id === resource.id) === index);
+}
+
+function renderStartHere() {
+  if (!startHere || !startHereActions || !startHereStatus) return;
+  startHereActions.replaceChildren();
+  if (!locationSelection) {
+    startHere.dataset.state = "prompt";
+    startHereStatus.textContent = "Enter a ZIP code or B.C. postal prefix to build a short, location-specific action stack. The complete directory below still follows the map view.";
+    const prompt = document.createElement("button");
+    prompt.type = "button";
+    prompt.className = "start-here-prompt";
+    prompt.textContent = "Enter a postal code";
+    prompt.addEventListener("click", () => {
+      postalInput.focus();
+      postalInput.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    startHereActions.append(prompt);
+    renderPlanProgress([]);
+    return;
+  }
+
+  const selected = startHereResources();
+  const exact = locationSelection.mode === "point";
+  startHere.dataset.state = exact ? "exact" : "approximate";
+  startHereStatus.textContent = exact
+    ? `Prioritized for the confirmed point in ${locationSelection.label}. Directory filters do not remove these essentials.`
+    : `Approximate for ${locationSelection.label}. Confirm a point inside the postal area to remove services that do not apply there.`;
+
+  if (!selected.length) {
+    const gap = document.createElement("p");
+    gap.className = "start-here-gap";
+    gap.textContent = "Signals has no verified action stack for this location yet. The full official-source directory remains available below.";
+    startHereActions.append(gap);
+    renderPlanProgress([]);
+    return;
+  }
+
+  selected.forEach((resource) => {
+    const item = document.createElement("article");
+    item.className = "start-action";
+    item.dataset.actionType = resource.primaryAction.type;
+    const type = document.createElement("span");
+    type.className = "start-action-type";
+    type.textContent = actionTypeLabels[resource.primaryAction.type];
+    const title = document.createElement("h3");
+    title.textContent = resource.name;
+    const applicability = document.createElement("p");
+    applicability.textContent = resource.coverageNote;
+    const controls = document.createElement("div");
+    controls.className = "start-action-controls";
+    const action = document.createElement("a");
+    action.className = "primary-action-link";
+    action.href = resource.primaryAction.url;
+    action.target = "_blank";
+    action.rel = "noopener";
+    action.textContent = `${resource.primaryAction.label} ↗`;
+    controls.append(action, createPlanToggle(resource, "plan-toggle plan-toggle-start"));
+    item.append(type, title, applicability, controls);
+    startHereActions.append(item);
+  });
+  renderPlanProgress(selected);
+}
+
 function describeViewport() {
   if (locationSelection?.mode === "point") return `the confirmed map point in ${locationSelection.label}`;
   if (locationSelection) return `the approximate ${locationSelection.label} postal area`;
@@ -1307,12 +1788,15 @@ function renderDirectory() {
 
       const link = document.createElement("a");
       link.className = "result-source-link";
-      link.href = resource.url;
+      link.href = resource.primaryAction.url;
       link.target = "_blank";
       link.rel = "noopener";
-      link.setAttribute("aria-label", `Open official resource for ${resource.name}`);
-      link.textContent = "↗";
-      item.append(focus, link);
+      link.setAttribute("aria-label", resource.primaryAction.label);
+      link.textContent = `${resource.primaryAction.label} ↗`;
+      const actions = document.createElement("div");
+      actions.className = "result-actions";
+      actions.append(link, createPlanToggle(resource, "plan-toggle plan-toggle-result"));
+      item.append(focus, actions);
       section.append(item);
     });
     resultList.append(section);
@@ -1329,10 +1813,13 @@ function renderDirectory() {
 
   const countText = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"}`;
   resultCount.textContent = countText;
-  viewportCount.textContent = locationSelection ? `${countText} match this location` : `${countText} apply to this view`;
+  viewportCount.textContent = locationSelection
+    ? `${countText} ${visibleResources.length === 1 ? "matches" : "match"} this location`
+    : `${countText} ${visibleResources.length === 1 ? "applies" : "apply"} to this view`;
   resultsContext.textContent = locationSelection
     ? `Showing resources applicable to ${describeViewport()}. Postal geography locates the search; it does not define service authority.`
     : `Showing resources applicable to ${describeViewport()}. Optional outlines do not change this list.`;
+  renderStartHere();
   updateResourcePoints();
   if (locationSelection) renderPostalResult();
 }
@@ -1365,14 +1852,18 @@ function renderViewDialog() {
 
       const recordHeading = document.createElement("div");
       recordHeading.className = "view-record-heading";
-      const link = document.createElement("a");
-      link.href = resource.url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = `${resource.name} ↗`;
+      const name = document.createElement("strong");
+      name.textContent = resource.name;
       const publisher = document.createElement("span");
       publisher.textContent = publisherLabels[resource.publisher];
-      recordHeading.append(link, publisher);
+      recordHeading.append(name, publisher);
+
+      const action = document.createElement("a");
+      action.className = "view-record-action";
+      action.href = resource.primaryAction.url;
+      action.target = "_blank";
+      action.rel = "noopener";
+      action.textContent = `${resource.primaryAction.label} ↗`;
 
       const scope = document.createElement("p");
       scope.className = "view-record-scope";
@@ -1386,6 +1877,37 @@ function renderViewDialog() {
       coverageLabel.textContent = "Applies: ";
       coverage.append(coverageLabel, resource.coverageNote);
 
+      const operations = document.createElement("dl");
+      operations.className = "view-record-operations";
+      operationalFacts(resource).forEach((fact) => {
+        const term = document.createElement("dt");
+        term.textContent = fact.label;
+        const definition = document.createElement("dd");
+        if (fact.url) {
+          const link = document.createElement("a");
+          link.href = fact.url;
+          link.target = "_blank";
+          link.rel = "noopener";
+          link.textContent = `${fact.value} ↗`;
+          definition.append(link);
+        } else {
+          definition.textContent = fact.value;
+        }
+        operations.append(term, definition);
+      });
+
+      const review = document.createElement("p");
+      review.className = "view-record-review";
+      review.textContent = `Reviewed ${formatDirectoryDate(resource.verifiedOn)} · ${resource.sourceRegistry}`;
+
+      const info = document.createElement("a");
+      info.className = "view-record-source";
+      info.href = resource.url;
+      info.target = "_blank";
+      info.rel = "noopener";
+      info.textContent = "Official information ↗";
+      info.hidden = resource.url === resource.primaryAction.url;
+
       const categories = document.createElement("div");
       categories.className = "view-record-categories";
       resource.categories.forEach((category) => {
@@ -1393,7 +1915,9 @@ function renderViewDialog() {
         tag.textContent = categoryLabels[category];
         categories.append(tag);
       });
-      article.append(recordHeading, scope, summary, coverage, categories);
+      article.append(recordHeading, scope, action, summary, coverage);
+      if (operations.childElementCount) article.append(operations);
+      article.append(review, info, categories, createPlanToggle(resource, "plan-toggle plan-toggle-view"));
       list.append(article);
     });
 
@@ -1428,6 +1952,26 @@ function formatDirectoryDate(value) {
     year: "numeric",
     timeZone: "UTC"
   }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function operationalFacts(resource) {
+  return [
+    resource.deliveryChannels?.length ? { label: "Channels", value: resource.deliveryChannels.join(", ") } : null,
+    typeof resource.optInRequired === "boolean" ? { label: "Opt-in", value: resource.optInRequired ? "Required" : "Not required for this source" } : null,
+    resource.cost ? { label: "Cost", value: resource.cost } : null,
+    resource.languages?.length ? { label: "Languages", value: resource.languages.join(", ") } : null,
+    resource.phone ? { label: "Phone", value: resource.phone } : null,
+    resource.accessibilityUrl ? { label: "Accessibility", value: "Accessibility information", url: resource.accessibilityUrl } : null,
+    resource.offlineFallback ? { label: "Offline fallback", value: resource.offlineFallback } : null
+  ].filter(Boolean);
+}
+
+function operationalFactLines(resource) {
+  return operationalFacts(resource).map((fact) => `${fact.label}: ${fact.value}${fact.url ? ` — ${fact.url}` : ""}`);
+}
+
+function operationalFactsHtml(resource) {
+  return operationalFacts(resource).map((fact) => `<br><strong>${escapeHtml(fact.label)}:</strong> ${fact.url ? `<a href="${escapeHtml(fact.url)}">${escapeHtml(fact.value)}</a>` : escapeHtml(fact.value)}`).join("");
 }
 
 function renderDirectoryFreshness() {
@@ -1603,6 +2147,15 @@ function selectResource(id) {
   const geometryDescription = exactCoverage
     ? `${familyLabels[exactCoverage.family]} · ${exactCoverage.sourceLabel}`
     : "No verified perimeter shown";
+  const operational = [
+    resource.deliveryChannels?.length ? `<dt>Channels</dt><dd>${escapeHtml(resource.deliveryChannels.join(", "))}</dd>` : "",
+    typeof resource.optInRequired === "boolean" ? `<dt>Opt-in</dt><dd>${resource.optInRequired ? "Required" : "Not required for this source"}</dd>` : "",
+    resource.cost ? `<dt>Cost</dt><dd>${escapeHtml(resource.cost)}</dd>` : "",
+    resource.languages?.length ? `<dt>Languages</dt><dd>${escapeHtml(resource.languages.join(", "))}</dd>` : "",
+    resource.phone ? `<dt>Phone</dt><dd>${escapeHtml(resource.phone)}</dd>` : "",
+    resource.accessibilityUrl ? `<dt>Accessibility</dt><dd><a href="${escapeHtml(resource.accessibilityUrl)}" target="_blank" rel="noreferrer">Accessibility information <span aria-hidden="true">↗</span></a></dd>` : "",
+    resource.offlineFallback ? `<dt>Offline fallback</dt><dd>${escapeHtml(resource.offlineFallback)}</dd>` : ""
+  ].join("");
   const meta = document.querySelector("#card-meta");
   meta.innerHTML = `
     <dt>Publisher</dt><dd>${escapeHtml(resource.organization)}</dd>
@@ -1610,9 +2163,18 @@ function selectResource(id) {
     <dt>Directory scope</dt><dd>${escapeHtml(resource.place)}</dd>
     <dt>Applicability</dt><dd>${escapeHtml(resource.coverageNote)}</dd>
     <dt>Map geometry</dt><dd>${escapeHtml(geometryDescription)}</dd>
-    <dt>Source review</dt><dd>${escapeHtml(resource.sourceRegistry || "Direct official source")} · ${escapeHtml(resource.verifiedOn)}</dd>`;
+    ${operational}
+    <dt>Source review</dt><dd>${escapeHtml(resource.sourceRegistry)} · ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}</dd>`;
   const sourceLink = document.querySelector("#card-link");
-  sourceLink.href = resource.url;
+  sourceLink.href = resource.primaryAction.url;
+  sourceLink.innerHTML = `${escapeHtml(resource.primaryAction.label)} <span aria-hidden="true">↗</span>`;
+  const infoLink = document.querySelector("#card-info-link");
+  if (resource.url !== resource.primaryAction.url) {
+    infoLink.href = resource.url;
+    infoLink.hidden = false;
+  } else {
+    infoLink.hidden = true;
+  }
   const registryLink = document.querySelector("#card-registry-link");
   if (resource.registryUrl && resource.registryUrl !== resource.url) {
     registryLink.href = resource.registryUrl;
@@ -1627,6 +2189,7 @@ function selectResource(id) {
   } else {
     geometryLink.hidden = true;
   }
+  document.querySelector("#card-plan-control").replaceChildren(createPlanToggle(resource, "plan-toggle plan-toggle-card"));
   recordCard.hidden = false;
   updateSelectedArea();
   focusResourceCoverage(resource, exactCoverage);
@@ -2012,8 +2575,16 @@ function shareableUrl() {
 function buildLinkedList() {
   const title = `Cascadia Signals — ${visibleResources.length} resources for ${describeViewport()}`;
   const freshness = `Directory last updated ${DIRECTORY_UPDATED_LABEL}.`;
-  const htmlItems = visibleResources.map((resource) => `<li><a href="${escapeHtml(resource.url)}"><strong>${escapeHtml(resource.name)}</strong></a> — ${escapeHtml(resource.place)}<br><em>${escapeHtml(resource.authorityRole)}</em><br>${escapeHtml(resource.summary)}</li>`).join("");
-  const plainItems = visibleResources.map((resource, index) => `${index + 1}. ${resource.name} — ${resource.place}\nRole: ${resource.authorityRole}\n${resource.summary}\n${resource.url}`).join("\n\n");
+  const includePlanStatus = Boolean(document.querySelector("#include-plan-status")?.checked);
+  const htmlItems = visibleResources.map((resource) => {
+    const completion = includePlanStatus ? `<br><strong>Plan status:</strong> ${isActionComplete(resource.id) ? "Completed" : "Not completed"}` : "";
+    return `<li><strong>${escapeHtml(resource.name)}</strong> — ${escapeHtml(resource.place)}<br><em>${escapeHtml(resource.authorityRole)}</em><br>${escapeHtml(resource.summary)}<br><strong>Action:</strong> <a href="${escapeHtml(resource.primaryAction.url)}">${escapeHtml(resource.primaryAction.label)}</a><br><strong>Applies:</strong> ${escapeHtml(resource.coverageNote)}${operationalFactsHtml(resource)}<br><strong>Reviewed:</strong> ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}${completion}</li>`;
+  }).join("");
+  const plainItems = visibleResources.map((resource, index) => {
+    const completion = includePlanStatus ? `\nPlan status: ${isActionComplete(resource.id) ? "Completed" : "Not completed"}` : "";
+    const operations = operationalFactLines(resource);
+    return `${index + 1}. ${resource.name} — ${resource.place}\nRole: ${resource.authorityRole}\n${resource.summary}\nAction: ${resource.primaryAction.label}\n${resource.primaryAction.url}\nApplies: ${resource.coverageNote}${operations.length ? `\n${operations.join("\n")}` : ""}\nReviewed: ${formatDirectoryDate(resource.verifiedOn)}${completion}`;
+  }).join("\n\n");
   return {
     html: `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(freshness)}</p><ol>${htmlItems}</ol><p>Shared from <a href="${escapeHtml(shareableUrl())}">${escapeHtml(shareableUrl())}</a></p>`,
     text: `${title}\n${freshness}\n\n${plainItems}\n\nFiltered map view: ${shareableUrl()}`
@@ -2046,7 +2617,7 @@ async function shareFilteredView() {
   const status = document.querySelector("#share-status");
   try {
     if (navigator.share) {
-      await navigator.share({ title: "Cascadia Signals", text: `${visibleResources.length} emergency resources for this map view. Directory last updated ${DIRECTORY_UPDATED_LABEL}.`, url });
+      await navigator.share({ title: "Cascadia Signals", text: `${visibleResources.length} emergency ${visibleResources.length === 1 ? "resource" : "resources"} for this map view. Directory last updated ${DIRECTORY_UPDATED_LABEL}.`, url });
       status.textContent = "Map view shared.";
     } else {
       await navigator.clipboard.writeText(url);
@@ -2063,12 +2634,13 @@ function preparePrint() {
   visibleResources.forEach((resource) => {
     const item = document.createElement("li");
     const name = document.createElement("strong");
-    name.textContent = resource.name;
+    name.textContent = `${isActionComplete(resource.id) ? "☒" : "☐"} ${resource.name}`;
     const detail = document.createElement("span");
-    detail.textContent = `${publisherLabels[resource.publisher]} · ${resource.authorityRole} · ${resource.place} — ${resource.summary}`;
+    const operations = operationalFactLines(resource);
+    detail.textContent = `${publisherLabels[resource.publisher]} · ${resource.authorityRole} · ${resource.place} — ${resource.summary} Applies: ${resource.coverageNote}${operations.length ? ` ${operations.join(" ")}` : ""} Reviewed: ${formatDirectoryDate(resource.verifiedOn)}.`;
     const link = document.createElement("a");
-    link.href = resource.url;
-    link.textContent = resource.url;
+    link.href = resource.primaryAction.url;
+    link.textContent = `${resource.primaryAction.label}: ${resource.primaryAction.url}`;
     item.append(name, detail, link);
     printRecords.append(item);
   });
@@ -2124,8 +2696,10 @@ document.querySelector("#view-list").addEventListener("click", () => {
 });
 document.querySelector("#print-list").addEventListener("click", preparePrint);
 document.querySelector("#share-list").addEventListener("click", () => {
-  document.querySelector("#share-summary").textContent = `${visibleResources.length} resources apply to ${describeViewport()}. Share the linked list or restore this exact map view.`;
+  const countText = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"}`;
+  document.querySelector("#share-summary").textContent = `${countText} ${visibleResources.length === 1 ? "applies" : "apply"} to ${describeViewport()}. Share the linked list or restore this exact map view.`;
   document.querySelector("#share-status").textContent = "";
+  document.querySelector("#include-plan-status").checked = false;
   shareDialog.showModal();
 });
 document.querySelector("#copy-linked-list").addEventListener("click", copyLinkedList);
@@ -2146,6 +2720,8 @@ document.querySelector("#close-card").addEventListener("click", () => {
 document.querySelector("#close-service-area").addEventListener("click", () => {
   closeServiceAreaDetails();
 });
+clearPlanButton.addEventListener("click", clearPrivatePlan);
+exportPlanButton.addEventListener("click", exportPrivatePlan);
 
 restoreFiltersFromUrl();
 renderDirectoryFreshness();

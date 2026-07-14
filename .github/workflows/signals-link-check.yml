@@ -1,0 +1,60 @@
+name: Signals registry and link check
+
+on:
+  push:
+    paths:
+      - "signals/**"
+      - ".github/workflows/signals-link-check.yml"
+  pull_request:
+    paths:
+      - "signals/**"
+      - ".github/workflows/signals-link-check.yml"
+  schedule:
+    - cron: "17 15 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signals-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate registry contract
+        run: node signals/scripts/validate-registry.mjs
+
+  signals-link-check:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: signals-validate
+    permissions:
+      contents: read
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore prior link state
+        uses: actions/cache@v4
+        with:
+          path: .signals-link-state.json
+          key: signals-link-state-${{ github.run_id }}
+          restore-keys: signals-link-state-
+      - name: Check official links
+        run: node signals/scripts/check-links.mjs --previous .signals-link-state.json --state .signals-link-state.json --output signals-link-report.json
+      - name: Upload review report
+        uses: actions/upload-artifact@v4
+        with:
+          name: signals-link-report
+          path: signals-link-report.json
+          retention-days: 30
+      - name: Update repeated-failure issue
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node signals/scripts/update-link-issue.mjs signals-link-report.json

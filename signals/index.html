@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="styles.css?v=20260714-weather-areas">
+  <link rel="stylesheet" href="styles.css?v=20260714-actionability">
 </head>
 <body>
   <a class="skip-link" href="#explorer">Skip to Signals</a>
@@ -129,6 +129,24 @@
         </div>
       </form>
 
+      <section class="start-here" id="start-here" data-state="prompt" aria-labelledby="start-here-title">
+        <div class="start-here-heading">
+          <div>
+            <p class="eyebrow">Private preparedness plan</p>
+            <h2 id="start-here-title">Start here</h2>
+          </div>
+          <span id="plan-progress" aria-live="polite">0 actions complete in this browser</span>
+        </div>
+        <p class="start-here-status" id="start-here-status">Enter a postal code to build a short action stack.</p>
+        <div class="start-here-actions" id="start-here-actions"></div>
+        <div class="plan-controls">
+          <button type="button" id="export-plan" disabled>Export my plan</button>
+          <button type="button" id="clear-plan" disabled>Clear my plan</button>
+        </div>
+        <p class="plan-privacy">Completion is saved only in this browser. Signals never adds your postal code, map point, or named location to the private plan.</p>
+        <p class="plan-status" id="plan-status" role="status" aria-live="polite"></p>
+      </section>
+
       <section class="results" aria-labelledby="results-heading">
         <div class="results-heading">
           <div>
@@ -194,8 +212,10 @@
         <h2 id="card-title"></h2>
         <p class="record-summary" id="card-summary"></p>
         <dl class="record-meta" id="card-meta"></dl>
+        <div id="card-plan-control"></div>
         <div class="record-links">
-          <a class="record-link" id="card-link" href="#" target="_blank" rel="noopener">Visit official resource <span aria-hidden="true">↗</span></a>
+          <a class="record-link record-primary-action" id="card-link" href="#" target="_blank" rel="noopener">Open action <span aria-hidden="true">↗</span></a>
+          <a class="record-link" id="card-info-link" href="#" target="_blank" rel="noopener" hidden>Visit official information <span aria-hidden="true">↗</span></a>
           <a class="record-link" id="card-registry-link" href="#" target="_blank" rel="noopener" hidden>Inspect registry / authority source <span aria-hidden="true">↗</span></a>
           <a class="record-link" id="card-geometry-link" href="#" target="_blank" rel="noopener" hidden>Inspect geometry source <span aria-hidden="true">↗</span></a>
         </div>
@@ -267,6 +287,10 @@
     <p class="dialog-eyebrow">Pass it along</p>
     <h2 id="share-title">Share your Signals list</h2>
     <p class="share-intro" id="share-summary">Share the resources that apply to the current map view and filters.</p>
+    <label class="share-plan-option">
+      <input type="checkbox" id="include-plan-status">
+      <span><strong>Include my checklist status</strong><small>Off by default. Turn this on only if you intend to share which actions you completed.</small></span>
+    </label>
     <div class="share-options">
       <button type="button" class="share-option" id="copy-linked-list">
         <span aria-hidden="true">⧉</span>
@@ -324,6 +348,20 @@
         <a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">Census tribal geography source ↗</a>
       </article>
       <article>
+        <div><strong>Municipal alert-source audit</strong><span>Independent coverage track</span></div>
+        <p>Municipal emergency programs are reviewed separately from county and regional systems. Signals includes only directly verified city sources and does not assume that a regional service covers every municipality inside its boundary.</p>
+        <a href="https://ofm.wa.gov/data-research/frequently-asked-questions/" target="_blank" rel="noopener">Washington municipal roster ↗</a>
+        <a href="https://sos.oregon.gov/blue-book/Pages/local/cities.aspx" target="_blank" rel="noopener">Oregon incorporated cities ↗</a>
+        <a href="https://www2.gov.bc.ca/gov/content/governments/local-governments/facts-framework/systems/municipalities" target="_blank" rel="noopener">B.C. municipalities ↗</a>
+      </article>
+      <article>
+        <div><strong>Indigenous-government alert-source audit</strong><span>Independent sovereignty track</span></div>
+        <p>Tribal and First Nation emergency sources are reviewed government by government. Signals never converts a reservation, trust-land, treaty, or regional-district outline into assumed alert authority.</p>
+        <a href="https://goia.wa.gov/tribal-directory/federally-recognized-tribes-washington-state" target="_blank" rel="noopener">Washington tribal directory ↗</a>
+        <a href="https://www.oregon.gov/odhs/tribal-affairs/Pages/tribes.aspx" target="_blank" rel="noopener">Oregon’s nine Tribes ↗</a>
+        <a href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/consulting-with-first-nations/first-nations-negotiations/first-nations-a-z-listing" target="_blank" rel="noopener">B.C. First Nations directory ↗</a>
+      </article>
+      <article>
         <div><strong>Postal-area locator</strong><span id="postal-source-status">On demand</span></div>
         <p>Five-digit U.S. lookups use 2020 Census ZIP Code Tabulation Areas. B.C. lookups use 2021 Statistics Canada census forward sortation areas—the first three postal-code characters. Both are approximate statistical geography and can cross service jurisdictions.</p>
         <a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/1" target="_blank" rel="noopener">Census ZCTA source ↗</a>
@@ -341,9 +379,9 @@
 
   <script src="../js/nav.js?v=20260712-phase8" defer></script>
   <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
-  <script src="authority-data.js?v=20260714" defer></script>
+  <script src="authority-data.js?v=20260714-actionability" defer></script>
   <script src="bc-province-boundary.js?v=20260714" defer></script>
   <script src="bc-forecast-zones.js?v=20260714" defer></script>
-  <script src="app.js?v=20260714-weather-areas" defer></script>
+  <script src="app.js?v=20260714-actionability" defer></script>
 </body>
 </html>

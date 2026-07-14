@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 2,
+  "reviewedOn": "2026-07-14",
+  "methodology": {
+    "statusValues": [
+      "dedicated-record",
+      "confirmed-shared-system",
+      "official-referral",
+      "directory-gap",
+      "not-yet-reviewed"
+    ],
+    "reviewRule": "A government is counted as reviewed only when an official source identifies its dedicated source, names it as a participant in a shared service, or explicitly refers its community to another authority's service. Legal or statistical containment never counts as evidence of alert coverage.",
+    "countRule": "Reviewed-government counts are mutually exclusive within each regional baseline. A dedicated record that is also present in a directory is counted once. Remaining-independent-review equals the official roster count minus reviewed governments."
+  },
+  "tracks": {
+    "municipalities": {
+      "status": "in-progress",
+      "policy": "Review municipal emergency programs independently from county and regional systems; do not infer service coverage from containment within another government boundary.",
+      "officialRosters": [
+        {
+          "region": "Washington",
+          "url": "https://ofm.wa.gov/data-research/population-demographics/estimates/april-1-official/",
+          "knownRosterCount": 281,
+          "note": "Washington Office of Financial Management April 1, 2026 city and town population workbook; multi-county municipality rows are deduplicated by incorporated-place name."
+        },
+        {
+          "region": "Oregon",
+          "url": "https://sos.oregon.gov/blue-book/Pages/local/cities/about.aspx",
+          "knownRosterCount": 241,
+          "note": "Oregon Secretary of State count of incorporated cities. Official city-limit names are compared with the OR-Alert search directory."
+        },
+        {
+          "region": "British Columbia",
+          "url": "https://www2.gov.bc.ca/gov/content/governments/local-governments/facts-framework/systems/municipalities",
+          "knownRosterCount": 161,
+          "note": "Province of British Columbia municipality roster and local-government framework."
+        }
+      ],
+      "baselines": [
+        {
+          "region": "Washington",
+          "rosterCount": 281,
+          "dedicatedRecordCount": 9,
+          "confirmedSharedSystemCount": 0,
+          "officialReferralCount": 0,
+          "reviewedGovernmentCount": 9,
+          "remainingIndependentReview": 272,
+          "note": "Washington EMD names nine city-specific systems. Other municipalities still require independent confirmation even when a county system is geographically nearby."
+        },
+        {
+          "region": "Oregon",
+          "rosterCount": 241,
+          "dedicatedRecordCount": 1,
+          "confirmedSharedSystemCount": 215,
+          "officialReferralCount": 0,
+          "reviewedGovernmentCount": 216,
+          "remainingIndependentReview": 25,
+          "note": "OR-Alert's official search data returns an exact normalized place-name match for 216 incorporated cities, including Portland. A match confirms a routing result, not municipal ownership of the destination. ZIP routing may still work for a city whose exact name is absent."
+        },
+        {
+          "region": "British Columbia",
+          "rosterCount": 161,
+          "dedicatedRecordCount": 3,
+          "confirmedSharedSystemCount": 15,
+          "officialReferralCount": 0,
+          "reviewedGovernmentCount": 18,
+          "remainingIndependentReview": 143,
+          "note": "Three city records and fifteen municipalities explicitly named by official regional-system sources are counted. Unnamed member municipalities remain unreviewed."
+        }
+      ],
+      "directoryGaps": [
+        {
+          "region": "Oregon",
+          "sourceUrl": "https://gscdn.govshare.site/de23ec105d03e4d85367f5760b92afc23e29bac4/zip_city_search_v2.json",
+          "officialRosterSourceUrl": "https://data.oregon.gov/dataset/City-Limits/daze-uvas",
+          "reviewedOn": "2026-07-14",
+          "count": 25,
+          "governments": [
+            "Adair Village",
+            "Barlow",
+            "Coburg",
+            "Dunes City",
+            "Durham",
+            "Gearhart",
+            "Granite",
+            "Greenhorn",
+            "Happy Valley",
+            "Island City",
+            "Johnson City",
+            "Jordan Valley",
+            "King City",
+            "Lonerock",
+            "Maywood Park",
+            "Metolius",
+            "Millersburg",
+            "Mt. Angel",
+            "Mt. Vernon",
+            "Nyssa",
+            "Prescott",
+            "Rivergrove",
+            "Sodaville",
+            "Waterloo",
+            "Wood Village"
+          ],
+          "note": "Exact normalized incorporated-city names not present in the OR-Alert search data on the review date. These are research gaps, not claims that no alert service exists."
+        }
+      ],
+      "confirmedSharedSystems": [
+        { "region": "British Columbia", "government": "City of Port Alberni", "resourceId": "alert-bc-alberni-clayoquot-regional", "sourceUrl": "https://www.acrd.bc.ca/emergency_alerts", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "City of Kelowna", "resourceId": "alert-bc-central-okanagan-regional", "sourceUrl": "https://www.coemergency.ca/subscribe", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "City of West Kelowna", "resourceId": "alert-bc-central-okanagan-regional", "sourceUrl": "https://www.coemergency.ca/subscribe", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "District of Lake Country", "resourceId": "alert-bc-central-okanagan-regional", "sourceUrl": "https://www.coemergency.ca/subscribe", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "District of Peachland", "resourceId": "alert-bc-central-okanagan-regional", "sourceUrl": "https://www.coemergency.ca/subscribe", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "Town of Golden", "resourceId": "alert-bc-columbia-shuswap-regional", "sourceUrl": "https://www.csrd.bc.ca/alertable", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "City of Revelstoke", "resourceId": "alert-bc-columbia-shuswap-regional", "sourceUrl": "https://www.csrd.bc.ca/alertable", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "City of Courtenay", "resourceId": "alert-bc-comox-valley-regional", "sourceUrl": "https://www.comoxvalleyrd.ca/services/emergency-management/emergency-notification-system", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "Town of Comox", "resourceId": "alert-bc-comox-valley-regional", "sourceUrl": "https://www.comoxvalleyrd.ca/services/emergency-management/emergency-notification-system", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "Village of Cumberland", "resourceId": "alert-bc-comox-valley-regional", "sourceUrl": "https://www.comoxvalleyrd.ca/services/emergency-management/emergency-notification-system", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "City of Prince George", "resourceId": "alert-bc-fraser-fort-george-regional", "sourceUrl": "https://www.rdffg.ca/PAS", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "District of Mackenzie", "resourceId": "alert-bc-fraser-fort-george-regional", "sourceUrl": "https://www.rdffg.ca/PAS", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "District of Lantzville", "resourceId": "alert-bc-nanaimo-regional", "sourceUrl": "https://rdn.bc.ca/emergency-communications", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "Town of Gibsons", "resourceId": "alert-bc-sunshine-coast-regional", "sourceUrl": "https://www.scrd.ca/emergency-alerts/", "reviewedOn": "2026-07-14" },
+        { "region": "British Columbia", "government": "District of Sechelt", "resourceId": "alert-bc-sunshine-coast-regional", "sourceUrl": "https://www.scrd.ca/emergency-alerts/", "reviewedOn": "2026-07-14" }
+      ]
+    },
+    "indigenousGovernments": {
+      "status": "in-progress",
+      "policy": "Review each Tribal or First Nation government independently; never convert reservation, trust-land, treaty, ancestral-territory, or regional boundaries into assumed emergency authority.",
+      "officialRosters": [
+        {
+          "region": "Washington",
+          "url": "https://goia.wa.gov/tribal-directory/federally-recognized-tribes-washington-state",
+          "knownRosterCount": 29,
+          "note": "Washington Governor's Office of Indian Affairs directory."
+        },
+        {
+          "region": "Oregon",
+          "url": "https://www.oregon.gov/odhs/tribal-affairs/Pages/tribes.aspx",
+          "knownRosterCount": 9,
+          "note": "State of Oregon overview of the nine federally recognized Tribes."
+        },
+        {
+          "region": "British Columbia",
+          "url": "https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/consulting-with-first-nations/first-nations-negotiations/first-nations-a-z-listing",
+          "knownRosterCount": 204,
+          "note": "Province of British Columbia First Nations A-Z directory; the provincial service-agency overview reports 204 First Nations in B.C."
+        }
+      ],
+      "baselines": [
+        {
+          "region": "Washington",
+          "rosterCount": 29,
+          "dedicatedRecordCount": 0,
+          "confirmedSharedSystemCount": 0,
+          "officialReferralCount": 0,
+          "reviewedGovernmentCount": 0,
+          "remainingIndependentReview": 29
+        },
+        {
+          "region": "Oregon",
+          "rosterCount": 9,
+          "dedicatedRecordCount": 1,
+          "confirmedSharedSystemCount": 1,
+          "officialReferralCount": 1,
+          "reviewedGovernmentCount": 3,
+          "remainingIndependentReview": 6
+        },
+        {
+          "region": "British Columbia",
+          "rosterCount": 204,
+          "dedicatedRecordCount": 0,
+          "confirmedSharedSystemCount": 7,
+          "officialReferralCount": 0,
+          "reviewedGovernmentCount": 7,
+          "remainingIndependentReview": 197
+        }
+      ],
+      "findings": [
+        {
+          "region": "Oregon",
+          "government": "Confederated Tribes of the Grand Ronde Community of Oregon",
+          "status": "dedicated-record",
+          "resourceId": "grand-ronde-emergency",
+          "sourceUrl": "https://www.grandronde.org/government/emergency-services/",
+          "reviewedOn": "2026-07-14",
+          "note": "Dedicated Tribal emergency-services and emergency-management source; no public opt-in alert destination was confirmed in this review."
+        },
+        {
+          "region": "Oregon",
+          "government": "Confederated Tribes of the Umatilla Indian Reservation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-or-umatilla-county",
+          "sourceUrl": "https://ctuir.org/departments/public-safety",
+          "reviewedOn": "2026-07-14",
+          "note": "The Tribe's official Public Safety page says Umatilla County and CTUIR use the linked emergency-alert enrollment service."
+        },
+        {
+          "region": "Oregon",
+          "government": "Klamath Tribes",
+          "status": "official-referral",
+          "resourceId": "alert-or-klamath-county",
+          "sourceUrl": "https://klamathtribes.org/emergency-management/",
+          "reviewedOn": "2026-07-14",
+          "note": "The Tribes' official emergency-management page refers Tribal members in Klamath County to the county Everbridge service and also identifies Genasys."
+        },
+        {
+          "region": "British Columbia",
+          "government": "Tseshaht First Nation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-alberni-clayoquot-regional",
+          "sourceUrl": "https://www.acrd.bc.ca/emergency_alerts",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "Uchucklesaht Tribe Government",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-alberni-clayoquot-regional",
+          "sourceUrl": "https://www.acrd.bc.ca/emergency_alerts",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "Huu-ay-aht First Nations",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-alberni-clayoquot-regional",
+          "sourceUrl": "https://www.acrd.bc.ca/emergency_alerts",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "Toquaht Nation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-alberni-clayoquot-regional",
+          "sourceUrl": "https://www.acrd.bc.ca/emergency_alerts",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "Westbank First Nation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-central-okanagan-regional",
+          "sourceUrl": "https://www.coemergency.ca/subscribe",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "K’ómoks First Nation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-comox-valley-regional",
+          "sourceUrl": "https://www.comoxvalleyrd.ca/services/emergency-management/emergency-notification-system",
+          "reviewedOn": "2026-07-14"
+        },
+        {
+          "region": "British Columbia",
+          "government": "shíshálh Nation",
+          "status": "confirmed-shared-system",
+          "resourceId": "alert-bc-sunshine-coast-regional",
+          "sourceUrl": "https://www.scrd.ca/emergency-alerts/",
+          "reviewedOn": "2026-07-14"
+        }
+      ],
+      "supportResources": [
+        {
+          "resourceId": "fness-emergency-management",
+          "scope": "First Nations emergency-management support across British Columbia; not a Nation-specific alert authority."
+        }
+      ]
+    }
+  }
+}

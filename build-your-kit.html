@@ -168,10 +168,10 @@
         </div>
         <div class="lw-workbook-container lw-workbook-print-band">
           <div>
-            <p class="lw-workbook-print-title">Make a working copy.</p>
-            <p>Cascadia.me does not save or transmit typed entries. Type before printing, or print blank pages and write by hand. Browsers and printers may retain history; clear fields on shared devices and keep paper copies secure.</p>
+            <p class="lw-workbook-print-title">Make a copy you can use.</p>
+            <p>Type directly into the four sheets below, then print, or print them blank and write by hand. Nothing you enter is saved or sent by Cascadia.me. On a shared device, clear the fields when you are done and keep printed copies somewhere private.</p>
           </div>
-          <button class="lw-workbook-print-button" type="button" data-print-workbook>Print the four workbook pages</button>
+          <button class="lw-workbook-print-button" type="button" data-print-workbook>Print the 4-page workbook</button>
         </div>
       </section>
 
@@ -379,40 +379,48 @@
         <div class="lw-workbook-container lw-workbook-sheets-intro">
           <div>
             <p class="lw-workbook-kicker">The working pages</p>
-            <h2 id="sheets-title">Four working sheets.</h2>
-            <p>Type before printing, or print blank sheets and write by hand. Cascadia.me does not save or transmit entries. Browsers and printers may retain page or print history; clear fields on shared devices and store printed copies with the same care as medication, contact, key, and pickup information.</p>
+            <h2 id="sheets-title">A plan you can finish in four pages.</h2>
+            <p>Start with what is true today. Leave a question blank if you do not know yet; that blank is a useful next step, not a failure. Keep answers short enough to find quickly. You can type here or print blank sheets. Cascadia.me does not save or send your answers.</p>
           </div>
-          <button class="lw-workbook-print-button lw-workbook-print-button--dark" type="button" data-print-workbook>Print the four workbook pages</button>
+          <button class="lw-workbook-print-button lw-workbook-print-button--dark" type="button" data-print-workbook>Print the 4-page workbook</button>
         </div>
 
         <div class="lw-workbook-container lw-workbook-sheet-stack">
           <section class="lw-workbook-sheet" aria-labelledby="sheet-one-title">
             <header class="lw-workbook-sheet-header">
-              <span>01</span>
-              <div><p>The ordinary day</p><h3 id="sheet-one-title">Who, where, and what must continue.</h3></div>
+              <span>1</span>
+              <div>
+                <p>Start with daily life</p>
+                <h3 id="sheet-one-title">Who is where, and what needs to keep working?</h3>
+                <p class="lw-workbook-sheet-intro">Write what is true on a usual weekday. If something has no backup, say so.</p>
+              </div>
             </header>
             <div class="lw-workbook-fields">
-              <label class="lw-workbook-field lw-workbook-field--wide"><span>People in this household and the places they usually are on a weekday</span><textarea rows="3" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Children, care responsibilities, pets, and service animals</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Medication, equipment, communication, mobility, feeding, and daily care that cannot simply stop</span><textarea rows="3" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Work, school, childcare, transit, ferry, elevator, or building constraints</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>What already has another way to work</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>One ordinary dependency that deserves another path</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field lw-workbook-field--wide"><span><strong class="lw-workbook-field-title">Who is part of this plan, and where are they on a usual weekday?</strong><small class="lw-workbook-field-help">List names and usual places: home, work, school, childcare, appointments, or in transit.</small></span><textarea rows="3" maxlength="600" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Who or what depends on someone in the household?</strong><small class="lw-workbook-field-help">Include children, older adults, people elsewhere, pets, and service animals.</small></span><textarea rows="2" maxlength="320" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What must keep working every day?</strong><small class="lw-workbook-field-help">Note medication, medical devices, mobility or communication aids, feeding, cooling, and daily care.</small></span><textarea rows="2" maxlength="320" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What could make leaving or reconnecting harder?</strong><small class="lw-workbook-field-help">Think about work shifts, school pickup, transit, ferries, stairs, elevators, and building access.</small></span><textarea rows="2" maxlength="320" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What already has a reliable backup?</strong><small class="lw-workbook-field-help">Name another person, place, route, tool, or supply that has been tested.</small></span><textarea rows="2" maxlength="320" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field lw-workbook-field--wide"><span><strong class="lw-workbook-field-title">What is the first weak point you want to improve?</strong><small class="lw-workbook-field-help">Choose one ordinary dependency that would cause trouble soon if it stopped.</small></span><textarea rows="2" maxlength="500" autocomplete="off"></textarea></label>
             </div>
             <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 1 of 4</footer>
           </section>
 
           <section class="lw-workbook-sheet" aria-labelledby="sheet-two-title">
             <header class="lw-workbook-sheet-header">
-              <span>02</span>
-              <div><p>Home continuity</p><h3 id="sheet-two-title">Water, warmth, power, food, sanitation, and medicine.</h3></div>
+              <span>2</span>
+              <div>
+                <p>Home continuity</p>
+                <h3 id="sheet-two-title">How will home keep working?</h3>
+                <p class="lw-workbook-sheet-intro">Plan for the first day first. Add time once the basics are practical.</p>
+              </div>
             </header>
             <div class="lw-workbook-fields lw-workbook-fields--compact">
-              <label class="lw-workbook-field"><span>Water: people and animals, duration goal, amount, locations, access, rotation date</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Safe warmth: room, layers, indoor-approved heat, alarms, and relocation point</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Critical power: essential items, runtime, approved backup, operator, and relocation point</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Food and sanitation: one-day menu, water used, opening/preparation tools, toilet and waste plan</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Medication and devices: list location, storage and power instructions, contacts, transport</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Water: how much, where, and who can use it?</strong><small class="lw-workbook-field-help">Count people and animals. Note your duration goal, amount, storage places, access, and refresh date.</small></span><textarea rows="2" maxlength="420" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Safe warmth: which room, and when would you leave?</strong><small class="lw-workbook-field-help">List layers, indoor-approved heat, alarm checks, and the condition that means relocating.</small></span><textarea rows="2" maxlength="420" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Essential power: what cannot stop?</strong><small class="lw-workbook-field-help">Name each essential item, tested runtime, approved backup, who can operate it, and when to seek help.</small></span><textarea rows="2" maxlength="420" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Food and sanitation: what works for one day without utilities?</strong><small class="lw-workbook-field-help">Write a familiar menu, water needed, opening or preparation tools, and the toilet and waste plan.</small></span><textarea rows="2" maxlength="420" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field lw-workbook-field--wide"><span><strong class="lw-workbook-field-title">Medication and medical devices: what would another person need to know?</strong><small class="lw-workbook-field-help">Note where the current list is kept, storage and power instructions, contacts, transport, and the relocation point.</small></span><textarea rows="2" maxlength="650" autocomplete="off"></textarea></label>
             </div>
             <aside class="lw-workbook-sheet-safety"><strong>CO and generator reminder:</strong> Outdoor fuel-burning equipment stays outside. Keep working CO alarms inside. A portable generator remains dry and at least 20 ft / 6 m from buildings and openings, with exhaust away; let it cool before refueling and never plug it into a wall outlet.</aside>
             <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 2 of 4</footer>
@@ -420,16 +428,20 @@
 
           <section class="lw-workbook-sheet" aria-labelledby="sheet-three-title">
             <header class="lw-workbook-sheet-header">
-              <span>03</span>
-              <div><p>Leave and reconnect</p><h3 id="sheet-three-title">Instructions, contacts, routes, destinations, and support.</h3></div>
+              <span>3</span>
+              <div>
+                <p>Leave and reconnect</p>
+                <h3 id="sheet-three-title">How will you leave and find one another?</h3>
+                <p class="lw-workbook-sheet-intro">Use names, numbers, and places. A plan helps when someone else can follow it.</p>
+              </div>
             </header>
             <div class="lw-workbook-fields lw-workbook-fields--compact">
-              <label class="lw-workbook-field"><span>Official alerts, emergency website, road/ferry source, and broadcast source</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Short household message, nearby meeting place, and farther meeting place</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Out-of-area contact: name, number, and paper-copy locations</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Routes, transport, destinations, pickup permissions, accessibility, and building constraints</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Departure load: medication, aids, identification, records, keys, clothes, animal supplies, where kept</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label class="lw-workbook-field"><span>Neighbor agreements: check-in, help offered each way, key permission, privacy and safety boundaries</span><textarea rows="2" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Where will official information come from?</strong><small class="lw-workbook-field-help">Write the local alert system, emergency website, road or ferry source, and radio or broadcast source.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What is the message if calls do not go through?</strong><small class="lw-workbook-field-help">Agree on a short text, a nearby meeting place, and a farther meeting place.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">Who is your out-of-area contact?</strong><small class="lw-workbook-field-help">Add a name and number, then note who will carry a paper copy.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">How will each person leave?</strong><small class="lw-workbook-field-help">Note routes, transport, destinations, pickup permission, accessibility, and building constraints.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What must go first, and where is it kept?</strong><small class="lw-workbook-field-help">List medication, aids, identification, keys, seasonal clothes, care instructions, and animal supplies.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
+              <label class="lw-workbook-field"><span><strong class="lw-workbook-field-title">What have you agreed with a neighbor?</strong><small class="lw-workbook-field-help">Record the check-in, mutual help, key permission, privacy limits, and when an in-person check is unsafe.</small></span><textarea rows="2" maxlength="360" autocomplete="off"></textarea></label>
             </div>
             <aside class="lw-workbook-sheet-safety"><strong>Departure reminder:</strong> Official instructions govern. Do not delay an evacuation to pack or work on utilities. Do not shut off natural gas merely because an order arrives.</aside>
             <footer class="lw-workbook-sheet-footer">Cascadia.me · Household workbook · Page 3 of 4</footer>
@@ -437,26 +449,30 @@
 
           <section class="lw-workbook-sheet" aria-labelledby="sheet-four-title">
             <header class="lw-workbook-sheet-header">
-              <span>04</span>
-              <div><p>Rehearse and add time</p><h3 id="sheet-four-title">One safe exercise and the next practical adjustment.</h3></div>
+              <span>4</span>
+              <div>
+                <p>Rehearse and add time</p>
+                <h3 id="sheet-four-title">Practice once. Improve one thing.</h3>
+                <p class="lw-workbook-sheet-intro">Choose a safe, ordinary interruption. Keep essential care and real alerts working.</p>
+              </div>
             </header>
             <div class="lw-workbook-rehearsal-fields">
-              <label><span>Interruption discussed or safely simulated</span><textarea rows="1" autocomplete="off"></textarea></label>
-              <label><span>Date</span><textarea rows="1" autocomplete="off"></textarea></label>
-              <label><span>What already worked</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label><span>One adjustment</span><textarea rows="2" autocomplete="off"></textarea></label>
-              <label><span>Person responsible</span><textarea rows="1" autocomplete="off"></textarea></label>
-              <label><span>Review date</span><textarea rows="1" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">What did you talk through or safely try?</strong></span><textarea rows="1" maxlength="160" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">When?</strong></span><textarea rows="1" maxlength="80" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">What worked well?</strong></span><textarea rows="2" maxlength="260" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">What should change next?</strong></span><textarea rows="2" maxlength="260" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">Who will take the next step?</strong></span><textarea rows="1" maxlength="120" autocomplete="off"></textarea></label>
+              <label><span><strong class="lw-workbook-field-title">When will you check again?</strong></span><textarea rows="1" maxlength="80" autocomplete="off"></textarea></label>
             </div>
             <table class="lw-workbook-depth-table">
-              <caption>Build duration gradually</caption>
-              <thead><tr><th scope="col">Capability</th><th scope="col">One day works</th><th scope="col">Three-day milestone</th><th scope="col">Local goal</th><th scope="col">Where / rotation</th></tr></thead>
+              <caption>Build time after the basics work</caption>
+              <thead><tr><th scope="col">Basic need</th><th scope="col">Works for one day</th><th scope="col">Works for three days</th><th scope="col">Meets our local goal</th><th scope="col">Where it lives / refresh date</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Water</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: local goal"></label></td><td><textarea rows="1" aria-label="Water location and rotation" autocomplete="off"></textarea></td></tr>
-                <tr><th scope="row">Food + sanitation</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: local goal"></label></td><td><textarea rows="1" aria-label="Food and sanitation location and rotation" autocomplete="off"></textarea></td></tr>
-                <tr><th scope="row">Medication + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: local goal"></label></td><td><textarea rows="1" aria-label="Medication and care location and rotation" autocomplete="off"></textarea></td></tr>
-                <tr><th scope="row">Light + power</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: local goal"></label></td><td><textarea rows="1" aria-label="Light and power location and rotation" autocomplete="off"></textarea></td></tr>
-                <tr><th scope="row">Animals + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: local goal"></label></td><td><textarea rows="1" aria-label="Animals and care location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Water</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Water: local goal"></label></td><td><textarea rows="1" maxlength="80" aria-label="Water location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Food + sanitation</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Food and sanitation: local goal"></label></td><td><textarea rows="1" maxlength="80" aria-label="Food and sanitation location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Medication + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Medication and care: local goal"></label></td><td><textarea rows="1" maxlength="80" aria-label="Medication and care location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Light + power</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Light and power: local goal"></label></td><td><textarea rows="1" maxlength="80" aria-label="Light and power location and rotation" autocomplete="off"></textarea></td></tr>
+                <tr><th scope="row">Animals + care</th><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: one day works"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: three-day milestone"></label></td><td><label class="lw-workbook-check"><input type="checkbox" aria-label="Animals and care: local goal"></label></td><td><textarea rows="1" maxlength="80" aria-label="Animals and care location and rotation" autocomplete="off"></textarea></td></tr>
               </tbody>
             </table>
             <aside class="lw-workbook-sheet-safety"><strong>Safe rehearsal:</strong> Do not interrupt treatment or essential heat/power, travel a risky route, enter unsafe conditions, or disable every way to receive alerts and call for help.</aside>

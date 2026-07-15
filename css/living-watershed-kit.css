@@ -576,6 +576,17 @@
   line-height: 1;
 }
 
+.lw-workbook-sheet-intro {
+  max-width: 48rem;
+  margin: 0.65rem 0 0 !important;
+  color: var(--lw-muted) !important;
+  font-size: 0.78rem !important;
+  font-weight: 450 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.55 !important;
+  text-transform: none !important;
+}
+
 .lw-workbook-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -598,8 +609,22 @@
 .lw-workbook-rehearsal-fields label > span {
   display: block;
   color: var(--workbook-ink);
-  font-size: 0.78rem;
-  font-weight: 700;
+  line-height: 1.5;
+}
+
+.lw-workbook-field-title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.lw-workbook-field-help {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--lw-muted);
+  font-size: 0.72rem;
+  font-weight: 450;
   line-height: 1.5;
 }
 
@@ -1015,11 +1040,13 @@
 @media print {
   html,
   body.lw-kit-page {
+    margin: 0 !important;
     color: #111;
     background: #fff;
     font-size: 10pt;
   }
 
+  .lw-kit-page .lw-skip-link,
   .lw-kit-page .site-header,
   .lw-kit-page .site-footer,
   .lw-kit-page .feedback-widget,
@@ -1054,7 +1081,12 @@
   }
 
   .lw-workbook-sheet {
-    min-height: 9in;
+    display: grid;
+    width: 100%;
+    height: calc(100vh - 1in);
+    min-height: calc(100vh - 1in);
+    box-sizing: border-box;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     margin: 0;
     padding: 0;
     overflow: visible;
@@ -1062,6 +1094,8 @@
     color: #111;
     background: #fff;
     box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
     break-after: page;
     page-break-after: always;
   }
@@ -1071,9 +1105,20 @@
     page-break-after: auto;
   }
 
+  .lw-workbook-sheet + .lw-workbook-sheet {
+    break-before: page;
+    page-break-before: always;
+  }
+
   .lw-workbook-sheet-header {
+    position: relative;
+    display: block;
+    flex: 0 0 auto;
+    box-sizing: border-box;
     padding-bottom: 0.14in;
     border-color: #111;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .lw-workbook-sheet-header > span,
@@ -1088,63 +1133,115 @@
   }
 
   .lw-workbook-sheet-header > span {
-    font-size: 38pt;
+    display: none;
   }
 
   .lw-workbook-sheet-header h3 {
-    font-size: 20pt;
+    font-size: 19pt;
+    line-height: 1.06;
   }
 
-  .lw-workbook-fields,
+  .lw-workbook-sheet-intro {
+    margin-top: 0.05in !important;
+    color: #333 !important;
+    font-size: 8pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .lw-workbook-fields {
+    flex: 1 1 auto;
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 0 0.25in;
+    margin-top: 0.08in;
+  }
+
   .lw-workbook-rehearsal-fields {
+    flex: 0 0 auto;
     gap: 0 0.25in;
     margin-top: 0.08in;
   }
 
   .lw-workbook-field,
   .lw-workbook-rehearsal-fields label {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
     padding-block: 0.08in;
     border-color: #999;
     break-inside: avoid;
   }
 
-  .lw-workbook-field > span,
-  .lw-workbook-rehearsal-fields label > span {
-    font-size: 8.5pt;
+  .lw-workbook-field-title {
+    font-size: 9pt;
+    line-height: 1.3;
+  }
+
+  .lw-workbook-field-help {
+    margin-top: 0.02in;
+    color: #333;
+    font-size: 7.5pt;
+    line-height: 1.3;
   }
 
   .lw-workbook-field textarea,
   .lw-workbook-rehearsal-fields input,
   .lw-workbook-rehearsal-fields textarea,
   .lw-workbook-depth-table textarea {
+    height: auto !important;
     min-height: 0.34in;
+    flex: 1 1 auto;
     margin-top: 0.04in;
-    padding: 0.03in;
-    border-bottom: 1px solid #555;
+    padding: 0 0.03in;
+    border-bottom: 0;
+    outline: 0 !important;
     color: #111;
-    background: transparent;
+    background-color: transparent;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(0.25in - 1px),
+      #aaa calc(0.25in - 1px),
+      #aaa 0.25in
+    ) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none !important;
+    caret-color: transparent;
     font-size: 9pt;
+    line-height: 0.25in;
     overflow: hidden;
+    resize: none;
   }
 
   .lw-workbook-field textarea[rows='3'] {
     min-height: 0.58in;
   }
 
+  .lw-workbook-rehearsal-fields textarea[rows='1'] {
+    flex: 0 0 0.34in;
+  }
+
+  .lw-workbook-rehearsal-fields textarea[rows='2'] {
+    flex: 0 0 0.58in;
+  }
+
   .lw-workbook-sheet-safety {
+    flex: 0 0 auto;
     margin-top: 0.12in;
     padding: 0.08in 0.1in;
     border: 1px solid #777;
     color: #111;
     background: #fff;
-    font-size: 7.5pt;
+    font-size: 8pt;
+    line-height: 1.4;
   }
 
   .lw-workbook-sheet-footer {
-    margin-top: 0.12in;
+    flex: 0 0 auto;
+    margin-top: auto;
     padding-top: 0.06in;
     color: #333;
-    font-size: 7pt;
+    font-size: 7.5pt;
   }
 
   .lw-workbook-depth-table {
@@ -1174,5 +1271,27 @@
   .lw-workbook-check {
     width: 0.28in;
     height: 0.28in;
+  }
+
+  .lw-workbook-depth-table textarea {
+    min-width: 0;
+    border-bottom: 1px solid #555;
+    background-color: transparent !important;
+    background-image: none !important;
+    line-height: 1.3;
+  }
+
+  .lw-kit-page textarea:focus,
+  .lw-kit-page textarea:focus-visible,
+  .lw-kit-page input:focus,
+  .lw-kit-page input:focus-visible {
+    outline: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .lw-kit-page .lw-workbook-depth-table textarea:focus,
+  .lw-kit-page .lw-workbook-depth-table textarea:focus-visible {
+    border-bottom-color: #555 !important;
   }
 }

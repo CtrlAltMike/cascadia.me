@@ -47,6 +47,7 @@ export function loadSignalsRegistry() {
     records: [...loadCoreRecords(), ...authority.records],
     authorityMeta: authority.meta,
     coverageAudit: JSON.parse(fs.readFileSync(path.join(signalsDirectory, "coverage-audit.json"), "utf8")),
+    coverageReview: JSON.parse(fs.readFileSync(path.join(signalsDirectory, "coverage-review.json"), "utf8")),
     actionReview: JSON.parse(fs.readFileSync(path.join(signalsDirectory, "action-review.json"), "utf8"))
   };
 }

@@ -1,20 +1,23 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "reviewedOn": "2026-07-14",
+  "reviewLedger": "coverage-review.json",
   "methodology": {
     "statusValues": [
       "dedicated-record",
       "confirmed-shared-system",
       "official-referral",
+      "no-public-source-confirmed",
+      "official-site-unavailable",
       "directory-gap",
       "not-yet-reviewed"
     ],
-    "reviewRule": "A government is counted as reviewed only when an official source identifies its dedicated source, names it as a participant in a shared service, or explicitly refers its community to another authority's service. Legal or statistical containment never counts as evidence of alert coverage.",
-    "countRule": "Reviewed-government counts are mutually exclusive within each regional baseline. A dedicated record that is also present in a directory is counted once. Remaining-independent-review equals the official roster count minus reviewed governments."
+    "reviewRule": "Each government in the reconciled roster scope receives one dated outcome in coverage-review.json. A confirmed finding requires an official source; an inconclusive or unavailable official site is recorded without inferring coverage. Legal or statistical containment never counts as evidence of alert coverage.",
+    "countRule": "Outcome counts are mutually exclusive within each regional baseline. Dedicated records, confirmed shared systems, official referrals, no-public-source-confirmed results, and official-site-unavailable results sum to the official roster count. Remaining-independent-review is zero only when the detailed ledger contains every government exactly once."
   },
   "tracks": {
     "municipalities": {
-      "status": "in-progress",
+      "status": "complete",
       "policy": "Review municipal emergency programs independently from county and regional systems; do not infer service coverage from containment within another government boundary.",
       "officialRosters": [
         {
@@ -42,30 +45,36 @@
           "rosterCount": 281,
           "dedicatedRecordCount": 9,
           "confirmedSharedSystemCount": 0,
-          "officialReferralCount": 0,
-          "reviewedGovernmentCount": 9,
-          "remainingIndependentReview": 272,
-          "note": "Washington EMD names nine city-specific systems. Other municipalities still require independent confirmation even when a county system is geographically nearby."
+          "officialReferralCount": 147,
+          "noPublicSourceConfirmedCount": 67,
+          "officialSiteUnavailableCount": 58,
+          "reviewedGovernmentCount": 281,
+          "remainingIndependentReview": 0,
+          "note": "Washington EMD names nine city-specific systems. The remaining official-site outcomes are recorded independently in coverage-review.json; automated referrals are research evidence and do not become public listings or service perimeters without manual confirmation."
         },
         {
           "region": "Oregon",
           "rosterCount": 241,
           "dedicatedRecordCount": 1,
           "confirmedSharedSystemCount": 215,
-          "officialReferralCount": 0,
-          "reviewedGovernmentCount": 216,
-          "remainingIndependentReview": 25,
-          "note": "OR-Alert's official search data returns an exact normalized place-name match for 216 incorporated cities, including Portland. A match confirms a routing result, not municipal ownership of the destination. ZIP routing may still work for a city whose exact name is absent."
+          "officialReferralCount": 9,
+          "noPublicSourceConfirmedCount": 5,
+          "officialSiteUnavailableCount": 11,
+          "reviewedGovernmentCount": 241,
+          "remainingIndependentReview": 0,
+          "note": "OR-Alert's official search data returns an exact normalized place-name match for 216 incorporated cities, including Portland. A match confirms a routing result, not municipal ownership of the destination. Every directory gap also has an independent official-site outcome in coverage-review.json."
         },
         {
           "region": "British Columbia",
           "rosterCount": 161,
           "dedicatedRecordCount": 3,
           "confirmedSharedSystemCount": 15,
-          "officialReferralCount": 0,
-          "reviewedGovernmentCount": 18,
-          "remainingIndependentReview": 143,
-          "note": "Three city records and fifteen municipalities explicitly named by official regional-system sources are counted. Unnamed member municipalities remain unreviewed."
+          "officialReferralCount": 131,
+          "noPublicSourceConfirmedCount": 6,
+          "officialSiteUnavailableCount": 6,
+          "reviewedGovernmentCount": 161,
+          "remainingIndependentReview": 0,
+          "note": "Three dedicated city records and fifteen municipalities explicitly named by official regional-system sources remain manually confirmed. Other official-site referrals stay in the research ledger until manually promoted."
         }
       ],
       "directoryGaps": [
@@ -124,7 +133,7 @@
       ]
     },
     "indigenousGovernments": {
-      "status": "in-progress",
+      "status": "complete",
       "policy": "Review each Tribal or First Nation government independently; never convert reservation, trust-land, treaty, ancestral-territory, or regional boundaries into assumed emergency authority.",
       "officialRosters": [
         {
@@ -152,27 +161,34 @@
           "rosterCount": 29,
           "dedicatedRecordCount": 0,
           "confirmedSharedSystemCount": 0,
-          "officialReferralCount": 0,
-          "reviewedGovernmentCount": 0,
-          "remainingIndependentReview": 29
+          "officialReferralCount": 20,
+          "noPublicSourceConfirmedCount": 8,
+          "officialSiteUnavailableCount": 1,
+          "reviewedGovernmentCount": 29,
+          "remainingIndependentReview": 0
         },
         {
           "region": "Oregon",
           "rosterCount": 9,
           "dedicatedRecordCount": 1,
           "confirmedSharedSystemCount": 1,
-          "officialReferralCount": 1,
-          "reviewedGovernmentCount": 3,
-          "remainingIndependentReview": 6
+          "officialReferralCount": 5,
+          "noPublicSourceConfirmedCount": 2,
+          "officialSiteUnavailableCount": 0,
+          "reviewedGovernmentCount": 9,
+          "remainingIndependentReview": 0
         },
         {
           "region": "British Columbia",
           "rosterCount": 204,
           "dedicatedRecordCount": 0,
           "confirmedSharedSystemCount": 7,
-          "officialReferralCount": 0,
-          "reviewedGovernmentCount": 7,
-          "remainingIndependentReview": 197
+          "officialReferralCount": 56,
+          "noPublicSourceConfirmedCount": 95,
+          "officialSiteUnavailableCount": 46,
+          "reviewedGovernmentCount": 204,
+          "remainingIndependentReview": 0,
+          "note": "The Province reports 204 First Nations while CivicInfo displayed 208 directory records. coverage-review.json documents the four intergovernmental directory organizations excluded from the 204-government review scope."
         }
       ],
       "findings": [

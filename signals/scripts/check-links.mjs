@@ -10,7 +10,7 @@ const outputPath = args.output || "signals-link-report.json";
 const statePath = args.state || ".signals-link-state.json";
 const previousPath = args.previous || statePath;
 const REVIEW_STATUSES = new Set([401, 403, 405, 429]);
-const { records, coverageAudit } = loadSignalsRegistry();
+const { records, coverageAudit, coverageReview } = loadSignalsRegistry();
 const urlMap = new Map();
 
 function addUrl(url, reference, manualReviewOnFailure = false) {
@@ -38,6 +38,12 @@ for (const [trackName, track] of Object.entries(coverageAudit?.tracks || {})) {
   for (const finding of [...(track.confirmedSharedSystems || []), ...(track.findings || [])]) {
     addUrl(finding.sourceUrl, { id: `${trackName}:${finding.government}`, kind: "coverage-evidence" });
   }
+}
+
+for (const scope of coverageReview?.rosterScopes || []) {
+  const id = `coverage-review:${scope.track}:${scope.region}`;
+  addUrl(scope.url, { id, kind: "coverage-review-roster" });
+  addUrl(scope.directoryUrl, { id, kind: "coverage-review-directory" });
 }
 
 async function check(entry) {

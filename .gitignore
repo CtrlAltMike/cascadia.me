@@ -3,3 +3,4 @@
 Google/
 .wrangler/
 .playwright-cli/
+output/playwright/

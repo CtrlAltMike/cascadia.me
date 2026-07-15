@@ -980,7 +980,7 @@ dialog::backdrop {
   .results { padding-bottom: 50px; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .nav-inner { padding: 0 16px; }
   .nav-logo { font-size: 24px; }
   .nav-toggle { display: block; }

@@ -238,16 +238,20 @@
   isolation: isolate;
   border-bottom: 1px solid var(--lw-line);
   background-color: var(--lw-cream-50);
-  background-image: url('../assets/living-watershed/home-hero.webp');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .home-hero-picture {
   position: absolute;
   inset: 0;
   z-index: 0;
+}
+
+.home-hero-picture > picture,
+.home-hero-picture > noscript,
+.home-hero-picture > noscript > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .home-hero-picture img {
@@ -681,7 +685,6 @@
     display: flex;
     min-height: 0;
     flex-direction: column;
-    background-image: none;
   }
 
   .home-hero-stage::after {
@@ -887,7 +890,6 @@
     display: block;
     min-height: 0;
     overflow: visible;
-    background-image: none;
   }
 
   .home-hero-stage::after {

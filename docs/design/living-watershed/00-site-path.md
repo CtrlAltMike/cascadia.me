@@ -83,7 +83,7 @@ Each major area has its own editorial job.
 
 The homepage welcomes the reader into Cascadia as a connected place. It explains why the site exists, establishes preparedness as care, and introduces land, water, weather, and fire as parts of one regional story.
 
-The guide pathways behave like an illustrated table of contents. The Atlas and preparation tools are meaningful destinations, not competing promotional buttons.
+The guide pathways behave like an illustrated table of contents. Signals, Field Stories, the Atlas, and the household workbook are introduced by the question they answer rather than as competing promotional buttons.
 
 ### Guides: individual chapters
 
@@ -97,9 +97,19 @@ The Atlas answers what connected sources are reporting, what models suggest, wha
 
 Its interface may be fragmented where controls require it. Its explanatory copy should remain ordinary, regional, and candid rather than clinical.
 
+### Signals: the official-source directory
+
+Signals helps a reader find the public agencies, alert programs, transportation sources, hazard publishers, and support services responsible for a place. It is a directory, not a current-conditions feed. Postal areas and map outlines help locate sources; they do not establish emergency authority or imply an active alert.
+
+### Field Stories: original fiction
+
+Field Stories offers fiction as a separate way to learn through crisis, consequence, care, and recovery. Every story is labeled as fiction, gated by a non-descriptive content note, and followed by factual source notes. The collection must never be presented as reporting, evidence, or survivor testimony.
+
 ### Build Your Kit: the household workbook
 
 Preparation is treated as an act of care and imagination, not an act of consumption. The capability model remains, joined by practical inventories, a communication plan, and printable tools that help different households make the guidance their own.
+
+Because the workbook also contains sustained guidance, its opening offers three clear choices: begin the working pages, print the workbook, or read from the beginning. The reader is not required to traverse the essay before using the tool.
 
 ### The Approach: the author's note and evidence method
 

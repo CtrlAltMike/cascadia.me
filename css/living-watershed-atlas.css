@@ -255,6 +255,17 @@
   line-height: 1.5;
 }
 
+.living-watershed-atlas .atlas-copy > .atlas-companion {
+  margin-top: 0.55rem;
+  color: var(--lw-muted);
+  font-size: 0.73rem;
+}
+
+.atlas-companion a {
+  color: var(--lw-ocean-700);
+  font-weight: 750;
+}
+
 .atlas-availability {
   position: absolute;
   width: 1px;

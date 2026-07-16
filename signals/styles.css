@@ -542,7 +542,8 @@ h1 em { color: var(--water); font-weight: 600; }
 .start-here-gap { margin: 0; padding: 12px; color: var(--ink-soft); background: var(--cream); border: 1px solid var(--line); border-radius: 4px; font-size: 9px; line-height: 1.5; }
 .plan-controls { display: flex; gap: 6px; margin-top: 13px; padding-top: 12px; border-top: 1px solid rgba(37,95,106,0.16); }
 .plan-controls button:disabled { opacity: 0.48; cursor: not-allowed; }
-.plan-privacy { margin: 9px 0 0; color: var(--ink-soft); font-size: 8px; line-height: 1.45; }
+.plan-privacy { margin: 9px 0 0; color: var(--ink-soft); font-size: 9px; line-height: 1.5; }
+.plan-privacy a { color: var(--ocean); font-weight: 700; }
 .plan-status { min-height: 13px; margin: 4px 0 0; color: var(--water); font-size: 8px; font-weight: 700; }
 .plan-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); font-size: 8px; font-weight: 700; cursor: pointer; }
 .plan-toggle input { width: 15px; height: 15px; margin: 0; accent-color: var(--moss); }

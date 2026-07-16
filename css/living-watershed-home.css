@@ -479,6 +479,70 @@
   text-align: right;
 }
 
+/* Two reader-facing routes that sit beside the hazard chapters */
+
+.home-companions {
+  padding: var(--home-section-space) 0;
+  border-top: 1px solid var(--lw-line);
+  background:
+    linear-gradient(120deg, rgba(47, 170, 179, 0.07), transparent 36%),
+    var(--lw-cream-50);
+}
+
+.home-companion-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--home-flow-space);
+  border-top: 1px solid var(--lw-line);
+  border-bottom: 1px solid var(--lw-line);
+}
+
+.home-companion {
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(0rem, 3vw, 3.5rem);
+}
+
+.home-companion + .home-companion {
+  border-left: 1px solid var(--lw-line);
+}
+
+.home-companion-label {
+  margin: 0 0 0.9rem;
+  color: var(--lw-coral-600);
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-companion h3 {
+  max-width: 31rem;
+  margin: 0;
+  color: var(--lw-ocean-900);
+  font-size: clamp(2.25rem, 4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.home-companion > p:not(.home-companion-label) {
+  max-width: 38rem;
+  margin: 1.25rem 0 0;
+  color: var(--lw-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.08rem, 1.35vw, 1.22rem);
+  line-height: 1.7;
+}
+
+.home-companion-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.35rem;
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
 /* Neighbor and household passage */
 
 .home-neighbors {
@@ -692,6 +756,15 @@
     text-align: left;
   }
 
+  .home-companion-list {
+    grid-template-columns: 1fr;
+  }
+
+  .home-companion + .home-companion {
+    border-top: 1px solid var(--lw-line);
+    border-left: 0;
+  }
+
   .home-page .seasonal-footer {
     text-align: left;
   }
@@ -702,6 +775,7 @@
   .home-reading-column,
   .home-chapter-list,
   .home-contents-link,
+  .home-companion-list,
   .home-neighbors-figure {
     width: min(100% - 2rem, 90rem);
   }

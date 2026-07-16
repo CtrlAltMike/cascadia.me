@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cascadia.me/</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/guides.html</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/atlas.html</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/signals/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/stories/</loc>
@@ -22,6 +22,10 @@
   </url>
   <url>
     <loc>https://cascadia.me/stories/level-three.html</loc>
+    <lastmod>2026-07-15</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/stories/overnight-lows.html</loc>
     <lastmod>2026-07-15</lastmod>
   </url>
   <url>
@@ -41,31 +45,27 @@
     <lastmod>2026-07-15</lastmod>
   </url>
   <url>
-    <loc>https://cascadia.me/stories/overnight-lows.html</loc>
+    <loc>https://cascadia.me/build-your-kit.html</loc>
     <lastmod>2026-07-15</lastmod>
   </url>
   <url>
-    <loc>https://cascadia.me/build-your-kit.html</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
     <loc>https://cascadia.me/approach.html</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/earthquake.html</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/wildfire.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/flooding.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/winter-storm.html</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-07-15</lastmod>
   </url>
 </urlset>

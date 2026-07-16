@@ -745,8 +745,8 @@ function renderPlanProgress(startResources = null) {
   const relevantComplete = relevant.filter((resource) => isActionComplete(resource.id)).length;
   if (planProgress) {
     planProgress.textContent = locationSelection && relevant.length
-      ? `${relevantComplete} of ${relevant.length} location actions complete`
-      : `${completedCount} action${completedCount === 1 ? "" : "s"} complete in this browser`;
+      ? `${relevantComplete} of ${relevant.length} local steps marked complete`
+      : `${completedCount} step${completedCount === 1 ? "" : "s"} marked complete in this browser`;
   }
   if (clearPlanButton) clearPlanButton.disabled = completedCount === 0;
   if (exportPlanButton) exportPlanButton.disabled = completedCount === 0;
@@ -754,12 +754,12 @@ function renderPlanProgress(startResources = null) {
 
 function clearPrivatePlan() {
   if (!Object.keys(planState.completed).length) return;
-  if (!window.confirm("Clear every completed action from this browser? Your map location and filters are not part of the private plan.")) return;
+  if (!window.confirm("Clear every completed step from this browser? Your map location and filters are not part of the checklist.")) return;
   planState = emptyPlanState();
   savePlanState();
   syncPlanControls();
   const status = document.querySelector("#plan-status");
-  if (status) status.textContent = "Private plan cleared.";
+  if (status) status.textContent = "Checklist cleared.";
 }
 
 function exportPrivatePlan() {
@@ -768,7 +768,7 @@ function exportPrivatePlan() {
     .sort((a, b) => a.primaryAction.type.localeCompare(b.primaryAction.type) || a.name.localeCompare(b.name));
   if (!completedResources.length) return;
   const lines = [
-    "Cascadia Signals — private preparedness plan",
+    "Cascadia Signals — saved checklist",
     `Exported ${new Date().toLocaleString()}`,
     "This export contains completed resource actions only. Signals did not store or export a location.",
     "",
@@ -785,11 +785,11 @@ function exportPrivatePlan() {
   const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `cascadia-signals-plan-${new Date().toISOString().slice(0, 10)}.txt`;
+  link.download = `cascadia-signals-checklist-${new Date().toISOString().slice(0, 10)}.txt`;
   link.click();
   URL.revokeObjectURL(link.href);
   const status = document.querySelector("#plan-status");
-  if (status) status.textContent = "Private plan exported without location data.";
+  if (status) status.textContent = "Checklist exported without location data.";
 }
 
 function checkedValues(name) {
@@ -1130,13 +1130,13 @@ function markSource(name, state, label) {
   const states = Object.values(sourceState);
   if (states.every((value) => value === "ready")) {
     perimeterStatus.dataset.state = "ready";
-    perimeterStatus.lastChild.textContent = "Geometry ready";
+    perimeterStatus.lastChild.textContent = "Service areas ready";
   } else if (states.some((value) => value === "error" || value === "partial")) {
     perimeterStatus.dataset.state = "partial";
-    perimeterStatus.lastChild.textContent = "Geometry partial";
+    perimeterStatus.lastChild.textContent = "Some service areas unavailable";
   } else {
     perimeterStatus.dataset.state = "checking";
-    perimeterStatus.lastChild.textContent = "Checking geometry";
+    perimeterStatus.lastChild.textContent = "Checking service areas";
   }
 }
 
@@ -1323,7 +1323,7 @@ function normalizePostalLookup(value) {
     return {
       type: "fsa",
       code,
-      label: `FSA ${code}`,
+      label: `Postal area ${code}`,
       where: `CFSAUID='${code}'`,
       source: STATCAN_FSA,
       outFields: "CFSAUID,PRUID,PRNAME",
@@ -1391,16 +1391,16 @@ function renderPostalResult() {
 
   postalResult.hidden = false;
   postalResult.dataset.state = locationSelection.mode === "point" ? "confirmed" : ambiguous ? "ambiguous" : "matched";
-  document.querySelector("#postal-match-title").textContent = `${locationSelection.label} · ${locationSelection.mode === "point" ? "map point confirmed" : "approximate census area"}`;
+  document.querySelector("#postal-match-title").textContent = `${locationSelection.label} · ${locationSelection.mode === "point" ? "map point confirmed" : "approximate postal area"}`;
 
   if (locationSelection.geometryPending) {
-    postalStatus.textContent = "Services match the shared map point while Signals verifies the official postal-area outline.";
+    postalStatus.textContent = "Sources match the shared map point while Signals checks the official postal-area boundary.";
   } else if (locationSelection.geometryUnavailable) {
-    postalStatus.textContent = `Services match the shared map point. The official ${locationSelection.type === "fsa" ? "FSA" : "ZIP-area"} outline is unavailable, so Signals could not confirm that the point lies inside ${locationSelection.label}.`;
+    postalStatus.textContent = `Sources match the shared map point. The official postal-area boundary is unavailable, so Signals could not confirm that the point lies inside ${locationSelection.label}.`;
   } else if (awaitingMapConfirmation) {
     postalStatus.textContent = "Click your exact location inside the highlighted postal area. The point stays in this browser unless you intentionally share the view.";
   } else if (locationSelection.mode === "point") {
-    postalStatus.textContent = "Services now match the point you chose, rather than every jurisdiction touched by the postal area.";
+    postalStatus.textContent = "Sources now match the point you chose, rather than every jurisdiction touched by the postal area.";
   } else if (ambiguous) {
     postalStatus.textContent = "This postal area overlaps multiple mapped service jurisdictions. Choose an exact spot before relying on the local portion of the list.";
   } else {
@@ -1434,9 +1434,10 @@ function showPostalError(message) {
 
 function postalLookupErrorMessage(error) {
   const message = String(error?.message || "");
-  if (/^(No matching census postal area|The postal source returned no usable geometry|That FSA is outside British Columbia|That ZIP area is outside Washington and Oregon)/.test(message)) {
-    return message;
-  }
+  if (message.startsWith("No matching census postal area")) return "No matching postal area was returned.";
+  if (message.startsWith("The postal source returned no usable geometry")) return "The postal source did not return a usable boundary.";
+  if (message.startsWith("That FSA is outside British Columbia")) return "That postal prefix is outside British Columbia.";
+  if (message.startsWith("That ZIP area is outside Washington and Oregon")) return "That ZIP area is outside Washington and Oregon.";
   if (error?.name === "TimeoutError" || /timed out/i.test(message)) {
     return "The official postal-area source did not respond in time. Try again, or use the map while the source recovers.";
   }
@@ -1491,7 +1492,7 @@ async function runPostalLookup({ restoredPoint = null } = {}) {
   postalResult.hidden = false;
   postalResult.dataset.state = "loading";
   document.querySelector("#postal-match-title").textContent = `Looking up ${lookup.label}`;
-  postalStatus.textContent = "Requesting official postal-area geometry…";
+  postalStatus.textContent = "Requesting the official postal-area boundary…";
   postalJurisdictions.textContent = "";
   postalActions.hidden = true;
   postalSubmit.disabled = true;
@@ -1554,7 +1555,7 @@ async function runPostalLookup({ restoredPoint = null } = {}) {
       geometryUnavailable: false
     };
     postalInput.value = lookup.code;
-    setPostalSourceStatus("ready", lookup.type === "zcta" ? "Census ZCTA matched" : "Statistics Canada FSA matched");
+    setPostalSourceStatus("ready", lookup.type === "zcta" ? "ZIP area matched" : "Postal area matched");
     updatePostalMap();
     renderDirectory();
     renderPostalResult();
@@ -1675,7 +1676,7 @@ function renderStartHere() {
   startHereActions.replaceChildren();
   if (!locationSelection) {
     startHere.dataset.state = "prompt";
-    startHereStatus.textContent = "Enter a ZIP code or B.C. postal prefix to build a short, location-specific action stack. The complete directory below still follows the map view.";
+    startHereStatus.textContent = "Enter a ZIP code or B.C. postal prefix to see a short list of useful first steps. The complete directory below still follows the map.";
     const prompt = document.createElement("button");
     prompt.type = "button";
     prompt.className = "start-here-prompt";
@@ -1699,7 +1700,7 @@ function renderStartHere() {
   if (!selected.length) {
     const gap = document.createElement("p");
     gap.className = "start-here-gap";
-    gap.textContent = "Signals has no verified action stack for this location yet. The full official-source directory remains available below.";
+    gap.textContent = "Signals does not yet have a short checklist for this location. The full official-source directory remains available below.";
     startHereActions.append(gap);
     renderPlanProgress([]);
     return;
@@ -1811,14 +1812,14 @@ function renderDirectory() {
     resultList.append(empty);
   }
 
-  const countText = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"}`;
+  const countText = `${visibleResources.length} ${visibleResources.length === 1 ? "source" : "sources"}`;
   resultCount.textContent = countText;
   viewportCount.textContent = locationSelection
     ? `${countText} ${visibleResources.length === 1 ? "matches" : "match"} this location`
-    : `${countText} ${visibleResources.length === 1 ? "applies" : "apply"} to this view`;
+    : `${countText} shown for this map area`;
   resultsContext.textContent = locationSelection
-    ? `Showing resources applicable to ${describeViewport()}. Postal geography locates the search; it does not define service authority.`
-    : `Showing resources applicable to ${describeViewport()}. Optional outlines do not change this list.`;
+    ? `Showing official sources for ${describeViewport()}. The postal match locates the area; responsible agencies may use different boundaries.`
+    : `Showing official sources for ${describeViewport()}. Optional outlines do not change this list.`;
   renderStartHere();
   updateResourcePoints();
   if (locationSelection) renderPostalResult();
@@ -1827,7 +1828,7 @@ function renderDirectory() {
 function renderViewDialog() {
   const viewRecords = document.querySelector("#view-records");
   viewRecords.replaceChildren();
-  document.querySelector("#view-summary").textContent = `${visibleResources.length} ${visibleResources.length === 1 ? "resource" : "resources"} applicable to ${describeViewport()}. Directory last updated ${DIRECTORY_UPDATED_LABEL}. Grouped by authority level and sorted by role, then name.`;
+  document.querySelector("#view-summary").textContent = `${visibleResources.length} ${visibleResources.length === 1 ? "source" : "sources"} for ${describeViewport()}. Directory last updated ${DIRECTORY_UPDATED_LABEL}. Grouped by authority level and sorted by role, then name.`;
 
   groupOrder.forEach((groupName) => {
     const groupResources = visibleResourcesForGroup(groupName);
@@ -1928,7 +1929,7 @@ function renderViewDialog() {
   if (!visibleResources.length) {
     const empty = document.createElement("p");
     empty.className = "view-empty";
-    empty.textContent = "No resources match the current view and filters.";
+    empty.textContent = "No sources match the current map area and filters.";
     viewRecords.append(empty);
   }
 }
@@ -2146,7 +2147,7 @@ function selectResource(id) {
   const exactCoverage = sourceForResource(resource);
   const geometryDescription = exactCoverage
     ? `${familyLabels[exactCoverage.family]} · ${exactCoverage.sourceLabel}`
-    : "No verified perimeter shown";
+    : "No verified service area shown";
   const operational = [
     resource.deliveryChannels?.length ? `<dt>Channels</dt><dd>${escapeHtml(resource.deliveryChannels.join(", "))}</dd>` : "",
     typeof resource.optInRequired === "boolean" ? `<dt>Opt-in</dt><dd>${resource.optInRequired ? "Required" : "Not required for this source"}</dd>` : "",
@@ -2160,9 +2161,9 @@ function selectResource(id) {
   meta.innerHTML = `
     <dt>Publisher</dt><dd>${escapeHtml(resource.organization)}</dd>
     <dt>Authority role</dt><dd>${escapeHtml(resource.authorityRole)}</dd>
-    <dt>Directory scope</dt><dd>${escapeHtml(resource.place)}</dd>
+    <dt>Area served</dt><dd>${escapeHtml(resource.place)}</dd>
     <dt>Applicability</dt><dd>${escapeHtml(resource.coverageNote)}</dd>
-    <dt>Map geometry</dt><dd>${escapeHtml(geometryDescription)}</dd>
+    <dt>Mapped area</dt><dd>${escapeHtml(geometryDescription)}</dd>
     ${operational}
     <dt>Source review</dt><dd>${escapeHtml(resource.sourceRegistry)} · ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}</dd>`;
   const sourceLink = document.querySelector("#card-link");
@@ -2199,7 +2200,7 @@ function selectResource(id) {
 function updateScaleLabel() {
   if (!mapReady) return;
   const zoom = map.getZoom();
-  scaleLabel.textContent = zoom >= 9 ? "Neighborhood context" : zoom >= 7 ? "County and city services" : zoom >= 5.3 ? "State and multi-county services" : "Regional resources";
+  scaleLabel.textContent = zoom >= 9 ? "Neighborhood context" : zoom >= 7 ? "County and city sources" : zoom >= 5.3 ? "State and multi-county sources" : "Regional sources";
 }
 
 function updateResourcePoints() {

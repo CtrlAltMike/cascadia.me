@@ -16,16 +16,23 @@ const stories = [
     summary: "A horsewoman, her son, and her father meet an east wind with different plans."
   },
   {
+    slug: "overnight-lows",
+    source: "overnight-lows-a-cascadia-story.md",
+    region: "Rain shadow",
+    accent: "sun",
+    summary: "A water operator reads an island’s lake, its meters, and the people behind them."
+  },
+  {
     slug: "inventory",
     source: "inventory-a-cascadia-story.md",
-    region: "Subduction country",
+    region: "Earthquake country",
     accent: "camas",
     summary: "An inventory specialist discovers what preparedness can—and cannot—hold."
   },
   {
     slug: "the-list",
     source: "the-list-a-cascadia-story.md",
-    region: "Subduction country",
+    region: "Earthquake country",
     accent: "spruce",
     summary: "A family’s unfinished refrigerator list becomes a map of the street around them."
   },
@@ -42,13 +49,6 @@ const stories = [
     region: "River country",
     accent: "river",
     summary: "A young family learns that the river’s history is a diary, not a promise."
-  },
-  {
-    slug: "overnight-lows",
-    source: "overnight-lows-a-cascadia-story.md",
-    region: "Rain shadow",
-    accent: "sun",
-    summary: "A water operator reads an island’s lake, its meters, and the people behind them."
   }
 ];
 
@@ -190,6 +190,7 @@ function footer() {
             <h4>Explore</h4>
             <ul>
               <li><a href="../atlas.html">Regional Hazard Atlas</a></li>
+              <li><a href="../signals/">Signals</a></li>
               <li><a href="./">Field Stories</a></li>
               <li><a href="../build-your-kit.html">Build Your Kit</a></li>
               <li><a href="../approach.html">The Approach</a></li>
@@ -295,11 +296,11 @@ function renderCollection(parsedStories) {
       <div class="surface-container field-stories-coda-layout">
         <div>
           <p class="surface-eyebrow">When you need facts first</p>
-          <h2 id="coda-title">The practical path stays close.</h2>
+          <h2 id="coda-title">Start with the source for your place.</h2>
         </div>
         <div>
-          <p>If conditions are changing now, begin with current official information. If you are preparing ahead, begin with the guide closest to your place or household.</p>
-          <p><a href="../guides.html">Open the Guides <span aria-hidden="true">→</span></a> <a href="../signals/">Open Signals <span aria-hidden="true">→</span></a></p>
+          <p>If conditions are changing now, follow current official information. Signals can help you find the responsible publisher. If you are preparing ahead, begin with the guide closest to your place or household.</p>
+          <p><a href="../signals/">Open Signals <span aria-hidden="true">→</span></a> <a href="../guides.html">Open the Guides <span aria-hidden="true">→</span></a></p>
         </div>
       </div>
     </aside>

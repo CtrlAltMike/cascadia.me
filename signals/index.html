@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="../css/base.css?v=20260712-phase8">
   <link rel="stylesheet" href="../css/components.css?v=20260715-field-stories">
-  <link rel="stylesheet" href="styles.css?v=20260715-chrome1">
+  <link rel="stylesheet" href="styles.css?v=20260716-flow">
 </head>
 <body class="signals-page">
   <a class="skip-link" href="#explorer">Skip to Signals</a>
@@ -51,7 +51,7 @@
   </header>
 
   <main class="app-shell" id="explorer">
-    <aside class="explorer-panel" aria-labelledby="explorer-title">
+    <section class="explorer-intro" aria-labelledby="explorer-title">
       <div class="explorer-heading">
         <p class="eyebrow">Cascadia Signals / beta</p>
         <h1 id="explorer-title">Who can help, <em>here?</em></h1>
@@ -84,92 +84,7 @@
           </div>
         </div>
       </form>
-
-      <form class="filters" id="filters" aria-label="Filter the Signals directory">
-        <label class="search-label" for="source-search">Find a service, place, or need</label>
-        <div class="search-wrap">
-          <span aria-hidden="true">⌕</span>
-          <input id="source-search" name="search" type="search" placeholder="Try “roads,” “Seattle,” or “support”" autocomplete="off">
-        </div>
-
-        <details class="filter-disclosure" open>
-          <summary>Publisher <span data-publisher-summary>All</span></summary>
-          <div class="check-grid">
-            <label><input type="checkbox" name="publisher" value="federal" checked><span>Federal</span></label>
-            <label><input type="checkbox" name="publisher" value="tribal" checked><span>Tribal nations</span></label>
-            <label><input type="checkbox" name="publisher" value="state" checked><span>State</span></label>
-            <label><input type="checkbox" name="publisher" value="county" checked><span>County / regional</span></label>
-            <label><input type="checkbox" name="publisher" value="local" checked><span>City / community</span></label>
-          </div>
-        </details>
-
-        <details class="filter-disclosure" open>
-          <summary>Need <span data-category-summary>All</span></summary>
-          <div class="topic-grid">
-            <label><input type="checkbox" name="category" value="alerts" checked><span>Alerts</span></label>
-            <label><input type="checkbox" name="category" value="emergency" checked><span>Emergency management</span></label>
-            <label><input type="checkbox" name="category" value="transport" checked><span>Transportation</span></label>
-            <label><input type="checkbox" name="category" value="hazards" checked><span>Weather &amp; hazards</span></label>
-            <label><input type="checkbox" name="category" value="support" checked><span>Health &amp; support</span></label>
-            <label><input type="checkbox" name="category" value="community" checked><span>Community readiness</span></label>
-          </div>
-        </details>
-
-        <details class="filter-disclosure overlay-disclosure">
-          <summary>Show service areas <span id="overlay-summary">None</span></summary>
-          <p class="overlay-note">These outlines help explain which offices may cover a place. They do not show active alerts, and changing them does not change the directory list.</p>
-          <div class="overlay-grid">
-            <label><input type="checkbox" name="overlay" value="state"><span class="overlay-chip overlay-state" aria-hidden="true"></span><span>State / province</span></label>
-            <label><input type="checkbox" name="overlay" value="county"><span class="overlay-chip overlay-county" aria-hidden="true"></span><span>County / regional</span></label>
-            <label><input type="checkbox" name="overlay" value="city"><span class="overlay-chip overlay-city" aria-hidden="true"></span><span>Municipal</span></label>
-            <label><input type="checkbox" name="overlay" value="forecast-us"><span class="overlay-chip overlay-forecast-us" aria-hidden="true"></span><span>NWS forecast office areas — U.S.</span></label>
-            <label><input type="checkbox" name="overlay" value="forecast-ca"><span class="overlay-chip overlay-forecast-ca" aria-hidden="true"></span><span>ECCC public forecast zones — B.C.</span></label>
-            <label><input type="checkbox" name="overlay" value="tribal-reference"><span class="overlay-chip overlay-tribal" aria-hidden="true"></span><span>Tribal reference geography</span></label>
-          </div>
-          <button type="button" class="clear-overlays" id="clear-overlays">Clear overlays</button>
-        </details>
-
-        <div class="filter-actions">
-          <button type="button" class="text-button" id="reset-filters">Reset directory filters</button>
-          <p id="perimeter-status" data-state="checking"><span class="status-light" aria-hidden="true"></span>Checking service areas</p>
-        </div>
-      </form>
-
-      <section class="start-here" id="start-here" data-state="prompt" aria-labelledby="start-here-title">
-        <div class="start-here-heading">
-          <div>
-            <p class="eyebrow">A short checklist for this place</p>
-            <h2 id="start-here-title">Start here</h2>
-          </div>
-          <span id="plan-progress" aria-live="polite">0 steps marked complete in this browser</span>
-        </div>
-        <p class="start-here-status" id="start-here-status">Enter a postal code to see a short list of useful first steps.</p>
-        <div class="start-here-actions" id="start-here-actions"></div>
-        <div class="plan-controls">
-          <button type="button" id="export-plan" disabled>Export my checklist</button>
-          <button type="button" id="clear-plan" disabled>Clear my checklist</button>
-        </div>
-        <p class="plan-privacy">Checkmarks are saved only in this browser. Signals never adds your postal code, map point, or named location to the checklist.</p>
-        <p class="plan-privacy">For household names, routes, care needs, and agreements, use <a href="../build-your-kit.html">Build Your Kit</a>. Cascadia.me does not save the answers entered there.</p>
-        <p class="plan-status" id="plan-status" role="status" aria-live="polite"></p>
-      </section>
-
-      <section class="results" aria-labelledby="results-heading">
-        <div class="results-heading">
-          <div>
-            <h2 id="results-heading">Official sources for this map area</h2>
-            <span id="result-count" aria-live="polite">0 resources</span>
-          </div>
-          <div class="list-actions" aria-label="List actions">
-            <button type="button" id="view-list">View</button>
-            <button type="button" id="print-list">Print</button>
-            <button type="button" id="share-list">Share</button>
-          </div>
-        </div>
-        <p class="results-context" id="results-context">Move or zoom the map to find resources that apply to another place.</p>
-        <div class="result-list" id="result-list"></div>
-      </section>
-    </aside>
+    </section>
 
     <section class="map-stage" aria-label="Interactive map for finding applicable emergency resources">
       <div class="map-toolbar">
@@ -244,6 +159,93 @@
         <span>Boundaries help locate sources; the applicability note identifies city exceptions and regional partnerships. First Nation authority is never inferred from a map boundary.</span>
       </div>
     </section>
+
+    <aside class="explorer-panel" aria-label="First steps and official sources">
+      <section class="start-here" id="start-here" data-state="prompt" aria-labelledby="start-here-title">
+        <div class="start-here-heading">
+          <div>
+            <p class="eyebrow">A short checklist for this place</p>
+            <h2 id="start-here-title">Start here</h2>
+          </div>
+          <span id="plan-progress" aria-live="polite">0 steps marked complete in this browser</span>
+        </div>
+        <p class="start-here-status" id="start-here-status">Enter a postal code to see a short list of useful first steps.</p>
+        <div class="start-here-actions" id="start-here-actions"></div>
+        <div class="plan-controls">
+          <button type="button" id="export-plan" disabled>Export my checklist</button>
+          <button type="button" id="clear-plan" disabled>Clear my checklist</button>
+        </div>
+        <p class="plan-privacy">Checkmarks are saved only in this browser. Signals never adds your postal code, map point, or named location to the checklist.</p>
+        <p class="plan-privacy">For household names, routes, care needs, and agreements, use <a href="../build-your-kit.html">Build Your Kit</a>. Cascadia.me does not save the answers entered there.</p>
+        <p class="plan-status" id="plan-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <form class="filters" id="filters" aria-label="Filter the Signals directory">
+        <label class="search-label" for="source-search">Find a service, place, or need</label>
+        <div class="search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="source-search" name="search" type="search" placeholder="Try “roads,” “Seattle,” or “support”" autocomplete="off">
+        </div>
+
+        <details class="filter-disclosure" open>
+          <summary>Publisher <span data-publisher-summary>All</span></summary>
+          <div class="check-grid">
+            <label><input type="checkbox" name="publisher" value="federal" checked><span>Federal</span></label>
+            <label><input type="checkbox" name="publisher" value="tribal" checked><span>Tribal nations</span></label>
+            <label><input type="checkbox" name="publisher" value="state" checked><span>State</span></label>
+            <label><input type="checkbox" name="publisher" value="county" checked><span>County / regional</span></label>
+            <label><input type="checkbox" name="publisher" value="local" checked><span>City / community</span></label>
+          </div>
+        </details>
+
+        <details class="filter-disclosure" open>
+          <summary>Need <span data-category-summary>All</span></summary>
+          <div class="topic-grid">
+            <label><input type="checkbox" name="category" value="alerts" checked><span>Alerts</span></label>
+            <label><input type="checkbox" name="category" value="emergency" checked><span>Emergency management</span></label>
+            <label><input type="checkbox" name="category" value="transport" checked><span>Transportation</span></label>
+            <label><input type="checkbox" name="category" value="hazards" checked><span>Weather &amp; hazards</span></label>
+            <label><input type="checkbox" name="category" value="support" checked><span>Health &amp; support</span></label>
+            <label><input type="checkbox" name="category" value="community" checked><span>Community readiness</span></label>
+          </div>
+        </details>
+
+        <details class="filter-disclosure overlay-disclosure">
+          <summary>Show service areas <span id="overlay-summary">None</span></summary>
+          <p class="overlay-note">These outlines help explain which offices may cover a place. They do not show active alerts, and changing them does not change the directory list.</p>
+          <div class="overlay-grid">
+            <label><input type="checkbox" name="overlay" value="state"><span class="overlay-chip overlay-state" aria-hidden="true"></span><span>State / province</span></label>
+            <label><input type="checkbox" name="overlay" value="county"><span class="overlay-chip overlay-county" aria-hidden="true"></span><span>County / regional</span></label>
+            <label><input type="checkbox" name="overlay" value="city"><span class="overlay-chip overlay-city" aria-hidden="true"></span><span>Municipal</span></label>
+            <label><input type="checkbox" name="overlay" value="forecast-us"><span class="overlay-chip overlay-forecast-us" aria-hidden="true"></span><span>NWS forecast office areas — U.S.</span></label>
+            <label><input type="checkbox" name="overlay" value="forecast-ca"><span class="overlay-chip overlay-forecast-ca" aria-hidden="true"></span><span>ECCC public forecast zones — B.C.</span></label>
+            <label><input type="checkbox" name="overlay" value="tribal-reference"><span class="overlay-chip overlay-tribal" aria-hidden="true"></span><span>Tribal reference geography</span></label>
+          </div>
+          <button type="button" class="clear-overlays" id="clear-overlays">Clear overlays</button>
+        </details>
+
+        <div class="filter-actions">
+          <button type="button" class="text-button" id="reset-filters">Reset directory filters</button>
+          <p id="perimeter-status" data-state="checking"><span class="status-light" aria-hidden="true"></span>Checking service areas</p>
+        </div>
+      </form>
+
+      <section class="results" aria-labelledby="results-heading">
+        <div class="results-heading">
+          <div>
+            <h2 id="results-heading">Official sources for this map area</h2>
+            <span id="result-count" aria-live="polite">0 resources</span>
+          </div>
+          <div class="list-actions" aria-label="List actions">
+            <button type="button" id="view-list">View</button>
+            <button type="button" id="print-list">Print</button>
+            <button type="button" id="share-list">Share</button>
+          </div>
+        </div>
+        <p class="results-context" id="results-context">Move or zoom the map to find resources that apply to another place.</p>
+        <div class="result-list" id="result-list"></div>
+      </section>
+    </aside>
   </main>
 
   <footer class="site-footer">

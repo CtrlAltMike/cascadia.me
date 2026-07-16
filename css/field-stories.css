@@ -55,6 +55,11 @@
   --story-accent-soft: rgba(138, 76, 55, 0.15);
 }
 
+.field-story-volcano {
+  --story-accent: #4d5a58;
+  --story-accent-soft: rgba(77, 90, 88, 0.17);
+}
+
 /* Library */
 
 .field-stories-hero {
@@ -215,6 +220,7 @@
 .field-story-entry-spruce { --entry-color: var(--lw-spruce-700); }
 .field-story-entry-storm { --entry-color: #416778; }
 .field-story-entry-cedar { --entry-color: #8a4c37; }
+.field-story-entry-volcano { --entry-color: #4d5a58; }
 
 .field-story-entry-mark {
   align-self: stretch;

@@ -5,7 +5,8 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = path.join(root, "public", "stories");
 const outputDirectory = path.join(root, "stories");
-const buildDate = "2026-07-15";
+const buildDate = "2026-07-16";
+const originalPublicationDate = "2026-07-15";
 
 const stories = [
   {
@@ -63,6 +64,14 @@ const stories = [
     region: "Outer coast",
     accent: "cedar",
     summary: "A coastal emergency coordinator inherits an old warning—and the responsibility to carry it forward."
+  },
+  {
+    slug: "eruption",
+    source: "eruption-a-cascadia-story.md",
+    region: "Volcano country",
+    accent: "volcano",
+    summary: "Three friends enter a watched landscape with maps, math, and one dangerous assumption.",
+    publicationDate: "2026-07-16"
   }
 ];
 
@@ -156,7 +165,7 @@ function head({ title, description, canonical, type = "website", schema }) {
   <link rel="stylesheet" href="../css/base.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
-  <link rel="stylesheet" href="../css/field-stories.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories6">
   <script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
 
@@ -341,7 +350,7 @@ function storySchema(story) {
     publisher: { "@type": "Organization", name: "Cascadia.me", url: "https://cascadia.me/" },
     wordCount: story.wordCount,
     timeRequired: `PT${story.readingMinutes}M`,
-    datePublished: buildDate,
+    datePublished: story.publicationDate || originalPublicationDate,
     dateModified: buildDate
   };
 }

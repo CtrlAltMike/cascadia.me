@@ -15,14 +15,19 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Cascadia Signals">
   <meta name="twitter:description" content="Find official alert systems and emergency resources for the place in view.">
+  <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&amp;display=swap">
+  <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="../favicon.ico?v=3">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="styles.css?v=20260715-orientation1">
+  <link rel="stylesheet" href="../css/base.css?v=20260712-phase8">
+  <link rel="stylesheet" href="../css/components.css?v=20260715-field-stories">
+  <link rel="stylesheet" href="styles.css?v=20260715-chrome1">
 </head>
-<body>
+<body class="signals-page">
   <a class="skip-link" href="#explorer">Skip to Signals</a>
 
   <header class="site-header">
@@ -241,6 +246,42 @@
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Cascadia<span>.me</span></h3>
+          <p>An illustrated field guide for people who live here.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Guides</h4>
+            <ul>
+              <li><a href="../earthquake.html">Earthquake</a></li>
+              <li><a href="../wildfire.html">Wildfire</a></li>
+              <li><a href="../flooding.html">Flooding</a></li>
+              <li><a href="../winter-storm.html">Winter Storm</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="../atlas.html">Regional Hazard Atlas</a></li>
+              <li><a href="./">Signals</a></li>
+              <li><a href="../stories/">Field Stories</a></li>
+              <li><a href="../build-your-kit.html">Build Your Kit</a></li>
+              <li><a href="../approach.html">The Approach</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cascadia.me</p>
+        <p class="seasonal-footer"></p>
+      </div>
+    </div>
+  </footer>
+
   <section class="print-sheet" id="print-sheet" aria-hidden="true">
     <header>
       <p>Cascadia.me</p>
@@ -379,11 +420,15 @@
     </form>
   </dialog>
 
+  <script src="../js/share.js" defer></script>
   <script src="../js/nav.js?v=20260712-phase8" defer></script>
+  <script src="../js/animations.js?v=20260712-phase8" defer></script>
+  <script src="../js/feedback.js?v=20260712-phase8" defer></script>
   <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
   <script src="authority-data.js?v=20260714-actionability" defer></script>
   <script src="bc-province-boundary.js?v=20260714" defer></script>
   <script src="bc-forecast-zones.js?v=20260714" defer></script>
   <script src="app.js?v=20260715-orientation1" defer></script>
+  <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

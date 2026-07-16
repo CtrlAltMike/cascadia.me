@@ -1939,3 +1939,14 @@
     border-top: 0;
   }
 }
+.nwp-continuation {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--lw-muted);
+  font-size: 0.76rem;
+}
+
+.nwp-continuation a {
+  min-height: 0;
+  font-weight: 650;
+}

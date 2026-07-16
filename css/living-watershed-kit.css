@@ -948,6 +948,70 @@
   resize: vertical;
 }
 
+/* Optional private continuity layer */
+
+.lw-workbook-plan-bridge {
+  color: var(--lw-cream-50);
+  background: #163f35;
+}
+
+.lw-workbook-plan-bridge-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.lw-workbook-plan-bridge h2 {
+  max-width: 15ch;
+  margin: 0.65rem 0 0;
+  color: var(--lw-cream-50);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.7rem);
+  font-weight: 500;
+  line-height: 1.02;
+}
+
+.lw-workbook-plan-bridge .lw-workbook-kicker,
+.lw-workbook-plan-bridge .lw-workbook-prose,
+.lw-workbook-plan-bridge a {
+  color: var(--lw-cream-50);
+}
+
+.lw-workbook-plan-bridge-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.lw-workbook-plan-bridge-actions a {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.lw-workbook-plan-bridge-primary {
+  display: inline-flex;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+}
+
+.lw-workbook-plan-bridge-primary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lw-workbook-plan-bridge-note {
+  max-width: 62ch;
+  margin-top: 1.25rem !important;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+}
+
 /* Source apparatus */
 
 .lw-workbook-sources {
@@ -1041,6 +1105,7 @@
   .lw-workbook-opening-layout,
   .lw-workbook-rehearsal-layout,
   .lw-workbook-hazards-layout,
+  .lw-workbook-plan-bridge-layout,
   .lw-workbook-sources-layout {
     grid-template-columns: 1fr;
   }
@@ -1278,6 +1343,7 @@
   .lw-workbook-rehearsal,
   .lw-workbook-hazards,
   .lw-workbook-conditional,
+  .lw-workbook-plan-bridge,
   .lw-workbook-sources,
   .lw-workbook-sheets-intro {
     display: none !important;

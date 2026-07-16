@@ -473,67 +473,8 @@
   margin-top: clamp(3rem, 6vw, 5rem);
 }
 
-.chapter-threads {
-  width: min(100%, 58rem);
-  margin: clamp(2.75rem, 5vw, 4.5rem) auto 0;
-  border-top: 1px solid var(--lw-line);
-}
-
-.chapter-thread {
-  display: grid;
-  grid-template-columns: minmax(9rem, 0.34fr) minmax(0, 1fr);
-  gap: 1.25rem 3rem;
-  padding-block: 1.5rem;
-  border-bottom: 1px solid var(--lw-line);
-}
-
-.chapter-thread dt {
-  color: var(--chapter-accent);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.chapter-thread dd {
-  margin: 0;
-}
-
-.chapter-thread h3 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.45rem, 2.3vw, 2rem);
-  font-weight: 500;
-  line-height: 1.16;
-}
-
-.chapter-thread p {
-  margin: 0.55rem 0 0;
-  color: var(--lw-muted);
-  font-size: 0.88rem;
-  line-height: 1.62;
-}
-
 .chapter-decisions {
   background: linear-gradient(180deg, var(--lw-cream-50), var(--chapter-soft));
-}
-
-.chapter-questions {
-  width: min(100%, 58rem);
-  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
-  padding: 0;
-  border-top: 1px solid rgba(6, 59, 92, 0.2);
-  list-style: none;
-}
-
-.chapter-questions li {
-  padding-block: 1.15rem;
-  border-bottom: 1px solid rgba(6, 59, 92, 0.16);
-  color: var(--chapter-deep);
-  font-family: var(--font-display);
-  font-size: clamp(1.12rem, 1.8vw, 1.35rem);
-  line-height: 1.45;
 }
 
 .chapter-continuation {
@@ -899,10 +840,6 @@
     grid-template-columns: 1fr;
   }
 
-  .chapter-thread {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
 }
 
 @media (max-width: 620px) {
@@ -1071,8 +1008,7 @@
   }
 
   .chapter-source-group,
-  .chapter-field-note,
-  .chapter-thread {
+  .chapter-field-note {
     break-inside: avoid;
   }
 

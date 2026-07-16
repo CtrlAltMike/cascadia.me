@@ -415,54 +415,6 @@
     var(--lw-cream-50);
 }
 
-.eq-questions {
-  margin-top: var(--eq-flow-space);
-  padding-block: 2rem;
-  border-top: 1px solid var(--lw-line);
-  border-bottom: 1px solid var(--lw-line);
-}
-
-.eq-questions h3 {
-  margin: 0;
-  color: var(--lw-ocean-900);
-  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
-  font-weight: 600;
-}
-
-.eq-questions ul {
-  margin: 1.4rem 0 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: eq-questions;
-}
-
-.eq-questions li {
-  position: relative;
-  min-height: 3rem;
-  padding: 0.85rem 0 0.85rem 3.5rem;
-  color: var(--lw-text);
-  font-family: var(--font-display);
-  font-size: 1.12rem;
-  line-height: 1.55;
-  counter-increment: eq-questions;
-}
-
-.eq-questions li + li {
-  border-top: 1px solid rgba(216, 207, 188, 0.72);
-}
-
-.eq-questions li::before {
-  content: counter(eq-questions, decimal-leading-zero);
-  position: absolute;
-  top: 0.95rem;
-  left: 0;
-  color: var(--lw-camas-600);
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
 .eq-conclusion {
   border-top: 1px solid var(--lw-line);
   background:

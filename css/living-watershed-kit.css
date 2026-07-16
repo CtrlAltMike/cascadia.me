@@ -466,19 +466,6 @@
   line-height: 0.98;
 }
 
-.lw-workbook-prompt {
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--workbook-line);
-  color: var(--lw-muted);
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  line-height: 1.65;
-}
-
-.lw-workbook-prompt strong {
-  color: var(--lw-ocean-900);
-}
-
 /* Rehearsal and duration */
 
 .lw-workbook-rehearsal {
@@ -665,21 +652,6 @@
 
 .lw-workbook-conditional-grid li + li {
   margin-top: 0.55rem;
-}
-
-.lw-workbook-conditional-prompt {
-  max-width: 72rem;
-  margin: 2rem 0 0;
-  padding: 1.25rem 1.5rem;
-  border-left: 4px solid #985139;
-  color: var(--lw-muted);
-  background: rgba(251, 247, 238, 0.72);
-  font-size: 0.84rem;
-  line-height: 1.62;
-}
-
-.lw-workbook-conditional-prompt strong {
-  color: var(--lw-ocean-900);
 }
 
 /* Working pages */

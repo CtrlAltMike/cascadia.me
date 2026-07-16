@@ -64,33 +64,69 @@
 
 .field-stories-hero {
   position: relative;
-  min-height: min(52rem, 88vh);
+  min-height: min(58rem, 96svh);
   display: grid;
   align-items: center;
-  padding: calc(var(--nav-height) + clamp(4rem, 9vw, 8rem)) 0 clamp(5rem, 9vw, 8rem);
+  padding: calc(var(--nav-height) + clamp(2.5rem, 5vw, 5rem)) 0 clamp(2.75rem, 5vw, 4.5rem);
   overflow: hidden;
   border-bottom: 1px solid rgba(6, 59, 92, 0.12);
-  background:
-    radial-gradient(circle at 82% 23%, rgba(47, 170, 179, 0.16), transparent 26rem),
-    radial-gradient(circle at 9% 84%, rgba(232, 185, 52, 0.15), transparent 24rem),
-    linear-gradient(145deg, #f8f0df 0%, var(--lw-cream-50) 44%, #edf3ed 100%);
+  background: #f8f0df;
+  isolation: isolate;
 }
 
 .field-stories-hero::before {
   content: "";
   position: absolute;
+  z-index: 2;
   inset: var(--nav-height) auto 0 11vw;
   width: 1px;
   background: linear-gradient(180deg, transparent, rgba(6, 59, 92, 0.24) 14%, rgba(6, 59, 92, 0.24) 86%, transparent);
 }
 
+.field-stories-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(248, 240, 223, 0.97) 0%, rgba(248, 240, 223, 0.9) 31%, rgba(248, 240, 223, 0.5) 47%, rgba(248, 240, 223, 0.08) 65%, transparent 76%);
+}
+
+.field-stories-hero-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.field-stories-hero-art > picture,
+.field-stories-hero-art > noscript,
+.field-stories-hero-art > noscript > picture,
+.field-stories-hero-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.field-stories-hero-art img {
+  object-fit: cover;
+  object-position: center;
+}
+
 .field-stories-hero-layout {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
-  grid-template-columns: minmax(18rem, 0.53fr) minmax(20rem, 0.47fr);
-  gap: clamp(4rem, 10vw, 10rem);
-  align-items: end;
+  grid-template-columns: minmax(20rem, 0.45fr) minmax(0, 0.55fr);
+  grid-template-rows: auto auto;
+  gap: clamp(1.75rem, 3.5vw, 3rem) clamp(3rem, 8vw, 8rem);
+  align-content: center;
+}
+
+.field-stories-hero-title,
+.field-stories-hero-copy {
+  grid-column: 1;
 }
 
 .field-stories-hero-title .surface-eyebrow {
@@ -107,7 +143,7 @@
 .field-stories-hero-title h1 {
   margin: 0;
   color: var(--lw-ocean-900);
-  font-size: clamp(5.5rem, 12vw, 11rem);
+  font-size: clamp(5.5rem, 9.5vw, 9rem);
   font-weight: 500;
   letter-spacing: -0.07em;
   line-height: 0.7;
@@ -122,13 +158,13 @@
 
 .field-stories-hero-copy {
   position: relative;
-  max-width: 34rem;
+  max-width: 35rem;
   padding-left: clamp(1.25rem, 3vw, 2.5rem);
   border-left: 1px solid rgba(6, 59, 92, 0.24);
   color: var(--lw-muted);
   font-family: var(--font-display);
-  font-size: clamp(1.08rem, 1.45vw, 1.28rem);
-  line-height: 1.72;
+  font-size: clamp(1rem, 1.15vw, 1.14rem);
+  line-height: 1.58;
 }
 
 .field-stories-hero-copy p {
@@ -141,19 +177,12 @@
 
 .field-stories-hero-copy .field-stories-deck {
   color: var(--lw-ocean-900);
-  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-size: clamp(1.55rem, 2.3vw, 2.15rem);
   line-height: 1.1;
 }
 
 .field-stories-contour {
-  position: absolute;
-  right: -9rem;
-  top: 5rem;
-  width: min(41vw, 36rem);
-  aspect-ratio: 1;
-  pointer-events: none;
-  opacity: 0.34;
-  transform: rotate(-11deg);
+  display: none;
 }
 
 .field-stories-contour span {
@@ -953,6 +982,16 @@
 }
 
 @media (max-width: 920px) {
+  .field-stories-hero {
+    min-height: auto;
+    align-items: initial;
+    padding: calc(var(--nav-height) + clamp(3rem, 7vw, 5rem)) 0 0;
+  }
+
+  .field-stories-hero::after {
+    display: none;
+  }
+
   .field-stories-hero-layout,
   .field-stories-coda-layout,
   .field-story-masthead-layout,
@@ -961,12 +1000,22 @@
   }
 
   .field-stories-hero-layout {
+    grid-column: 1;
+    grid-row: 1;
     align-items: start;
-    gap: 4rem;
+    gap: 3rem;
   }
 
   .field-stories-hero-copy {
     max-width: 42rem;
+  }
+
+  .field-stories-hero-art {
+    position: relative;
+    grid-column: 1;
+    grid-row: 2;
+    aspect-ratio: 2 / 1;
+    margin-top: clamp(3rem, 7vw, 5rem);
   }
 
   .field-story-entry {
@@ -1016,12 +1065,17 @@
 }
 
 @media (max-width: 720px) {
-  .field-stories-hero {
-    min-height: auto;
-  }
-
   .field-stories-hero::before {
     left: 1.4rem;
+  }
+
+  .field-stories-hero-art {
+    aspect-ratio: 4 / 3;
+    margin-top: 2.75rem;
+  }
+
+  .field-stories-hero-art img {
+    object-position: 70% center;
   }
 
   .field-stories-hero-title h1 {

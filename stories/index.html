@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="../css/base.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
-  <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories6">
+  <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://cascadia.me/stories/#webpage","url":"https://cascadia.me/stories/","name":"Field Stories","description":"Original fiction about preparedness, crisis, care, and community across the Cascadia bioregion.","inLanguage":"en-US","dateModified":"2026-07-16","author":{"@type":"Person","name":"Michael Hendrick"},"hasPart":[{"@type":"ShortStory","name":"Level Three","url":"https://cascadia.me/stories/level-three.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Overnight Lows","url":"https://cascadia.me/stories/overnight-lows.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Inventory","url":"https://cascadia.me/stories/inventory.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"The List","url":"https://cascadia.me/stories/the-list.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"The Rounds","url":"https://cascadia.me/stories/the-rounds.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Crest","url":"https://cascadia.me/stories/crest.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Chafe Gear","url":"https://cascadia.me/stories/chafe-gear.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Natural Warning","url":"https://cascadia.me/stories/natural-warning.html","genre":"Preparedness fiction"},{"@type":"ShortStory","name":"Eruption","url":"https://cascadia.me/stories/eruption.html","genre":"Preparedness fiction"}]}</script>
 </head>
 <body class="lw-surface-page field-stories-page field-stories-library">
@@ -66,7 +66,60 @@
           <p>Every story here is fiction. The people, places, and events are invented or composed; factual sources appear after the final page.</p>
         </div>
       </div>
-      <div class="field-stories-contour" aria-hidden="true"><span></span><span></span><span></span></div>
+      <figure class="field-stories-hero-art" id="field-stories-hero-art">
+        <script>
+          (() => {
+            const variants = [
+              {
+                id: "table",
+                base: "../assets/living-watershed/stories/field-stories-table",
+                alt: "An open book and two mugs beside a lamp, overlooking a braided river, forest, coast, and mountains at blue hour."
+              },
+              {
+                id: "passing",
+                base: "../assets/living-watershed/stories/field-stories-passing",
+                alt: "Three generations gathered around an open book at a lamplit table overlooking a Cascadian river and mountains."
+              },
+              {
+                id: "pages",
+                base: "../assets/living-watershed/stories/field-stories-pages",
+                alt: "An open book becoming a watercolor landscape of braided rivers, a neighborhood, evergreen forest, coast, and mountains."
+              }
+            ];
+            let selectedIndex = Math.floor(Math.random() * variants.length);
+            if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+              const randomValue = new Uint32Array(1);
+              window.crypto.getRandomValues(randomValue);
+              selectedIndex = randomValue[0] % variants.length;
+            }
+            const selected = variants[selectedIndex];
+            const host = document.getElementById("field-stories-hero-art");
+            const picture = document.createElement("picture");
+            const webp = document.createElement("source");
+            const image = document.createElement("img");
+            webp.type = "image/webp";
+            webp.srcset = selected.base + "-960.webp 960w, " + selected.base + ".webp 1774w";
+            webp.sizes = "100vw";
+            image.srcset = selected.base + "-960.jpg 960w, " + selected.base + ".jpg 1774w";
+            image.sizes = "100vw";
+            image.src = selected.base + ".jpg";
+            image.width = 1774;
+            image.height = 887;
+            image.alt = selected.alt;
+            image.decoding = "async";
+            image.fetchPriority = "high";
+            picture.append(webp, image);
+            host.dataset.hero = selected.id;
+            host.prepend(picture);
+          })();
+        </script>
+        <noscript>
+          <picture>
+            <source srcset="../assets/living-watershed/stories/field-stories-table-960.webp 960w, ../assets/living-watershed/stories/field-stories-table.webp 1774w" sizes="100vw" type="image/webp">
+            <img src="../assets/living-watershed/stories/field-stories-table.jpg" srcset="../assets/living-watershed/stories/field-stories-table-960.jpg 960w, ../assets/living-watershed/stories/field-stories-table.jpg 1774w" sizes="100vw" width="1774" height="887" alt="An open book and two mugs beside a lamp, overlooking a braided river, forest, coast, and mountains at blue hour.">
+          </picture>
+        </noscript>
+      </figure>
     </header>
 
     <section class="field-stories-shelf" aria-labelledby="shelf-title">

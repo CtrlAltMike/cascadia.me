@@ -99,6 +99,7 @@
 .guidebook-entry-wildfire { --chapter-color: var(--lw-coral-600); }
 .guidebook-entry-flooding { --chapter-color: var(--lw-ocean-700); }
 .guidebook-entry-winter { --chapter-color: var(--lw-glacial-text); }
+.guidebook-entry-volcano { --chapter-color: #985139; }
 
 .guidebook-entry-heading {
   position: relative;

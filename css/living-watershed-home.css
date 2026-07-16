@@ -429,6 +429,10 @@
   color: #8a6200;
 }
 
+.home-chapter-volcano .home-chapter-number {
+  color: #985139;
+}
+
 .home-chapter-heading h3 {
   margin: 0;
   font-size: clamp(2.8rem, 4.5vw, 4.65rem);

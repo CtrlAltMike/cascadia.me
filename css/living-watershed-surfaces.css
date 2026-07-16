@@ -371,6 +371,7 @@
 .guide-route-wildfire { --route-color: var(--lw-coral-600); }
 .guide-route-flooding { --route-color: var(--lw-ocean-700); }
 .guide-route-winter { --route-color: var(--lw-glacial-text); }
+.guide-route-volcano { --route-color: #985139; }
 
 .guide-route-number {
   color: var(--route-color);

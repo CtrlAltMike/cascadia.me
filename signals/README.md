@@ -20,7 +20,7 @@ Signals is a permanent Cascadia.me beta surface. It is linked from the primary n
 
 ## Authority registry
 
-`authority-data.js` is the inspectable local registry for the expanded alert layer. As reviewed on 2026-07-14, it contains:
+`authority-data.js` is the inspectable local registry for the expanded alert layer. As reviewed on 2026-07-15, it contains:
 
 - all 39 Washington county alert sources listed by Washington Emergency Management Division;
 - all 36 Oregon county enrollment routes listed by OR-Alert;
@@ -30,7 +30,9 @@ Signals is a permanent Cascadia.me beta surface. It is linked from the primary n
 
 Every expanded record identifies an authority role, source registry or direct source, review date, and a jurisdiction coverage key. Alertable, Everbridge, Voyent Alert!, CodeRED, and similar products are treated as delivery channels—not as the public authority.
 
-Every one of the original 142 records, plus DriveBC and 211 British Columbia added during actionability QA, has a required `primaryAction` with an accepted action type, verb-led label, direct HTTPS destination, and deterministic priority. The general official-information URL remains separate when it differs from the action destination. Optional operational fields—such as confirmed delivery channels, opt-in status, phone contact, languages, accessibility information, or offline fallback—are shown only when sourced; missing values are not inferred. The current registry has verified delivery-channel metadata on 141 of 144 records, opt-in status on 128, cost information on 56, phone contacts on 8, offline fallbacks on 42, language information on 2, and accessibility information on 1. These counts describe documented fields, not universal service availability.
+Every one of the 147 current records has a required `primaryAction` with an accepted action type, verb-led label, direct HTTPS destination, and deterministic priority. The general official-information URL remains separate when it differs from the action destination. Optional operational fields—such as confirmed delivery channels, opt-in status, phone contact, languages, accessibility information, or offline fallback—are shown only when sourced; missing values are not inferred. The current registry has verified delivery-channel metadata on 144 of 147 records, opt-in status on 131, cost information on 56, phone contacts on 8, offline fallbacks on 42, language information on 2, and accessibility information on 1. These counts describe documented fields, not universal service availability.
+
+Volcano coverage now pairs the U.S. Cascades Volcano Observatory with the California Volcano Observatory, Natural Resources Canada’s western-volcano science, and PreparedBC’s provincial volcanic activity and ashfall guidance. Each record keeps scientific status, preparedness guidance, and local protective authority distinct.
 
 The B.C. records follow the province's documented division of responsibility: a local government or First Nation is the authorized local alerting authority and normally requests a community BC Emergency Alert; provincial emergency-management staff transmit it. EmergencyInfoBC amplifies verified notices. Environment Canada and wildfire agencies publish hazard/incident information but do not become the default local evacuation authority.
 

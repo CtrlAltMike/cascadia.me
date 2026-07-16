@@ -59,6 +59,24 @@
   };
   const FIRE_BASE_YEAR = 2000;
   const FIRE_BASE_ACRES = 10000;
+  const VOLCANO_REFERENCES = [
+    { id: 'meager', name: 'Mount Meager volcanic complex', jurisdiction: 'British Columbia', coordinates: [-123.50, 50.63], mapUrl: 'https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano', sourceUrl: 'https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php' },
+    { id: 'cayley', name: 'Mount Cayley volcanic field', jurisdiction: 'British Columbia', coordinates: [-123.29, 50.12], mapUrl: 'https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano', sourceUrl: 'https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php' },
+    { id: 'garibaldi', name: 'Mount Garibaldi', jurisdiction: 'British Columbia', coordinates: [-123.00, 49.85], mapUrl: 'https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano', sourceUrl: 'https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php' },
+    { id: 'baker', name: 'Mount Baker', jurisdiction: 'Washington', coordinates: [-121.81, 48.78], mapUrl: 'https://dnr.wa.gov/washington-geological-survey/geologic-hazards-and-environment/volcanoes-and-lahars', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-baker' },
+    { id: 'glacier-peak', name: 'Glacier Peak', jurisdiction: 'Washington', coordinates: [-121.11, 48.11], mapUrl: 'https://dnr.wa.gov/washington-geological-survey/geologic-hazards-and-environment/volcanoes-and-lahars', sourceUrl: 'https://www.usgs.gov/volcanoes/glacier-peak' },
+    { id: 'rainier', name: 'Mount Rainier', jurisdiction: 'Washington', coordinates: [-121.76, 46.85], mapUrl: 'https://dnr.wa.gov/washington-geological-survey/geologic-hazards-and-environment/volcanoes-and-lahars', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-rainier' },
+    { id: 'st-helens', name: 'Mount St. Helens', jurisdiction: 'Washington', coordinates: [-122.19, 46.19], mapUrl: 'https://dnr.wa.gov/washington-geological-survey/geologic-hazards-and-environment/volcanoes-and-lahars', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-st-helens' },
+    { id: 'adams', name: 'Mount Adams', jurisdiction: 'Washington', coordinates: [-121.49, 46.20], mapUrl: 'https://dnr.wa.gov/washington-geological-survey/geologic-hazards-and-environment/volcanoes-and-lahars', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-adams' },
+    { id: 'hood', name: 'Mount Hood', jurisdiction: 'Oregon', coordinates: [-121.70, 45.37], mapUrl: 'https://www.oregon.gov/dogami/hazvu/pages/index.aspx', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-hood' },
+    { id: 'jefferson', name: 'Mount Jefferson', jurisdiction: 'Oregon', coordinates: [-121.80, 44.67], mapUrl: 'https://www.oregon.gov/dogami/hazvu/pages/index.aspx', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-jefferson' },
+    { id: 'three-sisters', name: 'Three Sisters', jurisdiction: 'Oregon', coordinates: [-121.77, 44.10], mapUrl: 'https://www.oregon.gov/dogami/hazvu/pages/index.aspx', sourceUrl: 'https://www.usgs.gov/volcanoes/three-sisters' },
+    { id: 'newberry', name: 'Newberry Volcano', jurisdiction: 'Oregon', coordinates: [-121.23, 43.72], mapUrl: 'https://www.oregon.gov/dogami/hazvu/pages/index.aspx', sourceUrl: 'https://www.usgs.gov/volcanoes/newberry' },
+    { id: 'crater-lake', name: 'Crater Lake / Mount Mazama', jurisdiction: 'Oregon', coordinates: [-122.11, 42.94], mapUrl: 'https://www.oregon.gov/dogami/hazvu/pages/index.aspx', sourceUrl: 'https://www.usgs.gov/volcanoes/crater-lake' },
+    { id: 'medicine-lake', name: 'Medicine Lake Volcano', jurisdiction: 'California', coordinates: [-121.55, 41.61], mapUrl: 'https://www.usgs.gov/data/california-volcano-locations-threat-rank-and-hazard-zones', sourceUrl: 'https://www.usgs.gov/volcanoes/medicine-lake' },
+    { id: 'shasta', name: 'Mount Shasta', jurisdiction: 'California', coordinates: [-122.19, 41.41], mapUrl: 'https://www.usgs.gov/data/california-volcano-locations-threat-rank-and-hazard-zones', sourceUrl: 'https://www.usgs.gov/volcanoes/mount-shasta' },
+    { id: 'lassen', name: 'Lassen volcanic center', jurisdiction: 'California', coordinates: [-121.51, 40.49], mapUrl: 'https://www.usgs.gov/data/california-volcano-locations-threat-rank-and-hazard-zones', sourceUrl: 'https://www.usgs.gov/volcanoes/lassen-volcanic-center' },
+  ];
   const WIND_SPEED_COLOR = [
     'step', ['to-number', ['coalesce', ['get', 'speedKmh'], 0]],
     '#081d78',
@@ -201,7 +219,7 @@
     const familyLayers = {
       current: ['live', 'wind'],
       forecast: ['forecast-wind'],
-      planning: ['earthquakes', 'fires', 'floods'],
+      planning: ['earthquakes', 'fires', 'floods', 'volcanoes'],
     };
 
     toggles.forEach((input) => {
@@ -296,6 +314,7 @@
       'atlas-fire-fill',
       'atlas-flood-fill',
       'atlas-flood-corridor-line',
+      'atlas-volcano-points',
     ].filter((id) => map.getLayer(id));
   }
 
@@ -1029,6 +1048,7 @@
       earthquakes: ['atlas-quake-rings', 'atlas-quake-points'],
       fires: ['atlas-fire-fill', 'atlas-fire-line'],
       floods: ['atlas-flood-corridor-glow', 'atlas-flood-corridor-line', 'atlas-flood-fill', 'atlas-flood-line-halo', 'atlas-flood-line'],
+      volcanoes: ['atlas-volcano-halo', 'atlas-volcano-points'],
     }[layer] || [];
 
     ids.forEach((id) => {
@@ -1047,6 +1067,7 @@
     if (layer === 'earthquakes') return ensureEarthquakes();
     if (layer === 'fires') return ensureFires();
     if (layer === 'floods') return ensureFloods();
+    if (layer === 'volcanoes') return ensureVolcanoes();
 
     return Promise.resolve();
   }
@@ -1066,6 +1087,7 @@
         earthquakes: 'Earthquakes',
         fires: 'Historical wildfires',
         floods: 'Flood zones',
+        volcanoes: 'Volcano references',
       };
       setStatus(layer, `${labels[layer] || 'Layer'} could not load.`, 'error');
       setLayerVisibility(layer, false);
@@ -1649,6 +1671,60 @@
     setStatus('earthquakes', `Earthquakes: ${data.features.length} USGS ${filter.label}.`, 'ready');
   }
 
+  async function ensureVolcanoes() {
+    if (loadedLayers.has('volcanoes')) return;
+
+    setStatus('volcanoes', 'Loading regional volcano reference locations.', 'loading');
+    const data = {
+      type: 'FeatureCollection',
+      features: VOLCANO_REFERENCES.map((volcano) => ({
+        type: 'Feature',
+        id: volcano.id,
+        geometry: { type: 'Point', coordinates: volcano.coordinates },
+        properties: {
+          id: volcano.id,
+          name: volcano.name,
+          jurisdiction: volcano.jurisdiction,
+          mapUrl: volcano.mapUrl,
+          sourceUrl: volcano.sourceUrl,
+        },
+      })),
+    };
+
+    map.addSource('atlas-volcanoes', { type: 'geojson', data });
+    map.addLayer({
+      id: 'atlas-volcano-halo',
+      type: 'circle',
+      source: 'atlas-volcanoes',
+      paint: {
+        'circle-radius': 11,
+        'circle-color': 'rgba(152, 81, 57, 0.09)',
+        'circle-stroke-color': 'rgba(152, 81, 57, 0.36)',
+        'circle-stroke-width': 1,
+      },
+    });
+    map.addLayer({
+      id: 'atlas-volcano-points',
+      type: 'circle',
+      source: 'atlas-volcanoes',
+      paint: {
+        'circle-radius': 5.5,
+        'circle-color': '#985139',
+        'circle-opacity': 0.94,
+        'circle-stroke-color': '#fbf7ee',
+        'circle-stroke-width': 1.5,
+      },
+    });
+
+    renderSourceRecords('volcanoes', [
+      { id: 'usgs-cvo', label: 'USGS Cascades Volcano Observatory', url: 'https://www.usgs.gov/observatories/cvo', status: 'available', recordCount: 10 },
+      { id: 'usgs-calvo', label: 'USGS California Volcano Observatory', url: 'https://www.usgs.gov/observatories/calvo/about-california-volcano-observatory', status: 'available', recordCount: 3 },
+      { id: 'nrcan-volcanoes', label: 'Natural Resources Canada volcano information', url: 'https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php', status: 'available', recordCount: 3 },
+    ], '2026-07-15T12:00:00-07:00');
+    loadedLayers.add('volcanoes');
+    setStatus('volcanoes', `Volcano references: ${data.features.length} summits and volcanic centers. Open a point for official mapping.`, 'ready');
+  }
+
   async function ensureFires() {
     let filter = getFireFilter();
     syncFireSummary();
@@ -2060,6 +2136,8 @@
       'atlas-fire-fill',
       'atlas-flood-fill',
       'atlas-flood-corridor-line',
+      'atlas-volcano-points',
+      'atlas-volcano-halo',
     ]
       .filter((id) => map.getLayer(id));
     if (!layers.length) return null;
@@ -2080,6 +2158,7 @@
     if (feature.layer.id === 'atlas-fire-fill') return firePopup(feature.properties || {});
     if (feature.layer.id === 'atlas-flood-fill') return floodPopup(feature.properties || {});
     if (feature.layer.id === 'atlas-flood-corridor-line') return floodCorridorPopup(feature.properties || {});
+    if (feature.layer.id === 'atlas-volcano-points' || feature.layer.id === 'atlas-volcano-halo') return volcanoPopup(feature.properties || {});
     return '';
   }
 
@@ -2211,6 +2290,17 @@
     return [
       `<h4>${escapeHtml(props.name || 'Flood-prone river corridor')}</h4>`,
       '<p>Flood-prone river corridor. This is a planning cue, not live inundation depth.</p>',
+    ].join('');
+  }
+
+  function volcanoPopup(props) {
+    return [
+      `<h4>${escapeHtml(props.name || 'Volcano reference')}</h4>`,
+      props.jurisdiction ? `<p>${escapeHtml(props.jurisdiction)}</p>` : '',
+      '<p>Reference location only—not a hazard zone, ash forecast, closure, or current status.</p>',
+      popupSourceLink(props.mapUrl, 'Official hazard information and maps'),
+      popupSourceLink(props.sourceUrl, 'Official volcano science'),
+      '<p><a href="volcano.html">Read the Cascadia.me Volcano guide</a></p>',
     ].join('');
   }
 

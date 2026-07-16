@@ -49,6 +49,20 @@ const stories = [
     region: "River country",
     accent: "river",
     summary: "A young family learns that the river’s history is a diary, not a promise."
+  },
+  {
+    slug: "chafe-gear",
+    source: "chafe-gear-a-cascadia-story.md",
+    region: "Storm coast",
+    accent: "storm",
+    summary: "A harbour manager follows a year’s quiet work toward the weather it was meant to meet."
+  },
+  {
+    slug: "natural-warning",
+    source: "natural-warning-a-cascadia-story.md",
+    region: "Outer coast",
+    accent: "cedar",
+    summary: "A coastal emergency coordinator inherits an old warning—and the responsibility to carry it forward."
   }
 ];
 
@@ -139,10 +153,10 @@ function head({ title, description, canonical, type = "website", schema }) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="../favicon.ico?v=3">
-  <link rel="stylesheet" href="../css/base.css?v=20260715-stories4">
-  <link rel="stylesheet" href="../css/components.css?v=20260715-stories4">
-  <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories4">
-  <link rel="stylesheet" href="../css/field-stories.css?v=20260715-stories4">
+  <link rel="stylesheet" href="../css/base.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/field-stories.css?v=20260715-stories5">
   <script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
 
@@ -184,6 +198,7 @@ function footer() {
               <li><a href="../wildfire.html">Wildfire</a></li>
               <li><a href="../flooding.html">Flooding</a></li>
               <li><a href="../winter-storm.html">Winter Storm</a></li>
+              <li><a href="../volcano.html">Volcano</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -207,10 +222,10 @@ function footer() {
 }
 
 function commonScripts({ story = false } = {}) {
-  return `${story ? '<script src="../js/field-stories.js?v=20260715-stories4"></script>\n  ' : ""}<script src="../js/share.js"></script>
-  <script src="../js/nav.js?v=20260715-stories4"></script>
-  <script src="../js/animations.js?v=20260715-stories4"></script>
-  <script src="../js/feedback.js?v=20260715-stories4"></script>
+  return `${story ? '<script src="../js/field-stories.js?v=20260715-stories5"></script>\n  ' : ""}<script src="../js/share.js"></script>
+  <script src="../js/nav.js?v=20260715-stories5"></script>
+  <script src="../js/animations.js?v=20260715-stories5"></script>
+  <script src="../js/feedback.js?v=20260715-stories5"></script>
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->`;
 }
 

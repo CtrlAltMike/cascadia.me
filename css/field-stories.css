@@ -45,6 +45,16 @@
   --story-accent-soft: rgba(47, 90, 67, 0.15);
 }
 
+.field-story-storm {
+  --story-accent: #416778;
+  --story-accent-soft: rgba(65, 103, 120, 0.16);
+}
+
+.field-story-cedar {
+  --story-accent: #8a4c37;
+  --story-accent-soft: rgba(138, 76, 55, 0.15);
+}
+
 /* Library */
 
 .field-stories-hero {
@@ -203,6 +213,8 @@
 .field-story-entry-fire { --entry-color: var(--lw-coral-600); }
 .field-story-entry-camas { --entry-color: var(--lw-camas-600); }
 .field-story-entry-spruce { --entry-color: var(--lw-spruce-700); }
+.field-story-entry-storm { --entry-color: #416778; }
+.field-story-entry-cedar { --entry-color: #8a4c37; }
 
 .field-story-entry-mark {
   align-self: stretch;

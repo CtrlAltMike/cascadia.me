@@ -1,0 +1,336 @@
+/* ============================================================
+   Cascadia.me — Volcano chapter
+   Code-native mountain and pathway illustrations
+   ============================================================ */
+
+.volcano-chapter-page {
+  --chapter-accent: #985139;
+  --chapter-deep: #3b3a34;
+  --chapter-soft: #eee6d8;
+  --chapter-wash: rgba(152, 81, 57, 0.09);
+  --chapter-alert: #b74b35;
+}
+
+.chapter--volcano .chapter-hero {
+  background:
+    radial-gradient(circle at 76% 24%, rgba(232, 185, 52, 0.18), transparent 22rem),
+    linear-gradient(180deg, #e8e5db 0%, #f6efe2 58%, #dce6dc 100%);
+}
+
+.chapter--volcano .chapter-hero::after {
+  background: linear-gradient(
+    90deg,
+    rgba(251, 247, 238, 0.995) 0%,
+    rgba(251, 247, 238, 0.96) 34%,
+    rgba(251, 247, 238, 0.68) 49%,
+    rgba(251, 247, 238, 0.08) 68%,
+    rgba(251, 247, 238, 0) 78%
+  );
+}
+
+.volcano-hero-art {
+  position: absolute;
+  inset: var(--nav-height) 0 0 32%;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.volcano-hero-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.volcano-pathways {
+  width: min(100% - clamp(2rem, 6vw, 6rem), 90rem);
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+}
+
+.volcano-pathways-stage {
+  position: relative;
+  padding: clamp(2rem, 5vw, 4rem);
+  border-block: 1px solid var(--lw-line);
+  background:
+    radial-gradient(circle at 50% 25%, rgba(232, 185, 52, 0.12), transparent 18rem),
+    linear-gradient(180deg, rgba(238, 230, 216, 0.42), rgba(251, 247, 238, 0.9));
+}
+
+.volcano-pathways-source {
+  display: grid;
+  width: clamp(8.5rem, 16vw, 12rem);
+  aspect-ratio: 1;
+  place-items: center;
+  margin: 0 auto clamp(3.5rem, 7vw, 5.5rem);
+  border: 1px solid rgba(59, 58, 52, 0.24);
+  border-radius: 50%;
+  color: var(--chapter-deep);
+  background: var(--lw-cream-50);
+  box-shadow: 0 1.2rem 3rem rgba(59, 58, 52, 0.08);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.volcano-pathways-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.volcano-pathways-grid::before,
+.volcano-pathways-grid::after {
+  content: '';
+  position: absolute;
+  top: clamp(10rem, 18vw, 13rem);
+  left: 50%;
+  width: min(66%, 56rem);
+  height: 1px;
+  background: rgba(59, 58, 52, 0.22);
+  transform: translateX(-50%);
+}
+
+.volcano-pathways-grid::after {
+  width: 1px;
+  height: clamp(2.7rem, 6vw, 4.6rem);
+}
+
+.volcano-pathway {
+  position: relative;
+  min-height: 16rem;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  border-top: 0.35rem solid var(--path-color);
+  background: rgba(251, 247, 238, 0.92);
+  box-shadow: 0 1rem 2.5rem rgba(59, 58, 52, 0.07);
+}
+
+.volcano-pathway-water { --path-color: #277d90; }
+.volcano-pathway-air { --path-color: #6f6798; }
+.volcano-pathway-systems { --path-color: #b17332; }
+
+.volcano-pathway small {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--path-color);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.volcano-pathway h3 {
+  margin: 0;
+  font-size: clamp(1.55rem, 2.5vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.volcano-pathway p {
+  margin: 0.9rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+
+.volcano-pathways figcaption {
+  max-width: 58rem;
+  margin: 0.9rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.volcano-timing {
+  background:
+    linear-gradient(90deg, rgba(152, 81, 57, 0.035), transparent 24%, transparent 76%, rgba(39, 125, 144, 0.035)),
+    var(--lw-cream-50);
+}
+
+.volcano-timing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.volcano-timing-grid li {
+  position: relative;
+  padding: clamp(1.4rem, 3vw, 2rem) clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.5rem, 3vw, 2.2rem);
+  border-top: 0.3rem solid var(--chapter-accent);
+  background: rgba(251, 247, 238, 0.92);
+  box-shadow: 0 1rem 2.6rem rgba(59, 58, 52, 0.065);
+}
+
+.volcano-timing-grid li:nth-child(2) {
+  border-top-color: #b17332;
+}
+
+.volcano-timing-grid li:nth-child(3) {
+  border-top-color: var(--chapter-alert);
+}
+
+.volcano-timing-label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--chapter-accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.volcano-timing-grid li:nth-child(2) .volcano-timing-label {
+  color: #8a5b23;
+}
+
+.volcano-timing-grid li:nth-child(3) .volcano-timing-label {
+  color: var(--chapter-alert);
+}
+
+.volcano-timing-grid h3 {
+  margin: 0;
+  color: var(--chapter-deep);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.volcano-timing-grid p {
+  margin: 0.9rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.87rem;
+  line-height: 1.65;
+}
+
+.volcano-timing-exception {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.volcano-alert-table {
+  width: min(100%, 58rem);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  border-collapse: collapse;
+  border-block: 1px solid var(--lw-line);
+}
+
+.volcano-alert-table th,
+.volcano-alert-table td {
+  padding: 1rem clamp(0.75rem, 2vw, 1.25rem);
+  border-bottom: 1px solid var(--lw-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.volcano-alert-table th {
+  color: var(--chapter-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.volcano-alert-table td {
+  color: var(--lw-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.volcano-alert-table td:first-child {
+  color: var(--chapter-deep);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .volcano-hero-art {
+    left: 24%;
+  }
+
+  .volcano-pathways-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .volcano-timing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .volcano-pathways-grid::before,
+  .volcano-pathways-grid::after {
+    display: none;
+  }
+
+  .volcano-pathway {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .chapter--volcano .chapter-hero {
+    min-height: 48rem;
+  }
+
+  .chapter--volcano .chapter-hero::after {
+    background: linear-gradient(
+      180deg,
+      rgba(251, 247, 238, 0.98) 0%,
+      rgba(251, 247, 238, 0.92) 50%,
+      rgba(251, 247, 238, 0.42) 70%,
+      rgba(251, 247, 238, 0.08) 100%
+    );
+  }
+
+  .chapter--volcano .chapter-hero-inner {
+    align-items: flex-start;
+  }
+
+  .chapter--volcano .chapter-hero-copy {
+    width: 100%;
+  }
+
+  .volcano-hero-art {
+    inset: 44% -12% 0 10%;
+  }
+
+  .volcano-alert-table,
+  .volcano-alert-table tbody,
+  .volcano-alert-table tr,
+  .volcano-alert-table th,
+  .volcano-alert-table td {
+    display: block;
+  }
+
+  .volcano-alert-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .volcano-alert-table tr {
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--lw-line);
+  }
+
+  .volcano-alert-table td {
+    padding: 0.3rem 0;
+    border: 0;
+  }
+
+  .volcano-alert-table td::before {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--chapter-accent);
+    content: attr(data-label);
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}

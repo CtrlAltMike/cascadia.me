@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedOn": "2026-07-14",
+  "reviewedOn": "2026-07-15",
   "status": "confirmed",
   "standard": "Every current record was checked for an official action destination, a label supported by that destination, an applicability note, and current provenance. Batch snapshots bind the review to the exact action and coverage text so later editorial changes require a new review.",
   "limitations": "A confirmed action does not prove that a regional-district service covers every municipality or First Nation inside the displayed legal boundary. Records with a narrower or incompletely mapped operating area are withheld from Start Here until finer service geometry is available.",
@@ -164,6 +164,23 @@
         "bc-wildfire-service",
         "environment-canada-bc-alerts",
         "fness-emergency-management"
+      ]
+    },
+    {
+      "id": "volcano-official-sources",
+      "status": "confirmed",
+      "reviewedOn": "2026-07-15",
+      "method": "Reviewed the official USGS California Volcano Observatory, Natural Resources Canada volcano, and PreparedBC volcanic activity pages; confirmed that each verb-led action describes the official destination and that local protective authority remains explicit.",
+      "evidenceUrls": [
+        "https://www.usgs.gov/observatories/calvo/about-california-volcano-observatory",
+        "https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php",
+        "https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano"
+      ],
+      "snapshotSha256": "c9774cbb4819d1ba8767e701a965c839986e077feed839d8f5402905815a48e3",
+      "recordIds": [
+        "nrcan-volcanoes",
+        "preparedbc-volcano",
+        "usgs-calvo"
       ]
     },
     {

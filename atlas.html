@@ -35,7 +35,7 @@
   <link rel="icon" href="favicon.ico?v=3">
   <link rel="stylesheet" href="css/base.css?v=20260712-phase8">
   <link rel="stylesheet" href="css/components.css?v=20260715-field-stories">
-  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260715-orientation1">
+  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260715-volcano">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -200,6 +200,7 @@
                   <span data-legend-layer="earthquakes" hidden><span class="atlas-legend-ring"></span> Earthquake record</span>
                   <span data-legend-layer="fires" hidden><span class="atlas-legend-fire"></span> Historical fire</span>
                   <span data-legend-layer="floods" hidden><span class="atlas-legend-flood"></span> Flood planning</span>
+                  <span data-legend-layer="volcanoes" hidden><span class="atlas-legend-volcano"></span> Volcano reference</span>
                 </div>
               </div>
             </details>
@@ -369,6 +370,16 @@
                       <input type="checkbox" data-atlas-layer="floods">
                       <span class="atlas-switch" aria-hidden="true"></span>
                     </label>
+
+                    <label class="atlas-toggle" data-atlas-toggle-row="volcanoes">
+                      <span class="atlas-swatch atlas-swatch-volcano" aria-hidden="true"></span>
+                      <span class="atlas-toggle-copy">
+                        <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Volcano references</span><span class="atlas-layer-state" data-atlas-layer-state="volcanoes" aria-hidden="true">Off</span></span>
+                        <span class="atlas-toggle-subtitle">Summits and centers · official map handoffs</span>
+                      </span>
+                      <input type="checkbox" data-atlas-layer="volcanoes">
+                      <span class="atlas-switch" aria-hidden="true"></span>
+                    </label>
                   </div>
                 </details>
               </div>
@@ -422,6 +433,7 @@
         <li data-atlas-status-key="earthquakes" hidden>Earthquake records not requested.</li>
         <li data-atlas-status-key="fires" hidden>Historical fires not requested.</li>
         <li data-atlas-status-key="floods" hidden>Flood planning not requested.</li>
+        <li data-atlas-status-key="volcanoes" hidden>Volcano references not requested.</li>
       </ul>
 
       <div class="atlas-source-detail-grid">
@@ -439,10 +451,15 @@
           <h3>Forecast source</h3>
           <ul data-atlas-source-list="forecast-wind"><li>Turn on Forecast wind to check its model source.</li></ul>
         </section>
+        <section class="atlas-source-detail" data-atlas-source-panel="volcanoes" hidden>
+          <h3>Volcano reference sources</h3>
+          <p>The Atlas draws a small static catalog of summits and volcanic centers, then hands each point to official hazard mapping or preparedness information. Points are not hazard zones or current status.</p>
+          <ul data-atlas-source-list="volcanoes"><li>Turn on Volcano references to see its official handoffs.</li></ul>
+        </section>
       </div>
 
       <p class="atlas-updated">For situational awareness only. Follow local officials and evacuation orders.</p>
-      <p class="atlas-source">Other on-demand sources: USGS earthquake catalog, NIFC historical fire perimeters, FEMA flood zones, generalized river corridors, and OpenStreetMap basemap data.</p>
+      <p class="atlas-source">Other on-demand sources: USGS earthquake catalog, NIFC historical fire perimeters, FEMA flood zones, generalized river corridors, official U.S. and Canadian volcano references, and OpenStreetMap basemap data.</p>
       <button type="button" class="btn btn-primary" data-atlas-sources-close>Back to the Atlas</button>
     </div>
   </dialog>
@@ -476,6 +493,10 @@
           <p>Regional river corridors are generalized, and FEMA zones cover U.S. communities only where mapped. These layers do not show current inundation, depth, parcel-level safety, or what will happen in the next storm. Historical records show past events, not a prediction.</p>
         </section>
         <section>
+          <h3>Volcano points are handoffs, not hazard zones</h3>
+          <p>A point marks a summit or volcanic center for regional orientation. It does not show lahars, ashfall, ground hazards, closures, or current volcanic activity. Open the point and continue to the official volcano-specific map and local emergency authority.</p>
+        </section>
+        <section>
           <h3>Official instructions come first</h3>
           <p>Use this map for orientation and planning. During an event, follow evacuation orders and instructions from your local emergency manager, fire agency, weather service, road authority, and utility.</p>
         </section>
@@ -500,6 +521,7 @@
               <li><a href="wildfire.html">Wildfire</a></li>
               <li><a href="flooding.html">Flooding</a></li>
               <li><a href="winter-storm.html">Winter Storm</a></li>
+              <li><a href="volcano.html">Volcano</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -524,7 +546,7 @@
   <script src="js/share.js"></script>
   <script src="js/nav.js?v=20260712-phase8"></script>
   <script src="js/animations.js?v=20260712-phase8"></script>
-  <script src="js/atlas.js?v=20260712-phase8"></script>
+  <script src="js/atlas.js?v=20260715-volcano"></script>
   <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

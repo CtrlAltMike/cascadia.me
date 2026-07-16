@@ -61,7 +61,7 @@ for (const record of records) {
   if (record.accessibilityUrl !== undefined && !HTTPS.test(record.accessibilityUrl)) errors.push(`${record.id}: invalid accessibility URL`);
 }
 
-if (records.length !== 144) errors.push(`Expected 144 records, found ${records.length}`);
+if (records.length !== 147) errors.push(`Expected 147 records, found ${records.length}`);
 if (authorityMeta?.schemaVersion !== 2) errors.push("Authority registry schemaVersion must be 2");
 for (const [key, expected] of Object.entries(authorityMeta?.expected || {})) {
   if (authorityMeta.actual?.[key] !== expected) errors.push(`${key}: expected ${expected}, found ${authorityMeta.actual?.[key]}`);

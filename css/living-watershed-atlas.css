@@ -576,6 +576,8 @@
 .atlas-swatch-fire::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.2 1.7c1.7 2.5-.2 3.2 1.4 5.1.8-.9.9-1.8.7-2.7 2 1.8 3.3 4 3 6.2-.3 2.4-2.3 4-5.2 4S3 12.7 2.8 10.3C2.6 8.4 3.7 6.4 6 4.4c-.1 1.8.5 3 1.6 3.8-1-2.4.8-3.8.6-6.5Z' fill='%23b63d31'/%3E%3C/svg%3E"); }
 .atlas-swatch-flood { color: var(--lw-ocean-700) !important; background: #e5f4f3 !important; }
 .atlas-swatch-flood::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5c2-2 4 2 6 0s4 2 8 0M1 9c2-2 4 2 6 0s4 2 8 0' fill='none' stroke='%23075a78' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.atlas-swatch-volcano { color: #985139 !important; background: #f4e9df !important; }
+.atlas-swatch-volcano::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m2 13 4.4-8 1.7 2.2L10 5l4 8H2Z' fill='none' stroke='%23985139' stroke-width='1.4' stroke-linejoin='round'/%3E%3Cpath d='M6.4 5c.8-1.2 2.3-.5 2-2.2' fill='none' stroke='%23985139' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
 
 .atlas-toggle-copy {
   display: grid;
@@ -1208,7 +1210,8 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
 .atlas-legend-wind,
 .atlas-legend-forecast-wind,
 .atlas-legend-fire,
-.atlas-legend-flood {
+.atlas-legend-flood,
+.atlas-legend-volcano {
   display: inline-flex;
   width: 1.05rem;
   min-width: 1.05rem;
@@ -1227,6 +1230,7 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
 .atlas-legend-ring { border-radius: 999px; color: var(--lw-camas-600); background: transparent; box-shadow: 0 0 0 3px rgba(101, 82, 154, 0.15); }
 .atlas-legend-fire { color: var(--lw-coral-600); background: rgba(182, 61, 49, 0.25); }
 .atlas-legend-flood { color: var(--lw-ocean-700); background: rgba(7, 90, 120, 0.68); }
+.atlas-legend-volcano { border-radius: 999px; color: #985139; background: #985139; box-shadow: 0 0 0 3px rgba(152, 81, 57, 0.16); }
 
 /* Wind uses one shared speed language: arrows are station observations;
    shading is model guidance. The key remains visible without opening Legend. */

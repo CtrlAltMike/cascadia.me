@@ -124,6 +124,51 @@ const coreResources = [
     point: [-122.59, 45.62]
   },
   {
+    id: "usgs-calvo",
+    name: "California Volcano Observatory",
+    organization: "U.S. Geological Survey",
+    publisher: "federal",
+    group: "Federal & regional",
+    place: "California and Nevada",
+    categories: ["alerts", "hazards", "community"],
+    summary: "Volcano status, monitoring, hazard science, and preparedness information for California and Nevada volcanoes, including northern California.",
+    url: "https://www.usgs.gov/observatories/calvo/about-california-volcano-observatory",
+    coverageKeys: ["region-northern-california"],
+    fallbackBounds: [-124.5, 39.5, -118.5, 42.2],
+    coverageNote: "Northern California relevance is broad; Signals does not substitute a single perimeter for volcano-specific hazard maps.",
+    point: [-122.19, 41.41]
+  },
+  {
+    id: "nrcan-volcanoes",
+    name: "Volcanoes in Canada",
+    organization: "Natural Resources Canada",
+    publisher: "federal",
+    group: "Federal & regional",
+    place: "Canada, with western volcano information",
+    categories: ["hazards", "community"],
+    summary: "Federal science about Canadian volcanoes, western volcanic regions, monitoring, and cross-border volcanic hazards.",
+    url: "https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php",
+    coverageKeys: ["province-bc"],
+    fallbackBounds: [-139.2, 48.2, -114, 60.1],
+    coverageNote: "Federal science resource for British Columbia and Canada; local governments and First Nations issue local protective instructions.",
+    point: [-123.12, 49.28]
+  },
+  {
+    id: "preparedbc-volcano",
+    name: "PreparedBC volcanic activity guidance",
+    organization: "Province of British Columbia",
+    publisher: "province",
+    group: "State & statewide",
+    place: "British Columbia",
+    categories: ["emergency", "hazards", "community"],
+    summary: "Provincial volcanic activity and ashfall preparedness, shelter, evacuation, recovery, and official-information guidance.",
+    url: "https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano",
+    coverageKeys: ["province-bc"],
+    fallbackBounds: [-139.2, 48.2, -114, 60.1],
+    coverageNote: "Province-wide preparedness guidance; follow the local government or First Nation and EmergencyInfoBC during an event.",
+    point: [-123.37, 48.43]
+  },
+  {
     id: "pnsn",
     name: "Pacific Northwest Seismic Network",
     organization: "University of Washington and University of Oregon",
@@ -395,7 +440,7 @@ const coreResources = [
   }
 ];
 
-const CORE_VERIFIED_ON = "2026-07-14";
+const CORE_VERIFIED_ON = "2026-07-15";
 const coreRecordDetails = {
   "fema-region-10": {
     authorityRole: "Federal preparedness and recovery support",
@@ -423,6 +468,24 @@ const coreRecordDetails = {
   "usgs-cvo": {
     authorityRole: "Volcano hazard information",
     primaryAction: { type: "monitor-hazard", label: "Monitor Cascade volcano status", url: "https://www.usgs.gov/observatories/cvo", priority: 30 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "usgs-calvo": {
+    authorityRole: "Volcano hazard information",
+    primaryAction: { type: "monitor-hazard", label: "Monitor northern California volcano status", url: "https://www.usgs.gov/observatories/calvo/about-california-volcano-observatory", priority: 30 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "nrcan-volcanoes": {
+    authorityRole: "Federal volcano science",
+    primaryAction: { type: "monitor-hazard", label: "Learn about volcanoes in western Canada", url: "https://chis.nrcan.gc.ca/volcano-volcan/can-vol-en.php", priority: 32 },
+    deliveryChannels: ["web"],
+    optInRequired: false
+  },
+  "preparedbc-volcano": {
+    authorityRole: "Provincial volcano preparedness guidance",
+    primaryAction: { type: "prepare", label: "Review British Columbia volcanic activity guidance", url: "https://www2.gov.bc.ca/gov/content/safety/emergency-management/preparedbc/know-your-hazards/volcano", priority: 28 },
     deliveryChannels: ["web"],
     optInRequired: false
   },
@@ -532,7 +595,7 @@ const resources = [
   ...(window.SIGNALS_AUTHORITY_RECORDS || [])
 ];
 
-const DIRECTORY_UPDATED_ON = "2026-07-14";
+const DIRECTORY_UPDATED_ON = "2026-07-15";
 const DIRECTORY_UPDATED_LABEL = formatDirectoryDate(DIRECTORY_UPDATED_ON);
 const PLAN_STORAGE_KEY = "cascadia-signals-plan-v1";
 const PLAN_VERSION = 1;
@@ -625,7 +688,7 @@ function validateAuthorityRegistry() {
   } else {
     errors.push("Registry metadata unavailable");
   }
-  if (resources.length !== 144) errors.push(`Expected 144 total resources, found ${resources.length}`);
+  if (resources.length !== 147) errors.push(`Expected 147 total resources, found ${resources.length}`);
   const status = document.querySelector('[data-authority-registry="status"]');
   if (status) {
     status.dataset.state = errors.length ? "error" : "ready";

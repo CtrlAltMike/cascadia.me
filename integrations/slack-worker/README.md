@@ -11,6 +11,7 @@ The static site should never contain Slack webhook URLs, Ko-fi verification toke
 ## Endpoints
 
 - `GET /conditions` aggregates current NIFC fires and perimeters, selected NWS alerts, Chelan County evacuation polygons, and optional WSDOT highway alerts.
+- `GET /conditions/ferries` serves current Washington State Ferries vessel positions for the Ferries Underway map. Requires the same `WSDOT_ACCESS_CODE` secret as highway alerts; without it the endpoint reports `not_configured`.
 - `POST /kofi` receives Ko-fi webhook payloads.
 - `POST /feedback` receives first-party reader feedback submissions from the static site.
 - `POST /traffic/digest` manually sends a daily or weekly digest for testing. Requires `Authorization: Bearer $ADMIN_TOKEN`.
@@ -55,7 +56,7 @@ WSDOT highway alerts are optional. Request a Traveler Information API access cod
 npx wrangler secret put WSDOT_ACCESS_CODE
 ```
 
-Without this secret, `/conditions` reports the WSDOT source as `not_configured` and continues serving the other sources.
+Without this secret, `/conditions` reports the WSDOT source as `not_configured` and continues serving the other sources. The same access code also unlocks `/conditions/ferries` (WSF vessel locations) — no separate registration is needed.
 
 Deploy:
 

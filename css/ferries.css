@@ -1,0 +1,74 @@
+/* ============================================================
+   Cascadia.me — Ferries Underway
+   Small overlay on the Atlas instrument kit: vessel swatches,
+   legend keys, and the live vessel list.
+   ============================================================ */
+
+/* Layer toggle swatches */
+
+.atlas-swatch-ferries-underway { color: var(--lw-spruce-700) !important; background: #e9f2ec !important; }
+.atlas-swatch-ferries-underway::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.6c2.4 2.2 3.4 4 3.2 6.6l-.4 4.4c-1.8 1.5-3.8 1.5-5.6 0l-.4-4.4C4.6 5.6 5.6 3.8 8 1.6Z' fill='%232f5a43'/%3E%3C/svg%3E"); }
+
+.atlas-swatch-ferries-docked { color: #53656b !important; background: #edf0f2 !important; }
+.atlas-swatch-ferries-docked::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4.6' fill='%2353656b' stroke='%23fbf7ee' stroke-width='1.6'/%3E%3C/svg%3E"); }
+
+.atlas-swatch-ferries-terminal { color: var(--lw-ocean-900) !important; background: var(--lw-cream-50) !important; }
+.atlas-swatch-ferries-terminal::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4.4' fill='%23fbf7ee' stroke='%23063b5c' stroke-width='1.8'/%3E%3C/svg%3E"); }
+
+/* Legend keys */
+
+.ferries-legend-underway,
+.ferries-legend-docked,
+.ferries-legend-terminal {
+  display: inline-flex;
+  width: 1.05rem;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+}
+
+.ferries-legend-underway {
+  border: 0;
+  color: var(--lw-spruce-700);
+  background: var(--lw-spruce-700);
+  clip-path: polygon(50% 0%, 84% 26%, 76% 100%, 24% 100%, 16% 26%);
+}
+
+.ferries-legend-docked {
+  border-radius: 999px;
+  color: #53656b;
+  background: #53656b;
+}
+
+.ferries-legend-terminal {
+  border-radius: 999px;
+  color: var(--lw-ocean-900);
+  background: var(--lw-cream-50);
+}
+
+/* Availability meta line under the H1 */
+
+.ferries-availability-meta {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--lw-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* Live vessel list */
+
+[data-ferries-list] li strong {
+  color: var(--lw-ocean-900);
+  font-weight: 650;
+}
+
+/* Vessel popup route line */
+
+.living-watershed-atlas .atlas-map .maplibregl-popup-content .ferries-popup-route {
+  color: var(--lw-spruce-700);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}

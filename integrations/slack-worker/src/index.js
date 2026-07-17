@@ -5,6 +5,7 @@ import {
   handleForecastPointRequest,
   handleForecastTileRequest,
 } from "./forecast-wind.js";
+import { ferriesPreflightResponse, handleFerriesRequest } from "./ferries.js";
 import { handleWindRequest, windPreflightResponse } from "./wind.js";
 
 const MAX_KOFI_BYTES = 64 * 1024;
@@ -65,6 +66,14 @@ export default {
 
     if (request.method === "GET" && url.pathname === "/conditions") {
       return handleConditionsRequest(request, env, ctx);
+    }
+
+    if (request.method === "OPTIONS" && url.pathname === "/conditions/ferries") {
+      return ferriesPreflightResponse(env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/conditions/ferries") {
+      return handleFerriesRequest(request, env, ctx);
     }
 
     if (request.method === "OPTIONS" && url.pathname === "/conditions/wind") {

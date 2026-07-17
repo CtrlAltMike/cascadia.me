@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferries Underway | Cascadia.me</title>
+  <meta name="description" content="A zoomable live map of Washington State Ferries — every in-service vessel underway on Puget Sound and the Salish Sea, with routes, speeds, and ETAs.">
+  <meta name="author" content="Michael Hendrick">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#fbf7ee">
+  <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
+  <meta name="cascadia-ferries-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/ferries">
+  <link rel="canonical" href="https://cascadia.me/ferries.html">
+  <meta property="og:site_name" content="Cascadia.me">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ferries Underway | Cascadia.me">
+  <meta property="og:description" content="Watch current Washington State Ferries crossings on a zoomable live map of Puget Sound and the Salish Sea.">
+  <meta property="og:url" content="https://cascadia.me/ferries.html">
+  <meta property="og:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
+  <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ferries Underway | Cascadia.me">
+  <meta name="twitter:description" content="Watch current Washington State Ferries crossings on a zoomable live map of Puget Sound and the Salish Sea.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.png">
+  <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
+  <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon.ico?v=3">
+  <link rel="stylesheet" href="css/base.css?v=20260717-motion">
+  <link rel="stylesheet" href="css/components.css?v=20260715-field-stories">
+  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260715-volcano">
+  <link rel="stylesheet" href="css/ferries.css?v=20260717-ferries">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://cascadia.me/#website",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://cascadia.me/#organization",
+          "name": "Cascadia.me",
+          "url": "https://cascadia.me/",
+          "founder": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publishingPrinciples": "https://cascadia.me/approach.html"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://cascadia.me/#author",
+          "name": "Michael Hendrick",
+          "description": "Washington State resident and founder of Cascadia.me.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Washington State, USA"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://cascadia.me/ferries.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://cascadia.me/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Ferries Underway",
+              "item": "https://cascadia.me/ferries.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cascadia.me/ferries.html#webpage",
+          "url": "https://cascadia.me/ferries.html",
+          "name": "Ferries Underway",
+          "description": "A zoomable live map of current Washington State Ferries vessel positions across Puget Sound and the Salish Sea.",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@id": "https://cascadia.me/#website"
+          },
+          "author": {
+            "@id": "https://cascadia.me/#author"
+          },
+          "publisher": {
+            "@id": "https://cascadia.me/#organization"
+          },
+          "dateModified": "2026-07-17",
+          "breadcrumb": {
+            "@id": "https://cascadia.me/ferries.html#breadcrumb"
+          },
+          "about": "Washington State Ferries vessel tracking"
+        }
+      ]
+    }
+  </script>
+</head>
+<body class="atlas-body living-watershed-atlas ferries-page">
+
+  <a class="atlas-skip-link" href="#main-content">Skip to the Ferries map</a>
+
+  <!-- Nav -->
+  <header class="site-header">
+    <nav class="nav-inner" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <ul class="nav-links" id="site-nav-links">
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="build-your-kit.html">Build Your Kit</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="signals/">Signals</a></li>
+        <li><a href="stories/">Field Stories</a></li>
+        <li><a href="approach.html">The Approach</a></li>
+        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="atlas-page" id="main-content">
+    <section class="atlas-page-section atlas-section" data-ferries>
+      <div class="atlas-trust-strip" role="note">
+        <strong>Official feed checked.</strong>
+        <span>Boats move faster than a map updates.</span>
+      </div>
+
+      <div class="atlas-page-layout">
+        <header class="atlas-copy">
+          <p class="atlas-eyebrow">Regional instrument</p>
+          <h1>Ferries Underway</h1>
+          <p>Every in-service Washington State Ferries vessel, live on the water. Zoom into a crossing for speed, heading, and ETA.</p>
+          <p class="atlas-companion">Reading the wider region? <a href="atlas.html">Open the Hazard Atlas.</a> Sailing today? <a href="https://wsdot.com/ferries/vesselwatch/" target="_blank" rel="noopener">Use the official VesselWatch.</a></p>
+          <div class="atlas-availability" role="status">
+            <span class="atlas-source-indicator" data-ferries-source-indicator data-state="loading" aria-hidden="true"></span>
+            <span class="atlas-availability-copy">
+              <strong data-ferries-source-state>Checking the feed</strong>
+              <span data-ferries-status>Map waiting to load.</span>
+              <span class="ferries-availability-meta"><span data-ferries-summary></span> <span data-ferries-checked></span></span>
+            </span>
+          </div>
+        </header>
+
+        <div class="atlas-panel" id="ferries-underway-map" aria-label="Ferries underway map">
+          <div class="atlas-map" id="cascadia-ferries-map" role="region" aria-label="Interactive map of current Washington State Ferries positions" aria-describedby="ferries-map-instructions">
+            <p class="sr-only" id="ferries-map-instructions">Use the map controls to zoom or restore the ferry-system view. Keyboard users can focus the map and use arrow keys to pan. Select a vessel for its route, speed, and ETA. The vessel list below the layer controls carries the same records as text.</p>
+            <noscript>
+              <section class="atlas-noscript" aria-labelledby="ferries-noscript-title">
+                <h2 id="ferries-noscript-title">The live ferries map needs JavaScript.</h2>
+                <p>Current vessel positions and sailing status are always available from Washington State Ferries directly.</p>
+                <p><a href="https://wsdot.com/ferries/vesselwatch/">Official WSF VesselWatch</a> · <a href="https://wsdot.wa.gov/travel/washington-state-ferries/schedules">Sailing schedules</a> · <a href="https://wsdot.wa.gov/travel/washington-state-ferries">Washington State Ferries</a></p>
+              </section>
+            </noscript>
+            <div class="atlas-placeholder" data-ferries-placeholder>
+              <h2>Ferries underway</h2>
+              <p>Loading the Salish Sea, from Tacoma to the San Juan Islands.</p>
+              <button type="button" class="atlas-load-btn" data-ferries-load hidden>Load the map</button>
+            </div>
+            <div class="atlas-map-utility-dock" aria-label="Map utilities">
+              <button type="button" class="atlas-map-utility" data-ferries-reset-view>Reset view</button>
+              <button type="button" class="atlas-map-utility" data-ferries-caveats-open aria-haspopup="dialog" aria-controls="ferries-caveats-dialog">Data notes</button>
+            </div>
+            <details class="atlas-map-legend" data-ferries-legend>
+              <summary><span>Legend</span><span>3 keys</span></summary>
+              <div class="atlas-legend-panel">
+                <div class="atlas-legend-family">
+                  <strong>Current positions</strong>
+                  <span><span class="ferries-legend-underway"></span> Vessel underway · points along its heading</span>
+                  <span><span class="ferries-legend-docked"></span> Vessel at the dock</span>
+                  <span><span class="ferries-legend-terminal"></span> Terminal reference point</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <aside class="atlas-sidebar" aria-label="Ferries map controls">
+          <details class="atlas-control-sheet" open>
+            <summary class="atlas-sheet-summary">
+              <span class="atlas-sheet-summary-title">Vessels <strong data-ferries-summary></strong></span>
+              <span class="atlas-sheet-summary-status"><span class="atlas-source-indicator" data-ferries-source-indicator data-state="loading" aria-hidden="true"></span><span data-ferries-source-state>Checking the feed</span></span>
+              <span class="atlas-sheet-chevron" aria-hidden="true"></span>
+            </summary>
+
+            <div class="atlas-sheet-body">
+              <div class="atlas-controls-heading">
+                <div>
+                  <p class="atlas-controls-kicker">Map layers</p>
+                  <h2 id="ferries-layers-title">What's on the water</h2>
+                </div>
+                <button type="button" class="atlas-reset-layers" data-ferries-refresh aria-label="Refresh vessel positions now">Refresh</button>
+              </div>
+
+              <div class="atlas-layer-scroll" aria-labelledby="ferries-layers-title">
+                <div class="atlas-family-body" role="group" aria-label="Ferry map layers">
+                  <label class="atlas-toggle">
+                    <span class="atlas-swatch atlas-swatch-ferries-underway" aria-hidden="true"></span>
+                    <span class="atlas-toggle-copy">
+                      <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Vessels underway</span></span>
+                      <span class="atlas-toggle-subtitle">In-service boats making a crossing</span>
+                    </span>
+                    <input type="checkbox" data-ferries-layer="underway" checked>
+                    <span class="atlas-switch" aria-hidden="true"></span>
+                  </label>
+
+                  <label class="atlas-toggle">
+                    <span class="atlas-swatch atlas-swatch-ferries-docked" aria-hidden="true"></span>
+                    <span class="atlas-toggle-copy">
+                      <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Vessels at the dock</span></span>
+                      <span class="atlas-toggle-subtitle">Loading, unloading, or holding</span>
+                    </span>
+                    <input type="checkbox" data-ferries-layer="docked" checked>
+                    <span class="atlas-switch" aria-hidden="true"></span>
+                  </label>
+
+                  <label class="atlas-toggle">
+                    <span class="atlas-swatch atlas-swatch-ferries-terminal" aria-hidden="true"></span>
+                    <span class="atlas-toggle-copy">
+                      <span class="atlas-toggle-heading"><span class="atlas-toggle-title">Terminals</span></span>
+                      <span class="atlas-toggle-subtitle">Approximate dock reference points</span>
+                    </span>
+                    <input type="checkbox" data-ferries-layer="terminals" checked>
+                    <span class="atlas-switch" aria-hidden="true"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="atlas-control-footer">
+                <button type="button" class="atlas-source-button" data-ferries-sources-open aria-haspopup="dialog" aria-controls="ferries-source-dialog">
+                  <span class="atlas-source-indicator" data-ferries-source-indicator data-state="loading" aria-hidden="true"></span>
+                  <span><strong>Source status</strong><small data-ferries-source-state>Checking the feed</small></span>
+                </button>
+                <button type="button" class="atlas-notes-button" data-ferries-caveats-open aria-haspopup="dialog" aria-controls="ferries-caveats-dialog">Data notes</button>
+              </div>
+
+              <details class="atlas-record-index" open>
+                <summary><span>Vessels as text</span><strong data-ferries-record-count>Waiting</strong></summary>
+                <p>Every tracked vessel as a text record — underway boats first. The list refreshes with the map, about every 30 seconds.</p>
+                <ul data-ferries-list>
+                  <li>Waiting for the first vessel positions.</li>
+                </ul>
+              </details>
+            </div>
+          </details>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="atlas-dialog atlas-source-dialog" id="ferries-source-dialog" data-ferries-sources aria-labelledby="ferries-source-title">
+    <div class="atlas-dialog-panel">
+      <div class="atlas-dialog-heading">
+        <div>
+          <p class="atlas-dialog-kicker">Source status</p>
+          <h2 id="ferries-source-title">What the map reached</h2>
+        </div>
+        <button type="button" class="atlas-dialog-close" data-ferries-sources-close aria-label="Close source status">&#215;</button>
+      </div>
+      <p class="atlas-dialog-lede">Vessel positions come from the Washington State Department of Transportation's public vessel-location feed, relayed through this site's own conditions endpoint and rechecked about every 30 seconds.</p>
+      <ul class="atlas-status-list" data-ferries-source-list>
+        <li>Waiting for the first feed check.</li>
+      </ul>
+      <p class="atlas-updated">For situational awareness only. Sailing decisions belong to Washington State Ferries — follow terminal staff and official alerts.</p>
+      <p class="atlas-source">Sources: WSDOT Traveler Information API (vessel locations), Washington State Ferries VesselWatch, and OpenStreetMap basemap data.</p>
+      <button type="button" class="btn btn-primary" data-ferries-sources-close>Back to the map</button>
+    </div>
+  </dialog>
+
+  <dialog class="atlas-dialog atlas-caveats" id="ferries-caveats-dialog" data-ferries-caveats aria-labelledby="ferries-caveats-title">
+    <div class="atlas-dialog-panel">
+      <div class="atlas-dialog-heading">
+        <h2 id="ferries-caveats-title">How to read the ferries map</h2>
+        <button type="button" class="atlas-dialog-close" data-ferries-caveats-close aria-label="Close data notes">&#215;</button>
+      </div>
+      <div class="atlas-caveats-list">
+        <section>
+          <h3>Positions lag the water</h3>
+          <p>Vessels report their position every few seconds, but the feed, its cache, and this page's roughly 30-second refresh each add delay. A marker is a recent report, not the boat itself. Faded markers are running on positions more than five minutes old.</p>
+        </section>
+        <section>
+          <h3>ETAs and departures are estimates</h3>
+          <p>Arrival and departure times come from Washington State Ferries' own estimates and shift with loading, weather, traffic, and crewing. Sailings can be delayed or canceled after this map last checked. Confirm against the official schedule and terminal alerts before you drive to a dock.</p>
+        </section>
+        <section>
+          <h3>A missing vessel is not a missing sailing</h3>
+          <p>Only in-service vessels that are reporting positions appear. Boats in the yard, tied up for the night, or with a quiet transponder drop off the map without meaning service has stopped — and a vessel shown underway says nothing about space for your car.</p>
+        </section>
+        <section>
+          <h3>Terminals are reference points</h3>
+          <p>Terminal dots mark approximate dock locations for orientation, not property lines, holding lanes, or tide conditions. The Anacortes&ndash;Sidney B.C. international route remains suspended, so its terminal appears without vessels.</p>
+        </section>
+        <section>
+          <h3>Not for navigation</h3>
+          <p>This map is for shoreside awareness. It is not a navigation product, and it does not replace VesselWatch, VHF traffic, or the judgment of anyone actually on the water.</p>
+        </section>
+      </div>
+      <button type="button" class="btn btn-primary" data-ferries-caveats-close>Back to the map</button>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Cascadia<span>.me</span></h3>
+          <p>An illustrated field guide for people who live here.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Guides</h4>
+            <ul>
+              <li><a href="earthquake.html">Earthquake</a></li>
+              <li><a href="wildfire.html">Wildfire</a></li>
+              <li><a href="flooding.html">Flooding</a></li>
+              <li><a href="winter-storm.html">Winter Storm</a></li>
+              <li><a href="volcano.html">Volcano</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="atlas.html">Regional Hazard Atlas</a></li>
+              <li><a href="ferries.html">Ferries Underway</a></li>
+              <li><a href="signals/">Signals</a></li>
+              <li><a href="stories/">Field Stories</a></li>
+              <li><a href="build-your-kit.html">Build Your Kit</a></li>
+              <li><a href="approach.html">The Approach</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cascadia.me</p>
+        <p class="seasonal-footer"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/share.js"></script>
+  <script src="js/nav.js?v=20260712-phase8"></script>
+  <script src="js/animations.js?v=20260717-motion"></script>
+  <script src="js/ferries.js?v=20260717-ferries"></script>
+  <script src="js/feedback.js?v=20260712-phase8"></script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -214,12 +214,75 @@ small, .text-sm {
 .reveal-enabled .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition:
+    opacity 0.6s var(--ease-out) var(--reveal-delay, 0ms),
+    transform 0.6s var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal-enabled .reveal.reveal-visual {
+  transform: translateY(14px) scale(0.992);
 }
 
 .reveal-enabled .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* === Page entrance === */
+
+@keyframes cascadia-copy-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cascadia-landscape-settle {
+  from {
+    opacity: 0.76;
+    transform: scale(1.012);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js :is(
+    .home-hero-copy,
+    .guide-hub-hero-heading,
+    .approach-masthead-copy,
+    .lw-workbook-hero-copy,
+    .chapter-hero-copy,
+    .eq-hero-copy,
+    .field-stories-hero-title,
+    .field-story-masthead-copy,
+    .atlas-copy,
+    .explorer-heading
+  ) {
+    animation: cascadia-copy-arrive 720ms var(--ease-out) 90ms both;
+  }
+
+  .js :is(
+    .home-hero-picture,
+    .guide-hub-hero-art,
+    .approach-hero-figure,
+    .lw-workbook-hero-picture,
+    .chapter-hero-picture,
+    .eq-hero-picture,
+    .field-stories-hero-art,
+    .field-story-masthead-wash
+  ) {
+    transform-origin: 60% 50%;
+    animation: cascadia-landscape-settle 1.2s var(--ease-out) both;
+  }
 }
 
 /* === Utility === */

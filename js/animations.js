@@ -4,8 +4,70 @@
    ============================================================ */
 
 function initReveals() {
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  // The Living Watershed redesign kept the reveal system but retired most of
+  // the old `.reveal` hooks. Reconnect it to a small set of editorial moments
+  // so motion follows the reading rhythm instead of touching every element.
+  const revealSelectors = [
+    '.reveal',
+    '.home-prologue-opening .home-reading-column',
+    '.home-regional-passage > .home-reading-column',
+    '.home-regional-continuation',
+    '.home-chapter-contents > .home-reading-column',
+    '.home-chapter-entry',
+    '.home-companions > .home-reading-column',
+    '.home-companion',
+    '.home-neighbors > .home-reading-column',
+    '.home-author-note-layout',
+    '.guidebook-frontispiece-note',
+    '.guidebook-opening',
+    '.guidebook-entry',
+    '.guidebook-coda-layout',
+    '.approach-essay-section',
+    '.lw-workbook-quickstart-intro',
+    '.lw-workbook-section-heading',
+    '.lw-workbook-plate',
+    '.lw-workbook-capability',
+    '.lw-workbook-duration',
+    '.lw-workbook-conditional-body',
+    '.lw-workbook-sheet',
+    '.chapter-section-heading',
+    '.chapter-section > .chapter-container > .chapter-reading:first-child',
+    '.chapter-plate',
+    '.chapter-pull',
+    '.chapter-reference > .chapter-container',
+    '.eq-section > .eq-reading:first-child',
+    '.eq-plate',
+    '.eq-reference > .eq-container',
+    '.field-story-entry',
+    '.field-stories-coda-layout',
+    '.story-sources-layout',
+  ];
+  const reveals = Array.from(document.querySelectorAll(revealSelectors.join(',')));
   if (!reveals.length) return;
+
+  const visualSelectors = '.home-plate, .chapter-plate, .eq-plate, .lw-workbook-plate';
+  reveals.forEach((el) => {
+    el.classList.add('reveal');
+    if (el.matches(visualSelectors)) {
+      el.classList.add('reveal-visual');
+    }
+  });
+
+  const staggerGroups = [
+    ['.home-chapter-list', '.home-chapter-entry'],
+    ['.home-companion-list', '.home-companion'],
+    ['.guidebook-toc', '.guidebook-entry'],
+    ['.lw-workbook-capabilities', '.lw-workbook-capability'],
+    ['.field-story-list', '.field-story-entry'],
+  ];
+
+  staggerGroups.forEach(([groupSelector, itemSelector]) => {
+    document.querySelectorAll(groupSelector).forEach((group) => {
+      Array.from(group.querySelectorAll(itemSelector)).forEach((item, index) => {
+        item.style.setProperty('--reveal-delay', `${Math.min(index, 2) * 60}ms`);
+      });
+    });
+  });
 
   if (
     !('IntersectionObserver' in window) ||

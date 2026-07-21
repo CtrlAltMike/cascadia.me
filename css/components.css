@@ -677,7 +677,7 @@
   background-color: var(--color-cloud);
   background-image:
     linear-gradient(180deg, rgba(250, 248, 245, 0.78) 0%, rgba(250, 248, 245, 0.92) 38%, rgba(250, 248, 245, 1) 100%),
-    url('../assets/quake.png');
+    url('../assets/quake.webp');
   background-repeat: no-repeat;
   background-position: center center, left top;
   background-size: 100% 100%, auto clamp(7rem, 11vw, 8.5rem);
@@ -687,7 +687,7 @@
   background-color: var(--color-cloud);
   background-image:
     linear-gradient(180deg, rgba(250, 248, 245, 0.78) 0%, rgba(250, 248, 245, 0.92) 38%, rgba(250, 248, 245, 1) 100%),
-    url('../assets/fire.png');
+    url('../assets/fire.webp');
   background-repeat: no-repeat;
   background-position: center center, left top;
   background-size: 100% 100%, auto clamp(7rem, 11vw, 8.5rem);
@@ -697,7 +697,7 @@
   background-color: var(--color-cloud);
   background-image:
     linear-gradient(180deg, rgba(250, 248, 245, 0.78) 0%, rgba(250, 248, 245, 0.92) 38%, rgba(250, 248, 245, 1) 100%),
-    url('../assets/flood.png');
+    url('../assets/flood.webp');
   background-repeat: no-repeat;
   background-position: center center, left top;
   background-size: 100% 100%, auto clamp(7rem, 11vw, 8.5rem);
@@ -707,7 +707,7 @@
   background-color: var(--color-cloud);
   background-image:
     linear-gradient(180deg, rgba(250, 248, 245, 0.78) 0%, rgba(250, 248, 245, 0.92) 38%, rgba(250, 248, 245, 1) 100%),
-    url('../assets/storm.png');
+    url('../assets/storm.webp');
   background-repeat: no-repeat;
   background-position: center center, left top;
   background-size: 100% 100%, auto clamp(7rem, 11vw, 8.5rem);

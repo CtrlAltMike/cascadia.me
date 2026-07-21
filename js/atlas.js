@@ -101,7 +101,7 @@
   const loadingNote = document.querySelector('[data-atlas-loading-note]');
   const loadButton = atlas.querySelector('[data-atlas-load]');
   const resetLayersButton = atlas.querySelector('[data-atlas-reset-layers]');
-  const resetViewButton = atlas.querySelector('[data-atlas-reset-view]');
+  const resetViewButtons = Array.from(atlas.querySelectorAll('[data-atlas-reset-view]'));
   const controlSheet = atlas.querySelector('.atlas-control-sheet');
   const toggles = Array.from(atlas.querySelectorAll('[data-atlas-layer]'));
   const quakeWindowControl = atlas.querySelector('[data-atlas-quake-window]');
@@ -962,7 +962,10 @@
           attributionControl: false,
         });
 
-        map.addControl(new window.maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
+        map.addControl(new window.maplibregl.NavigationControl({
+          showCompass: !window.matchMedia('(max-width: 640px)').matches,
+          visualizePitch: false,
+        }), 'bottom-right');
         map.addControl(new window.maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 
         mapLoadPromise = new Promise((resolve, reject) => {
@@ -2485,13 +2488,15 @@
     }
   });
 
-  resetViewButton?.addEventListener('click', async () => {
-    try {
-      await initAtlas();
-      fitCascadia();
-    } catch (error) {
-      setStatus('map', 'The regional view is unavailable until the map loads.', 'error');
-    }
+  resetViewButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      try {
+        await initAtlas();
+        fitCascadia();
+      } catch (error) {
+        setStatus('map', 'The regional view is unavailable until the map loads.', 'error');
+      }
+    });
   });
 
   if (fireYearControl) {

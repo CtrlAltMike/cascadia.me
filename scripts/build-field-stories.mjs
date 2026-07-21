@@ -162,7 +162,7 @@ function head({ title, description, canonical, type = "website", schema }) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
   <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="../favicon.ico?v=3">
-  <link rel="stylesheet" href="../css/base.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/base.css?v=20260717-motion">
   <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
@@ -185,6 +185,7 @@ function header() {
         <li><a href="../signals/">Signals</a></li>
         <li><a href="./" class="active" aria-current="page">Field Stories</a></li>
         <li><a href="../approach.html">The Approach</a></li>
+        <li><a href="../faq.html">FAQ</a></li>
         <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
@@ -218,6 +219,7 @@ function footer() {
               <li><a href="./">Field Stories</a></li>
               <li><a href="../build-your-kit.html">Build Your Kit</a></li>
               <li><a href="../approach.html">The Approach</a></li>
+              <li><a href="../faq.html">FAQ</a></li>
             </ul>
           </div>
         </div>
@@ -233,7 +235,7 @@ function footer() {
 function commonScripts({ story = false } = {}) {
   return `${story ? '<script src="../js/field-stories.js?v=20260715-stories5"></script>\n  ' : ""}<script src="../js/share.js"></script>
   <script src="../js/nav.js?v=20260715-stories5"></script>
-  <script src="../js/animations.js?v=20260715-stories5"></script>
+  <script src="../js/animations.js?v=20260717-motion"></script>
   <script src="../js/feedback.js?v=20260715-stories5"></script>
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->`;
 }

@@ -596,7 +596,24 @@ rollback plan are recorded in
 [`field-maps/phase5b-production-release-plan.md`](field-maps/phase5b-production-release-plan.md).
 Phase 5B publication does not satisfy the Phase 5 commerce exit above.
 
-### Phase 6 — Complete eligible U.S. Cascadia coverage
+### Phase 6A — Polished public map experience
+
+**Goal:** apply mature map interaction patterns to the public Olympic Peninsula proof without weakening Cascadia's source or privacy boundaries.
+
+- Add an optional map synchronized with the semantic official-source results.
+- Keep search, map-job filters, selection, and visible map features in one state.
+- Use a desktop map/results split and a compact, expandable mobile results sheet.
+- Preserve useful URL state for filters and source selection.
+- Use the official USGS Topo basemap, clearly labeled representative publisher points, and verified sheet bounds.
+- Do not request location, store map state, or depend on the map for the free official-source task.
+- Keep complete source records, no-script resilience, accessibility, reduced motion, and print support.
+
+**Exit:** the interaction validator and desktop/mobile checks pass, the protected release merges, and production is verified.
+
+The implementation and acceptance contract are recorded in
+[`field-maps/phase6a-map-experience-plan.md`](field-maps/phase6a-map-experience-plan.md).
+
+### Phase 6B — Complete eligible U.S. Cascadia coverage
 
 **Goal:** reach every sellable cell within the U.S. portion of the adopted boundary.
 

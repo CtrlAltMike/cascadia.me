@@ -34,6 +34,9 @@ jobs:
       - name: Validate closed-commerce Field Maps pages
         run: python scripts/field-maps/validate-phase5-site-readiness.py
 
+      - name: Validate Field Maps map experience
+        run: python scripts/field-maps/validate-phase6a-map-experience.py
+
       - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:

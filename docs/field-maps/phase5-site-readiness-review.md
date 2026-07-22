@@ -68,6 +68,6 @@ The final full test, lint, brand, and production-build results are recorded in t
 
 ## Decision
 
-The connected sites are ready for continued public-content work with commerce closed. This is not the production proof required to complete Phase 5's commerce exit, and it does not authorize Phase 6 inventory expansion.
+The connected sites are ready for continued public-content work with commerce closed. This is not the production proof required to complete Phase 5's commerce exit, and it does not authorize Phase 6B inventory expansion.
 
 The next commerce step, when the owner chooses to resume it, is the product-format decision: unchanged digital download or a separately designed printed-and-shipped product. That decision must precede final pricing, Stripe sandbox setup, shipping terms, and fulfillment rehearsal.

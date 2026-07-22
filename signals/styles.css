@@ -222,18 +222,6 @@ h1 em { color: var(--water); font-weight: 600; }
   line-height: 1.45;
 }
 
-.field-maps-companion {
-  margin: 13px 0 0;
-  color: var(--ink-soft);
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-.field-maps-companion a {
-  color: var(--water-deep);
-  font-weight: 700;
-}
-
 .directory-freshness {
   display: flex;
   flex-wrap: wrap;
@@ -267,17 +255,30 @@ h1 em { color: var(--water); font-weight: 600; }
 }
 
 .postal-lookup {
-  padding: 18px 28px 19px;
-  background: rgba(255,255,255,0.28);
-  border-top: 1px solid var(--line);
+  position: absolute;
+  z-index: 7;
+  top: 78px;
+  left: 17px;
+  width: min(420px, calc(100% - 34px));
+  padding: 10px;
+  background: rgba(255,253,248,0.96);
+  border: 1px solid rgba(38,54,51,0.2);
+  border-radius: 5px;
+  box-shadow: 0 8px 26px rgba(24,48,47,0.14);
+  backdrop-filter: blur(12px);
 }
 
 .postal-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
 }
 
 .postal-heading label {
@@ -330,10 +331,16 @@ h1 em { color: var(--water); font-weight: 600; }
 .postal-entry button:disabled { opacity: 0.6; cursor: wait; }
 
 .postal-guidance {
-  margin: 7px 0 0;
-  color: var(--ink-soft);
-  font-size: 8px;
-  line-height: 1.45;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
 }
 
 .postal-result {
@@ -993,8 +1000,10 @@ dialog::backdrop {
 .plan-toggle-card { font-size: 9px; }
 
 .data-note {
-  top: 78px;
-  left: 17px;
+  top: auto;
+  right: 17px;
+  bottom: 61px;
+  left: auto;
   max-width: 470px;
   display: flex;
   gap: 10px;
@@ -1015,10 +1024,9 @@ dialog::backdrop {
 @media (max-width: 920px) {
   html, body { height: auto; }
   .app-shell { height: auto; min-height: 0; grid-template-columns: 1fr; grid-template-rows: auto auto auto; overflow: visible; }
-  .explorer-intro { grid-column: 1; grid-row: 1; overflow: visible; border-right: 0; }
+  .explorer-intro { grid-column: 1; grid-row: 2; overflow: visible; border-right: 0; }
   .explorer-panel { grid-column: 1; grid-row: 3; overflow: visible; border-right: 0; }
   .explorer-heading { padding: 28px 22px 20px; }
-  .postal-lookup { padding-left: 22px; padding-right: 22px; }
   .start-here { margin-left: 14px; margin-right: 14px; }
   .search-label, .filter-disclosure summary { padding-left: 22px; padding-right: 22px; }
   .search-wrap { margin-left: 22px; margin-right: 22px; }
@@ -1026,22 +1034,22 @@ dialog::backdrop {
   .overlay-note { margin-left: 22px; margin-right: 22px; }
   .overlay-grid { padding-left: 22px; padding-right: 22px; }
   .clear-overlays { margin-left: 22px; margin-right: 22px; }
-  .map-stage { height: min(76vh, 760px); min-height: 590px; grid-column: 1; grid-row: 2; }
+  .map-stage { height: min(76svh, 760px); min-height: 590px; grid-column: 1; grid-row: 1; }
   .results { padding-bottom: 50px; }
 }
 
 @media (max-width: 560px) {
   .app-shell { min-height: 0; }
-  .map-stage { height: 74vh; min-height: 520px; }
-  .map-toolbar { top: 10px; left: 10px; right: 10px; }
+  .map-stage { height: calc(100svh - var(--nav-height)); min-height: 560px; }
+  .postal-lookup { top: 10px; left: 10px; width: calc(100% - 20px); }
+  .map-toolbar { top: 73px; left: 10px; right: 10px; }
   .map-toolbar-actions button:first-child { display: none; }
   .map-caption { left: 10px; right: 10px; bottom: 10px; }
   .map-caption span:last-child { display: none; }
-  .data-note { top: 71px; left: 10px; right: 10px; max-width: none; }
-  .data-note span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .legend { top: 71px; right: 10px; }
+  .data-note { display: none; }
+  .legend { top: 131px; right: 10px; }
   .record-card { left: 10px; bottom: 53px; width: calc(100% - 20px); }
-  .maplibregl-ctrl-top-right { top: 71px; right: 0; }
+  .maplibregl-ctrl-top-right { top: 131px; right: 0; }
   h1 { font-size: 39px; }
   .check-grid, .topic-grid { grid-template-columns: 1fr 1fr; }
   .gate-dialog h2 { font-size: 27px; }
@@ -1057,7 +1065,6 @@ dialog::backdrop {
   .perimeter-dialog { padding: 22px; }
   .perimeter-dialog h2 { font-size: 27px; }
   .source-ledger article > div { display: grid; gap: 4px; }
-  .postal-heading { display: grid; gap: 3px; }
 }
 
 @media (min-width: 561px) and (max-width: 760px) {

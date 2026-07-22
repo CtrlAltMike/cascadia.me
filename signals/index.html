@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="../css/base.css?v=20260717-motion">
   <link rel="stylesheet" href="../css/components.css?v=20260715-field-stories">
-  <link rel="stylesheet" href="styles.css?v=20260716-flow">
+  <link rel="stylesheet" href="styles.css?v=20260722-map-first">
 </head>
 <body class="signals-page">
   <a class="skip-link" href="#explorer">Skip to Signals</a>
@@ -57,7 +57,6 @@
         <p class="eyebrow">Cascadia Signals / beta</p>
         <h1 id="explorer-title">Who can help, <em>here?</em></h1>
         <p class="lede">A place-aware directory of official alerts, emergency services, support, and preparedness resources—showing who issues instructions, who transmits alerts, and who supplies hazard information.</p>
-        <p class="field-maps-companion">Looking for an official trail, terrain, access, or offline map? <a href="../field-maps/">Open Field Maps.</a></p>
         <p class="directory-freshness">
           <span>Directory last updated</span>
           <time id="directory-last-updated" datetime="2026-07-14">July 14, 2026</time>
@@ -65,27 +64,6 @@
         </p>
       </div>
 
-      <form class="postal-lookup" id="postal-lookup" novalidate>
-        <div class="postal-heading">
-          <label for="postal-code">Find services by ZIP or postal code</label>
-          <span>Approximate map match</span>
-        </div>
-        <div class="postal-entry">
-          <input id="postal-code" name="postal-code" type="text" inputmode="text" maxlength="10" autocomplete="postal-code" placeholder="98101 or V6B 1A1" aria-describedby="postal-guidance postal-status">
-          <button type="submit" id="postal-submit">Locate</button>
-        </div>
-        <p class="postal-guidance" id="postal-guidance">A ZIP or postal-code search places the map near the matching area, not at an address or an emergency-service boundary. Choose a point on the map when the exact jurisdiction matters.</p>
-        <div class="postal-result" id="postal-result" hidden>
-          <p class="postal-result-label">Location match</p>
-          <strong id="postal-match-title"></strong>
-          <p id="postal-status" role="status" aria-live="polite"></p>
-          <p class="postal-jurisdictions" id="postal-jurisdictions"></p>
-          <div class="postal-actions">
-            <button type="button" id="confirm-postal-point">Choose exact spot on map</button>
-            <button type="button" id="clear-postal">Clear</button>
-          </div>
-        </div>
-      </form>
     </section>
 
     <section class="map-stage" aria-label="Interactive map for finding applicable emergency resources">
@@ -100,6 +78,28 @@
           <button type="button" id="toggle-legend" aria-expanded="false" aria-controls="map-legend">Legend</button>
         </div>
       </div>
+
+      <form class="postal-lookup" id="postal-lookup" novalidate>
+        <div class="postal-heading">
+          <label for="postal-code">Find a place</label>
+          <span>ZIP or postal code</span>
+        </div>
+        <div class="postal-entry">
+          <input id="postal-code" name="postal-code" type="text" inputmode="text" maxlength="10" autocomplete="postal-code" placeholder="ZIP or postal code" aria-describedby="postal-guidance postal-status">
+          <button type="submit" id="postal-submit">Find</button>
+        </div>
+        <p class="postal-guidance" id="postal-guidance">A postal search locates an approximate census area, not an address or emergency-service boundary. Choose a point on the map when the exact jurisdiction matters.</p>
+        <div class="postal-result" id="postal-result" hidden>
+          <p class="postal-result-label">Location match</p>
+          <strong id="postal-match-title"></strong>
+          <p id="postal-status" role="status" aria-live="polite"></p>
+          <p class="postal-jurisdictions" id="postal-jurisdictions"></p>
+          <div class="postal-actions">
+            <button type="button" id="confirm-postal-point">Choose exact spot on map</button>
+            <button type="button" id="clear-postal">Clear</button>
+          </div>
+        </div>
+      </form>
 
       <div id="map" class="map" role="application" aria-label="Map. Use arrow keys to move and plus or minus to zoom.">
         <div class="map-loading" id="map-loading">
@@ -273,7 +273,6 @@
             <h4>Explore</h4>
             <ul>
               <li><a href="../atlas.html">Regional Hazard Atlas</a></li>
-              <li><a href="../field-maps/">Field Maps</a></li>
               <li><a href="./">Signals</a></li>
               <li><a href="../stories/">Field Stories</a></li>
               <li><a href="../build-your-kit.html">Build Your Kit</a></li>
@@ -436,7 +435,7 @@
   <script src="authority-data.js?v=20260714-actionability" defer></script>
   <script src="bc-province-boundary.js?v=20260714" defer></script>
   <script src="bc-forecast-zones.js?v=20260714" defer></script>
-  <script src="app.js?v=20260715-volcano" defer></script>
+  <script src="app.js?v=20260722-map-first" defer></script>
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -1848,7 +1848,7 @@ function renderDirectory() {
         <span class="result-swatch" style="--swatch:${publisherColors[resource.publisher]}" aria-hidden="true"></span>
         <span class="result-copy"><strong>${escapeHtml(resource.name)}</strong><span class="result-role">${escapeHtml(resource.authorityRole)}</span><small>${escapeHtml(resource.place)} · ${escapeHtml(resource.categories.map((category) => categoryLabels[category]).join(" · "))}</small></span>
         <span class="result-kind">${escapeHtml(publisherLabels[resource.publisher])}</span>`;
-      focus.addEventListener("click", () => selectResource(resource.id));
+      focus.addEventListener("click", () => selectResource(resource.id, { revealMap: true }));
 
       const link = document.createElement("a");
       link.className = "result-source-link";
@@ -2199,7 +2199,7 @@ function spiderfyFeatures(features, centerCoordinates, { clusterId = null } = {}
   spiderfyActive = true;
 }
 
-function selectResource(id) {
+function selectResource(id, { revealMap = false } = {}) {
   const resource = resources.find((item) => item.id === id);
   if (!resource) return;
   closeServiceAreaDetails({ update: false });
@@ -2258,6 +2258,12 @@ function selectResource(id) {
   updateSelectedArea();
   focusResourceCoverage(resource, exactCoverage);
   renderDirectory();
+  if (revealMap && window.matchMedia("(max-width: 920px)").matches) {
+    document.querySelector(".map-stage")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  }
 }
 
 function updateScaleLabel() {

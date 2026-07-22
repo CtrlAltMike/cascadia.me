@@ -1,5 +1,6 @@
 const CACHE_SECONDS = 120;
 const SOURCE_TIMEOUT_MS = 9_000;
+const SOURCE_ATTEMPTS = 2;
 const MAX_SOURCE_BYTES = 6 * 1024 * 1024;
 const FIRE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 const STALE_SOURCE_MS = 24 * 60 * 60 * 1000;
@@ -630,28 +631,42 @@ function normalizeRoadFeature(record) {
 }
 
 async function fetchJson(fetchImpl, url, headers) {
-  const response = await fetchImpl(url.toString(), {
-    headers,
-    signal: AbortSignal.timeout(SOURCE_TIMEOUT_MS),
-  });
-  if (!response.ok) {
-    throw new Error(`upstream returned ${response.status}`);
-  }
+  let lastError;
+  for (let attempt = 1; attempt <= SOURCE_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetchImpl(url.toString(), {
+        headers,
+        signal: AbortSignal.timeout(SOURCE_TIMEOUT_MS),
+      });
+      if (!response.ok) {
+        const error = new Error(`upstream returned ${response.status}`);
+        error.retryable = response.status === 429 || response.status >= 500;
+        throw error;
+      }
 
-  const contentLength = Number(response.headers.get("content-length") || "0");
-  if (contentLength > MAX_SOURCE_BYTES) {
-    throw new Error("upstream response exceeded size limit");
-  }
+      const contentLength = Number(response.headers.get("content-length") || "0");
+      if (contentLength > MAX_SOURCE_BYTES) {
+        throw new Error("upstream response exceeded size limit");
+      }
 
-  const data = await response.json();
-  if (!Array.isArray(data) && data?.error) {
-    throw new Error("upstream returned an API error");
-  }
+      const data = await response.json();
+      if (!Array.isArray(data) && data?.error) {
+        const error = new Error("upstream returned an API error");
+        error.retryable = true;
+        throw error;
+      }
 
-  return {
-    data,
-    lastModifiedAt: toIso(response.headers.get("last-modified") || response.headers.get("date")),
-  };
+      return {
+        data,
+        lastModifiedAt: toIso(response.headers.get("last-modified") || response.headers.get("date")),
+      };
+    } catch (error) {
+      lastError = error;
+      const retryable = error?.retryable || error?.name === "TimeoutError" || error?.name === "TypeError";
+      if (!retryable || attempt === SOURCE_ATTEMPTS) throw error;
+    }
+  }
+  throw lastError;
 }
 
 function arcgisQueryUrl(base, extraParams, bounds = PNW_US_BOUNDS) {

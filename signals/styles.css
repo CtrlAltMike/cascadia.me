@@ -222,6 +222,18 @@ h1 em { color: var(--water); font-weight: 600; }
   line-height: 1.45;
 }
 
+.field-maps-companion {
+  margin: 13px 0 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.field-maps-companion a {
+  color: var(--water-deep);
+  font-weight: 700;
+}
+
 .directory-freshness {
   display: flex;
   flex-wrap: wrap;

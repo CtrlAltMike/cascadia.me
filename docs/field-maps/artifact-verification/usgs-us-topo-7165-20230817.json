@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "artifact_id": "usgs-us-topo-7165-20230817",
+  "verified_at": "2026-07-21",
+  "boundary_version": "cascadia-field-maps-v1",
+  "artifact": {
+    "publisher": "U.S. Geological Survey",
+    "cell_id": "7165",
+    "cell_name": "Cape Flattery",
+    "cell_mapcode": "48124-D6",
+    "edition_date": "2023-08-17",
+    "publication_year": "2023",
+    "official_url": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Maps/USTopo/PDF/WA/WA_Cape_Flattery_20230817_TM_geo.pdf"
+  },
+  "catalog": {
+    "source_id": "usgs-us-topo-availability",
+    "matrix_checked_at": "2026-07-21",
+    "live_checked_at": "2026-07-21",
+    "status": "exact-current",
+    "live_product": {
+      "cell_id": "7165",
+      "cell_name": "Cape Flattery",
+      "primary_state": "Washington",
+      "product_date": "2023-08-17",
+      "product_url": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Maps/USTopo/PDF/WA/WA_Cape_Flattery_20230817_TM_geo.pdf",
+      "publication_year": "2023"
+    }
+  },
+  "download": {
+    "sha256": "2a203c1add0997af69ff6165cd61b749df42be5a57780b0c02035a37aa974570",
+    "byte_count": "8880171",
+    "content_type": "application/pdf",
+    "etag": "862a2202ffe4fa37a7b8a201cea0220c-2",
+    "last_modified": "Sat, 19 Aug 2023 01:07:37 GMT"
+  },
+  "pdf": {
+    "header": "%PDF-1.6",
+    "page_count": 1,
+    "encrypted": false,
+    "page_width_points": 1728.0,
+    "page_height_points": 2088.0,
+    "document_metadata": {
+      "/CreationDate": "D:20230817180140Z",
+      "/Creator": "Esri ArcSOC 10.8.1.14362",
+      "/ModDate": "D:20230817180509Z",
+      "/Title": "Cape Flattery"
+    },
+    "has_xmp_metadata": true,
+    "has_optional_content_layers": true,
+    "has_geospatial_viewport": true,
+    "unique_attachment_count": 2,
+    "attachments": [
+      {
+        "sha256": "794c8a88d8b34cda1d53d17118f839fd6a1380bae0f2fce33bef370f67900897",
+        "byte_count": 934091,
+        "aliases": [
+          "US Topo Map Symbols.pdf"
+        ],
+        "canonical_name": "US Topo Map Symbols.pdf"
+      },
+      {
+        "sha256": "58a511f94e2856d8c08c6cda07fb084dbf65fa88b62b6caddb25044600b402f5",
+        "byte_count": 39741,
+        "aliases": [
+          "WA_Cape_Flattery_20230817_TM_geo.xml"
+        ],
+        "canonical_name": "WA_Cape_Flattery_20230817_TM_geo.xml"
+      }
+    ]
+  },
+  "embedded_metadata": {
+    "publisher": "U.S. Geological Survey",
+    "publication_date": "20230817",
+    "title": "US Topo 7.5-minute map for Cape Flattery, WA",
+    "cell_id": "7165",
+    "use_constraints": "This product may be freely copied, redistributed, and printed. Most content is derived from public domain data with no reuse constraints. The primary exceptions are the orthoimage layers for maps in Alaska and Hawaii, which are copyrighted and have some reuse restrictions; see the relevant data source sections (srcinfo tag) in this file. US Topo maps with dates 2010-2015 may contain commercial road data that is also copyrighted with use restrictions; see the credit note and metadata file for individual products. Even maps that contain copyrighted data may be freely used and redistributed, provided the appropriate copyright notices are retained; normal fair-use principles apply. Users should be aware that temporal changes may have occurred since these data were collected and some data may no longer represent actual surface conditions. Users should not use these data for critical applications without a full awareness of their limitations. Acknowledgment of the U.S. Geological Survey is appreciated for products derived from these data.",
+    "access_constraints": "None",
+    "temporal_begin": "19790910",
+    "temporal_end": "20230809",
+    "update_status": "Irregular",
+    "sources": [
+      {
+        "origin": "U.S. Geological Survey, National Geospatial Technical Operations Center - 3D Elevation Program is a component of a comprehensive base geospatial data model",
+        "publication_date": "20020401",
+        "title": "Hypsography",
+        "citation_abbreviation": "Hypsography",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Geological Survey",
+        "publication_date": "2016",
+        "title": "Land Cover - Woodland",
+        "citation_abbreviation": "Land Cover - Woodland",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Geological Survey in cooperation with U.S. Environmental Protection Agency, USDA Forest Service, and other Federal, State and local partners. National Hydrography Dataset is a component of a comprehensive base geospatial data model.",
+        "publication_date": "20100820",
+        "title": "Hydrography",
+        "citation_abbreviation": "Hydrography",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Census Bureau, Geography Division",
+        "publication_date": "2014",
+        "title": "Transportation, Census Roads",
+        "citation_abbreviation": "Roads - Census",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "International Boundary Commission",
+        "publication_date": "2006",
+        "title": "U.S.-Canada National Boundary",
+        "citation_abbreviation": "U.S. / Canada International Boundary",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Census Bureau",
+        "publication_date": "20190809",
+        "title": "State and Equivalent Boundary",
+        "citation_abbreviation": "State Boundaries",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Census Bureau",
+        "publication_date": "20190809",
+        "title": "County and Equivalent Boundary",
+        "citation_abbreviation": "County Boundaries",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "National Park Service - Land Resources Division",
+        "publication_date": "2020",
+        "title": "National Park Service Boundary",
+        "citation_abbreviation": "National Park Service Boundary",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Department of Interior, U.S. Fish and Wildlife Service",
+        "publication_date": "2020",
+        "title": "FWS Interest Simplified Boundaries",
+        "citation_abbreviation": "U. S. Fish and Wildlife Service Boundary",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Dept. of Interior, Bureau of Land Management, Division of Support Services, Branch of Information Resource Management",
+        "publication_date": "2012",
+        "title": "Public Land Survey System",
+        "citation_abbreviation": "Public Land Survey System - BLM",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "For the conterminous 48 states - National Agriculture Image Program (NAIP) administered by the Aerial Photography Field Office (APFO) for the United States Department of Agriculture.",
+        "publication_date": "Publication Date",
+        "title": "Orthoimagery - CONUS",
+        "citation_abbreviation": "Imagery",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Geological Survey",
+        "publication_date": "Publication Date",
+        "title": "Geographic Names Information System (GNIS)",
+        "citation_abbreviation": "Geographic Names",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "Bureau of Land Management",
+        "publication_date": "Unknown",
+        "title": "Alaska Bureau of Land Management Boundary",
+        "citation_abbreviation": "Bureau of Land Management Boundary",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Geological Survey",
+        "publication_date": "Publication Date",
+        "title": "Shaded Relief",
+        "citation_abbreviation": "Shaded Relief",
+        "source_type": "digital data"
+      },
+      {
+        "origin": "U.S. Geological Survey",
+        "publication_date": "Publication Date",
+        "title": "Grids and Coordinate System",
+        "citation_abbreviation": "Grids and Coordinate Systems",
+        "source_type": "raster data"
+      }
+    ],
+    "filename": "WA_Cape_Flattery_20230817_TM_geo.xml",
+    "sha256": "58a511f94e2856d8c08c6cda07fb084dbf65fa88b62b6caddb25044600b402f5",
+    "byte_count": 39741
+  },
+  "symbol_guide": {
+    "page_count": 4,
+    "title": "USTopo_Legend_7_7_20230111.pdf",
+    "identifies_usgs": true,
+    "states_freely_distributable": true,
+    "filename": "US Topo Map Symbols.pdf",
+    "sha256": "794c8a88d8b34cda1d53d17118f839fd6a1380bae0f2fce33bef370f67900897",
+    "byte_count": 934091
+  },
+  "collar": {
+    "text": "Beach\nCape Flattery\nJones Rock\nQUADRANGLE LOCATION\nCAPE FLATTERY QUADRANGLE\nWASHINGTON - CLALLAM COUNTY\nADJOINING QUADRANGLES\nImagery.....................................................NAIP, August 2017 - November 2017\nRoads......................................... U.S. Census Bureau, 2016\nNames............................................................................GNIS, 1979 - 2023\nHydrography...............................National Hydrography Dataset, 2003 - 2019\nContours............................................National Elevation Dataset, 1999\nBoundaries..............Multiple sources; see metadata file 2018 - 2022\nPublic Land Survey System................................................BLM, 2019\nWetlands.................FWS National Wetlands Inventory Not Available\nNorth American Datum of 1983 (NAD83)\n1 000-meter grid:Universal Transverse Mercator, Zone 10U\nProduced by the United States Geological Survey\nThis map is not a legal document. Boundaries may be\ngeneralized for this map scale. Private lands within government\nNORTH AMERICAN VERTICAL DATUM OF 1988\nSCALE 1:24 000\n1000 500 0 METERS 1000 2000\nFEET\nCAPE FLATTERY, WA\n2023\nExpressway Local Connector\nROAD CLASSIFICATION\nRamp 4WD",
+    "render": {
+      "renderer": "pdftoppm",
+      "dpi": 144,
+      "crop": {
+        "x": 0,
+        "y": 3299,
+        "width": 3456,
+        "height": 877
+      },
+      "render_sha256": "3d58daa9a7ecaf6aeb96801f052e70c46b9ad48a5e57b0254b59a6b95d68ed0c",
+      "render_width": 3456,
+      "render_height": 877,
+      "renderer_warning_lines": 77
+    },
+    "manual_review": {
+      "status": "passed",
+      "reviewed_at": "2026-07-21",
+      "review_method": "Rendered full-page and collar inspection by Codex during Phase 2 implementation",
+      "review_owner": "Cascadia Field Maps product owner",
+      "binding_sha256": "2a203c1add0997af69ff6165cd61b749df42be5a57780b0c02035a37aa974570",
+      "note": "Title and 2023 edition are visible. Collar credits identify NAIP imagery, U.S. Census Bureau roads, GNIS names, National Hydrography Dataset hydrography, National Elevation Dataset contours, metadata-documented government boundaries, BLM survey data, and no available wetlands layer. No third-party copyright notice was observed."
+    }
+  },
+  "rights": {
+    "authority_url": "https://www.usgs.gov/faqs/are-usgs-topographic-maps-copyrighted",
+    "rights_class": "public-domain-us",
+    "public_domain_status": "verified-public-domain-us",
+    "third_party_status": "no-excluded-component-found",
+    "prohibited_findings": [],
+    "approved_sale_delivery_territories": [],
+    "territory_status": "not-approved"
+  },
+  "checks": [
+    {
+      "id": "official-url",
+      "status": "passed",
+      "evidence": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Maps/USTopo/PDF/WA/WA_Cape_Flattery_20230817_TM_geo.pdf"
+    },
+    {
+      "id": "live-catalog-exact-match",
+      "status": "passed",
+      "evidence": "exact-current"
+    },
+    {
+      "id": "expected-file-checksum",
+      "status": "passed",
+      "evidence": "2a203c1add0997af69ff6165cd61b749df42be5a57780b0c02035a37aa974570"
+    },
+    {
+      "id": "single-page",
+      "status": "passed",
+      "evidence": "1"
+    },
+    {
+      "id": "not-encrypted",
+      "status": "passed",
+      "evidence": "False"
+    },
+    {
+      "id": "geospatial-viewport",
+      "status": "passed",
+      "evidence": "Page contains /VP"
+    },
+    {
+      "id": "optional-content-layers",
+      "status": "passed",
+      "evidence": "Document contains /OCProperties"
+    },
+    {
+      "id": "embedded-metadata-publisher",
+      "status": "passed",
+      "evidence": "U.S. Geological Survey"
+    },
+    {
+      "id": "document-title",
+      "status": "passed",
+      "evidence": "Cape Flattery"
+    },
+    {
+      "id": "embedded-metadata-cell-id",
+      "status": "passed",
+      "evidence": "7165"
+    },
+    {
+      "id": "embedded-metadata-publication-date",
+      "status": "passed",
+      "evidence": "20230817"
+    },
+    {
+      "id": "embedded-use-constraints",
+      "status": "passed",
+      "evidence": "This product may be freely copied, redistributed, and printed. Most content is derived from public domain data with no reuse constraints. The primary exceptions are the orthoimage layers for maps in Alaska and Hawaii, which are copyrighted and have some reuse restrictions; see the relevant data source sections (srcinfo tag) in this file. US Topo maps with dates 2010-2015 may contain commercial road data that is also copyrighted with use restrictions; see the credit note and metadata file for individual products. Even maps that contain copyrighted data may be freely used and redistributed, provided the appropriate copyright notices are retained; normal fair-use principles apply. Users should be aware that temporal changes may have occurred since these data were collected and some data may no longer represent actual surface conditions. Users should not use these data for critical applications without a full awareness of their limitations. Acknowledgment of the U.S. Geological Survey is appreciated for products derived from these data."
+    },
+    {
+      "id": "commercial-road-year-exception",
+      "status": "passed",
+      "evidence": "Publication year 2023"
+    },
+    {
+      "id": "alaska-hawaii-imagery-exception",
+      "status": "passed",
+      "evidence": "Washington"
+    },
+    {
+      "id": "prohibited-content-screen",
+      "status": "passed",
+      "evidence": "No prohibited notice or provider found"
+    },
+    {
+      "id": "official-symbol-guide",
+      "status": "passed",
+      "evidence": "{\"identifies_usgs\": true, \"page_count\": 4, \"states_freely_distributable\": true, \"title\": \"USTopo_Legend_7_7_20230111.pdf\"}"
+    },
+    {
+      "id": "collar-text-present",
+      "status": "passed",
+      "evidence": "Beach\nCape Flattery\nJones Rock\nQUADRANGLE LOCATION\nCAPE FLATTERY QUADRANGLE\nWASHINGTON - CLALLAM COUNTY\nADJOINING QUADRANGLES\nImagery.....................................................NAIP, August 2017 - November 2017\nRoads......................................... U.S. Census Bureau, 2016\nNames............................................................................GNIS, 1979 - 2023\nHydrography...............................National Hydrography Dataset, 2003 - 2019\nContours............................................National Elevation Dataset, 1999\nBoundaries..............Multiple sources; see metadata file 2018 - 2022\nPublic Land Survey System................................................BLM, 2019\nWetlands.................FWS National Wetlands Inventory Not Available\nNorth American Datum of 1983 (NAD83)\n1 000-meter grid:Universal Transverse Mercator, Zone 10U\nProduced by the United States Geological Survey\nThis map is not a legal document. Boundaries may be\ngeneralized for this map scale. Private lands within government\nNORTH AMERICAN VERTICAL DATUM OF 1988\nSCALE 1:24 000\n1000 500 0 METERS 1000 2000\nFEET\nCAPE FLATTERY, WA\n2023\nExpressway Local Connector\nROAD CLASSIFICATION\nRamp 4WD"
+    },
+    {
+      "id": "manual-collar-review",
+      "status": "passed",
+      "evidence": "Title and 2023 edition are visible. Collar credits identify NAIP imagery, U.S. Census Bureau roads, GNIS names, National Hydrography Dataset hydrography, National Elevation Dataset contours, metadata-documented government boundaries, BLM survey data, and no available wetlands layer. No third-party copyright notice was observed."
+    }
+  ],
+  "decision": {
+    "eligibility_status": "verification-complete-territory-blocked",
+    "sale_status": "blocked-territory",
+    "pause_reason": "No sale/delivery territory has a completed legal review; the artifact must remain paused even though the exact-file public-domain screen passed."
+  }
+}

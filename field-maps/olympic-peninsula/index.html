@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="../../css/base.css?v=20260717-motion">
   <link rel="stylesheet" href="../../css/components.css?v=20260715-field-stories">
   <link rel="stylesheet" href="../../css/living-watershed-surfaces.css?v=20260712-phase8">
-  <link rel="stylesheet" href="../../css/living-watershed-field-maps.css?v=20260721-phase3">
+  <link rel="stylesheet" href="../../css/living-watershed-field-maps.css?v=20260721-phase6a">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -122,22 +122,146 @@
       </ul>
     </aside>
 
-    <section class="fm-section" aria-labelledby="choose-job-title">
+    <section class="fm-section fm-explorer-section" data-field-map-explorer aria-labelledby="choose-job-title">
       <div class="fm-container">
-        <div class="fm-section-heading">
+        <div class="fm-section-heading fm-explorer-heading">
           <div>
             <p class="surface-eyebrow">Choose the map job</p>
             <h2 id="choose-job-title">One place. Different authorities.</h2>
           </div>
-          <p>A park map, a terrain sheet, and a legal vehicle-use map answer different questions. Keep more than one when the trip crosses those questions.</p>
+          <p>The map keeps geographic context visible. The results keep the publisher, purpose, and limitation in view. Neither replaces the full official record below.</p>
         </div>
-        <ol class="fm-job-index" aria-label="Olympic Peninsula map jobs">
-          <li><a href="#trail-maps"><span class="fm-job-number">01</span><strong>Trail and recreation</strong></a></li>
-          <li><a href="#terrain-maps"><span class="fm-job-number">02</span><strong>Terrain and topography</strong></a></li>
-          <li><a href="#vehicle-access"><span class="fm-job-number">03</span><strong>Vehicle access</strong></a></li>
-          <li><a href="#land-manager"><span class="fm-job-number">04</span><strong>Land manager</strong></a></li>
-          <li><a href="../offline-field-guide/"><span class="fm-job-number">05</span><strong>Offline backup</strong></a></li>
-        </ol>
+
+        <div class="fm-explorer-toolbar" aria-label="Field map filters">
+          <label class="fm-explorer-search" for="field-map-search">
+            <span class="sr-only">Search field map sources</span>
+            <span class="fm-search-icon" aria-hidden="true"></span>
+            <input id="field-map-search" type="search" placeholder="Search source or map job" autocomplete="off" data-field-map-search>
+          </label>
+          <div class="fm-filter-chips" role="group" aria-label="Filter by map job">
+            <button type="button" class="fm-filter-chip is-active" data-field-map-job="all" aria-pressed="true">All sources</button>
+            <button type="button" class="fm-filter-chip" data-field-map-job="trail" aria-pressed="false">Trail</button>
+            <button type="button" class="fm-filter-chip" data-field-map-job="terrain" aria-pressed="false">Terrain</button>
+            <button type="button" class="fm-filter-chip" data-field-map-job="vehicle" aria-pressed="false">Vehicle access</button>
+            <button type="button" class="fm-filter-chip" data-field-map-job="offline" aria-pressed="false">Offline</button>
+          </div>
+        </div>
+
+        <div class="fm-explorer-layout">
+          <div class="fm-map-panel">
+            <div
+              class="fm-map-canvas"
+              id="olympic-field-map"
+              role="region"
+              aria-label="Interactive Olympic Peninsula source map"
+              aria-describedby="field-map-instructions"
+              tabindex="0"
+              data-field-map-canvas
+            >
+              <p class="sr-only" id="field-map-instructions">Use the source results beside or below the map to move between official map families. Keyboard users can focus the map and use arrow keys to pan. The map does not request your location.</p>
+              <div class="fm-map-placeholder" data-field-map-placeholder>
+                <strong>Loading the official USGS reference map</strong>
+                <span>The source list remains available if the map cannot load.</span>
+                <button type="button" class="fm-map-retry" data-field-map-retry hidden>Try loading again</button>
+              </div>
+              <noscript>
+                <p class="fm-map-noscript">The optional geographic view needs JavaScript. Every official source remains available in the list and full records.</p>
+              </noscript>
+            </div>
+
+            <div class="fm-map-utilities" aria-label="Map utilities">
+              <button type="button" class="fm-map-utility" data-field-map-reset>Reset view</button>
+              <details class="fm-map-layers">
+                <summary>Layers <span data-field-map-layer-count>2 on</span></summary>
+                <div class="fm-map-layer-panel">
+                  <label><input type="checkbox" data-field-map-layer="sources" checked> Publisher source points</label>
+                  <label><input type="checkbox" data-field-map-layer="sheets" checked> Verified USGS sheets</label>
+                </div>
+              </details>
+            </div>
+
+            <div class="fm-map-legend" aria-label="Map legend">
+              <span><i class="fm-legend-source" aria-hidden="true"></i> Source family</span>
+              <span><i class="fm-legend-sheet" aria-hidden="true"></i> Verified sheet</span>
+            </div>
+            <p class="fm-map-note">Orientation only. Source points are regional starting points—not routes, legal boundaries, closures, or your location. Basemap: <a href="https://www.usgs.gov/faqs/what-are-base-map-services-or-urls-used-national-map">USGS The National Map</a>.</p>
+          </div>
+
+          <section class="fm-results-sheet" data-field-map-sheet data-sheet-state="compact" aria-labelledby="field-map-results-title">
+            <button type="button" class="fm-sheet-handle" data-field-map-sheet-toggle aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span class="sr-only">Expand source results</span>
+            </button>
+            <div class="fm-results-heading">
+              <div>
+                <p class="surface-eyebrow">Official sources</p>
+                <h3 id="field-map-results-title">Results</h3>
+              </div>
+              <p data-field-map-result-count role="status" aria-live="polite">3 sources</p>
+            </div>
+
+            <div class="fm-result-list" data-field-map-results>
+              <article
+                class="fm-result-card is-selected"
+                data-field-map-source="trail-maps"
+                data-field-map-jobs="trail recreation offline land-manager"
+                data-field-map-search-text="National Park Service Olympic park wilderness trail recreation map"
+                data-field-map-point="-123.73,47.78"
+                data-field-map-bounds="-124.92,47.30,-122.80,48.30"
+              >
+                <button type="button" class="fm-result-select" aria-pressed="true">
+                  <span class="fm-result-index">01</span>
+                  <span class="fm-result-copy">
+                    <small>National Park Service</small>
+                    <strong>Park and wilderness maps</strong>
+                    <span>Trail and recreation · Free</span>
+                  </span>
+                </button>
+                <a href="#trail-maps">Open full source record</a>
+              </article>
+
+              <article
+                class="fm-result-card"
+                data-field-map-source="terrain-maps"
+                data-field-map-jobs="terrain topography print offline"
+                data-field-map-search-text="USGS US Topo terrain topography contour Cape Flattery Mount Olympus Port Angeles"
+                data-field-map-point="-123.96,48.08"
+                data-field-map-bounds="-124.80,47.70,-123.30,48.55"
+              >
+                <button type="button" class="fm-result-select" aria-pressed="false">
+                  <span class="fm-result-index">02</span>
+                  <span class="fm-result-copy">
+                    <small>U.S. Geological Survey</small>
+                    <strong>US Topo terrain sheets</strong>
+                    <span>Terrain and print · 3 verified examples</span>
+                  </span>
+                </button>
+                <a href="#terrain-maps">Open full source record</a>
+              </article>
+
+              <article
+                class="fm-result-card"
+                data-field-map-source="vehicle-access"
+                data-field-map-jobs="vehicle access roads offline land-manager"
+                data-field-map-search-text="USDA Forest Service Olympic Motor Vehicle Use Map MVUM roads access"
+                data-field-map-point="-123.34,47.62"
+                data-field-map-bounds="-124.45,47.25,-122.65,48.28"
+              >
+                <button type="button" class="fm-result-select" aria-pressed="false">
+                  <span class="fm-result-index">03</span>
+                  <span class="fm-result-copy">
+                    <small>USDA Forest Service</small>
+                    <strong>Motor Vehicle Use Maps</strong>
+                    <span>Legal vehicle designations · Free</span>
+                  </span>
+                </button>
+                <a href="#vehicle-access">Open full source record</a>
+              </article>
+            </div>
+
+            <p class="fm-result-empty" data-field-map-empty hidden>No source matches those filters. Clear the search or choose another map job.</p>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -385,7 +509,7 @@
   <script src="../../js/share.js"></script>
   <script src="../../js/nav.js?v=20260712-phase8"></script>
   <script src="../../js/animations.js?v=20260717-motion"></script>
-  <script src="../../js/field-maps.js?v=20260721-phase3"></script>
+  <script src="../../js/field-maps.js?v=20260721-phase6a"></script>
   <script src="../../js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

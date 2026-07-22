@@ -319,7 +319,7 @@
   transition: opacity 180ms ease-out;
 }
 
-.field-story-entry.is-picked-up,
+.field-story-entry.is-picked-up:hover,
 .field-story-entry:hover,
 .field-story-entry:focus-within {
   --book-lift: -13px;
@@ -336,7 +336,7 @@
   transition-duration: 90ms;
 }
 
-.field-story-entry.is-picked-up::after,
+.field-story-entry.is-picked-up:hover::after,
 .field-story-entry:hover::after,
 .field-story-entry:focus-within::after {
   opacity: 0.72;

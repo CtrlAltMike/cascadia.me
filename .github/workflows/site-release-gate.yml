@@ -1,0 +1,48 @@
+name: Cascadia site release gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    name: release-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate Signals registry
+        run: node signals/scripts/validate-registry.mjs
+
+      - name: Validate Signals browser script
+        run: node --check signals/app.js
+
+      - name: Confirm the retired product stays removed
+        shell: bash
+        run: |
+          test ! -e field-maps
+          test ! -e css/living-watershed-field-maps.css
+          test ! -e js/field-maps.js
+          if grep -RniE \
+            --include='*.html' \
+            --include='*.xml' \
+            --include='*.js' \
+            --include='*.css' \
+            --include='*.md' \
+            --exclude-dir='.git' \
+            'field[ -]?maps|/field-maps' .; then
+            echo 'Retired Field Maps references remain.'
+            exit 1
+          fi

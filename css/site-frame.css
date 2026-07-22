@@ -1,0 +1,170 @@
+/* ============================================================
+   Cascadia.me — canonical production site frame
+   Header, navigation, wordmark, share control, and footer.
+   Loaded last so page surfaces cannot accidentally restyle global chrome.
+   ============================================================ */
+
+body.site-frame-page {
+  --site-frame-cream: #fbf7ee;
+  --site-frame-cream-deep: #f2e9d7;
+  --site-frame-ocean: #063b5c;
+  --site-frame-text: #24343b;
+  --site-frame-muted: #53656b;
+  --site-frame-coral: #c44737;
+  --site-frame-glacial: #2faab3;
+  --site-frame-sun: #e8b934;
+  --site-frame-basalt: #232d31;
+  --site-frame-line: #d8cfbc;
+}
+
+body.site-frame-page .site-header {
+  color: var(--site-frame-text);
+  background: rgba(251, 247, 238, 0.94);
+  border-bottom-color: rgba(6, 59, 92, 0.11);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+body.site-frame-page .site-header.scrolled {
+  border-bottom-color: rgba(6, 59, 92, 0.18);
+  box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
+}
+
+body.site-frame-page .nav-inner {
+  max-width: 90rem;
+  gap: 1rem;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+body.site-frame-page .nav-logo {
+  color: var(--site-frame-ocean);
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+body.site-frame-page .nav-logo span {
+  color: inherit;
+  font-weight: inherit;
+}
+
+body.site-frame-page .nav-logo:hover,
+body.site-frame-page .nav-links a:hover,
+body.site-frame-page .nav-links a.active {
+  color: var(--site-frame-coral);
+}
+
+body.site-frame-page .nav-links {
+  gap: clamp(1.25rem, 2.7vw, 2.75rem);
+}
+
+body.site-frame-page .nav-links a {
+  color: var(--site-frame-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+body.site-frame-page .nav-links a.active {
+  border-bottom-color: var(--site-frame-coral);
+}
+
+body.site-frame-page .nav-toggle,
+body.site-frame-page .nav-share-btn {
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  min-height: 2.75rem;
+}
+
+body.site-frame-page .nav-toggle-bar {
+  background: var(--site-frame-ocean);
+}
+
+body.site-frame-page .share-button {
+  color: var(--site-frame-ocean);
+  background: rgba(251, 247, 238, 0.96);
+  border-color: rgba(6, 59, 92, 0.18);
+  box-shadow: none;
+}
+
+body.site-frame-page .share-button:hover {
+  color: var(--site-frame-ocean);
+  background: #e2f3f2;
+  border-color: var(--site-frame-glacial);
+  box-shadow: none;
+}
+
+body.site-frame-page .floating-share-btn {
+  display: none;
+}
+
+body.site-frame-page .site-footer {
+  color: var(--site-frame-cream-deep);
+  background: var(--site-frame-basalt);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+body.site-frame-page .footer-inner {
+  max-width: 90rem;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+body.site-frame-page .footer-brand {
+  max-width: 28rem;
+}
+
+body.site-frame-page .footer-brand h3 {
+  color: var(--site-frame-cream);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+body.site-frame-page .footer-brand h3 span {
+  color: inherit;
+  font-weight: inherit;
+}
+
+body.site-frame-page .footer-brand p,
+body.site-frame-page .footer-col a {
+  color: rgba(251, 247, 238, 0.72);
+}
+
+body.site-frame-page .footer-col h4 {
+  color: var(--site-frame-glacial);
+}
+
+body.site-frame-page .footer-col a:hover,
+body.site-frame-page .footer-bottom a:hover,
+body.site-frame-page .footer-col a[aria-current='page'] {
+  color: var(--site-frame-sun);
+}
+
+body.site-frame-page .footer-bottom {
+  color: rgba(251, 247, 238, 0.6);
+  border-top-color: rgba(251, 247, 238, 0.17);
+}
+
+body.site-frame-page .seasonal-footer {
+  color: rgba(242, 233, 215, 0.62);
+}
+
+@media (max-width: 1180px) {
+  body.site-frame-page .nav-links {
+    background: var(--site-frame-cream);
+    border-bottom-color: var(--site-frame-line);
+    box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
+  }
+}
+
+@media print {
+  body.site-frame-page .site-header,
+  body.site-frame-page .site-footer {
+    display: none !important;
+  }
+}

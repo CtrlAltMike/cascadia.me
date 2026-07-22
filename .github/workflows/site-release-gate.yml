@@ -29,6 +29,9 @@ jobs:
       - name: Validate Signals browser script
         run: node --check signals/app.js
 
+      - name: Validate shared site frame
+        run: node scripts/sync-site-frame.mjs --check
+
       - name: Confirm the retired product stays removed
         shell: bash
         run: |

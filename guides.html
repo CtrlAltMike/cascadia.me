@@ -25,15 +25,19 @@
   <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/surfaces/guides-social.jpg">
   <meta name="twitter:image:alt" content="Five guides across one connected Cascadian landscape: Earthquake, Wildfire, Flooding, Winter Storm, and Volcano.">
   <script>document.documentElement.classList.add('js');</script>
+  <!-- site-frame:head:start -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
+  <link rel="preload" href="https://fonts.gstatic.com/s/newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjIJFJpc.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=block">
   <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico?v=3">
-  <link rel="stylesheet" href="css/base.css?v=20260717-motion">
-  <link rel="stylesheet" href="css/components.css?v=20260715-field-stories">
-  <link rel="stylesheet" href="css/living-watershed-surfaces.css?v=20260712-phase8">
-  <link rel="stylesheet" href="css/living-watershed-phase7.css?v=20260715-volcano">
+  <link rel="stylesheet" href="css/base.css?v=20260722-site-frame">
+  <link rel="stylesheet" href="css/components.css?v=20260722-site-frame">
+  <!-- site-frame:head:end -->
+  <link rel="stylesheet" href="css/living-watershed-surfaces.css?v=20260722-guides-hero">
+  <link rel="stylesheet" href="css/living-watershed-phase7.css?v=20260722-guides-hero">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -98,12 +102,17 @@
       ]
     }
   </script>
+  <!-- site-frame:styles:start -->
+  <link rel="stylesheet" href="css/site-frame.css?v=20260722-site-frame">
+  <!-- site-frame:styles:end -->
 </head>
-<body class="lw-surface-page guides-surface">
+<body class="lw-surface-page guides-surface site-frame-page">
 
+  <!-- site-frame:header:start -->
   <a class="surface-skip-link" href="#main-content">Skip to main content</a>
 
-  <header class="site-header">
+
+  <header class="site-header" data-site-frame="header">
     <nav class="nav-inner" aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
@@ -123,31 +132,34 @@
       </ul>
     </nav>
   </header>
+  <!-- site-frame:header:end -->
 
   <main id="main-content" data-readyplan-context="hazard-orientation">
     <section class="guide-hub-hero guidebook-hero" aria-labelledby="guides-title">
-      <div class="surface-container guide-hub-hero-heading">
-        <div>
-          <p class="surface-eyebrow">The Cascadia guidebook</p>
-          <h1 id="guides-title">Five guides.<br>Five different clocks.</h1>
-        </div>
-        <p class="guide-hub-hero-lede">Each hazard keeps its own clock. The landscape and the households living across it remain one continuous story.</p>
-      </div>
+      <div class="guide-hub-hero-stage">
+        <figure class="guide-hub-hero-art">
+          <picture>
+            <source media="(max-width: 760px)" srcset="assets/living-watershed/surfaces/guides-hero-960.webp" type="image/webp">
+            <source srcset="assets/living-watershed/surfaces/guides-hero.webp" type="image/webp">
+            <img
+              src="assets/living-watershed/surfaces/guides-hero.jpg"
+              alt="A faulted coast, braided rivers, storm clouds, snow-covered mountains, and a ridge fire meet in one connected Cascadian landscape."
+              width="1774"
+              height="887"
+              fetchpriority="high"
+              decoding="async"
+            >
+          </picture>
+        </figure>
 
-      <figure class="guide-hub-hero-art">
-        <picture>
-          <source media="(max-width: 760px)" srcset="assets/living-watershed/surfaces/guides-hero-960.webp" type="image/webp">
-          <source srcset="assets/living-watershed/surfaces/guides-hero.webp" type="image/webp">
-          <img
-            src="assets/living-watershed/surfaces/guides-hero.jpg"
-            alt="A faulted coast, braided rivers, storm clouds, snow-covered mountains, and a ridge fire meet in one connected Cascadian landscape."
-            width="1774"
-            height="887"
-            fetchpriority="high"
-            decoding="async"
-          >
-        </picture>
-      </figure>
+        <div class="surface-container guide-hub-hero-inner">
+          <div class="guide-hub-hero-copy">
+            <p class="surface-eyebrow">The Cascadia guidebook</p>
+            <h1 id="guides-title">Five guides.<br>Five different clocks.</h1>
+            <p class="guide-hub-hero-lede">Each hazard keeps its own clock. The landscape and the households living across it remain one continuous story.</p>
+          </div>
+        </div>
+      </div>
       <p class="surface-container guidebook-frontispiece-note">Land shapes water. Weather moves through both. Fire follows fuel, terrain, and wind. Political boundaries decide who issues an instruction; they do not separate the physical system.</p>
     </section>
 
@@ -237,7 +249,8 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <!-- site-frame:footer:start -->
+  <footer class="site-footer" data-site-frame="footer">
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
@@ -274,6 +287,7 @@
       </div>
     </div>
   </footer>
+  <!-- site-frame:footer:end -->
 
   <script src="js/share.js"></script>
   <script src="js/nav.js?v=20260712-phase8"></script>

@@ -13,6 +13,7 @@
 
     const resetBook = () => {
       window.cancelAnimationFrame(frame);
+      book.classList.remove("is-picked-up");
       book.style.setProperty("--book-rx", "0deg");
       book.style.setProperty("--book-ry", "0deg");
       book.style.setProperty("--book-shine-x", "50%");
@@ -21,6 +22,7 @@
 
     book.addEventListener("pointermove", (event) => {
       if (event.pointerType && event.pointerType !== "mouse") return;
+      book.classList.add("is-picked-up");
       const bounds = book.getBoundingClientRect();
       const x = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
       const y = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));

@@ -258,6 +258,7 @@
   --book-rx: 0deg;
   --book-ry: 0deg;
   --book-lift: 0px;
+  --book-scale: 1;
   --book-shine-x: 50%;
   --book-shine-y: 50%;
   position: relative;
@@ -275,10 +276,13 @@
     -4px 5px 0 color-mix(in srgb, var(--entry-color) 18%, var(--lw-cream-200)),
     0 18px 38px rgba(16, 49, 58, 0.12);
   isolation: isolate;
-  transform: perspective(900px) rotateX(var(--book-rx)) rotateY(var(--book-ry)) translateY(var(--book-lift));
+  transform: perspective(900px) translateY(var(--book-lift)) rotateX(var(--book-rx)) rotateY(var(--book-ry)) scale(var(--book-scale));
   transform-origin: center;
   transform-style: preserve-3d;
-  transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out;
+  transition:
+    transform 260ms cubic-bezier(0.2, 0.82, 0.24, 1),
+    box-shadow 260ms cubic-bezier(0.2, 0.82, 0.24, 1),
+    border-color 180ms ease-out;
   will-change: transform;
 }
 
@@ -307,11 +311,18 @@
 
 .field-story-entry:hover,
 .field-story-entry:focus-within {
-  --book-lift: -7px;
+  --book-lift: -13px;
+  --book-scale: 1.018;
   border-color: color-mix(in srgb, var(--entry-color) 58%, var(--lw-line));
   box-shadow:
-    -5px 7px 0 color-mix(in srgb, var(--entry-color) 23%, var(--lw-cream-200)),
-    0 28px 55px rgba(16, 49, 58, 0.2);
+    -7px 10px 0 color-mix(in srgb, var(--entry-color) 23%, var(--lw-cream-200)),
+    0 34px 62px rgba(16, 49, 58, 0.24);
+}
+
+.field-story-entry:active {
+  --book-lift: -7px;
+  --book-scale: 1.009;
+  transition-duration: 90ms;
 }
 
 .field-story-entry:hover::after,

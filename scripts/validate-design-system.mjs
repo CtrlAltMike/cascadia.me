@@ -113,7 +113,7 @@ const signals = read('signals/styles.css');
 assert(!/font-size:\s*(?:[0-9]|1[01])px/.test(signals), 'signals/styles.css: labels below 12px remain');
 assert(count(signals, 'min-height: 44px') >= 7, 'signals/styles.css: canonical 44px control targets are missing');
 assert(read('signals/index.html').includes('instrument-page'), 'signals/index.html: missing shared instrument contract');
-assert(read('signals/index.html').includes('styles.css?v=20260722-design-system'), 'signals/index.html: stale instrument stylesheet cache key');
+assert(read('signals/index.html').includes('styles.css?v=20260722-overlay-system'), 'signals/index.html: stale instrument stylesheet cache key');
 assert(read('atlas.html').includes('instrument-page'), 'atlas.html: missing shared instrument contract');
 assert(read('atlas.html').includes('living-watershed-atlas.css?v=20260722-design-system'), 'atlas.html: stale instrument stylesheet cache key');
 assert(read('atlas.html').includes('js/atlas.js?v=20260722-fire-markers'), 'atlas.html: stale Atlas script cache key');

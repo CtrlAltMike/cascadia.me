@@ -28,7 +28,7 @@ const excludedDirectories = new Set([
 ]);
 
 const templates = Object.fromEntries(
-  ['head', 'styles', 'header', 'footer'].map((name) => [
+  ['head', 'styles', 'header', 'footer', 'scripts'].map((name) => [
     name,
     fs.readFileSync(path.join(templateDirectory, `${name}.html`), 'utf8').trimEnd()
   ])
@@ -207,6 +207,16 @@ function installFooter(document, block, relativePath) {
   return document.replace(expression, `  ${block.trim()}`);
 }
 
+function installScripts(document, block) {
+  const marked = replaceMarkedBlock(document, 'scripts', block);
+  if (marked !== null) return marked;
+
+  const sharedScript = /[ \t]*<script[^>]+src="(?:\.\.\/|\/)*(?:js\/)?(?:share|nav|animations|feedback)\.js[^"\n]*"[^>]*><\/script>\r?\n?/g;
+  const next = document.replace(sharedScript, '');
+  if (!next.includes('</body>')) throw new Error('Missing closing body element');
+  return next.replace('</body>', `  ${block.trim()}\n</body>`);
+}
+
 function installBodyMarker(document) {
   return document.replace(/<body class="([^"]*)">/, (_, classes) => {
     const names = classes.split(/\s+/).filter(Boolean);
@@ -220,7 +230,7 @@ function countOccurrences(document, value) {
 }
 
 function validateGenerated(document, relativePath) {
-  const requiredBlocks = ['head', 'styles', 'header'];
+  const requiredBlocks = ['head', 'styles', 'header', 'scripts'];
   if (relativePath !== '404.html') requiredBlocks.push('footer');
   for (const name of requiredBlocks) {
     for (const boundary of ['start', 'end']) {
@@ -242,6 +252,14 @@ function validateGenerated(document, relativePath) {
   }
   if (countOccurrences(document, 'css/site-frame.css') !== 1) {
     throw new Error('Expected exactly one canonical frame stylesheet');
+  }
+  if (countOccurrences(document, 'css/design-system.css') !== 1) {
+    throw new Error('Expected exactly one canonical design-system stylesheet');
+  }
+  for (const script of ['share', 'nav', 'animations', 'feedback']) {
+    if (countOccurrences(document, `js/${script}.js`) !== 1) {
+      throw new Error(`Expected exactly one canonical ${script} script`);
+    }
   }
   if (countOccurrences(document, 'newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjIJFJpc.woff2') !== 1) {
     throw new Error('Expected exactly one Newsreader preload');
@@ -270,6 +288,7 @@ function generate(document, relativePath) {
   next = installStyles(next, render(templates.styles, values));
   next = installHeader(next, render(templates.header, values));
   next = installFooter(next, render(templates.footer, values), relativePath);
+  next = installScripts(next, render(templates.scripts, values));
   next = installBodyMarker(next);
   validateGenerated(next, relativePath);
   return next;

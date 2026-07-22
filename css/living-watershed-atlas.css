@@ -12,7 +12,7 @@
   --lw-glacial-500: #2faab3;
   --lw-glacial-on-ocean: #45b6be;
   --lw-camas-600: #65529a;
-  --lw-coral-600: #b63d31;
+  --lw-coral-600: #c44737;
   --lw-sun-400: #e8b934;
   --lw-spruce-700: #2f5a43;
   --lw-basalt-900: #232d31;
@@ -1286,7 +1286,7 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
 
 .atlas-wind-key-heading span {
   color: var(--lw-muted);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -1301,7 +1301,7 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   color: var(--lw-muted);
-  font-size: 0.62rem;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1830,10 +1830,6 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
 }
 
 @media (max-width: 640px) {
-  .living-watershed-atlas .nav-share-btn {
-    display: none;
-  }
-
   .atlas-field select {
     font-size: 1rem;
   }

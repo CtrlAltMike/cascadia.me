@@ -32,6 +32,9 @@ jobs:
       - name: Validate shared site frame
         run: node scripts/sync-site-frame.mjs --check
 
+      - name: Validate canonical design system
+        run: node scripts/validate-design-system.mjs
+
       - name: Confirm the retired product stays removed
         shell: bash
         run: |

@@ -1,30 +1,28 @@
 /* ============================================================
-   PREP.SUPPLY — Design System
-   Foundation: variables, reset, typography, spacing, utilities
-   Owner: Keel (shared — changes require Podium agreement)
+   Cascadia.me — Design System Foundation
+   Canonical variables, reset, typography, spacing, and utilities.
    ============================================================ */
 
 /* === Design Tokens === */
 :root {
-  /* Primary neutrals — warm stone palette */
-  --color-stone:        #3d3a36;
-  --color-timber:       #6b5e4f;
-  --color-fog:          #e8e4de;
-  --color-cloud:        #f5f2ec;
-  --color-white:        #faf8f5;
-
-  /* Accent — lantern amber: preparedness as warmth */
-  --color-lantern:      #c8913a;
-  --color-lantern-dim:  #865c12;
-  --color-lantern-glow: #f5e6cc;
-
-  /* Functional — accessible, no red/green reliance */
-  --color-water:        #3d6a7a;   /* links, interactive */
-  --color-alert:        #a84a2d;   /* urgent callouts — burnt orange, NOT red */
-  --color-safe:         #4a7a5e;   /* confirmation — muted forest, value-contrast safe */
+  /* Brand and semantic colors */
+  --color-stone:        #24343b;
+  --color-timber:       #53656b;
+  --color-fog:          #d8cfbc;
+  --color-cloud:        #f2e9d7;
+  --color-white:        #fbf7ee;
+  --color-lantern:      #e8b934;
+  --color-lantern-dim:  #9b6c00;
+  --color-lantern-glow: #fff0b7;
+  --color-water:        #075a78;
+  --color-alert:        #c44737;
+  --color-safe:         #2f5a43;
+  --color-ocean:        #063b5c;
+  --color-glacial:      #2faab3;
+  --color-basalt:       #232d31;
 
   /* Typography */
-  --font-display:   'Bitter', Georgia, 'Times New Roman', serif;
+  --font-display:   'Newsreader', Georgia, 'Times New Roman', serif;
   --font-body:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:      'SF Mono', 'Fira Code', 'Consolas', monospace;
 
@@ -57,9 +55,9 @@
   --space-16:  8rem;      /* 128px */
 
   /* Layout */
-  --content-width:     42rem;   /* ~714px — optimal reading width */
-  --page-width:        72rem;   /* ~1224px — max page width */
-  --nav-height:        4rem;
+  --content-width:     46rem;
+  --page-width:        90rem;
+  --nav-height:        4.25rem;
   --sticky-header-offset: var(--nav-height);
 
   /* Transitions */
@@ -257,7 +255,7 @@ small, .text-sm {
 @media (prefers-reduced-motion: no-preference) {
   .js :is(
     .home-hero-copy,
-    .guide-hub-hero-heading,
+    .guide-hub-hero-copy,
     .approach-masthead-copy,
     .lw-workbook-hero-copy,
     .chapter-hero-copy,

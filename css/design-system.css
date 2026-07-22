@@ -1,0 +1,185 @@
+/* ============================================================
+   Cascadia.me — Canonical Design System
+   Shared brand tokens and structural primitives. Page-family
+   styles may express a distinct voice without redefining these
+   foundations.
+   ============================================================ */
+
+body.site-frame-page {
+  --cascadia-cream: #fbf7ee;
+  --cascadia-cream-deep: #f2e9d7;
+  --cascadia-ocean: #063b5c;
+  --cascadia-water: #075a78;
+  --cascadia-ink: #24343b;
+  --cascadia-muted: #53656b;
+  --cascadia-coral: #c44737;
+  --cascadia-glacial: #2faab3;
+  --cascadia-sun: #e8b934;
+  --cascadia-spruce: #2f5a43;
+  --cascadia-basalt: #232d31;
+  --cascadia-line: #d8cfbc;
+  --cascadia-font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --cascadia-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --cascadia-page-width: 90rem;
+  --cascadia-reading-width: 46rem;
+  --cascadia-gutter: clamp(1.25rem, 4vw, 3rem);
+  --cascadia-space-1: 0.5rem;
+  --cascadia-space-2: 1rem;
+  --cascadia-space-3: 1.5rem;
+  --cascadia-space-4: 2rem;
+  --cascadia-space-6: 3rem;
+  --cascadia-space-8: 4rem;
+  --cascadia-radius-control: 0.25rem;
+  --cascadia-radius-panel: 0.5rem;
+  --cascadia-border: 1px solid rgba(6, 59, 92, 0.18);
+  --cascadia-shadow: 0 18px 48px rgba(6, 59, 92, 0.08);
+  --cascadia-focus-ring: 0 0 0 3px rgba(47, 170, 179, 0.42);
+  --cascadia-control-height: 2.75rem;
+  --cascadia-type-hero-xl: clamp(3.4rem, 8vw, 7.25rem);
+  --cascadia-type-hero-lg: clamp(2.75rem, 6vw, 5.75rem);
+  --cascadia-type-section: clamp(2rem, 4vw, 3.6rem);
+  --cascadia-type-subsection: clamp(1.35rem, 2vw, 2rem);
+  --cascadia-type-lede: clamp(1.05rem, 1.6vw, 1.3rem);
+  --cascadia-type-label: 0.75rem;
+  --cascadia-type-meta: 0.8125rem;
+
+  /* Compatibility aliases keep established page-family CSS on the
+     canonical foundation while those files retain only their variants. */
+  --font-display: var(--cascadia-font-display);
+  --font-body: var(--cascadia-font-body);
+  --page-width: var(--cascadia-page-width);
+  --content-width: var(--cascadia-reading-width);
+  --nav-height: 4.25rem;
+  --color-stone: var(--cascadia-ink);
+  --color-timber: var(--cascadia-muted);
+  --color-fog: var(--cascadia-line);
+  --color-cloud: var(--cascadia-cream-deep);
+  --color-white: var(--cascadia-cream);
+  --color-lantern: var(--cascadia-sun);
+  --color-water: var(--cascadia-water);
+  --color-alert: var(--cascadia-coral);
+  --color-safe: var(--cascadia-spruce);
+  --lw-cream-50: var(--cascadia-cream);
+  --lw-cream-100: var(--cascadia-cream-deep);
+  --lw-ocean-900: var(--cascadia-ocean);
+  --lw-ocean-700: var(--cascadia-water);
+  --lw-glacial-500: var(--cascadia-glacial);
+  --lw-coral-600: var(--cascadia-coral);
+  --lw-sun-400: var(--cascadia-sun);
+  --lw-spruce-700: var(--cascadia-spruce);
+  --lw-basalt-900: var(--cascadia-basalt);
+  --lw-line: var(--cascadia-line);
+  --lw-text: var(--cascadia-ink);
+  --lw-muted: var(--cascadia-muted);
+}
+
+body.site-frame-page :is(
+  .home-container,
+  .surface-container,
+  .lw-guide-container,
+  .chapter-container,
+  .eq-container,
+  .lw-workbook-container
+) {
+  width: min(100% - clamp(2rem, 6vw, 6rem), var(--cascadia-page-width));
+  margin-inline: auto;
+}
+
+body.site-frame-page :is(
+  .home-skip-link,
+  .surface-skip-link,
+  .lw-skip-link,
+  .atlas-skip-link,
+  .skip-link
+) {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10000;
+  min-height: var(--cascadia-control-height);
+  padding: 0.65rem 1rem;
+  color: var(--cascadia-cream);
+  background: var(--cascadia-ocean);
+  border-radius: var(--cascadia-radius-control);
+  font-family: var(--cascadia-font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transform: translateY(-150%);
+}
+
+body.site-frame-page :is(
+  .home-skip-link,
+  .surface-skip-link,
+  .lw-skip-link,
+  .atlas-skip-link,
+  .skip-link
+):focus {
+  color: var(--cascadia-cream);
+  transform: translateY(0);
+}
+
+body.site-frame-page :is(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--cascadia-ocean);
+  outline-offset: 3px;
+  box-shadow: var(--cascadia-focus-ring);
+}
+
+.illustrated-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.illustrated-hero__media {
+  pointer-events: none;
+}
+
+.illustrated-hero__media :is(img, video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.illustrated-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.instrument-page {
+  --instrument-control-height: var(--cascadia-control-height);
+  --instrument-radius-control: var(--cascadia-radius-control);
+  --instrument-radius-panel: var(--cascadia-radius-panel);
+  --instrument-border: var(--cascadia-border);
+  --instrument-shadow: var(--cascadia-shadow);
+}
+
+.instrument-page :is(button, [role='button'], summary, input, select) {
+  min-height: var(--instrument-control-height);
+}
+
+.instrument-page :is(button, [role='button'], .maplibregl-ctrl-attrib-button) {
+  min-width: var(--instrument-control-height);
+}
+
+.instrument-page :is(.eyebrow, .toolbar-label, .record-kicker, .result-kind) {
+  font-size: max(var(--cascadia-type-label), 12px);
+}
+
+@media (max-width: 48rem) {
+  body.site-frame-page {
+    --cascadia-gutter: 1.25rem;
+  }
+}
+
+@media print {
+  body.site-frame-page :is(
+    .home-skip-link,
+    .surface-skip-link,
+    .lw-skip-link,
+    .atlas-skip-link,
+    .skip-link
+  ) {
+    display: none !important;
+  }
+}

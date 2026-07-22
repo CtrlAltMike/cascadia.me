@@ -1,7 +1,7 @@
 /* ============================================================
    Cascadia.me — Living Watershed primary chapters
-   Phase 4: Wildfire, Flooding, and Winter Storm
-   Shared reading grammar; hazard-specific pacing and color.
+   Shared reading grammar for the five hazard chapters;
+   hazard-specific files retain pacing and color variants.
    ============================================================ */
 
 .primary-chapter-page {
@@ -12,6 +12,14 @@
   --chapter-alert: var(--lw-coral-600);
   color: var(--lw-text);
   background: var(--lw-cream-50);
+}
+
+.earthquake-chapter-page {
+  --chapter-accent: var(--lw-camas-600);
+  --chapter-deep: var(--lw-ocean-900);
+  --chapter-soft: var(--lw-cream-100);
+  --chapter-wash: rgba(101, 82, 154, 0.09);
+  --chapter-alert: var(--lw-coral-600);
 }
 
 .wildfire-chapter-page {

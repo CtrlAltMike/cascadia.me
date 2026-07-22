@@ -5,6 +5,7 @@
   const books = [...document.querySelectorAll(".field-story-entry")];
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const resetters = new Map();
 
   if (!books.length || !finePointer.matches || reducedMotion.matches) return;
 
@@ -19,6 +20,8 @@
       book.style.setProperty("--book-shine-x", "50%");
       book.style.setProperty("--book-shine-y", "50%");
     };
+
+    resetters.set(book, resetBook);
 
     book.addEventListener("pointermove", (event) => {
       if (event.pointerType && event.pointerType !== "mouse") return;
@@ -45,4 +48,13 @@
     });
     book.addEventListener("blur", resetBook, true);
   });
+
+  document.addEventListener("pointermove", (event) => {
+    const activeBook = event.target.closest?.(".field-story-entry");
+    books.forEach((book) => {
+      if (book !== activeBook && book.classList.contains("is-picked-up")) {
+        resetters.get(book)?.();
+      }
+    });
+  }, { passive: true });
 })();

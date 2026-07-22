@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -542,6 +543,11 @@ await writeFile(path.join(outputDirectory, "index.html"), renderCollection(parse
 for (const [index, story] of parsedStories.entries()) {
   await writeFile(path.join(outputDirectory, `${story.slug}.html`), renderStory(story, index, parsedStories));
 }
+
+execFileSync(process.execPath, [path.join(root, "scripts", "sync-site-frame.mjs"), "--write"], {
+  cwd: root,
+  stdio: "inherit"
+});
 
 console.log(`Built ${parsedStories.length} Field Stories in ${path.relative(root, outputDirectory)}/`);
 parsedStories.forEach((story) => console.log(`${story.title}: ${story.wordCount} words, ${story.readingMinutes} minutes, ${story.chapters.length} chapters`));

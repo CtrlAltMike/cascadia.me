@@ -21,21 +21,30 @@
   <meta name="twitter:description" content="An inventory specialist discovers what preparedness can—and cannot—hold. An original work of fiction from Cascadia.me.">
   <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
   <script>document.documentElement.classList.add('js');</script>
+  <!-- site-frame:head:start -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
+  <link rel="preload" href="https://fonts.gstatic.com/s/newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjIJFJpc.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=block">
   <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="../favicon.ico?v=3">
-  <link rel="stylesheet" href="../css/base.css?v=20260717-motion">
-  <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/base.css?v=20260722-site-frame">
+  <link rel="stylesheet" href="../css/components.css?v=20260722-site-frame">
+  <!-- site-frame:head:end -->
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ShortStory","@id":"https://cascadia.me/stories/inventory.html#story","url":"https://cascadia.me/stories/inventory.html","name":"Inventory","description":"An inventory specialist discovers what preparedness can—and cannot—hold.","genre":["Fiction","Preparedness fiction","Cascadian literature"],"inLanguage":"en-US","isPartOf":{"@id":"https://cascadia.me/stories/#webpage"},"author":{"@type":"Person","name":"Michael Hendrick"},"publisher":{"@type":"Organization","name":"Cascadia.me","url":"https://cascadia.me/"},"wordCount":8846,"timeRequired":"PT38M","datePublished":"2026-07-15","dateModified":"2026-07-16"}</script>
+  <!-- site-frame:styles:start -->
+  <link rel="stylesheet" href="../css/site-frame.css?v=20260722-site-frame">
+  <!-- site-frame:styles:end -->
 </head>
-<body class="lw-surface-page field-stories-page field-story-page field-story-camas">
+<body class="lw-surface-page field-stories-page field-story-page field-story-camas site-frame-page">
+  <!-- site-frame:header:start -->
   <a class="surface-skip-link" href="#story-text">Skip to the story</a>
   <div class="story-reading-progress" aria-hidden="true"><span id="story-progress-bar"></span></div>
-  <header class="site-header">
+
+  <header class="site-header" data-site-frame="header">
     <nav class="nav-inner" aria-label="Primary navigation">
       <a href="../index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
@@ -48,13 +57,14 @@
         <li><a href="../build-your-kit.html">Build Your Kit</a></li>
         <li><a href="../atlas.html">Atlas</a></li>
         <li><a href="../signals/">Signals</a></li>
-        <li><a href="./" class="active" aria-current="page">Field Stories</a></li>
+        <li><a href="../stories/" class="active" aria-current="page">Field Stories</a></li>
         <li><a href="../approach.html">The Approach</a></li>
         <li><a href="../faq.html">FAQ</a></li>
         <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
     </nav>
   </header>
+  <!-- site-frame:header:end -->
   <main id="main-content">
     <article class="field-story" aria-labelledby="story-title">
       <header class="field-story-masthead">
@@ -317,7 +327,8 @@
     </form>
   </dialog>
 
-  <footer class="site-footer">
+  <!-- site-frame:footer:start -->
+  <footer class="site-footer" data-site-frame="footer">
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
@@ -340,7 +351,7 @@
             <ul>
               <li><a href="../atlas.html">Regional Hazard Atlas</a></li>
               <li><a href="../signals/">Signals</a></li>
-              <li><a href="./">Field Stories</a></li>
+              <li><a href="../stories/" aria-current="page">Field Stories</a></li>
               <li><a href="../build-your-kit.html">Build Your Kit</a></li>
               <li><a href="../approach.html">The Approach</a></li>
               <li><a href="../faq.html">FAQ</a></li>
@@ -354,6 +365,7 @@
       </div>
     </div>
   </footer>
+  <!-- site-frame:footer:end -->
   <script src="../js/field-stories.js?v=20260715-stories5"></script>
   <script src="../js/share.js"></script>
   <script src="../js/nav.js?v=20260715-stories5"></script>

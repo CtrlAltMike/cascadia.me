@@ -33,8 +33,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=block">
   <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico?v=3">
-  <link rel="stylesheet" href="css/base.css?v=20260722-site-frame">
-  <link rel="stylesheet" href="css/components.css?v=20260722-site-frame">
+  <link rel="stylesheet" href="css/base.css?v=20260722-design-system">
+  <link rel="stylesheet" href="css/components.css?v=20260722-design-system">
   <!-- site-frame:head:end -->
   <link rel="stylesheet" href="css/living-watershed-guide.css?v=20260712-phase8">
   <link rel="stylesheet" href="css/living-watershed-kit.css?v=20260716-nowweplan">
@@ -100,7 +100,8 @@
     }
   </script>
   <!-- site-frame:styles:start -->
-  <link rel="stylesheet" href="css/site-frame.css?v=20260722-site-frame">
+  <link rel="stylesheet" href="css/design-system.css?v=20260722-design-system">
+  <link rel="stylesheet" href="css/site-frame.css?v=20260722-design-system">
   <!-- site-frame:styles:end -->
 </head>
 <body class="living-watershed-page lw-kit-page site-frame-page">
@@ -127,6 +128,16 @@
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
       </ul>
+      <button type="button" class="share-button nav-share-btn" aria-label="Share this page" title="Share this page">
+        <svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="18" cy="5" r="2.5"></circle>
+          <circle cx="6" cy="12" r="2.5"></circle>
+          <circle cx="18" cy="19" r="2.5"></circle>
+          <path d="M8.2 10.9L15.8 6.1"></path>
+          <path d="M8.2 13.1L15.8 17.9"></path>
+        </svg>
+        <span class="sr-only">Share this page</span>
+      </button>
     </nav>
   </header>
   <!-- site-frame:header:end -->
@@ -139,8 +150,8 @@
       aria-labelledby="workbook-title"
     >
 
-      <header class="lw-workbook-hero">
-        <picture class="lw-workbook-hero-picture">
+      <header class="lw-workbook-hero illustrated-hero" data-hero-variant="workbook">
+        <picture class="lw-workbook-hero-picture illustrated-hero__media">
           <source media="(max-width: 620px)" srcset="assets/living-watershed/kit/household-capability-hero-mobile.webp" type="image/webp">
           <source media="(max-width: 620px)" srcset="assets/living-watershed/kit/household-capability-hero-mobile.jpg">
           <source srcset="assets/living-watershed/kit/household-capability-hero-960.webp 960w, assets/living-watershed/kit/household-capability-hero.webp 1774w" sizes="100vw" type="image/webp">
@@ -155,7 +166,7 @@
             decoding="async"
           >
         </picture>
-        <div class="lw-workbook-container lw-workbook-hero-inner">
+        <div class="lw-workbook-container lw-workbook-hero-inner illustrated-hero__content">
           <div class="lw-workbook-hero-copy">
             <p class="lw-workbook-kicker">The household workbook</p>
             <h1 id="workbook-title">Begin with an ordinary day.</h1>
@@ -679,11 +690,13 @@
   </footer>
   <!-- site-frame:footer:end -->
 
-  <script src="js/share.js"></script>
-  <script src="js/nav.js?v=20260712-phase8"></script>
-  <script src="js/animations.js?v=20260717-motion"></script>
   <script src="js/household-workbook.js"></script>
-  <script src="js/feedback.js?v=20260712-phase8"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+  <!-- site-frame:scripts:start -->
+  <script src="js/share.js?v=20260722-design-system"></script>
+  <script src="js/nav.js?v=20260722-design-system"></script>
+  <script src="js/animations.js?v=20260722-design-system"></script>
+  <script src="js/feedback.js?v=20260722-design-system"></script>
+  <!-- site-frame:scripts:end -->
 </body>
 </html>

@@ -6,17 +6,6 @@
 (function() {
   'use strict';
 
-  const shareIcon = `
-    <svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="18" cy="5" r="2.5"></circle>
-      <circle cx="6" cy="12" r="2.5"></circle>
-      <circle cx="18" cy="19" r="2.5"></circle>
-      <path d="M8.2 10.9L15.8 6.1"></path>
-      <path d="M8.2 13.1L15.8 17.9"></path>
-    </svg>
-    <span class="sr-only">Share this page</span>
-  `;
-
   let liveRegion;
 
   function getShareData() {
@@ -104,28 +93,10 @@
     }
   }
 
-  function createShareButton(className) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = `share-button ${className}`;
-    button.setAttribute('aria-label', 'Share this page');
-    button.setAttribute('title', 'Share this page');
-    button.innerHTML = shareIcon;
-    button.addEventListener('click', handleShare);
-    return button;
-  }
-
   function initShareButtons() {
-    const navLinks = document.querySelector('.nav-links');
-    const navInner = document.querySelector('.nav-inner');
-
-    if (navLinks && navInner && !navInner.querySelector('.nav-share-btn')) {
-      navLinks.insertAdjacentElement('afterend', createShareButton('nav-share-btn'));
-    }
-
-    if (!document.querySelector('.floating-share-btn')) {
-      document.body.appendChild(createShareButton('floating-share-btn'));
-    }
+    document.querySelectorAll('.share-button').forEach((button) => {
+      button.addEventListener('click', handleShare);
+    });
   }
 
   document.addEventListener('DOMContentLoaded', initShareButtons);

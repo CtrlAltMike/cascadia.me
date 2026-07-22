@@ -1,7 +1,6 @@
 /* ============================================================
-   PREP.SUPPLY — Navigation
-   Mobile menu, scroll behavior, active link highlighting
-   Owner: Limn
+   Cascadia.me — Navigation
+   Mobile menu, scroll behavior, and active link highlighting.
    ============================================================ */
 
 (function() {
@@ -41,7 +40,7 @@
   }
 
   // === Active link highlighting ===
-  // Note: Scroll behavior (shadow + hide-on-scroll) is in animations.js (Keel)
+  // Scroll behavior (shadow + hide-on-scroll) is managed in animations.js.
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(link => {
     const href = link.getAttribute('href');

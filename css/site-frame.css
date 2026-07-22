@@ -5,16 +5,16 @@
    ============================================================ */
 
 body.site-frame-page {
-  --site-frame-cream: #fbf7ee;
-  --site-frame-cream-deep: #f2e9d7;
-  --site-frame-ocean: #063b5c;
-  --site-frame-text: #24343b;
-  --site-frame-muted: #53656b;
-  --site-frame-coral: #c44737;
-  --site-frame-glacial: #2faab3;
-  --site-frame-sun: #e8b934;
-  --site-frame-basalt: #232d31;
-  --site-frame-line: #d8cfbc;
+  --site-frame-cream: var(--cascadia-cream);
+  --site-frame-cream-deep: var(--cascadia-cream-deep);
+  --site-frame-ocean: var(--cascadia-ocean);
+  --site-frame-text: var(--cascadia-ink);
+  --site-frame-muted: var(--cascadia-muted);
+  --site-frame-coral: var(--cascadia-coral);
+  --site-frame-glacial: var(--cascadia-glacial);
+  --site-frame-sun: var(--cascadia-sun);
+  --site-frame-basalt: var(--cascadia-basalt);
+  --site-frame-line: var(--cascadia-line);
 }
 
 body.site-frame-page .site-header {
@@ -154,7 +154,7 @@ body.site-frame-page .seasonal-footer {
   color: rgba(242, 233, 215, 0.62);
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1080px) {
   body.site-frame-page .nav-links {
     background: var(--site-frame-cream);
     border-bottom-color: var(--site-frame-line);

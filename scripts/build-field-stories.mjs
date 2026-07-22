@@ -158,87 +158,19 @@ function head({ title, description, canonical, type = "website", schema }) {
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
   <script>document.documentElement.classList.add('js');</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap">
-  <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
-  <link rel="icon" href="../favicon.ico?v=3">
-  <link rel="stylesheet" href="../css/base.css?v=20260717-motion">
-  <link rel="stylesheet" href="../css/components.css?v=20260715-stories5">
+  ${framePlaceholder('head')}
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
   <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
-  <script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+  <script type="application/ld+json">${JSON.stringify(schema)}</script>
+  ${framePlaceholder('styles')}`;
 }
 
-function header() {
-  return `<header class="site-header">
-    <nav class="nav-inner" aria-label="Primary navigation">
-      <a href="../index.html" class="nav-logo" aria-label="Cascadia.me home">Cascadia<span>.me</span></a>
-      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-links">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
-      <ul class="nav-links" id="site-nav-links">
-        <li><a href="../guides.html">Guides</a></li>
-        <li><a href="../build-your-kit.html">Build Your Kit</a></li>
-        <li><a href="../atlas.html">Atlas</a></li>
-        <li><a href="../signals/">Signals</a></li>
-        <li><a href="./" class="active" aria-current="page">Field Stories</a></li>
-        <li><a href="../approach.html">The Approach</a></li>
-        <li><a href="../faq.html">FAQ</a></li>
-        <li><a href="https://ko-fi.com/mikehen" target="_blank" rel="noopener">Support</a></li>
-      </ul>
-    </nav>
-  </header>`;
+function framePlaceholder(name) {
+  return `<!-- site-frame:${name}:start --><!-- site-frame:${name}:end -->`;
 }
 
-function footer() {
-  return `<footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <h3>Cascadia<span>.me</span></h3>
-          <p>An illustrated field guide for people who live here.</p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-col">
-            <h4>Guides</h4>
-            <ul>
-              <li><a href="../earthquake.html">Earthquake</a></li>
-              <li><a href="../wildfire.html">Wildfire</a></li>
-              <li><a href="../flooding.html">Flooding</a></li>
-              <li><a href="../winter-storm.html">Winter Storm</a></li>
-              <li><a href="../volcano.html">Volcano</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Explore</h4>
-            <ul>
-              <li><a href="../atlas.html">Regional Hazard Atlas</a></li>
-              <li><a href="../signals/">Signals</a></li>
-              <li><a href="./">Field Stories</a></li>
-              <li><a href="../build-your-kit.html">Build Your Kit</a></li>
-              <li><a href="../approach.html">The Approach</a></li>
-              <li><a href="../faq.html">FAQ</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Cascadia.me</p>
-        <p class="seasonal-footer"></p>
-      </div>
-    </div>
-  </footer>`;
-}
-
-function commonScripts({ story = false } = {}) {
-  return `${story ? '<script src="../js/field-stories.js?v=20260715-stories5"></script>\n  ' : ""}<script src="../js/share.js"></script>
-  <script src="../js/nav.js?v=20260715-stories5"></script>
-  <script src="../js/animations.js?v=20260717-motion"></script>
-  <script src="../js/feedback.js?v=20260715-stories5"></script>
-  <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->`;
+function pageScripts({ story = false } = {}) {
+  return `${story ? '<script src="../js/field-stories.js?v=20260715-stories5"></script>\n  ' : ''}<!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->\n  ${framePlaceholder('scripts')}`;
 }
 
 function collectionSchema(parsedStories) {
@@ -293,11 +225,10 @@ function renderCollection(parsedStories) {
   })}
 </head>
 <body class="lw-surface-page field-stories-page field-stories-library">
-  <a class="surface-skip-link" href="#main-content">Skip to main content</a>
-  ${header()}
+  ${framePlaceholder('header')}
   <main id="main-content">
-    <header class="field-stories-hero" aria-labelledby="field-stories-title">
-      <div class="surface-container field-stories-hero-layout">
+    <header class="field-stories-hero illustrated-hero" data-hero-variant="collection-editorial" aria-labelledby="field-stories-title">
+      <div class="surface-container field-stories-hero-layout illustrated-hero__content">
         <div class="field-stories-hero-title">
           <p class="surface-eyebrow">Original fiction</p>
           <h1 id="field-stories-title">Field<br><em>Stories</em></h1>
@@ -308,7 +239,7 @@ function renderCollection(parsedStories) {
           <p>Every story here is fiction. The people, places, and events are invented or composed; factual sources appear after the final page.</p>
         </div>
       </div>
-      <figure class="field-stories-hero-art" id="field-stories-hero-art">
+      <figure class="field-stories-hero-art illustrated-hero__media" id="field-stories-hero-art">
         <script>
           (() => {
             const variants = [
@@ -386,8 +317,8 @@ function renderCollection(parsedStories) {
       </div>
     </aside>
   </main>
-  ${footer()}
-  ${commonScripts()}
+  ${framePlaceholder('footer')}
+  ${pageScripts()}
 </body>
 </html>`;
 }
@@ -447,9 +378,7 @@ function renderStory(story, index, parsedStories) {
   })}
 </head>
 <body class="lw-surface-page field-stories-page field-story-page field-story-${story.accent}">
-  <a class="surface-skip-link" href="#story-text">Skip to the story</a>
-  <div class="story-reading-progress" aria-hidden="true"><span id="story-progress-bar"></span></div>
-  ${header()}
+  ${framePlaceholder('header')}
   <main id="main-content">
     <article class="field-story" aria-labelledby="story-title">
       <header class="field-story-masthead">
@@ -526,8 +455,8 @@ function renderStory(story, index, parsedStories) {
     </form>
   </dialog>
 
-  ${footer()}
-  ${commonScripts({ story: true })}
+  ${framePlaceholder('footer')}
+  ${pageScripts({ story: true })}
 </body>
 </html>`;
 }

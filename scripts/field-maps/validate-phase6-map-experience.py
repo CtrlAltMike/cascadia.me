@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the Phase 6A optional Field Maps interaction contract."""
+"""Validate the Phase 6 optional Field Maps interaction contract."""
 
 from __future__ import annotations
 
@@ -140,14 +140,14 @@ def main() -> int:
 
     if errors:
         return report(errors)
-    print("Phase 6A map-experience validation passed.")
+    print("Phase 6 map-experience validation passed.")
     print("Sources checked: 3")
     print("Contract: synchronized optional map, official USGS basemap, no location or storage")
     return 0
 
 
 def report(errors: list[str]) -> int:
-    print("Phase 6A map-experience validation failed:")
+    print("Phase 6 map-experience validation failed:")
     for error in errors:
         print(f"- {error}")
     return 1

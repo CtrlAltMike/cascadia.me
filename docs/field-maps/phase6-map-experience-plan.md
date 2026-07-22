@@ -1,4 +1,4 @@
-# Phase 6A — polished Field Maps experience
+# Phase 6 — polished Field Maps experience
 
 **Status:** implemented for the Olympic Peninsula regional proof
 
@@ -57,7 +57,7 @@ This phase does not turn Cascadia into a route planner or live conditions servic
 
 ## Release gate
 
-`scripts/field-maps/validate-phase6a-map-experience.py` protects the following invariants:
+`scripts/field-maps/validate-phase6-map-experience.py` protects the following invariants:
 
 - all three approved source records and full-record anchors are present;
 - exact verified sheet identifiers and bounds remain in the browser script;
@@ -67,4 +67,4 @@ This phase does not turn Cascadia into a route planner or live conditions servic
 
 ## Acceptance
 
-Phase 6A is complete when the release validator and existing Field Maps release gates pass, desktop and mobile interaction checks pass, the protected pull request merges, and the production page is verified. The existing U.S. catalog-expansion phase becomes Phase 6B and remains separately gated.
+Phase 6 is complete: the release validator and existing Field Maps release gates passed, desktop and mobile interaction checks passed, the protected pull request merged, and the production page was verified. U.S. catalog expansion is separate future work in Phase 7.

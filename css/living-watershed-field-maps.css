@@ -891,7 +891,7 @@
   }
 }
 
-/* Phase 6A — optional synchronized map and source results. */
+/* Phase 6 — optional synchronized map and source results. */
 .fm-explorer-section {
   background:
     linear-gradient(rgba(18, 63, 81, 0.035) 1px, transparent 1px),

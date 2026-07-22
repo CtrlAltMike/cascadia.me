@@ -15,7 +15,7 @@ The v1 operating boundary is the union of the official administrative geometries
 
 This is a product-coverage decision. It is not offered as a definition of ecological, geological, bioregional, cultural, historical, or Indigenous Cascadia. It does not assert that every map source covers every part of those jurisdictions or that all official maps within them are suitable for a particular field use.
 
-The version gives Field Maps a stable, reproducible answer to “which cells must be checked before regional completeness is claimed?” The U.S. matrix enumerates every USGS 7.5-minute cell with a positive-area intersection against the Washington or Oregon source geometry. British Columbia is included in the operating boundary, but Phase 1 records its official sources only; complete NTS/free-finder coverage remains Phase 7 work.
+The version gives Field Maps a stable, reproducible answer to “which cells must be checked before regional completeness is claimed?” The U.S. matrix enumerates every USGS 7.5-minute cell with a positive-area intersection against the Washington or Oregon source geometry. British Columbia is included in the operating boundary, but Phase 1 records its official sources only; complete NTS/free-finder coverage remains Phase 8 work.
 
 ## Included and excluded geography
 

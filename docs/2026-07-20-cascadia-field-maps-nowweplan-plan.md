@@ -596,7 +596,9 @@ rollback plan are recorded in
 [`field-maps/phase5b-production-release-plan.md`](field-maps/phase5b-production-release-plan.md).
 Phase 5B publication does not satisfy the Phase 5 commerce exit above.
 
-### Phase 6A — Polished public map experience
+### Phase 6 — Polished public map experience
+
+**Status:** complete July 21, 2026.
 
 **Goal:** apply mature map interaction patterns to the public Olympic Peninsula proof without weakening Cascadia's source or privacy boundaries.
 
@@ -611,9 +613,9 @@ Phase 5B publication does not satisfy the Phase 5 commerce exit above.
 **Exit:** the interaction validator and desktop/mobile checks pass, the protected release merges, and production is verified.
 
 The implementation and acceptance contract are recorded in
-[`field-maps/phase6a-map-experience-plan.md`](field-maps/phase6a-map-experience-plan.md).
+[`field-maps/phase6-map-experience-plan.md`](field-maps/phase6-map-experience-plan.md).
 
-### Phase 6B — Complete eligible U.S. Cascadia coverage
+### Phase 7 — Complete eligible U.S. Cascadia coverage
 
 **Goal:** reach every sellable cell within the U.S. portion of the adopted boundary.
 
@@ -625,7 +627,7 @@ The implementation and acceptance contract are recorded in
 
 **Exit:** every U.S. boundary cell is eligible and available or visibly blocked with a recorded reason.
 
-### Phase 7 — B.C. free coverage and rights decision
+### Phase 8 — B.C. free coverage and rights decision
 
 **Goal:** cover B.C. editorially without mislabeling Crown-copyrighted material as public domain.
 

@@ -49,7 +49,7 @@ The matrix enumerates **3,342 unique USGS 7.5-minute grid cells** whose polygons
 6. Match current products by official USGS `cell_id`; where multiple records occur, retain the latest `pub_yr`, then `file_name_date`, then stable URL order.
 7. Assign an explicit blocked state to every row. No source map file is downloaded or inspected in Phase 1.
 
-The matrix does not enumerate British Columbia NTS sheets. Phase 1 keeps official Canadian sources in the source register as free-finder candidates and blocks them from sale under the approved public-domain-only rule. Complete B.C. free-finder coverage is Phase 7.
+The matrix does not enumerate British Columbia NTS sheets. Phase 1 keeps official Canadian sources in the source register as free-finder candidates and blocks them from sale under the approved public-domain-only rule. Complete B.C. free-finder coverage is Phase 8.
 
 ## Column definitions
 

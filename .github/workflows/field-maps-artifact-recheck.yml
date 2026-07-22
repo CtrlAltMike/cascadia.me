@@ -1,0 +1,61 @@
+name: Field Maps artifact recheck
+
+on:
+  push:
+    paths:
+      - "docs/field-maps/artifact-register.csv"
+      - "scripts/field-maps/**"
+      - ".github/workflows/field-maps-artifact-recheck.yml"
+  pull_request:
+    paths:
+      - "docs/field-maps/artifact-register.csv"
+      - "scripts/field-maps/**"
+      - ".github/workflows/field-maps-artifact-recheck.yml"
+  schedule:
+    - cron: "37 15 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phase2-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/field-maps/requirements-phase2.txt
+      - name: Install verifier dependencies
+        run: python -m pip install -r scripts/field-maps/requirements-phase2.txt
+      - name: Test fail-closed catalog decisions
+        run: python scripts/field-maps/test_phase2_pipeline.py
+
+  live-artifact-recheck:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: phase2-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/field-maps/requirements-phase2.txt
+      - name: Install verifier dependencies
+        run: python -m pip install -r scripts/field-maps/requirements-phase2.txt
+      - name: Recheck exact editions against the official catalog
+        run: >-
+          python scripts/field-maps/recheck-phase2-artifacts.py
+          --checked-at "$(date -u +%F)"
+          --output field-maps-artifact-recheck.json
+          --fail-on-catalog-drift
+      - name: Upload automatic-pause report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: field-maps-artifact-recheck
+          path: field-maps-artifact-recheck.json
+          retention-days: 30

@@ -2,19 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cascadia.me/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/guides.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/atlas.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/signals/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/field-maps/</loc>
+    <lastmod>2026-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/field-maps/olympic-peninsula/</loc>
+    <lastmod>2026-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/field-maps/offline-field-guide/</loc>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/stories/</loc>
@@ -70,11 +82,11 @@
   </url>
   <url>
     <loc>https://cascadia.me/earthquake.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/wildfire.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-21</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/flooding.html</loc>

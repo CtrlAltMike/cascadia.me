@@ -1,6 +1,7 @@
 # Cascadia.me Feeder Integration Plan
 
-**Status:** planning
+**Status:** implemented and superseded for future integration planning by [`docs/2026-07-20-cascadia-field-maps-nowweplan-plan.md`](docs/2026-07-20-cascadia-field-maps-nowweplan-plan.md)
+
 **Date:** 2026-07-07
 **Scope:** Add ReadyPlan integration to Cascadia.me without disrupting an older, already-trusted free guide site.
 

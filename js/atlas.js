@@ -1127,11 +1127,13 @@
   }
 
   function renderLiveConditions(data) {
+    const perimeters = mapFeatureCollection(data.perimeters);
+    const firePoints = mapFeatureCollection(data.fires);
     const collections = {
       alerts: mapFeatureCollection(data.alerts),
-      perimeters: mapFeatureCollection(data.perimeters),
+      perimeters,
       evacuations: mapFeatureCollection(data.evacuations),
-      fires: mapFeatureCollection(data.fires),
+      fires: addPerimeterFallbackFirePoints(firePoints, perimeters),
       roads: mapFeatureCollection(data.roads),
     };
 
@@ -1457,6 +1459,69 @@
         ? collection.features.filter((feature) => feature?.type === 'Feature' && feature.geometry)
         : [],
     };
+  }
+
+  function addPerimeterFallbackFirePoints(pointCollection, perimeterCollection) {
+    const features = [...pointCollection.features];
+    const represented = new Set(features.map((feature) => fireFeatureIdentity(feature)).filter(Boolean));
+
+    perimeterCollection.features.forEach((feature) => {
+      const identity = fireFeatureIdentity(feature);
+      if (identity && represented.has(identity)) return;
+
+      const coordinates = geometryBoundsCenter(feature.geometry);
+      if (!coordinates) return;
+
+      const properties = feature.properties || {};
+      features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates },
+        properties: {
+          ...properties,
+          kind: 'wildfire',
+          status: properties.stale ? 'reported' : 'current',
+          derivedFromPerimeter: true,
+        },
+      });
+      if (identity) represented.add(identity);
+    });
+
+    return { type: 'FeatureCollection', features };
+  }
+
+  function fireFeatureIdentity(feature) {
+    const properties = feature?.properties || {};
+    const id = String(properties.id || '').trim().toLowerCase();
+    if (id) return `id:${id}`;
+    const name = String(properties.name || '').trim().toLowerCase();
+    const source = String(properties.sourceName || '').trim().toLowerCase();
+    return name ? `name:${source}:${name}` : '';
+  }
+
+  function geometryBoundsCenter(geometry) {
+    if (!geometry || !Array.isArray(geometry.coordinates)) return null;
+    let minLongitude = Infinity;
+    let minLatitude = Infinity;
+    let maxLongitude = -Infinity;
+    let maxLatitude = -Infinity;
+
+    function visit(coordinates) {
+      if (!Array.isArray(coordinates)) return;
+      if (coordinates.length >= 2 && Number.isFinite(Number(coordinates[0])) && Number.isFinite(Number(coordinates[1]))) {
+        const longitude = Number(coordinates[0]);
+        const latitude = Number(coordinates[1]);
+        minLongitude = Math.min(minLongitude, longitude);
+        minLatitude = Math.min(minLatitude, latitude);
+        maxLongitude = Math.max(maxLongitude, longitude);
+        maxLatitude = Math.max(maxLatitude, latitude);
+        return;
+      }
+      coordinates.forEach(visit);
+    }
+
+    visit(geometry.coordinates);
+    if (![minLongitude, minLatitude, maxLongitude, maxLatitude].every(Number.isFinite)) return null;
+    return [(minLongitude + maxLongitude) / 2, (minLatitude + maxLatitude) / 2];
   }
 
   function setGeoJsonSource(id, data) {
@@ -1788,6 +1853,7 @@
     }
 
     if (!map.getLayer('atlas-fire-fill')) {
+      const currentFirePointLayer = map.getLayer('atlas-live-fire-points') ? 'atlas-live-fire-points' : undefined;
       map.addLayer({
         id: 'atlas-fire-fill',
         type: 'fill',
@@ -1796,10 +1862,11 @@
           'fill-color': '#c44737',
           'fill-opacity': 0.32,
         },
-      });
+      }, currentFirePointLayer);
     }
 
     if (!map.getLayer('atlas-fire-line')) {
+      const currentFirePointLayer = map.getLayer('atlas-live-fire-points') ? 'atlas-live-fire-points' : undefined;
       map.addLayer({
         id: 'atlas-fire-line',
         type: 'line',
@@ -1809,7 +1876,7 @@
           'line-opacity': 0.82,
           'line-width': 1.2,
         },
-      });
+      }, currentFirePointLayer);
     }
 
     loadedFireKey = filter.key;
@@ -2174,6 +2241,7 @@
       location ? `<p>${escapeHtml(location)}</p>` : '',
       `<p>${Number.isFinite(acres) ? `${Math.round(acres).toLocaleString()} acres` : 'Acreage not reported'} · ${Number.isFinite(containment) ? `${Math.round(containment)}% contained` : 'Containment not reported'}</p>`,
       props.stageOfControl ? `<p>Stage of control: ${escapeHtml(props.stageOfControl)}</p>` : '',
+      props.derivedFromPerimeter ? '<p>Marker placed from the reported perimeter because a separate incident point was unavailable.</p>' : '',
       props.updatedAt ? `<p>Updated ${escapeHtml(formatPopupDate(props.updatedAt))}</p>` : '',
       popupSourceLink(props.evacuationSourceUrl || props.sourceUrl, props.evacuationSourceUrl ? 'Official evacuation source' : 'Official fire source'),
     ].join('');

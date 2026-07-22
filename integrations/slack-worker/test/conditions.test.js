@@ -236,6 +236,21 @@ assert.equal(payload.sources.find((source) => source.id === "nifc-fires").label,
 assert.equal(payload.sources.find((source) => source.id === "bcws-fires").label, "Southern B.C. current fire incidents");
 assert.equal(payload.sources.find((source) => source.id === "nws-alerts").label, "Selected Washington NWS alerts");
 
+let transientNifcAttempts = 0;
+const transientNifcFetch = (url) => {
+  if (url.includes("WFIGS_Incident_Locations_Current")) {
+    transientNifcAttempts += 1;
+    if (transientNifcAttempts === 1) {
+      return Promise.resolve(new Response("Temporarily unavailable", { status: 503 }));
+    }
+  }
+  return fixtureFetch(url);
+};
+const recovered = await buildConditions({}, { fetchImpl: transientNifcFetch, now: NOW });
+assert.equal(transientNifcAttempts, 2);
+assert.equal(recovered.sources.find((source) => source.id === "nifc-fires").status, "available");
+assert.equal(recovered.fires.features.some((feature) => feature.properties.sourceName === "NIFC WFIGS"), true);
+
 const degradedFetch = (url) => {
   if (url.includes("api.weather.gov")) {
     return Promise.resolve(new Response("Unavailable", { status: 503 }));

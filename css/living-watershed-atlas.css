@@ -1883,7 +1883,30 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
   }
 
   .atlas-map-utility-dock {
+    top: auto;
+    right: 0.55rem;
+    bottom: 4.35rem;
+    display: flex;
+  }
+
+  .atlas-map-utility-dock [data-atlas-caveats-open] {
     display: none;
+  }
+
+  .atlas-map-utility-dock [data-atlas-reset-view] {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border-radius: 999px;
+    font-size: 0;
+  }
+
+  .atlas-map-utility-dock [data-atlas-reset-view]::before {
+    content: '\21BB';
+    font-size: 1.35rem;
+    line-height: 1;
   }
 
   .atlas-map-legend {

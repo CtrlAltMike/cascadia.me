@@ -37,6 +37,12 @@
     });
 
     book.addEventListener("pointerleave", resetBook);
+    // Keep the picked-up state from sticking if a browser synthesizes mouse
+    // movement without a matching pointerleave event.
+    book.addEventListener("mouseleave", resetBook);
+    book.addEventListener("pointerout", (event) => {
+      if (!book.contains(event.relatedTarget)) resetBook();
+    });
     book.addEventListener("blur", resetBook, true);
   });
 })();

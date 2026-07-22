@@ -2090,6 +2090,7 @@ function selectServiceArea(feature) {
   const coverage = coverageStore.get(key);
   if (!coverage || !["forecast-us", "forecast-ca"].includes(coverage.family)) return;
   closeResourceDetails({ rerender: false });
+  closeMapLegend();
   selectedServiceAreaKey = key;
   const isCanadian = coverage.family === "forecast-ca";
   const identifier = isCanadian ? coverage.feature.properties.CLC : coverage.feature.properties.CWA || coverage.feature.properties.cwa;
@@ -2203,6 +2204,7 @@ function selectResource(id, { revealMap = false } = {}) {
   const resource = resources.find((item) => item.id === id);
   if (!resource) return;
   closeServiceAreaDetails({ update: false });
+  closeMapLegend();
   selectedResourceId = id;
   document.querySelector("#card-kicker").textContent = `${publisherLabels[resource.publisher]} · ${resource.place}`;
   document.querySelector("#card-title").textContent = resource.name;
@@ -2775,15 +2777,22 @@ document.querySelector("#share-list").addEventListener("click", () => {
 document.querySelector("#copy-linked-list").addEventListener("click", copyLinkedList);
 document.querySelector("#share-filtered-view").addEventListener("click", shareFilteredView);
 document.querySelector("#show-perimeter-sources").addEventListener("click", () => perimeterDialog.showModal());
-document.querySelector("#toggle-legend").addEventListener("click", () => {
-  const legend = document.querySelector("#map-legend");
-  legend.hidden = !legend.hidden;
-  document.querySelector("#toggle-legend").setAttribute("aria-expanded", String(!legend.hidden));
-});
-document.querySelector("#close-legend").addEventListener("click", () => {
+function closeMapLegend() {
   document.querySelector("#map-legend").hidden = true;
   document.querySelector("#toggle-legend").setAttribute("aria-expanded", "false");
+}
+
+document.querySelector("#toggle-legend").addEventListener("click", () => {
+  const legend = document.querySelector("#map-legend");
+  const willOpen = legend.hidden;
+  if (willOpen) {
+    closeResourceDetails();
+    closeServiceAreaDetails();
+  }
+  legend.hidden = !willOpen;
+  document.querySelector("#toggle-legend").setAttribute("aria-expanded", String(willOpen));
 });
+document.querySelector("#close-legend").addEventListener("click", closeMapLegend);
 document.querySelector("#close-card").addEventListener("click", () => {
   closeResourceDetails();
 });

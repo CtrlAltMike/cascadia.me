@@ -1282,7 +1282,11 @@
           'icon-rotate': ['to-number', ['get', 'bearing']],
           'icon-rotation-alignment': 'map',
           'icon-pitch-alignment': 'map',
-          'icon-allow-overlap': false,
+          // Station observations are the layer's primary marks. Keep them
+          // visible when denser basemap and speed-label tiers enter at
+          // higher zooms; the optional speed labels still declutter.
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
           'icon-padding': 6,
         },
         paint: {

@@ -116,8 +116,11 @@ assert(read('signals/index.html').includes('instrument-page'), 'signals/index.ht
 assert(read('signals/index.html').includes('styles.css?v=20260722-overlay-system'), 'signals/index.html: stale instrument stylesheet cache key');
 assert(read('atlas.html').includes('instrument-page'), 'atlas.html: missing shared instrument contract');
 assert(read('atlas.html').includes('living-watershed-atlas.css?v=20260722-design-system'), 'atlas.html: stale instrument stylesheet cache key');
-assert(read('atlas.html').includes('js/atlas.js?v=20260722-fire-markers'), 'atlas.html: stale Atlas script cache key');
+assert(read('atlas.html').includes('js/atlas.js?v=20260723-wind-arrows'), 'atlas.html: stale Atlas script cache key');
 assert(!read('css/living-watershed-atlas.css').includes('.living-watershed-atlas .nav-share-btn'), 'atlas stylesheet: mobile share-control exception remains');
+const atlasScript = read('js/atlas.js');
+assert(atlasScript.includes("'icon-allow-overlap': true"), 'atlas script: observed-wind arrows can lose collision placement');
+assert(atlasScript.includes("'icon-ignore-placement': true"), 'atlas script: observed-wind arrows can be displaced by label tiers');
 
 const illustratedPages = [
   'index.html', 'guides.html', 'faq.html', 'build-your-kit.html', 'earthquake.html',

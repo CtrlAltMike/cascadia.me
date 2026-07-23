@@ -1,19 +1,35 @@
 /* ============================================================
    Cascadia.me — Share Controls
-   Native share sheet with clipboard fallback
+   Editable suggested message with native and clipboard options
    ============================================================ */
 
 (function() {
   'use strict';
 
   let liveRegion;
+  let shareDialog;
+  let shareMessage;
+  let shareStatus;
+  let shareNativeButton;
+  let activeShareButton;
 
-  function getShareData() {
-    const description = document.querySelector('meta[name="description"]');
+  function pageTitle() {
+    return document.title.replace(/\s+(?:—|\|)\s+Cascadia\.me$/i, '');
+  }
 
+  function suggestedMessage() {
+    const title = pageTitle();
+    const customMessage = document.querySelector('meta[name="cascadia-share-text"]')?.content?.trim();
+    const introduction = `I thought this Cascadia.me page might be useful: ${title}.`;
+
+    if (customMessage) return `${introduction} ${customMessage}`;
+    return `${introduction} It’s a calm, place-based resource for understanding hazards and preparedness across the Pacific Northwest.`;
+  }
+
+  function getShareData(text) {
     return {
-      title: document.title.replace(/\s+(?:—|\|)\s+Cascadia\.me$/i, ''),
-      text: description ? description.content : '',
+      title: pageTitle(),
+      text: text.trim(),
       url: window.location.href
     };
   }
@@ -36,11 +52,16 @@
     }, 30);
   }
 
-  function setCopiedState() {
+  function setShareStatus(message) {
+    if (shareStatus) shareStatus.textContent = message;
+    announce(message);
+  }
+
+  function setCopiedState(label) {
     document.querySelectorAll('.share-button').forEach((button) => {
       button.classList.add('is-confirmed');
-      button.setAttribute('aria-label', 'Link copied');
-      button.setAttribute('title', 'Link copied');
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
     });
 
     window.setTimeout(() => {
@@ -52,14 +73,14 @@
     }, 1600);
   }
 
-  async function copyLink(url) {
+  async function copyText(value) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(value);
       return true;
     }
 
     const field = document.createElement('textarea');
-    field.value = url;
+    field.value = value;
     field.setAttribute('readonly', '');
     field.style.position = 'absolute';
     field.style.left = '-9999px';
@@ -72,30 +93,138 @@
     return copied;
   }
 
-  async function handleShare() {
-    const shareData = getShareData();
+  function closeShareDialog() {
+    if (!shareDialog) return;
+
+    if (typeof shareDialog.close === 'function' && shareDialog.open) {
+      shareDialog.close();
+    } else {
+      shareDialog.classList.remove('is-open');
+      shareDialog.hidden = true;
+    }
+
+    document.body.classList.remove('share-dialog-open');
+    activeShareButton?.focus();
+  }
+
+  function openShareDialog(button) {
+    ensureShareDialog();
+    activeShareButton = button;
+    shareMessage.value = suggestedMessage();
+    shareStatus.textContent = 'Use the suggested message as written, edit it, or share only the link.';
+    shareNativeButton.hidden = !navigator.share;
+
+    if (typeof shareDialog.showModal === 'function') {
+      shareDialog.showModal();
+    } else {
+      shareDialog.hidden = false;
+      shareDialog.classList.add('is-open');
+      shareDialog.setAttribute('role', 'dialog');
+      shareDialog.setAttribute('aria-modal', 'true');
+    }
+
+    document.body.classList.add('share-dialog-open');
+    shareMessage.focus();
+    shareMessage.select();
+  }
+
+  async function shareNatively() {
+    if (!navigator.share) return;
 
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-        return;
-      }
+      await navigator.share(getShareData(shareMessage.value));
+      closeShareDialog();
     } catch (error) {
       if (error && error.name === 'AbortError') return;
+      setShareStatus('Sharing was not available. You can copy the message or link instead.');
     }
+  }
+
+  async function copyMessageAndLink() {
+    const data = getShareData(shareMessage.value);
+    const message = data.text ? `${data.text}\n\n${data.url}` : data.url;
 
     try {
-      await copyLink(shareData.url);
-      setCopiedState();
-      announce('Link copied to clipboard');
+      await copyText(message);
+      setCopiedState('Message and link copied');
+      setShareStatus('Message and link copied.');
     } catch (error) {
-      window.prompt('Copy this link:', shareData.url);
+      window.prompt('Copy this message and link:', message);
     }
+  }
+
+  async function copyLinkOnly() {
+    const url = window.location.href;
+
+    try {
+      await copyText(url);
+      setCopiedState('Link copied');
+      setShareStatus('Link copied.');
+    } catch (error) {
+      window.prompt('Copy this link:', url);
+    }
+  }
+
+  function ensureShareDialog() {
+    if (shareDialog) return shareDialog;
+
+    shareDialog = document.createElement('dialog');
+    shareDialog.className = 'share-dialog';
+    shareDialog.setAttribute('aria-labelledby', 'share-dialog-title');
+    shareDialog.innerHTML = `
+      <div class="share-dialog-card">
+        <div class="share-dialog-heading">
+          <div>
+            <p class="share-dialog-kicker">A note to send along</p>
+            <h2 id="share-dialog-title">Share this page</h2>
+          </div>
+          <button class="share-dialog-close" type="button" aria-label="Close share panel">&times;</button>
+        </div>
+        <label class="share-dialog-label" for="share-dialog-message">Suggested message</label>
+        <textarea id="share-dialog-message" class="share-dialog-message" rows="6"></textarea>
+        <p class="share-dialog-status" role="status" aria-live="polite"></p>
+        <div class="share-dialog-actions">
+          <button class="share-dialog-action share-dialog-action-primary" type="button" data-share-native>Share&hellip;</button>
+          <button class="share-dialog-action" type="button" data-share-copy-message>Copy message + link</button>
+          <button class="share-dialog-action share-dialog-action-quiet" type="button" data-share-copy-link>Copy link only</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(shareDialog);
+
+    shareMessage = shareDialog.querySelector('#share-dialog-message');
+    shareStatus = shareDialog.querySelector('.share-dialog-status');
+    shareNativeButton = shareDialog.querySelector('[data-share-native]');
+
+    shareDialog.querySelector('.share-dialog-close').addEventListener('click', closeShareDialog);
+    shareNativeButton.addEventListener('click', shareNatively);
+    shareDialog.querySelector('[data-share-copy-message]').addEventListener('click', copyMessageAndLink);
+    shareDialog.querySelector('[data-share-copy-link]').addEventListener('click', copyLinkOnly);
+
+    shareDialog.addEventListener('click', (event) => {
+      if (event.target === shareDialog) closeShareDialog();
+    });
+    shareDialog.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeShareDialog();
+    });
+    shareDialog.addEventListener('close', () => {
+      document.body.classList.remove('share-dialog-open');
+    });
+    document.addEventListener('keydown', (event) => {
+      const dialogIsOpen = shareDialog.open || shareDialog.classList.contains('is-open');
+      if (event.key === 'Escape' && dialogIsOpen) {
+        event.preventDefault();
+        closeShareDialog();
+      }
+    });
+
+    return shareDialog;
   }
 
   function initShareButtons() {
     document.querySelectorAll('.share-button').forEach((button) => {
-      button.addEventListener('click', handleShare);
+      button.addEventListener('click', () => openShareDialog(button));
     });
   }
 

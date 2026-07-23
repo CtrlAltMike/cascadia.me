@@ -65,8 +65,6 @@ function activeSection(relativePath) {
   if (relativePath === 'atlas.html') return 'atlas';
   if (relativePath === 'signals/index.html') return 'signals';
   if (relativePath.startsWith('stories/')) return 'stories';
-  if (relativePath === 'approach.html') return 'approach';
-  if (relativePath === 'faq.html') return 'faq';
   return null;
 }
 
@@ -132,8 +130,6 @@ function pageValues(relativePath) {
     atlasState: state('atlas'),
     signalsState: state('signals'),
     storiesState: state('stories'),
-    approachState: state('approach'),
-    faqState: state('faq'),
     earthquakeCurrent: current('earthquake'),
     wildfireCurrent: current('wildfire'),
     floodingCurrent: current('flooding'),

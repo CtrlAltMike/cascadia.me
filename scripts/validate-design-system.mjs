@@ -153,7 +153,10 @@ assert(earthquake.includes('css/living-watershed-primary-chapters.css'), 'earthq
 const header = read('scripts/site-frame/header.html');
 assert(header.includes('share-button nav-share-btn'), 'site-frame header: share control is not static');
 assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
-assert(read('scripts/site-frame/footer.html').includes('>Support this work</a>'), 'site-frame footer: quiet support path is missing');
+for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this work</a>']) {
+  assert(!header.includes(informationalLink), `site-frame header: ${informationalLink} has returned to primary task navigation`);
+  assert(read('scripts/site-frame/footer.html').includes(informationalLink), `site-frame footer: ${informationalLink} is missing`);
+}
 assert(read('approach.html').includes('>Reader support</a>'), 'approach.html: contextual support disclosure is missing');
 const shareScript = read('js/share.js');
 for (const shareContract of ['Suggested message', 'Copy message + link', 'Copy link only', 'navigator.share']) {

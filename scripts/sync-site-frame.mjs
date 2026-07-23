@@ -53,6 +53,7 @@ function collectHtmlFiles(directory, relativeDirectory = '') {
 }
 
 function activeSection(relativePath) {
+  if (relativePath === 'index.html') return 'home';
   if (relativePath === 'guides.html' || [
     'earthquake.html',
     'wildfire.html',
@@ -125,6 +126,7 @@ function pageValues(relativePath) {
     headerAccessory: relativePath.startsWith('stories/') && relativePath !== 'stories/index.html'
       ? '  <div class="story-reading-progress" aria-hidden="true"><span id="story-progress-bar"></span></div>'
       : '',
+    homeState: state('home'),
     guidesState: state('guides'),
     kitState: state('kit'),
     atlasState: state('atlas'),

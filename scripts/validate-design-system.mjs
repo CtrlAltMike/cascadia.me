@@ -140,6 +140,9 @@ assert(earthquake.includes('css/living-watershed-primary-chapters.css'), 'earthq
 
 const header = read('scripts/site-frame/header.html');
 assert(header.includes('share-button nav-share-btn'), 'site-frame header: share control is not static');
+assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
+assert(read('scripts/site-frame/footer.html').includes('>Support this work</a>'), 'site-frame footer: quiet support path is missing');
+assert(read('approach.html').includes('>Reader support</a>'), 'approach.html: contextual support disclosure is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
 assert(read('css/site-frame.css').includes('@media (max-width: 1080px)'), 'site-frame.css: navigation collapse point is not 1080px');
 

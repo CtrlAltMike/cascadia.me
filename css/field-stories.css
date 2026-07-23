@@ -342,15 +342,37 @@
   opacity: 0.72;
 }
 
-.field-story-entry-glacial { --entry-color: #247f8b; }
-.field-story-entry-river { --entry-color: var(--lw-ocean-700); }
-.field-story-entry-sun { --entry-color: #946819; }
-.field-story-entry-fire { --entry-color: var(--lw-coral-600); }
-.field-story-entry-camas { --entry-color: var(--lw-camas-600); }
-.field-story-entry-spruce { --entry-color: var(--lw-spruce-700); }
-.field-story-entry-storm { --entry-color: #416778; }
-.field-story-entry-cedar { --entry-color: #8a4c37; }
-.field-story-entry-volcano { --entry-color: #4d5a58; }
+.field-story-entry-glacial { --entry-color: #247f8b; --cover-sketch: url("../assets/living-watershed/stories/covers/the-rounds.webp"); }
+.field-story-entry-river { --entry-color: var(--lw-ocean-700); --cover-sketch: url("../assets/living-watershed/stories/covers/crest.webp"); }
+.field-story-entry-sun { --entry-color: #946819; --cover-sketch: url("../assets/living-watershed/stories/covers/overnight-lows.webp"); }
+.field-story-entry-fire { --entry-color: var(--lw-coral-600); --cover-sketch: url("../assets/living-watershed/stories/covers/level-three.webp"); }
+.field-story-entry-camas { --entry-color: var(--lw-camas-600); --cover-sketch: url("../assets/living-watershed/stories/covers/inventory.webp"); }
+.field-story-entry-spruce { --entry-color: var(--lw-spruce-700); --cover-sketch: url("../assets/living-watershed/stories/covers/the-list.webp"); }
+.field-story-entry-storm { --entry-color: #416778; --cover-sketch: url("../assets/living-watershed/stories/covers/chafe-gear.webp"); }
+.field-story-entry-cedar { --entry-color: #8a4c37; --cover-sketch: url("../assets/living-watershed/stories/covers/natural-warning.webp"); }
+.field-story-entry-volcano { --entry-color: #4d5a58; --cover-sketch: url("../assets/living-watershed/stories/covers/eruption.webp"); }
+
+.field-story-entry-sketch {
+  position: absolute;
+  z-index: 0;
+  inset: 2.8rem 0.9rem auto 1.25rem;
+  height: min(42%, 13.5rem);
+  pointer-events: none;
+  background: var(--entry-color);
+  -webkit-mask: var(--cover-sketch) center / contain no-repeat;
+  mask: var(--cover-sketch) center / contain no-repeat;
+  opacity: 0.22;
+  transform: translateZ(4px) rotate(-0.6deg) scale(0.98);
+  transform-origin: center;
+  transition: opacity 220ms ease-out, transform 260ms cubic-bezier(0.2, 0.82, 0.24, 1);
+}
+
+.field-story-entry.is-picked-up .field-story-entry-sketch,
+.field-story-entry:hover .field-story-entry-sketch,
+.field-story-entry:focus-within .field-story-entry-sketch {
+  opacity: 0.3;
+  transform: translateZ(14px) rotate(0deg) scale(1);
+}
 
 .field-story-entry-mark {
   position: relative;
@@ -1283,6 +1305,7 @@
   .field-story-entry::before,
   .field-story-entry::after,
   .field-story-entry,
+  .field-story-entry-sketch,
   .field-story-read span,
   .story-rail li a,
   .story-afterword a {
@@ -1290,6 +1313,7 @@
   }
 
   .field-story-entry,
+  .field-story-entry-sketch,
   .reveal-enabled .field-stories-page .field-story-entry.reveal.revealed {
     transform: none;
     transition: none;

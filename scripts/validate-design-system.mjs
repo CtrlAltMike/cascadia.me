@@ -68,7 +68,7 @@ for (const relativePath of pages) {
   assert(count(document, 'css/site-frame.css') === 1, `${relativePath}: site-frame.css must appear once`);
   assert(count(document, 'css/base.css?v=20260722-design-system') === 1, `${relativePath}: canonical base cache key is missing`);
   assert(count(document, 'css/components.css?v=20260722-design-system') === 1, `${relativePath}: canonical components cache key is missing`);
-  assert(count(document, 'css/site-frame.css?v=20260723-share-helper') === 1, `${relativePath}: canonical frame cache key is missing`);
+  assert(count(document, 'css/site-frame.css?v=20260723-nav-spacing') === 1, `${relativePath}: canonical frame cache key is missing`);
   assert(/<body class="[^"]*\bsite-frame-page\b/.test(document), `${relativePath}: missing site-frame-page body class`);
   assert(count(document, 'class="share-button nav-share-btn"') === 1, `${relativePath}: static share control must appear once`);
   assert(count(document, 'js/share.js?v=20260723-share-copy') === 1, `${relativePath}: canonical share helper cache key is missing`);
@@ -167,6 +167,8 @@ assert(
   'share helper: canonical suggested message is missing'
 );
 assert(read('css/site-frame.css').includes('.share-dialog-card'), 'site-frame.css: shared share panel is missing');
+assert(read('css/site-frame.css').includes('gap: clamp(1.1rem, 1.6vw, 1.75rem)'), 'site-frame.css: compact desktop navigation rhythm is missing');
+assert(read('css/site-frame.css').includes('margin-left: clamp(0.5rem, 1vw, 1rem)'), 'site-frame.css: share-control separation is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
 assert(read('css/site-frame.css').includes('@media (max-width: 1080px)'), 'site-frame.css: navigation collapse point is not 1080px');
 

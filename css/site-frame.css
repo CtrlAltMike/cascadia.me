@@ -58,10 +58,6 @@ body.site-frame-page .nav-links a.active {
   color: var(--site-frame-coral);
 }
 
-body.site-frame-page .nav-links {
-  gap: clamp(1.25rem, 2.7vw, 2.75rem);
-}
-
 body.site-frame-page .nav-links a {
   color: var(--site-frame-text);
   font-size: 0.8rem;
@@ -100,6 +96,16 @@ body.site-frame-page .share-button:hover {
 
 body.site-frame-page .floating-share-btn {
   display: none;
+}
+
+@media (min-width: 1081px) {
+  body.site-frame-page .nav-links {
+    gap: clamp(1.1rem, 1.6vw, 1.75rem);
+  }
+
+  body.site-frame-page .nav-share-btn {
+    margin-left: clamp(0.5rem, 1vw, 1rem);
+  }
 }
 
 body.site-frame-page .site-footer {
@@ -320,9 +326,14 @@ body.share-dialog-open {
 
 @media (max-width: 1080px) {
   body.site-frame-page .nav-links {
+    gap: 1rem;
     background: var(--site-frame-cream);
     border-bottom-color: var(--site-frame-line);
     box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
+  }
+
+  body.site-frame-page .nav-share-btn {
+    margin-left: auto;
   }
 }
 

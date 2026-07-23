@@ -18,12 +18,7 @@
   }
 
   function suggestedMessage() {
-    const title = pageTitle();
-    const customMessage = document.querySelector('meta[name="cascadia-share-text"]')?.content?.trim();
-    const introduction = `I thought this Cascadia.me page might be useful: ${title}.`;
-
-    if (customMessage) return `${introduction} ${customMessage}`;
-    return `${introduction} It’s a calm, place-based resource for understanding hazards and preparedness across the Pacific Northwest.`;
+    return 'I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.';
   }
 
   function getShareData(text) {

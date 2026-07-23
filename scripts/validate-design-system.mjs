@@ -71,7 +71,7 @@ for (const relativePath of pages) {
   assert(count(document, 'css/site-frame.css?v=20260723-share-helper') === 1, `${relativePath}: canonical frame cache key is missing`);
   assert(/<body class="[^"]*\bsite-frame-page\b/.test(document), `${relativePath}: missing site-frame-page body class`);
   assert(count(document, 'class="share-button nav-share-btn"') === 1, `${relativePath}: static share control must appear once`);
-  assert(count(document, 'js/share.js?v=20260723-share-helper') === 1, `${relativePath}: canonical share helper cache key is missing`);
+  assert(count(document, 'js/share.js?v=20260723-share-copy') === 1, `${relativePath}: canonical share helper cache key is missing`);
   for (const script of ['share', 'nav', 'animations', 'feedback']) {
     assert(count(document, `js/${script}.js`) === 1, `${relativePath}: ${script}.js must appear once`);
   }
@@ -134,6 +134,17 @@ for (const relativePath of illustratedPages) {
   assert(document.includes('illustrated-hero__content'), `${relativePath}: missing illustrated hero content contract`);
 }
 
+const guideTaxonomyPages = [
+  'index.html', 'guides.html', 'faq.html', 'earthquake.html', 'wildfire.html',
+  'flooding.html', 'winter-storm.html', 'volcano.html'
+];
+const publicChapterLanguage = />[^<]*\bchapters?\b|content="[^"]*\bchapters?\b|"(?:description|text)":\s*"[^"]*\bchapters?\b/i;
+for (const relativePath of guideTaxonomyPages) {
+  assert(!publicChapterLanguage.test(read(relativePath)), `${relativePath}: public copy still describes a hazard guide as a chapter`);
+}
+const guidesPage = read('guides.html');
+assert(!/>[^<]*\bguidebook\b|<title>[^<]*\bguidebook\b|"name":\s*"[^"]*\bguidebook\b/i.test(guidesPage), 'guides.html: public copy still presents the guide collection as one guidebook');
+
 const earthquake = read('earthquake.html');
 assert(earthquake.includes('chapter--earthquake'), 'earthquake.html: missing shared hazard-family class');
 assert(earthquake.includes('primary-chapter-page earthquake-chapter-page'), 'earthquake.html: missing shared hazard-family page contract');
@@ -148,6 +159,10 @@ const shareScript = read('js/share.js');
 for (const shareContract of ['Suggested message', 'Copy message + link', 'Copy link only', 'navigator.share']) {
   assert(shareScript.includes(shareContract), `share helper: missing ${shareContract}`);
 }
+assert(
+  shareScript.includes('I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.'),
+  'share helper: canonical suggested message is missing'
+);
 assert(read('css/site-frame.css').includes('.share-dialog-card'), 'site-frame.css: shared share panel is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
 assert(read('css/site-frame.css').includes('@media (max-width: 1080px)'), 'site-frame.css: navigation collapse point is not 1080px');

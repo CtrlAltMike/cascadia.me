@@ -154,6 +154,170 @@ body.site-frame-page .seasonal-footer {
   color: rgba(242, 233, 215, 0.62);
 }
 
+body.share-dialog-open {
+  overflow: hidden;
+}
+
+.share-dialog {
+  width: min(42rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  color: var(--site-frame-text, #24343a);
+  background: transparent;
+}
+
+.share-dialog::backdrop {
+  background: rgba(23, 34, 38, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.share-dialog.is-open {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  width: auto;
+  max-height: none;
+  padding: 1rem;
+  place-items: center;
+  background: rgba(23, 34, 38, 0.62);
+}
+
+.share-dialog-card {
+  display: grid;
+  gap: 0.9rem;
+  max-height: calc(100dvh - 2rem);
+  padding: clamp(1.25rem, 4vw, 2rem);
+  overflow: auto;
+  border: 1px solid rgba(6, 59, 92, 0.16);
+  border-radius: 0.75rem;
+  background: var(--site-frame-cream, #fbf7ee);
+  box-shadow: 0 26px 70px rgba(10, 30, 37, 0.28);
+}
+
+.share-dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.share-dialog-kicker {
+  margin: 0 0 0.2rem;
+  color: var(--site-frame-coral, #c84d3c);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.share-dialog h2 {
+  margin: 0;
+  color: var(--site-frame-ocean, #063b5c);
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.share-dialog-close {
+  display: inline-grid;
+  width: 2.75rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(6, 59, 92, 0.18);
+  border-radius: 999px;
+  color: var(--site-frame-ocean, #063b5c);
+  background: transparent;
+  font: inherit;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.share-dialog-label {
+  color: var(--site-frame-text, #24343a);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.share-dialog-message {
+  width: 100%;
+  min-height: 9rem;
+  resize: vertical;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(6, 59, 92, 0.24);
+  border-radius: 0.45rem;
+  color: var(--site-frame-text, #24343a);
+  background: #fffdf8;
+  font: 500 0.95rem/1.55 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.share-dialog-message:focus,
+.share-dialog-close:focus-visible,
+.share-dialog-action:focus-visible {
+  outline: 3px solid var(--site-frame-sun, #e2b93b);
+  outline-offset: 2px;
+}
+
+.share-dialog-status {
+  min-height: 1.35rem;
+  margin: 0;
+  color: var(--site-frame-muted, #5c6f76);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.share-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.share-dialog-action {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(6, 59, 92, 0.23);
+  border-radius: 0.35rem;
+  color: var(--site-frame-ocean, #063b5c);
+  background: transparent;
+  font: 700 0.8rem/1.2 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  cursor: pointer;
+}
+
+.share-dialog-action:hover,
+.share-dialog-close:hover {
+  border-color: var(--site-frame-glacial, #2faab3);
+  background: rgba(47, 170, 179, 0.1);
+}
+
+.share-dialog-action-primary {
+  border-color: var(--site-frame-ocean, #063b5c);
+  color: var(--site-frame-cream, #fbf7ee);
+  background: var(--site-frame-ocean, #063b5c);
+}
+
+.share-dialog-action-primary:hover {
+  color: var(--site-frame-cream, #fbf7ee);
+  background: #0b5277;
+}
+
+.share-dialog-action-quiet {
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 @media (max-width: 1080px) {
   body.site-frame-page .nav-links {
     background: var(--site-frame-cream);
@@ -162,9 +326,34 @@ body.site-frame-page .seasonal-footer {
   }
 }
 
+@media (max-width: 520px) {
+  .share-dialog {
+    width: min(100% - 1rem, 42rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .share-dialog.is-open {
+    padding: 0.5rem;
+  }
+
+  .share-dialog-card {
+    max-height: calc(100dvh - 1rem);
+    padding: 1.15rem;
+  }
+
+  .share-dialog-actions {
+    display: grid;
+  }
+
+  .share-dialog-action {
+    width: 100%;
+  }
+}
+
 @media print {
   body.site-frame-page .site-header,
-  body.site-frame-page .site-footer {
+  body.site-frame-page .site-footer,
+  .share-dialog {
     display: none !important;
   }
 }

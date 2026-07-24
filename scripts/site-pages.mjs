@@ -18,7 +18,7 @@ const storySkip = Object.freeze({
 
 export const siteCacheVersions = Object.freeze({
   designSystem: '20260723-css-audit',
-  frame: '20260723-note-dialog',
+  frame: '20260724-nowweplan-gate',
   frameHardening: '20260723-frame-hardening',
   approach: '20260712-approach3',
   guidesHero: '20260722-guides-hero',

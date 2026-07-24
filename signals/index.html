@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#153f47">
+  <!-- site-frame:metadata:start -->
   <title>Cascadia Signals | Official Alerts &amp; Emergency Services Directory</title>
   <meta name="description" content="Find place-aware official alert systems, emergency management agencies, transportation updates, hazard information, and support resources across Washington, Oregon, and British Columbia.">
   <link rel="canonical" href="https://cascadia.me/signals/">
+  <!-- site-frame:metadata:end -->
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#153f47">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Cascadia Signals">
   <meta property="og:description" content="A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.">
@@ -28,8 +30,10 @@
   <link rel="stylesheet" href="../css/base.css?v=20260722-design-system">
   <link rel="stylesheet" href="../css/components.css?v=20260722-design-system">
   <!-- site-frame:head:end -->
+  <!-- site-frame:page-styles:start -->
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="styles.css?v=20260723-frame-hardening">
+  <link rel="stylesheet" href="../signals/styles.css?v=20260723-frame-hardening">
+  <!-- site-frame:page-styles:end -->
   <!-- site-frame:styles:start -->
   <link rel="stylesheet" href="../css/design-system.css?v=20260722-design-system">
   <link rel="stylesheet" href="../css/site-frame.css?v=20260723-note-dialog">
@@ -449,12 +453,14 @@
     </form>
   </dialog>
 
-  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
-  <script src="authority-data.js?v=20260714-actionability" defer></script>
-  <script src="bc-province-boundary.js?v=20260714" defer></script>
-  <script src="bc-forecast-zones.js?v=20260714" defer></script>
-  <script src="app.js?v=20260722-overlay-system" defer></script>
   <!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+  <!-- site-frame:page-scripts:start -->
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
+  <script src="../signals/authority-data.js?v=20260714-actionability" defer></script>
+  <script src="../signals/bc-province-boundary.js?v=20260714" defer></script>
+  <script src="../signals/bc-forecast-zones.js?v=20260714" defer></script>
+  <script src="../signals/app.js?v=20260722-overlay-system" defer></script>
+  <!-- site-frame:page-scripts:end -->
   <!-- site-frame:scripts:start -->
   <script src="../js/share.js?v=20260723-note-dialog"></script>
   <script src="../js/nav.js?v=20260722-design-system"></script>

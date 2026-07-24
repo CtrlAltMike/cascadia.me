@@ -3,6 +3,9 @@
 Google/
 .wrangler/
 .playwright-cli/
+node_modules/
+playwright-report/
+test-results/
 output/playwright/
 __pycache__/
 *.pyc

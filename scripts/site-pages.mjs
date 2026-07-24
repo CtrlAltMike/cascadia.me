@@ -16,7 +16,51 @@ const storySkip = Object.freeze({
   text: 'Skip to the story'
 });
 
-export const sitePages = Object.freeze([
+export const siteCacheVersions = Object.freeze({
+  designSystem: '20260722-design-system',
+  frame: '20260723-note-dialog',
+  frameHardening: '20260723-frame-hardening',
+  approach: '20260712-approach3',
+  guidesHero: '20260722-guides-hero',
+  faqHero: '20260721-hero3',
+  kit: '20260716-nowweplan',
+  guideEditorial: '20260716-editorial',
+  volcanoEditorial: '20260716-volcano-edit',
+  fieldStories: '20260723-story-frontispieces2',
+  storyShelf: '20260722-book-lift6',
+  atlas: '20260723-wind-arrows',
+  signalsAuthority: '20260714-actionability',
+  signalsBoundary: '20260714',
+  signalsApp: '20260722-overlay-system'
+});
+
+export const siteAssetCatalog = Object.freeze({
+  surface: Object.freeze({ kind: 'style', path: 'css/living-watershed-surfaces.css', version: siteCacheVersions.frameHardening }),
+  guide: Object.freeze({ kind: 'style', path: 'css/living-watershed-guide.css', version: siteCacheVersions.frameHardening }),
+  home: Object.freeze({ kind: 'style', path: 'css/living-watershed-home.css', version: siteCacheVersions.frameHardening }),
+  atlasStyle: Object.freeze({ kind: 'style', path: 'css/living-watershed-atlas.css', version: siteCacheVersions.frameHardening }),
+  signalsStyle: Object.freeze({ kind: 'style', path: 'signals/styles.css', version: siteCacheVersions.frameHardening }),
+  approachPhase7: Object.freeze({ kind: 'style', path: 'css/living-watershed-phase7.css', version: siteCacheVersions.approach }),
+  guidesPhase7: Object.freeze({ kind: 'style', path: 'css/living-watershed-phase7.css', version: siteCacheVersions.guidesHero }),
+  faq: Object.freeze({ kind: 'style', path: 'css/faq.css', version: siteCacheVersions.faqHero }),
+  kit: Object.freeze({ kind: 'style', path: 'css/living-watershed-kit.css', version: siteCacheVersions.kit }),
+  primaryGuides: Object.freeze({ kind: 'style', path: 'css/living-watershed-primary-chapters.css', version: siteCacheVersions.designSystem }),
+  earthquake: Object.freeze({ kind: 'style', path: 'css/living-watershed-earthquake.css', version: siteCacheVersions.guideEditorial }),
+  volcano: Object.freeze({ kind: 'style', path: 'css/living-watershed-volcano.css', version: siteCacheVersions.volcanoEditorial }),
+  fieldStories: Object.freeze({ kind: 'style', path: 'css/field-stories.css', version: siteCacheVersions.fieldStories }),
+  maplibreStyle: Object.freeze({ kind: 'style', path: 'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css', external: true }),
+  maplibreScript: Object.freeze({ kind: 'script', path: 'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js', external: true, defer: true }),
+  atlasScript: Object.freeze({ kind: 'script', path: 'js/atlas.js', version: siteCacheVersions.atlas }),
+  workbookScript: Object.freeze({ kind: 'script', path: 'js/household-workbook.js' }),
+  storyScript: Object.freeze({ kind: 'script', path: 'js/field-stories.js', version: '20260715-stories5' }),
+  storyShelfScript: Object.freeze({ kind: 'script', path: 'js/field-stories-shelf.js', version: siteCacheVersions.storyShelf }),
+  signalsAuthority: Object.freeze({ kind: 'script', path: 'signals/authority-data.js', version: siteCacheVersions.signalsAuthority, defer: true }),
+  signalsProvince: Object.freeze({ kind: 'script', path: 'signals/bc-province-boundary.js', version: siteCacheVersions.signalsBoundary, defer: true }),
+  signalsForecast: Object.freeze({ kind: 'script', path: 'signals/bc-forecast-zones.js', version: siteCacheVersions.signalsBoundary, defer: true }),
+  signalsApp: Object.freeze({ kind: 'script', path: 'signals/app.js', version: siteCacheVersions.signalsApp, defer: true })
+});
+
+const pageDefinitions = [
   {
     path: '404.html',
     family: 'not-found',
@@ -314,7 +358,54 @@ export const sitePages = Object.freeze([
     canonical: 'https://cascadia.me/winter-storm.html',
     schemaType: 'WebPage'
   }
-]);
+];
+
+const styleFamilyAssets = Object.freeze({
+  surface: ['surface'],
+  guide: ['guide'],
+  home: ['home'],
+  atlas: ['atlasStyle'],
+  signals: ['maplibreStyle', 'signalsStyle']
+});
+
+const pageAssetOverrides = Object.freeze({
+  'approach.html': { styles: ['approachPhase7'] },
+  'atlas.html': { scripts: ['atlasScript'] },
+  'build-your-kit.html': { styles: ['kit'], scripts: ['workbookScript'] },
+  'earthquake.html': { styles: ['primaryGuides', 'earthquake'] },
+  'faq.html': { styles: ['faq'] },
+  'flooding.html': { styles: ['primaryGuides'] },
+  'guides.html': { styles: ['guidesPhase7'] },
+  'signals/index.html': {
+    scripts: ['maplibreScript', 'signalsAuthority', 'signalsProvince', 'signalsForecast', 'signalsApp']
+  },
+  'stories/index.html': { styles: ['fieldStories'], scripts: ['storyShelfScript'] },
+  'volcano.html': { styles: ['primaryGuides', 'volcano'] },
+  'wildfire.html': { styles: ['primaryGuides'] },
+  'winter-storm.html': { styles: ['primaryGuides'] }
+});
+
+function assetsForPage(page) {
+  const overrides = pageAssetOverrides[page.path] || {};
+  const styles = [
+    ...(styleFamilyAssets[page.styleFamily] || []),
+    ...(overrides.styles || []),
+    ...(page.family === 'story' ? ['fieldStories'] : [])
+  ];
+  const scripts = [
+    ...(overrides.scripts || []),
+    ...(page.family === 'story' ? ['storyScript'] : [])
+  ];
+  return Object.freeze({
+    styles: Object.freeze(styles),
+    scripts: Object.freeze(scripts)
+  });
+}
+
+export const sitePages = Object.freeze(pageDefinitions.map((definition) => Object.freeze({
+  ...definition,
+  assets: assetsForPage(definition)
+})));
 
 export const sitePageByPath = new Map(sitePages.map((page) => [page.path, page]));
 

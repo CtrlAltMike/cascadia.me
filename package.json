@@ -1,0 +1,11 @@
+{
+  "name": "cascadia-me",
+  "private": true,
+  "scripts": {
+    "test:release": "playwright test",
+    "validate": "node scripts/sync-site-frame.mjs --check && node scripts/validate-design-system.mjs && npm run test:release"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

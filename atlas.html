@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- site-frame:metadata:start -->
   <title>Regional Hazard Atlas | Cascadia.me</title>
   <meta name="description" content="Read current official conditions, observed and forecast wind, and historical and planning layers together across Cascadia.">
+  <link rel="canonical" href="https://cascadia.me/atlas.html">
+  <!-- site-frame:metadata:end -->
   <meta name="author" content="Michael Hendrick">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#fbf7ee">
@@ -12,7 +15,6 @@
   <meta name="cascadia-conditions-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions">
   <meta name="cascadia-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind">
   <meta name="cascadia-forecast-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind/forecast?model=rdps-10km">
-  <link rel="canonical" href="https://cascadia.me/atlas.html">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Regional Hazard Atlas | Cascadia.me">
@@ -39,7 +41,9 @@
   <link rel="stylesheet" href="css/base.css?v=20260722-design-system">
   <link rel="stylesheet" href="css/components.css?v=20260722-design-system">
   <!-- site-frame:head:end -->
+  <!-- site-frame:page-styles:start -->
   <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260723-frame-hardening">
+  <!-- site-frame:page-styles:end -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -562,8 +566,10 @@
   </footer>
   <!-- site-frame:footer:end -->
 
-  <script src="js/atlas.js?v=20260723-wind-arrows"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "342fced3e6ce4fbe9aa256b78d1d4599"}'></script><!-- End Cloudflare Web Analytics -->
+  <!-- site-frame:page-scripts:start -->
+  <script src="js/atlas.js?v=20260723-wind-arrows"></script>
+  <!-- site-frame:page-scripts:end -->
   <!-- site-frame:scripts:start -->
   <script src="js/share.js?v=20260723-note-dialog"></script>
   <script src="js/nav.js?v=20260722-design-system"></script>

@@ -52,3 +52,12 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 - Do not make every page visually identical.
 - Do not reintroduce the retired map-product surface.
 - Treat shared frame templates and canonical CSS tokens as the source of truth.
+
+## Common framework continuation — July 23, 2026
+
+- `scripts/site-pages.mjs` is the canonical registry for every production page, its family, core metadata, page-specific assets, and cache versions.
+- `scripts/sync-site-frame.mjs --write` generates the shared frame, core metadata, page styles, and page scripts across all 23 production pages.
+- Rich page-owned structured data remains intact; the registry declares the required schema type and the design-system validator confirms that the generated page supplies it.
+- `npm run validate` checks frame drift and design-system contracts, then runs the release browser suite at desktop and mobile sizes.
+- The browser suite exercises shared navigation and sharing, Field Stories shelf and story layouts, Atlas disclosure controls, and the Signals postal-result message overlay.
+- The GitHub release gate installs an isolated Chromium browser and runs these interaction checks before production work can pass.

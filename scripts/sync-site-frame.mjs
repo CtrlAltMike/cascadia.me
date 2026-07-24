@@ -3,7 +3,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSitePage, sitePages } from './site-pages.mjs';
+import {
+  getSitePage,
+  siteAssetCatalog,
+  siteCacheVersions,
+  sitePages
+} from './site-pages.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, '..');
@@ -22,10 +27,14 @@ const excludedDirectories = new Set([
   'experiments',
   'integrations',
   'js',
+  'node_modules',
   'output',
+  'playwright-report',
   'poc',
   'public',
-  'scripts'
+  'scripts',
+  'test-results',
+  'tests'
 ]);
 
 const templates = Object.fromEntries(
@@ -86,7 +95,9 @@ function pageValues(relativePath) {
     storiesCurrent: current('stories'),
     kitCurrent: current('kit'),
     approachCurrent: current('approach'),
-    faqCurrent: current('faq')
+    faqCurrent: current('faq'),
+    designSystemVersion: siteCacheVersions.designSystem,
+    frameVersion: siteCacheVersions.frame
   };
 }
 
@@ -107,6 +118,99 @@ function replaceMarkedBlock(document, name, block) {
   if (!document.includes(start)) return null;
   const expression = new RegExp(`${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}`);
   return document.replace(expression, block.trim());
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function renderMetadata(page) {
+  return `<!-- site-frame:metadata:start -->
+  <title>${escapeHtml(page.title)}</title>
+  <meta name="description" content="${escapeHtml(page.description)}">
+  <link rel="canonical" href="${escapeHtml(page.canonical)}">
+  <!-- site-frame:metadata:end -->`;
+}
+
+function assetUrl(asset, values) {
+  const base = asset.external ? asset.path : `${values.prefix}${asset.path}`;
+  return asset.version ? `${base}?v=${asset.version}` : base;
+}
+
+function renderPageAssets(page, values, kind) {
+  const name = kind === 'style' ? 'page-styles' : 'page-scripts';
+  const assetIds = kind === 'style' ? page.assets.styles : page.assets.scripts;
+  const lines = assetIds.map((assetId) => {
+    const asset = siteAssetCatalog[assetId];
+    if (!asset || asset.kind !== kind) {
+      throw new Error(`Unknown ${kind} asset ${assetId}`);
+    }
+    const url = escapeHtml(assetUrl(asset, values));
+    if (kind === 'style') return `  <link rel="stylesheet" href="${url}">`;
+    return `  <script src="${url}"${asset.defer ? ' defer' : ''}></script>`;
+  });
+  return [
+    `<!-- site-frame:${name}:start -->`,
+    ...lines,
+    `  <!-- site-frame:${name}:end -->`
+  ].join('\n');
+}
+
+function normalizedLocalAsset(relativePath, rawUrl) {
+  const pathname = rawUrl.split(/[?#]/, 1)[0];
+  if (!pathname || /^https?:/i.test(pathname)) return pathname;
+  return path.normalize(pathname.startsWith('/')
+    ? pathname.slice(1)
+    : path.join(path.dirname(relativePath), pathname));
+}
+
+function stripPageAssetTags(document, relativePath, kind) {
+  const known = new Set(
+    Object.values(siteAssetCatalog)
+      .filter((asset) => asset.kind === kind)
+      .map((asset) => asset.path)
+  );
+  const expression = kind === 'style'
+    ? /[ \t]*<link\b[^>]*\brel="stylesheet"[^>]*\bhref="([^"]+)"[^>]*>\r?\n?/g
+    : /[ \t]*<script\b[^>]*\bsrc="([^"]+)"[^>]*><\/script>\r?\n?/g;
+  return document.replace(expression, (tag, rawUrl) => {
+    const normalized = normalizedLocalAsset(relativePath, rawUrl);
+    return known.has(normalized) || known.has(rawUrl.split(/[?#]/, 1)[0]) ? '' : tag;
+  });
+}
+
+function installMetadata(document, block) {
+  const marked = replaceMarkedBlock(document, 'metadata', block);
+  if (marked !== null) return marked;
+  let next = document
+    .replace(/[ \t]*<title>[^<]*<\/title>\r?\n?/g, '')
+    .replace(/[ \t]*<meta name="description" content="[^"]*">\r?\n?/g, '')
+    .replace(/[ \t]*<link rel="canonical" href="[^"]*">\r?\n?/g, '');
+  const viewport = /[ \t]*<meta name="viewport"[^>]*>/;
+  if (!viewport.test(next)) throw new Error('Missing viewport metadata');
+  return next.replace(viewport, (match) => `${match}\n  ${block.trim()}`);
+}
+
+function installPageStyles(document, block, relativePath) {
+  const marked = replaceMarkedBlock(document, 'page-styles', block);
+  if (marked !== null) return marked;
+  const next = stripPageAssetTags(document, relativePath, 'style');
+  const headEnd = '<!-- site-frame:head:end -->';
+  if (!next.includes(headEnd)) throw new Error('Missing shared head block');
+  return next.replace(headEnd, `${headEnd}\n  ${block.trim()}`);
+}
+
+function installPageScripts(document, block, relativePath) {
+  const marked = replaceMarkedBlock(document, 'page-scripts', block);
+  if (marked !== null) return marked;
+  const next = stripPageAssetTags(document, relativePath, 'script');
+  const sharedScripts = '<!-- site-frame:scripts:start -->';
+  if (!next.includes(sharedScripts)) throw new Error('Missing shared scripts block');
+  return next.replace(sharedScripts, `${block.trim()}\n  ${sharedScripts}`);
 }
 
 function installHead(document, block) {
@@ -174,7 +278,7 @@ function countOccurrences(document, value) {
 }
 
 function validateGenerated(document, relativePath) {
-  const requiredBlocks = ['head', 'styles', 'header', 'scripts'];
+  const requiredBlocks = ['metadata', 'head', 'page-styles', 'styles', 'header', 'page-scripts', 'scripts'];
   if (relativePath !== '404.html') requiredBlocks.push('footer');
   for (const name of requiredBlocks) {
     for (const boundary of ['start', 'end']) {
@@ -205,6 +309,14 @@ function validateGenerated(document, relativePath) {
       throw new Error(`Expected exactly one canonical ${script} script`);
     }
   }
+  const page = getSitePage(relativePath);
+  for (const assetId of [...page.assets.styles, ...page.assets.scripts]) {
+    const asset = siteAssetCatalog[assetId];
+    const expected = assetUrl(asset, pageValues(relativePath));
+    if (countOccurrences(document, expected) !== 1) {
+      throw new Error(`Expected exactly one ${assetId} asset`);
+    }
+  }
   if (countOccurrences(document, 'newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjIJFJpc.woff2') !== 1) {
     throw new Error('Expected exactly one Newsreader preload');
   }
@@ -228,10 +340,14 @@ function validateGenerated(document, relativePath) {
 
 function generate(document, relativePath) {
   const values = pageValues(relativePath);
-  let next = installHead(document, render(templates.head, values));
+  const page = getSitePage(relativePath);
+  let next = installMetadata(document, renderMetadata(page));
+  next = installHead(next, render(templates.head, values));
+  next = installPageStyles(next, renderPageAssets(page, values, 'style'), relativePath);
   next = installStyles(next, render(templates.styles, values));
   next = installHeader(next, render(templates.header, values));
   next = installFooter(next, render(templates.footer, values), relativePath);
+  next = installPageScripts(next, renderPageAssets(page, values, 'script'), relativePath);
   next = installScripts(next, render(templates.scripts, values));
   next = installBodyMarker(next);
   validateGenerated(next, relativePath);

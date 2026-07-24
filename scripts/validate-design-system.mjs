@@ -3,13 +3,18 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { sitePages } from './site-pages.mjs';
+import {
+  siteAssetCatalog,
+  siteCacheVersions,
+  sitePages
+} from './site-pages.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDirectory, '..');
 const excludedDirectories = new Set([
   '.git', '.github', '.playwright-cli', 'Google', 'assets', 'css', 'docs',
-  'experiments', 'integrations', 'js', 'output', 'poc', 'public', 'scripts'
+  'experiments', 'integrations', 'js', 'node_modules', 'output', 'playwright-report',
+  'poc', 'public', 'scripts', 'test-results', 'tests'
 ]);
 const failures = [];
 
@@ -121,7 +126,7 @@ for (const page of sitePages) {
 
 for (const relativePath of pages) {
   const document = read(relativePath);
-  for (const block of ['head', 'styles', 'header', 'scripts']) {
+  for (const block of ['metadata', 'head', 'page-styles', 'styles', 'header', 'page-scripts', 'scripts']) {
     assert(count(document, `<!-- site-frame:${block}:start -->`) === 1, `${relativePath}: missing canonical ${block} start`);
     assert(count(document, `<!-- site-frame:${block}:end -->`) === 1, `${relativePath}: missing canonical ${block} end`);
   }
@@ -130,12 +135,12 @@ for (const relativePath of pages) {
   }
   assert(count(document, 'css/design-system.css') === 1, `${relativePath}: design-system.css must appear once`);
   assert(count(document, 'css/site-frame.css') === 1, `${relativePath}: site-frame.css must appear once`);
-  assert(count(document, 'css/base.css?v=20260722-design-system') === 1, `${relativePath}: canonical base cache key is missing`);
-  assert(count(document, 'css/components.css?v=20260722-design-system') === 1, `${relativePath}: canonical components cache key is missing`);
-  assert(count(document, 'css/site-frame.css?v=20260723-note-dialog') === 1, `${relativePath}: canonical frame cache key is missing`);
+  assert(count(document, `css/base.css?v=${siteCacheVersions.designSystem}`) === 1, `${relativePath}: canonical base cache key is missing`);
+  assert(count(document, `css/components.css?v=${siteCacheVersions.designSystem}`) === 1, `${relativePath}: canonical components cache key is missing`);
+  assert(count(document, `css/site-frame.css?v=${siteCacheVersions.frame}`) === 1, `${relativePath}: canonical frame cache key is missing`);
   assert(/<body class="[^"]*\bsite-frame-page\b/.test(document), `${relativePath}: missing site-frame-page body class`);
   assert(count(document, 'class="share-button nav-share-btn"') === 1, `${relativePath}: static share control must appear once`);
-  assert(count(document, 'js/share.js?v=20260723-note-dialog') === 1, `${relativePath}: canonical share helper cache key is missing`);
+  assert(count(document, `js/share.js?v=${siteCacheVersions.frame}`) === 1, `${relativePath}: canonical share helper cache key is missing`);
   for (const script of ['share', 'nav', 'animations', 'feedback']) {
     assert(count(document, `js/${script}.js`) === 1, `${relativePath}: ${script}.js must appear once`);
   }
@@ -153,6 +158,15 @@ for (const relativePath of pages) {
       const target = localTarget(relativePath, candidate.trim().split(/\s+/)[0]);
       if (target) assert(fs.existsSync(path.join(root, target)), `${relativePath}: missing srcset target ${candidate.trim()}`);
     }
+  }
+}
+
+for (const page of sitePages) {
+  const document = read(page.path);
+  for (const assetId of [...page.assets.styles, ...page.assets.scripts]) {
+    const asset = siteAssetCatalog[assetId];
+    const expected = `${asset.path}${asset.version ? `?v=${asset.version}` : ''}`;
+    assert(document.includes(expected), `${page.path}: missing registry-owned asset ${assetId}`);
   }
 }
 
@@ -177,19 +191,9 @@ assert(!read('css/base.css').includes('.guide-hub-hero-heading'), 'css/base.css:
 const signals = read('signals/styles.css');
 assert(!/font-size:\s*(?:[0-9]|1[01])px/.test(signals), 'signals/styles.css: labels below 12px remain');
 assert(count(signals, 'min-height: 44px') >= 7, 'signals/styles.css: canonical 44px control targets are missing');
-const styleFamilyContracts = new Map([
-  ['atlas', 'living-watershed-atlas.css?v=20260723-frame-hardening'],
-  ['guide', 'living-watershed-guide.css?v=20260723-frame-hardening'],
-  ['home', 'living-watershed-home.css?v=20260723-frame-hardening'],
-  ['signals', 'styles.css?v=20260723-frame-hardening'],
-  ['surface', 'living-watershed-surfaces.css?v=20260723-frame-hardening']
-]);
-for (const page of sitePages) {
-  assert(read(page.path).includes(styleFamilyContracts.get(page.styleFamily)), `${page.path}: stale ${page.styleFamily} stylesheet-family contract`);
-}
 assert(read('signals/index.html').includes('instrument-page'), 'signals/index.html: missing shared instrument contract');
 assert(read('atlas.html').includes('instrument-page'), 'atlas.html: missing shared instrument contract');
-assert(read('atlas.html').includes('js/atlas.js?v=20260723-wind-arrows'), 'atlas.html: stale Atlas script cache key');
+assert(read('atlas.html').includes(`js/atlas.js?v=${siteCacheVersions.atlas}`), 'atlas.html: stale Atlas script cache key');
 assert(!read('css/living-watershed-atlas.css').includes('.living-watershed-atlas .nav-share-btn'), 'atlas stylesheet: mobile share-control exception remains');
 const atlasScript = read('js/atlas.js');
 assert(atlasScript.includes("'icon-allow-overlap': true"), 'atlas script: observed-wind arrows can lose collision placement');

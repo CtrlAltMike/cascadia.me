@@ -40,6 +40,8 @@ Add page-specific styles and scripts through `siteAssetCatalog`, then assign the
 
 If the family itself is new, add its name to the allowed family set in `scripts/validate-design-system.mjs` and add a family-specific structural assertion. The assertion should identify the markup or behavior that makes the family distinct.
 
+Every indexable page must also preserve the search contract enforced by `scripts/validate-seo.mjs`: a unique title and description, a self-referencing canonical URL, index/follow directives, representative Open Graph and Twitter metadata, crawlable image fallbacks, structured data matching the visible page, and inclusion in `sitemap.xml`. Keep the custom 404 page `noindex,follow` and out of the sitemap.
+
 ## 3. Preserve stylesheet ownership
 
 The cascade has three layers:
@@ -83,6 +85,8 @@ Use semantic landmarks, a unique `main` target, a working skip link, one page-le
 
 For illustrated editorial pages, use the shared `illustrated-hero`, `illustrated-hero__media`, and `illustrated-hero__content` primitives. For map-led tools, use the `instrument-page` contract. New primitives belong in `css/design-system.css`; family-specific composition belongs in the family stylesheet.
 
+All HTTP(S) links leaving Cascadia.me open in a separate tab and include `rel="noopener"`. The site-frame synchronizer applies this policy, and the design-system and browser validators enforce it. Internal Cascadia.me links remain in the current tab.
+
 Do not infer that a desktop layout will collapse correctly. Define and test the reading order, overflow behavior, controls, overlays, and fixed elements at mobile widths.
 
 ## 6. Extend regression coverage
@@ -106,7 +110,7 @@ npm run validate
 git diff --check
 ```
 
-The gate checks generated frame drift, registry and design-system contracts, local targets, stylesheet structure, and browser behavior in desktop and mobile Chromium.
+The gate checks generated frame drift, registry, design-system and SEO contracts, local targets, stylesheet structure, sitemap coverage, internal crawl depth, and browser behavior in desktop and mobile Chromium.
 
 If CSS changed, compare representative pages before and after at both viewport sizes. Review the family being changed plus Home, Guides, Atlas, Signals, Field Stories, and an individual story when shared CSS is involved.
 

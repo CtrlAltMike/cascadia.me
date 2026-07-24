@@ -273,6 +273,33 @@ function installBodyMarker(document) {
   });
 }
 
+function installExternalLinkPolicy(document) {
+  const internalHosts = new Set(['cascadia.me', 'www.cascadia.me']);
+  return document.replace(/<a\b[^>]*\bhref="https?:\/\/[^"]+"[^>]*>/gi, (anchor) => {
+    const href = anchor.match(/\bhref="([^"]+)"/i)?.[1]?.replaceAll('&amp;', '&');
+    if (!href) return anchor;
+
+    let hostname;
+    try {
+      hostname = new URL(href).hostname.toLowerCase();
+    } catch {
+      return anchor;
+    }
+    if (internalHosts.has(hostname)) return anchor;
+
+    let next = /\btarget="[^"]*"/i.test(anchor)
+      ? anchor.replace(/\btarget="[^"]*"/i, 'target="_blank"')
+      : anchor.replace(/>$/, ' target="_blank">');
+
+    const rel = next.match(/\brel="([^"]*)"/i);
+    if (!rel) return next.replace(/>$/, ' rel="noopener">');
+
+    const values = rel[1].split(/\s+/).filter(Boolean);
+    if (!values.some((value) => value.toLowerCase() === 'noopener')) values.push('noopener');
+    return next.replace(/\brel="[^"]*"/i, `rel="${values.join(' ')}"`);
+  });
+}
+
 function countOccurrences(document, value) {
   return document.split(value).length - 1;
 }
@@ -350,6 +377,7 @@ function generate(document, relativePath) {
   next = installPageScripts(next, renderPageAssets(page, values, 'script'), relativePath);
   next = installScripts(next, render(templates.scripts, values));
   next = installBodyMarker(next);
+  next = installExternalLinkPolicy(next);
   validateGenerated(next, relativePath);
   return next;
 }

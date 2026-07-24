@@ -8,15 +8,22 @@
   <meta name="description" content="Find place-aware official alert systems, emergency management agencies, transportation updates, hazard information, and support resources across Washington, Oregon, and British Columbia.">
   <link rel="canonical" href="https://cascadia.me/signals/">
   <!-- site-frame:metadata:end -->
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#153f47">
+  <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Cascadia Signals">
   <meta property="og:description" content="A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.">
   <meta property="og:url" content="https://cascadia.me/signals/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
+  <meta property="og:image:width" content="1731">
+  <meta property="og:image:height" content="909">
+  <meta property="og:image:alt" content="An illustrated Cascadian watershed connecting communities across the Pacific Northwest.">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cascadia Signals">
   <meta name="twitter:description" content="Find official alert systems and emergency resources for the place in view.">
+  <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
+  <meta name="twitter:image:alt" content="An illustrated Cascadian watershed connecting communities across the Pacific Northwest.">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
   <script>document.documentElement.classList.add('js');</script>
   <!-- site-frame:head:start -->
@@ -34,6 +41,24 @@
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="../signals/styles.css?v=20260723-frame-hardening">
   <!-- site-frame:page-styles:end -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://cascadia.me/signals/#webpage",
+      "url": "https://cascadia.me/signals/",
+      "name": "Cascadia Signals",
+      "description": "A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://cascadia.me/#website"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "Official emergency alerts and public safety information in Cascadia"
+      }
+    }
+  </script>
   <!-- site-frame:styles:start -->
   <link rel="stylesheet" href="../css/design-system.css?v=20260723-css-audit">
   <link rel="stylesheet" href="../css/site-frame.css?v=20260723-note-dialog">
@@ -202,7 +227,7 @@
         </div>
         <p class="plan-privacy">Checkmarks are saved only in this browser. Signals never adds your postal code, map point, or named location to the checklist.</p>
         <p class="plan-privacy">For household names, routes, care needs, and agreements, use <a href="../build-your-kit.html">Build Your Kit</a>. Cascadia.me does not save the answers entered there.</p>
-        <p class="plan-privacy">To keep several official sources with household owners and review dates, <a href="https://nowweplan.com/start?src=cascadia&amp;entry=signals">open the optional private planning layer in NowWePlan</a>. Signals does not transfer your location, checklist, or sources.</p>
+        <p class="plan-privacy">To keep several official sources with household owners and review dates, <a href="https://nowweplan.com/start?src=cascadia&amp;entry=signals" target="_blank" rel="noopener">open the optional private planning layer in NowWePlan</a>. Signals does not transfer your location, checklist, or sources.</p>
         <p class="plan-status" id="plan-status" role="status" aria-live="polite"></p>
       </section>
 

@@ -191,7 +191,7 @@ const pageDefinitions = [
     title: 'Cascadia Signals | Official Alerts & Emergency Services Directory',
     description: 'Find place-aware official alert systems, emergency management agencies, transportation updates, hazard information, and support resources across Washington, Oregon, and British Columbia.',
     canonical: 'https://cascadia.me/signals/',
-    schemaType: null
+    schemaType: 'WebPage'
   },
   {
     path: 'stories/chafe-gear.html',

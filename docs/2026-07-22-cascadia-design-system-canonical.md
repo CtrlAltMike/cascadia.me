@@ -62,3 +62,5 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 - The browser suite exercises shared navigation and sharing, Field Stories shelf and story layouts, Atlas disclosure controls, and the Signals postal-result message overlay.
 - The GitHub release gate installs an isolated Chromium browser and runs these interaction checks before production work can pass.
 - New pages and page families follow the required process in `docs/page-family-extension-process.md`, which is mandatory reading through the repository’s `AGENTS.md`.
+- External HTTP(S) links open in a separate tab with `rel="noopener"`; internal Cascadia.me navigation stays in the current tab.
+- Search metadata, robots directives, social previews, structured data, image semantics, sitemap membership, and internal crawl depth are checked by `scripts/validate-seo.mjs` in both the local and GitHub release gates.

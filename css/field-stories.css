@@ -637,6 +637,22 @@
   filter: blur(1rem);
 }
 
+@media (min-width: 921px) {
+  .field-story-masthead-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 30rem);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .field-story-frontispiece::before {
+    inset: -12% -16%;
+    opacity: 0.64;
+  }
+
+  .field-story-frontispiece::after {
+    inset: 2% -8%;
+  }
+}
+
 .field-story-folio {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

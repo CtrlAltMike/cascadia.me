@@ -259,7 +259,7 @@ function installScripts(document, block) {
   const marked = replaceMarkedBlock(document, 'scripts', block);
   if (marked !== null) return marked;
 
-  const sharedScript = /[ \t]*<script[^>]+src="(?:\.\.\/|\/)*(?:js\/)?(?:share|nav|animations|feedback)\.js[^"\n]*"[^>]*><\/script>\r?\n?/g;
+  const sharedScript = /[ \t]*<script[^>]+src="(?:\.\.\/|\/)*(?:js\/)?(?:share|nowweplan-gate|nav|animations|feedback)\.js[^"\n]*"[^>]*><\/script>\r?\n?/g;
   const next = document.replace(sharedScript, '');
   if (!next.includes('</body>')) throw new Error('Missing closing body element');
   return next.replace('</body>', `  ${block.trim()}\n</body>`);
@@ -331,7 +331,7 @@ function validateGenerated(document, relativePath) {
   if (countOccurrences(document, 'css/design-system.css') !== 1) {
     throw new Error('Expected exactly one canonical design-system stylesheet');
   }
-  for (const script of ['share', 'nav', 'animations', 'feedback']) {
+  for (const script of ['share', 'nowweplan-gate', 'nav', 'animations', 'feedback']) {
     if (countOccurrences(document, `js/${script}.js`) !== 1) {
       throw new Error(`Expected exactly one canonical ${script} script`);
     }

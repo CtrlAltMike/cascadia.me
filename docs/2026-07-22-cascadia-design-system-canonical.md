@@ -64,3 +64,4 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 - New pages and page families follow the required process in `docs/page-family-extension-process.md`, which is mandatory reading through the repository’s `AGENTS.md`.
 - External HTTP(S) links open in a separate tab with `rel="noopener"`; internal Cascadia.me navigation stays in the current tab.
 - Search metadata, robots directives, social previews, structured data, image semantics, sitemap membership, and internal crawl depth are checked by `scripts/validate-seo.mjs` in both the local and GitHub release gates.
+- While NowWePlan purchasing is not yet available, every NowWePlan entry point uses the shared, accessible coming-soon dialog in `js/nowweplan-gate.js`; the destination links remain in the source for a straightforward future launch.

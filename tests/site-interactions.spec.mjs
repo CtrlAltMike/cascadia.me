@@ -50,11 +50,22 @@ test.describe('shared site frame', () => {
     await expect(toggle).toBeFocused();
   });
 
-  test('Build Your Kit opens NowWePlan in a separate tab', async ({ page }) => {
+  test('NowWePlan links show the temporary launch dialog and restore focus', async ({ page, context }) => {
     await page.goto('/build-your-kit.html');
     const link = page.getByRole('link', { name: /Start a living household plan/ });
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /(?:^|\s)noopener(?:\s|$)/);
+    const pageCount = context.pages().length;
+    await link.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Now We Plan is coming soon' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('smart and comfortable household plan');
+    expect(context.pages()).toHaveLength(pageCount);
+
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(link).toBeFocused();
   });
 });
 

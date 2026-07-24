@@ -83,15 +83,6 @@
   isolation: isolate;
 }
 
-.field-stories-hero::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  inset: var(--nav-height) auto 0 11vw;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(6, 59, 92, 0.24) 14%, rgba(6, 59, 92, 0.24) 86%, transparent);
-}
-
 .field-stories-hero::after {
   content: "";
   position: absolute;
@@ -168,8 +159,6 @@
 .field-stories-hero-copy {
   position: relative;
   max-width: 35rem;
-  padding-left: clamp(1.25rem, 3vw, 2.5rem);
-  border-left: 1px solid rgba(6, 59, 92, 0.24);
   color: var(--lw-muted);
   font-family: var(--font-display);
   font-size: clamp(1rem, 1.15vw, 1.14rem);
@@ -571,10 +560,10 @@
 
 .field-story-masthead {
   position: relative;
-  min-height: min(47rem, 79vh);
+  min-height: min(36rem, 63svh);
   display: grid;
-  align-items: end;
-  padding: calc(var(--nav-height) + clamp(4.5rem, 9vw, 8rem)) 0 clamp(4rem, 8vw, 7rem);
+  align-items: center;
+  padding: calc(var(--nav-height) + clamp(2rem, 4vw, 3.5rem)) 0 clamp(2.5rem, 4vw, 3.5rem);
   overflow: hidden;
   border-bottom: 1px solid rgba(6, 59, 92, 0.12);
   background:
@@ -585,25 +574,16 @@
 .field-story-masthead::after {
   content: "";
   position: absolute;
-  right: -8rem;
-  bottom: -18rem;
-  width: min(58vw, 53rem);
+  right: -5rem;
+  bottom: -13rem;
+  width: min(44vw, 36rem);
   aspect-ratio: 1;
   border: 1px solid color-mix(in srgb, var(--story-accent) 32%, transparent);
   border-radius: 47% 53% 38% 62% / 55% 37% 63% 45%;
   box-shadow:
-    0 0 0 4rem color-mix(in srgb, var(--story-accent) 5%, transparent),
-    0 0 0 8rem color-mix(in srgb, var(--story-accent) 3%, transparent);
+    0 0 0 3rem color-mix(in srgb, var(--story-accent) 5%, transparent),
+    0 0 0 6rem color-mix(in srgb, var(--story-accent) 3%, transparent);
   transform: rotate(-12deg);
-}
-
-.field-story-masthead-wash {
-  position: absolute;
-  top: var(--nav-height);
-  left: 10vw;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--story-accent) 45%, transparent), transparent);
 }
 
 .field-story-masthead-layout {
@@ -611,8 +591,8 @@
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
-  gap: clamp(3rem, 8vw, 8rem);
-  align-items: end;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
 }
 
 .field-story-masthead .surface-eyebrow {
@@ -623,7 +603,7 @@
   max-width: 60rem;
   margin: 0;
   color: var(--lw-ocean-900);
-  font-size: clamp(5.3rem, 12vw, 11.5rem);
+  font-size: clamp(4.75rem, 9vw, 8.75rem);
   font-weight: 500;
   letter-spacing: -0.075em;
   line-height: 0.77;
@@ -631,7 +611,7 @@
 
 .field-story-subtitle {
   max-width: 45rem;
-  margin: clamp(2rem, 4vw, 3.5rem) 0 0;
+  margin: clamp(1.25rem, 2.5vw, 2rem) 0 0;
   color: var(--story-accent);
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2vw, 1.65rem);
@@ -641,8 +621,8 @@
 
 .field-story-masthead-aside {
   display: grid;
-  gap: clamp(1.5rem, 3vw, 2.25rem);
-  align-self: end;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+  align-self: center;
 }
 
 .field-story-bookplate {
@@ -683,7 +663,7 @@
 }
 
 .field-story-folio div {
-  padding: 0.95rem 0;
+  padding: 0.7rem 0;
   border-top: 1px solid rgba(6, 59, 92, 0.11);
 }
 
@@ -716,7 +696,7 @@
   gap: clamp(3rem, 7vw, 7rem);
   justify-content: center;
   align-items: start;
-  padding-top: clamp(3.5rem, 7vw, 6rem);
+  padding-top: clamp(3rem, 5vw, 4.5rem);
   padding-bottom: clamp(7rem, 12vw, 12rem);
 }
 
@@ -1211,7 +1191,9 @@
   .field-story-entry { min-height: 29rem; }
 
   .field-story-masthead {
-    min-height: 44rem;
+    min-height: 0;
+    align-items: initial;
+    padding: calc(var(--nav-height) + clamp(2.5rem, 6vw, 4rem)) 0 clamp(3rem, 6vw, 4rem);
   }
 
   .field-story-masthead-layout {
@@ -1257,10 +1239,6 @@
 }
 
 @media (max-width: 720px) {
-  .field-stories-hero::before {
-    left: 1.4rem;
-  }
-
   .field-stories-hero-art {
     aspect-ratio: 4 / 3;
     margin-top: 2.75rem;
@@ -1272,10 +1250,6 @@
 
   .field-stories-hero-title h1 {
     font-size: clamp(5rem, 25vw, 8rem);
-  }
-
-  .field-stories-hero-copy {
-    padding-left: 1.2rem;
   }
 
   .field-stories-shelf { padding-block: 4rem 5rem; }
@@ -1303,10 +1277,6 @@
 
   .field-story-entry-meta span + span::before {
     display: none;
-  }
-
-  .field-story-masthead {
-    min-height: 39rem;
   }
 
   .field-story-masthead h1 {

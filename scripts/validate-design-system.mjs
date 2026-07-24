@@ -264,6 +264,11 @@ assert(earthquake.includes('css/living-watershed-primary-chapters.css'), 'earthq
 
 const header = read('scripts/site-frame/header.html');
 assert(header.includes('share-button nav-share-btn'), 'site-frame header: share control is not static');
+assert(
+  header.indexOf('>Home</a>') < header.indexOf('>Field Stories</a>') &&
+    header.indexOf('>Field Stories</a>') < header.indexOf('>Guides</a>'),
+  'site-frame header: Field Stories must appear immediately after Home'
+);
 assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
 for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this work</a>']) {
   assert(!header.includes(informationalLink), `site-frame header: ${informationalLink} has returned to primary task navigation`);

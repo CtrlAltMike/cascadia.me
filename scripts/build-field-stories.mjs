@@ -159,7 +159,7 @@ function head({ title, description, canonical, type = "website", schema }) {
   <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
   <script>document.documentElement.classList.add('js');</script>
   ${framePlaceholder('head')}
-  <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260715-stories5">
+  <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260723-frame-hardening">
   <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
   <script type="application/ld+json">${JSON.stringify(schema)}</script>
   ${framePlaceholder('styles')}`;

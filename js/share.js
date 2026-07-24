@@ -106,7 +106,7 @@
     ensureShareDialog();
     activeShareButton = button;
     shareMessage.value = suggestedMessage();
-    shareStatus.textContent = 'Use the suggested message as written, edit it, or share only the link.';
+    shareStatus.textContent = 'Edit the note, use it as written, or share only the link.';
     shareNativeButton.hidden = !navigator.share;
 
     if (typeof shareDialog.showModal === 'function') {
@@ -169,14 +169,10 @@
     shareDialog.innerHTML = `
       <div class="share-dialog-card">
         <div class="share-dialog-heading">
-          <div>
-            <p class="share-dialog-kicker">A note to send along</p>
-            <h2 id="share-dialog-title">Share this page</h2>
-          </div>
+          <h2 id="share-dialog-title">Add a note</h2>
           <button class="share-dialog-close" type="button" aria-label="Close share panel">&times;</button>
         </div>
-        <label class="share-dialog-label" for="share-dialog-message">Suggested message</label>
-        <textarea id="share-dialog-message" class="share-dialog-message" rows="6"></textarea>
+        <textarea id="share-dialog-message" class="share-dialog-message" rows="4" aria-label="Note to accompany the shared link"></textarea>
         <p class="share-dialog-status" role="status" aria-live="polite"></p>
         <div class="share-dialog-actions">
           <button class="share-dialog-action share-dialog-action-primary" type="button" data-share-native>Share&hellip;</button>

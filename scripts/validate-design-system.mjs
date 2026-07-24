@@ -68,10 +68,10 @@ for (const relativePath of pages) {
   assert(count(document, 'css/site-frame.css') === 1, `${relativePath}: site-frame.css must appear once`);
   assert(count(document, 'css/base.css?v=20260722-design-system') === 1, `${relativePath}: canonical base cache key is missing`);
   assert(count(document, 'css/components.css?v=20260722-design-system') === 1, `${relativePath}: canonical components cache key is missing`);
-  assert(count(document, 'css/site-frame.css?v=20260723-nav-spacing') === 1, `${relativePath}: canonical frame cache key is missing`);
+  assert(count(document, 'css/site-frame.css?v=20260723-note-dialog') === 1, `${relativePath}: canonical frame cache key is missing`);
   assert(/<body class="[^"]*\bsite-frame-page\b/.test(document), `${relativePath}: missing site-frame-page body class`);
   assert(count(document, 'class="share-button nav-share-btn"') === 1, `${relativePath}: static share control must appear once`);
-  assert(count(document, 'js/share.js?v=20260723-share-copy') === 1, `${relativePath}: canonical share helper cache key is missing`);
+  assert(count(document, 'js/share.js?v=20260723-note-dialog') === 1, `${relativePath}: canonical share helper cache key is missing`);
   for (const script of ['share', 'nav', 'animations', 'feedback']) {
     assert(count(document, `js/${script}.js`) === 1, `${relativePath}: ${script}.js must appear once`);
   }
@@ -114,9 +114,16 @@ const signals = read('signals/styles.css');
 assert(!/font-size:\s*(?:[0-9]|1[01])px/.test(signals), 'signals/styles.css: labels below 12px remain');
 assert(count(signals, 'min-height: 44px') >= 7, 'signals/styles.css: canonical 44px control targets are missing');
 assert(read('signals/index.html').includes('instrument-page'), 'signals/index.html: missing shared instrument contract');
-assert(read('signals/index.html').includes('styles.css?v=20260722-overlay-system'), 'signals/index.html: stale instrument stylesheet cache key');
+assert(read('signals/index.html').includes('styles.css?v=20260723-frame-hardening'), 'signals/index.html: stale instrument stylesheet cache key');
 assert(read('atlas.html').includes('instrument-page'), 'atlas.html: missing shared instrument contract');
-assert(read('atlas.html').includes('living-watershed-atlas.css?v=20260722-design-system'), 'atlas.html: stale instrument stylesheet cache key');
+assert(read('atlas.html').includes('living-watershed-atlas.css?v=20260723-frame-hardening'), 'atlas.html: stale instrument stylesheet cache key');
+assert(read('index.html').includes('living-watershed-home.css?v=20260723-frame-hardening'), 'index.html: stale home stylesheet cache key');
+for (const relativePath of ['build-your-kit.html', 'earthquake.html', 'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html']) {
+  assert(read(relativePath).includes('living-watershed-guide.css?v=20260723-frame-hardening'), `${relativePath}: stale guide-family stylesheet cache key`);
+}
+for (const relativePath of ['404.html', 'approach.html', 'faq.html', 'guides.html', ...pages.filter((page) => page.startsWith('stories/'))]) {
+  assert(read(relativePath).includes('living-watershed-surfaces.css?v=20260723-frame-hardening'), `${relativePath}: stale surface-family stylesheet cache key`);
+}
 assert(read('atlas.html').includes('js/atlas.js?v=20260723-wind-arrows'), 'atlas.html: stale Atlas script cache key');
 assert(!read('css/living-watershed-atlas.css').includes('.living-watershed-atlas .nav-share-btn'), 'atlas stylesheet: mobile share-control exception remains');
 const atlasScript = read('js/atlas.js');
@@ -159,8 +166,11 @@ for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this
 }
 assert(read('approach.html').includes('>Reader support</a>'), 'approach.html: contextual support disclosure is missing');
 const shareScript = read('js/share.js');
-for (const shareContract of ['Suggested message', 'Copy message + link', 'Copy link only', 'navigator.share']) {
+for (const shareContract of ['Add a note', 'Note to accompany the shared link', 'Copy message + link', 'Copy link only', 'navigator.share']) {
   assert(shareScript.includes(shareContract), `share helper: missing ${shareContract}`);
+}
+for (const retiredShareLabel of ['A note to send along', 'Suggested message', 'Share this page</h2>']) {
+  assert(!shareScript.includes(retiredShareLabel), `share helper: retired dialog label remains: ${retiredShareLabel}`);
 }
 assert(
   shareScript.includes('I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.'),
@@ -171,6 +181,28 @@ assert(read('css/site-frame.css').includes('gap: clamp(1.1rem, 1.6vw, 1.75rem)')
 assert(read('css/site-frame.css').includes('margin-left: clamp(0.5rem, 1vw, 1rem)'), 'site-frame.css: share-control separation is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
 assert(read('css/site-frame.css').includes('@media (max-width: 1080px)'), 'site-frame.css: navigation collapse point is not 1080px');
+
+const retiredFrameOwners = new Map([
+  ['css/living-watershed-home.css', '.home-page'],
+  ['css/living-watershed-guide.css', '.living-watershed-page'],
+  ['css/living-watershed-surfaces.css', '.lw-surface-page'],
+  ['css/living-watershed-atlas.css', '.living-watershed-atlas'],
+  ['signals/styles.css', '.signals-page']
+]);
+const retiredFrameRules = [
+  '.site-header {', '.site-header.scrolled', '.nav-inner {', '.nav-logo {',
+  '.nav-logo span {', '.nav-links {', '.nav-links a {', '.nav-toggle {',
+  '.nav-share-btn {', '.share-button {', '.share-button:hover',
+  '.floating-share-btn {', '.site-footer {', '.footer-inner {',
+  '.footer-brand {', '.footer-brand h3 {', '.footer-col h4 {'
+];
+for (const [relativePath, owner] of retiredFrameOwners) {
+  const source = read(relativePath);
+  const lines = source.split('\n');
+  for (const rule of retiredFrameRules) {
+    assert(!lines.some((line) => line.startsWith(`${owner} ${rule}`)), `${relativePath}: shared-frame shadow rule remains: ${owner} ${rule}`);
+  }
+}
 
 for (const removed of ['css/effects.css', 'js/conditions.js', 'js/kits.js']) {
   assert(!fs.existsSync(path.join(root, removed)), `${removed}: dead production asset still exists`);

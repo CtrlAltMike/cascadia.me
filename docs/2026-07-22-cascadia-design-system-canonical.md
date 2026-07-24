@@ -61,3 +61,4 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 - `npm run validate` checks frame drift and design-system contracts, then runs the release browser suite at desktop and mobile sizes.
 - The browser suite exercises shared navigation and sharing, Field Stories shelf and story layouts, Atlas disclosure controls, and the Signals postal-result message overlay.
 - The GitHub release gate installs an isolated Chromium browser and runs these interaction checks before production work can pass.
+- New pages and page families follow the required process in `docs/page-family-extension-process.md`, which is mandatory reading through the repository’s `AGENTS.md`.

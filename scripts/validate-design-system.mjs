@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sitePages } from './site-pages.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDirectory, '..');
@@ -37,6 +38,36 @@ function assert(condition, message) {
   if (!condition) failures.push(message);
 }
 
+function decodeHtmlText(value) {
+  return value
+    .replaceAll('&amp;', '&')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&apos;', "'")
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>');
+}
+
+function structuredDataTypes(document, relativePath) {
+  const types = new Set();
+  for (const match of document.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try {
+      const value = JSON.parse(match[1]);
+      const visit = (entry) => {
+        if (!entry || typeof entry !== 'object') return;
+        if (entry['@type']) {
+          for (const type of Array.isArray(entry['@type']) ? entry['@type'] : [entry['@type']]) types.add(type);
+        }
+        if (Array.isArray(entry['@graph'])) entry['@graph'].forEach(visit);
+      };
+      visit(value);
+    } catch {
+      assert(false, `${relativePath}: invalid JSON-LD`);
+    }
+  }
+  return types;
+}
+
 function localTarget(relativePage, rawValue) {
   if (!rawValue || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(rawValue)) return null;
   const [pathname] = rawValue.split(/[?#]/, 1);
@@ -54,6 +85,39 @@ function localTarget(relativePage, rawValue) {
 
 const pages = collectHtml(root);
 assert(pages.length === 23, `Expected 23 production pages, found ${pages.length}`);
+assert(sitePages.length === pages.length, `Expected ${pages.length} page-manifest entries, found ${sitePages.length}`);
+
+const pagePaths = new Set(pages);
+const manifestPaths = new Set(sitePages.map((page) => page.path));
+const manifestCanonicals = new Set(sitePages.map((page) => page.canonical));
+assert(manifestPaths.size === sitePages.length, 'Page manifest contains duplicate paths');
+assert(manifestCanonicals.size === sitePages.length, 'Page manifest contains duplicate canonical URLs');
+for (const relativePath of pages) assert(manifestPaths.has(relativePath), `${relativePath}: missing from page manifest`);
+for (const page of sitePages) assert(pagePaths.has(page.path), `${page.path}: manifest entry has no production page`);
+
+const allowedFamilies = new Set(['about', 'faq', 'guide', 'guide-library', 'home', 'instrument', 'not-found', 'story', 'story-library', 'workbook']);
+const allowedStyleFamilies = new Set(['atlas', 'guide', 'home', 'signals', 'surface']);
+const allowedNavSections = new Set([null, 'atlas', 'guides', 'home', 'kit', 'signals', 'stories']);
+const allowedFooterItems = new Set([null, 'approach', 'atlas', 'earthquake', 'faq', 'flooding', 'kit', 'signals', 'stories', 'volcano', 'wildfire', 'winter']);
+
+for (const page of sitePages) {
+  const document = read(page.path);
+  const title = document.match(/<title>([^<]*)<\/title>/)?.[1];
+  const description = document.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  const canonical = document.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
+
+  assert(allowedFamilies.has(page.family), `${page.path}: unknown page family ${page.family}`);
+  assert(allowedStyleFamilies.has(page.styleFamily), `${page.path}: unknown stylesheet family ${page.styleFamily}`);
+  assert(allowedNavSections.has(page.navSection), `${page.path}: unknown navigation section ${page.navSection}`);
+  assert(allowedFooterItems.has(page.footerItem), `${page.path}: unknown footer item ${page.footerItem}`);
+  assert(page.skip && page.skip.className && page.skip.href && page.skip.text, `${page.path}: incomplete skip-link contract`);
+  assert(title && decodeHtmlText(title) === page.title, `${page.path}: title differs from page manifest`);
+  assert(description === page.description, `${page.path}: description differs from page manifest`);
+  assert(canonical === page.canonical, `${page.path}: canonical URL differs from page manifest`);
+  if (page.schemaType) {
+    assert(structuredDataTypes(document, page.path).has(page.schemaType), `${page.path}: missing manifest schema type ${page.schemaType}`);
+  }
+}
 
 for (const relativePath of pages) {
   const document = read(relativePath);
@@ -113,17 +177,18 @@ assert(!read('css/base.css').includes('.guide-hub-hero-heading'), 'css/base.css:
 const signals = read('signals/styles.css');
 assert(!/font-size:\s*(?:[0-9]|1[01])px/.test(signals), 'signals/styles.css: labels below 12px remain');
 assert(count(signals, 'min-height: 44px') >= 7, 'signals/styles.css: canonical 44px control targets are missing');
+const styleFamilyContracts = new Map([
+  ['atlas', 'living-watershed-atlas.css?v=20260723-frame-hardening'],
+  ['guide', 'living-watershed-guide.css?v=20260723-frame-hardening'],
+  ['home', 'living-watershed-home.css?v=20260723-frame-hardening'],
+  ['signals', 'styles.css?v=20260723-frame-hardening'],
+  ['surface', 'living-watershed-surfaces.css?v=20260723-frame-hardening']
+]);
+for (const page of sitePages) {
+  assert(read(page.path).includes(styleFamilyContracts.get(page.styleFamily)), `${page.path}: stale ${page.styleFamily} stylesheet-family contract`);
+}
 assert(read('signals/index.html').includes('instrument-page'), 'signals/index.html: missing shared instrument contract');
-assert(read('signals/index.html').includes('styles.css?v=20260723-frame-hardening'), 'signals/index.html: stale instrument stylesheet cache key');
 assert(read('atlas.html').includes('instrument-page'), 'atlas.html: missing shared instrument contract');
-assert(read('atlas.html').includes('living-watershed-atlas.css?v=20260723-frame-hardening'), 'atlas.html: stale instrument stylesheet cache key');
-assert(read('index.html').includes('living-watershed-home.css?v=20260723-frame-hardening'), 'index.html: stale home stylesheet cache key');
-for (const relativePath of ['build-your-kit.html', 'earthquake.html', 'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html']) {
-  assert(read(relativePath).includes('living-watershed-guide.css?v=20260723-frame-hardening'), `${relativePath}: stale guide-family stylesheet cache key`);
-}
-for (const relativePath of ['404.html', 'approach.html', 'faq.html', 'guides.html', ...pages.filter((page) => page.startsWith('stories/'))]) {
-  assert(read(relativePath).includes('living-watershed-surfaces.css?v=20260723-frame-hardening'), `${relativePath}: stale surface-family stylesheet cache key`);
-}
 assert(read('atlas.html').includes('js/atlas.js?v=20260723-wind-arrows'), 'atlas.html: stale Atlas script cache key');
 assert(!read('css/living-watershed-atlas.css').includes('.living-watershed-atlas .nav-share-btn'), 'atlas stylesheet: mobile share-control exception remains');
 const atlasScript = read('js/atlas.js');

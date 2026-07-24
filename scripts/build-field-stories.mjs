@@ -160,7 +160,7 @@ function head({ title, description, canonical, type = "website", schema }) {
   <script>document.documentElement.classList.add('js');</script>
   ${framePlaceholder('head')}
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260723-frame-hardening">
-  <link rel="stylesheet" href="../css/field-stories.css?v=20260716-stories7">
+  <link rel="stylesheet" href="../css/field-stories.css?v=20260723-story-plates1">
   <script type="application/ld+json">${JSON.stringify(schema)}</script>
   ${framePlaceholder('styles')}`;
 }
@@ -389,11 +389,14 @@ function renderStory(story, index, parsedStories) {
             <h1 id="story-title">${escapeHtml(story.title)}</h1>
             <p class="field-story-subtitle">${escapeHtml(story.subtitle)}</p>
           </div>
-          <dl class="field-story-folio">
-            <div><dt>Form</dt><dd>Original fiction</dd></div>
-            <div><dt>Length</dt><dd>${story.chapters.length} chapters · about ${story.readingMinutes} minutes</dd></div>
-            <div><dt>Grounding</dt><dd>Factual sources follow the story</dd></div>
-          </dl>
+          <div class="field-story-masthead-aside">
+            <div class="field-story-bookplate" aria-hidden="true"></div>
+            <dl class="field-story-folio">
+              <div><dt>Form</dt><dd>Original fiction</dd></div>
+              <div><dt>Length</dt><dd>${story.chapters.length} chapters · about ${story.readingMinutes} minutes</dd></div>
+              <div><dt>Grounding</dt><dd>Factual sources follow the story</dd></div>
+            </dl>
+          </div>
         </div>
       </header>
 

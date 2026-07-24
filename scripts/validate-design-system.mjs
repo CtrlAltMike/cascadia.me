@@ -175,6 +175,26 @@ for (const relativePath of pages) {
       if (target) assert(fs.existsSync(path.join(root, target)), `${relativePath}: missing srcset target ${candidate.trim()}`);
     }
   }
+
+  for (const match of document.matchAll(/<a\b([^>]*\bhref="https?:\/\/[^"]+"[^>]*)>/gi)) {
+    const attributes = match[1];
+    const href = attributes.match(/\bhref="([^"]+)"/i)?.[1]?.replaceAll('&amp;', '&');
+    if (!href) continue;
+    let hostname;
+    try {
+      hostname = new URL(href).hostname.toLowerCase();
+    } catch {
+      assert(false, `${relativePath}: invalid external link ${href}`);
+      continue;
+    }
+    if (hostname === 'cascadia.me' || hostname === 'www.cascadia.me') continue;
+    const rel = attributes.match(/\brel="([^"]*)"/i)?.[1] ?? '';
+    assert(/\btarget="_blank"/i.test(attributes), `${relativePath}: external link must open a new tab: ${href}`);
+    assert(
+      rel.split(/\s+/).some((value) => value.toLowerCase() === 'noopener'),
+      `${relativePath}: external link must use rel="noopener": ${href}`
+    );
+  }
 }
 
 for (const page of sitePages) {

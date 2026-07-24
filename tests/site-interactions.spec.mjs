@@ -49,6 +49,13 @@ test.describe('shared site frame', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(toggle).toBeFocused();
   });
+
+  test('Build Your Kit opens NowWePlan in a separate tab', async ({ page }) => {
+    await page.goto('/build-your-kit.html');
+    const link = page.getByRole('link', { name: /Start a living household plan/ });
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', /(?:^|\s)noopener(?:\s|$)/);
+  });
 });
 
 test.describe('representative page interactions', () => {
@@ -173,12 +180,17 @@ test.describe('production-page CSS and frame smoke test', () => {
           });
         const skipLink = document.querySelector('a[class$="skip-link"], a.skip-link');
         const skipTarget = skipLink?.getAttribute('href');
+        const invalidExternalLinks = [...document.querySelectorAll('a[href^="http://"], a[href^="https://"]')]
+          .filter((link) => !['cascadia.me', 'www.cascadia.me'].includes(new URL(link.href).hostname.toLowerCase()))
+          .filter((link) => link.target !== '_blank' || !link.relList.contains('noopener'))
+          .map((link) => link.href);
 
         return {
           localStyles,
           hasHeader: Boolean(document.querySelector('.site-header')),
           hasMain: Boolean(document.querySelector('main')),
           hasSkipTarget: Boolean(skipTarget && document.querySelector(skipTarget)),
+          invalidExternalLinks,
           documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
           bodyOverflow: document.body.scrollWidth - document.body.clientWidth
         };
@@ -187,6 +199,7 @@ test.describe('production-page CSS and frame smoke test', () => {
       expect(health.hasHeader, `${sitePage.path}: shared header`).toBe(true);
       expect(health.hasMain, `${sitePage.path}: main landmark`).toBe(true);
       expect(health.hasSkipTarget, `${sitePage.path}: skip-link target`).toBe(true);
+      expect(health.invalidExternalLinks, `${sitePage.path}: external-link policy`).toEqual([]);
       expect(health.localStyles.length, `${sitePage.path}: local stylesheet count`).toBeGreaterThanOrEqual(4);
       expect(
         health.localStyles.filter((style) => !style.readable || style.ruleCount === 0),

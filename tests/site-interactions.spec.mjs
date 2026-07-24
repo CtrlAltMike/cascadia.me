@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { sitePages } from '../scripts/site-pages.mjs';
 
 const shareMessage = 'I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.';
 
@@ -133,5 +134,69 @@ test.describe('representative page interactions', () => {
     expect(bounds.result.top).toBeGreaterThanOrEqual(bounds.stage.top);
     expect(bounds.result.bottom).toBeLessThanOrEqual(bounds.stage.bottom + 1);
     await expectNoHorizontalOverflow(page);
+  });
+});
+
+test.describe('production-page CSS and frame smoke test', () => {
+  test.beforeEach(async ({ page }) => {
+    await preventThirdPartyDependencies(page);
+  });
+
+  test('every registered page loads its local styles without overflow or runtime errors', async ({ page }) => {
+    test.setTimeout(90_000);
+
+    for (const sitePage of sitePages) {
+      const pageErrors = [];
+      const recordPageError = (error) => pageErrors.push(error.message);
+      page.on('pageerror', recordPageError);
+
+      await page.goto(`/${sitePage.path}`, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => document.fonts.ready);
+
+      const health = await page.evaluate(() => {
+        const localStyles = [...document.styleSheets]
+          .filter((sheet) => sheet.href && new URL(sheet.href).origin === window.location.origin)
+          .map((sheet) => {
+            try {
+              return {
+                href: sheet.href,
+                readable: true,
+                ruleCount: sheet.cssRules.length
+              };
+            } catch {
+              return {
+                href: sheet.href,
+                readable: false,
+                ruleCount: 0
+              };
+            }
+          });
+        const skipLink = document.querySelector('a[class$="skip-link"], a.skip-link');
+        const skipTarget = skipLink?.getAttribute('href');
+
+        return {
+          localStyles,
+          hasHeader: Boolean(document.querySelector('.site-header')),
+          hasMain: Boolean(document.querySelector('main')),
+          hasSkipTarget: Boolean(skipTarget && document.querySelector(skipTarget)),
+          documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          bodyOverflow: document.body.scrollWidth - document.body.clientWidth
+        };
+      });
+
+      expect(health.hasHeader, `${sitePage.path}: shared header`).toBe(true);
+      expect(health.hasMain, `${sitePage.path}: main landmark`).toBe(true);
+      expect(health.hasSkipTarget, `${sitePage.path}: skip-link target`).toBe(true);
+      expect(health.localStyles.length, `${sitePage.path}: local stylesheet count`).toBeGreaterThanOrEqual(4);
+      expect(
+        health.localStyles.filter((style) => !style.readable || style.ruleCount === 0),
+        `${sitePage.path}: unreadable or empty local stylesheets`
+      ).toEqual([]);
+      expect(health.documentOverflow, `${sitePage.path}: document horizontal overflow`).toBeLessThanOrEqual(1);
+      expect(health.bodyOverflow, `${sitePage.path}: body horizontal overflow`).toBeLessThanOrEqual(1);
+      expect(pageErrors, `${sitePage.path}: uncaught runtime errors`).toEqual([]);
+
+      page.off('pageerror', recordPageError);
+    }
   });
 });

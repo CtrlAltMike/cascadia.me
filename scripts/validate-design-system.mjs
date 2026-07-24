@@ -17,6 +17,10 @@ const excludedDirectories = new Set([
   'poc', 'public', 'scripts', 'test-results', 'tests'
 ]);
 const failures = [];
+const requiredPageFamilyReferences = [
+  'docs/page-family-extension-process.md',
+  'docs/2026-07-22-cascadia-design-system-canonical.md'
+];
 
 function collectHtml(directory, relativeDirectory = '') {
   const files = [];
@@ -41,6 +45,18 @@ function count(document, value) {
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
+}
+
+const repositoryGuidance = read('AGENTS.md');
+for (const reference of requiredPageFamilyReferences) {
+  assert(
+    repositoryGuidance.includes(reference),
+    `AGENTS.md: page-family work must require reading ${reference}`
+  );
+  assert(
+    fs.existsSync(path.join(root, reference)),
+    `AGENTS.md: required page-family reference is missing: ${reference}`
+  );
 }
 
 function decodeHtmlText(value) {

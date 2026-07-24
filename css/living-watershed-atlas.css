@@ -82,68 +82,6 @@
   transform: translateY(0);
 }
 
-/* Site frame */
-
-.living-watershed-atlas .site-header {
-  background: rgba(251, 247, 238, 0.95);
-  border-bottom-color: rgba(6, 59, 92, 0.11);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.living-watershed-atlas .site-header.scrolled {
-  border-bottom-color: rgba(6, 59, 92, 0.18);
-  box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
-}
-
-.living-watershed-atlas .nav-inner {
-  max-width: 90rem;
-  gap: 1rem;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-
-.living-watershed-atlas .nav-logo {
-  color: var(--lw-ocean-900);
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 600;
-}
-
-.living-watershed-atlas .nav-logo span {
-  color: inherit;
-  font-weight: inherit;
-}
-
-.living-watershed-atlas .nav-logo:hover,
-.living-watershed-atlas .nav-links a:hover,
-.living-watershed-atlas .nav-links a.active {
-  color: var(--lw-coral-600);
-}
-
-.living-watershed-atlas .nav-links {
-  gap: clamp(1.25rem, 2.7vw, 2.75rem);
-}
-
-.living-watershed-atlas .nav-links a {
-  color: var(--lw-text);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.living-watershed-atlas .nav-links a.active {
-  border-bottom-color: var(--lw-coral-600);
-}
-
-.living-watershed-atlas .nav-toggle {
-  width: 2.75rem;
-  min-width: 2.75rem;
-  height: 2.75rem;
-  min-height: 2.75rem;
-}
-
-.living-watershed-atlas .floating-share-btn {
-  display: none;
-}
-
 .living-watershed-atlas .atlas-page {
   min-height: 100svh;
   padding-top: var(--nav-height);
@@ -1606,42 +1544,6 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
   color: var(--lw-muted);
   font-size: 0.84rem;
   line-height: 1.65;
-}
-
-/* Footer */
-
-.living-watershed-atlas .site-footer {
-  background: var(--lw-basalt-900);
-  color: var(--lw-cream-100);
-}
-
-.living-watershed-atlas .footer-inner {
-  max-width: 90rem;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-
-.living-watershed-atlas .footer-brand h3,
-.living-watershed-atlas .footer-col h4,
-.living-watershed-atlas .footer-col a {
-  color: var(--lw-cream-50);
-}
-
-.living-watershed-atlas .footer-brand h3 span {
-  color: inherit;
-}
-
-.living-watershed-atlas .footer-col h4 {
-  color: var(--lw-glacial-on-ocean);
-}
-
-.living-watershed-atlas .footer-col a:hover {
-  color: var(--lw-sun-400);
-}
-
-.living-watershed-atlas .footer-brand p,
-.living-watershed-atlas .footer-bottom,
-.living-watershed-atlas .footer-bottom p {
-  color: rgba(251, 247, 238, 0.72);
 }
 
 /* Mobile: honest disclosure sheet, matching visual and keyboard order. */

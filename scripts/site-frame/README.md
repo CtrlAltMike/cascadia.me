@@ -11,3 +11,5 @@ These fragments are the canonical source for production-page chrome:
 Run `node scripts/sync-site-frame.mjs --write` after changing a fragment. The release gate runs the same script with `--check` and fails if any production page has drifted.
 
 Production pages remain complete static HTML. The shared frame is generated before release, so navigation, accessibility, indexing, and local `file://` previews do not depend on client-side JavaScript.
+
+Page-family stylesheets may style their own content, but must not redefine the header, primary navigation, share control, or footer. Those elements are owned by `css/site-frame.css`; the design-system validator rejects new page-family shadow rules.

@@ -133,82 +133,6 @@
   line-height: 1.65;
 }
 
-/* Site frame */
-
-.lw-surface-page .site-header {
-  background: rgba(251, 247, 238, 0.94);
-  border-bottom-color: rgba(6, 59, 92, 0.11);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.lw-surface-page .site-header.scrolled {
-  border-bottom-color: rgba(6, 59, 92, 0.18);
-  box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
-}
-
-.lw-surface-page .nav-inner {
-  max-width: 90rem;
-  gap: 1rem;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-
-.lw-surface-page .nav-logo {
-  color: var(--lw-ocean-900);
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 600;
-}
-
-.lw-surface-page .nav-logo span {
-  color: inherit;
-  font-weight: inherit;
-}
-
-.lw-surface-page .nav-logo:hover,
-.lw-surface-page .nav-links a:hover,
-.lw-surface-page .nav-links a.active {
-  color: var(--lw-coral-600);
-}
-
-.lw-surface-page .nav-links {
-  gap: clamp(1.25rem, 2.7vw, 2.75rem);
-}
-
-.lw-surface-page .nav-links a {
-  color: var(--lw-text);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.lw-surface-page .nav-links a.active {
-  border-bottom-color: var(--lw-coral-600);
-}
-
-.lw-surface-page .nav-toggle {
-  width: 2.75rem;
-  min-width: 2.75rem;
-  height: 2.75rem;
-  min-height: 2.75rem;
-}
-
-.lw-surface-page .share-button {
-  color: var(--lw-ocean-900);
-  background: rgba(251, 247, 238, 0.92);
-  border-color: rgba(6, 59, 92, 0.16);
-  box-shadow: none;
-}
-
-.lw-surface-page .share-button:hover {
-  color: var(--lw-ocean-900);
-  background: var(--lw-cream-100);
-  border-color: rgba(6, 59, 92, 0.32);
-  box-shadow: none;
-}
-
-.lw-surface-page .floating-share-btn {
-  display: none;
-}
-
 .surface-button {
   display: inline-flex;
   min-height: 3.25rem;
@@ -1023,35 +947,6 @@
   color: var(--lw-ocean-700);
 }
 
-/* Footer */
-
-.lw-surface-page .site-footer {
-  color: #d7e2df;
-  background: var(--lw-basalt-900);
-}
-
-.lw-surface-page .footer-brand h3,
-.lw-surface-page .footer-col h4 {
-  color: var(--lw-cream-50);
-}
-
-.lw-surface-page .footer-brand h3 span {
-  color: var(--lw-glacial-500);
-}
-
-.lw-surface-page .footer-brand p,
-.lw-surface-page .footer-bottom {
-  color: #aebdbb;
-}
-
-.lw-surface-page .footer-col a {
-  color: #d7e2df;
-}
-
-.lw-surface-page .footer-col a:hover {
-  color: var(--lw-glacial-500);
-}
-
 @media (max-width: 980px) {
   .surface-section-heading {
     grid-template-columns: 1fr;
@@ -1098,13 +993,6 @@
 
   .surface-section {
     padding: 4.5rem 0;
-  }
-
-  .lw-surface-page .nav-share-btn {
-    width: 2.75rem;
-    min-width: 2.75rem;
-    height: 2.75rem;
-    min-height: 2.75rem;
   }
 
   .guide-hub-hero {

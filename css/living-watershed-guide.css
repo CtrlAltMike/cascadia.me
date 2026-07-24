@@ -188,83 +188,6 @@
   line-height: 1.65;
 }
 
-/* Site frame */
-
-.living-watershed-page .site-header {
-  background: rgba(251, 247, 238, 0.94);
-  border-bottom-color: rgba(6, 59, 92, 0.11);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.living-watershed-page .site-header.scrolled {
-  border-bottom-color: rgba(6, 59, 92, 0.18);
-  box-shadow: 0 8px 30px rgba(6, 59, 92, 0.07);
-}
-
-.living-watershed-page .nav-inner {
-  max-width: 90rem;
-  gap: 1rem;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-
-.living-watershed-page .nav-logo {
-  color: var(--lw-ocean-900);
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 600;
-}
-
-.living-watershed-page .nav-logo span {
-  color: inherit;
-  font-weight: inherit;
-}
-
-.living-watershed-page .nav-logo:hover,
-.living-watershed-page .nav-links a:hover,
-.living-watershed-page .nav-links a.active {
-  color: var(--lw-coral-600);
-}
-
-.living-watershed-page .nav-links {
-  gap: clamp(1.25rem, 2.7vw, 2.75rem);
-}
-
-.living-watershed-page .nav-links a {
-  color: var(--lw-text);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.living-watershed-page .nav-links a.active {
-  border-bottom-color: var(--lw-coral-600);
-}
-
-.living-watershed-page .nav-toggle,
-.living-watershed-page .nav-share-btn {
-  width: 2.75rem;
-  min-width: 2.75rem;
-  height: 2.75rem;
-  min-height: 2.75rem;
-}
-
-.living-watershed-page .share-button {
-  color: var(--lw-ocean-900);
-  background: rgba(251, 247, 238, 0.92);
-  border-color: rgba(6, 59, 92, 0.15);
-  box-shadow: none;
-}
-
-.living-watershed-page .share-button:hover {
-  color: var(--lw-ocean-900);
-  background: var(--lw-cream-100);
-  border-color: rgba(6, 59, 92, 0.32);
-  box-shadow: none;
-}
-
-.living-watershed-page .floating-share-btn {
-  display: none;
-}
-
 /* Buttons and links */
 
 .lw-guide-actions {
@@ -1396,55 +1319,6 @@
   line-height: 1.55;
 }
 
-/* Footer */
-
-.living-watershed-page .site-footer {
-  background: var(--lw-basalt-900);
-  color: var(--lw-cream-100);
-}
-
-.living-watershed-page .footer-inner {
-  max-width: 90rem;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-
-.living-watershed-page .footer-brand {
-  max-width: 28rem;
-}
-
-.living-watershed-page .footer-brand h3 {
-  color: var(--lw-cream-50);
-  font-size: 2rem;
-  font-weight: 500;
-}
-
-.living-watershed-page .footer-brand h3 span {
-  color: inherit;
-  font-weight: inherit;
-}
-
-.living-watershed-page .footer-brand p,
-.living-watershed-page .footer-col a {
-  color: rgba(251, 247, 238, 0.72);
-}
-
-.living-watershed-page .footer-col h4 {
-  color: var(--lw-glacial-on-ocean);
-}
-
-.living-watershed-page .footer-col a:hover {
-  color: var(--lw-sun-400);
-}
-
-.living-watershed-page .footer-bottom {
-  border-top-color: rgba(251, 247, 238, 0.17);
-  color: rgba(251, 247, 238, 0.6);
-}
-
-.living-watershed-page .seasonal-footer {
-  color: rgba(242, 233, 215, 0.62);
-}
-
 /* Responsive */
 
 @media (min-width: 861px) {
@@ -1606,16 +1480,6 @@
 }
 
 @media (max-width: 700px) {
-  .living-watershed-page .nav-inner {
-    padding-inline: 1.1rem;
-  }
-
-  .living-watershed-page .nav-links {
-    border-bottom-color: rgba(6, 59, 92, 0.15);
-    background: var(--lw-cream-50);
-    box-shadow: 0 14px 28px rgba(6, 59, 92, 0.09);
-  }
-
   .lw-guide-actions-grid,
   .lw-guide-dont-list {
     grid-template-columns: 1fr;

@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getSitePage, sitePages } from './site-pages.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, '..');
@@ -52,76 +53,21 @@ function collectHtmlFiles(directory, relativeDirectory = '') {
   return files.sort();
 }
 
-function activeSection(relativePath) {
-  if (relativePath === 'index.html') return 'home';
-  if (relativePath === 'guides.html' || [
-    'earthquake.html',
-    'wildfire.html',
-    'flooding.html',
-    'winter-storm.html',
-    'volcano.html'
-  ].includes(relativePath)) return 'guides';
-  if (relativePath === 'build-your-kit.html') return 'kit';
-  if (relativePath === 'atlas.html') return 'atlas';
-  if (relativePath === 'signals/index.html') return 'signals';
-  if (relativePath.startsWith('stories/')) return 'stories';
-  return null;
-}
-
-function footerItem(relativePath) {
-  const exactItems = new Map([
-    ['earthquake.html', 'earthquake'],
-    ['wildfire.html', 'wildfire'],
-    ['flooding.html', 'flooding'],
-    ['winter-storm.html', 'winter'],
-    ['volcano.html', 'volcano'],
-    ['atlas.html', 'atlas'],
-    ['signals/index.html', 'signals'],
-    ['build-your-kit.html', 'kit'],
-    ['approach.html', 'approach'],
-    ['faq.html', 'faq']
-  ]);
-  if (relativePath.startsWith('stories/')) return 'stories';
-  return exactItems.get(relativePath) || null;
-}
-
-function skipLink(relativePath) {
-  if (relativePath === 'index.html') {
-    return { skipClass: 'home-skip-link', skipHref: '#main-content', skipText: 'Skip to main content' };
-  }
-  if (relativePath === 'atlas.html') {
-    return { skipClass: 'atlas-skip-link', skipHref: '#main-content', skipText: 'Skip to the Atlas' };
-  }
-  if (relativePath === 'signals/index.html') {
-    return { skipClass: 'skip-link', skipHref: '#explorer', skipText: 'Skip to Signals' };
-  }
-  if (relativePath.startsWith('stories/') && relativePath !== 'stories/index.html') {
-    return { skipClass: 'surface-skip-link', skipHref: '#story-text', skipText: 'Skip to the story' };
-  }
-  if (relativePath === 'build-your-kit.html' || [
-    'earthquake.html',
-    'wildfire.html',
-    'flooding.html',
-    'winter-storm.html',
-    'volcano.html'
-  ].includes(relativePath)) {
-    return { skipClass: 'lw-skip-link', skipHref: '#main-content', skipText: 'Skip to main content' };
-  }
-  return { skipClass: 'surface-skip-link', skipHref: '#main-content', skipText: 'Skip to main content' };
-}
-
 function pageValues(relativePath) {
+  const page = getSitePage(relativePath);
   const depth = relativePath === '404.html' ? 0 : relativePath.split('/').length - 1;
   const prefix = relativePath === '404.html' ? '/' : '../'.repeat(depth);
-  const section = activeSection(relativePath);
-  const footer = footerItem(relativePath);
+  const section = page.navSection;
+  const footer = page.footerItem;
   const state = (name) => section === name ? ' class="active" aria-current="page"' : '';
   const current = (name) => footer === name ? ' aria-current="page"' : '';
   return {
     prefix,
     homeHref: relativePath === '404.html' ? '/' : `${prefix}index.html`,
-    ...skipLink(relativePath),
-    headerAccessory: relativePath.startsWith('stories/') && relativePath !== 'stories/index.html'
+    skipClass: page.skip.className,
+    skipHref: page.skip.href,
+    skipText: page.skip.text,
+    headerAccessory: page.headerAccessory === 'story-progress'
       ? '  <div class="story-reading-progress" aria-hidden="true"><span id="story-progress-bar"></span></div>'
       : '',
     homeState: state('home'),
@@ -274,7 +220,7 @@ function validateGenerated(document, relativePath) {
 
   const headerMatch = document.match(/<!-- site-frame:header:start -->([\s\S]*?)<!-- site-frame:header:end -->/);
   const activeCount = headerMatch ? countOccurrences(headerMatch[1], 'aria-current="page"') : 0;
-  const expectedActiveCount = activeSection(relativePath) ? 1 : 0;
+  const expectedActiveCount = getSitePage(relativePath).navSection ? 1 : 0;
   if (activeCount !== expectedActiveCount) {
     throw new Error(`Expected ${expectedActiveCount} active primary navigation item, found ${activeCount}`);
   }
@@ -293,6 +239,15 @@ function generate(document, relativePath) {
 }
 
 const htmlFiles = collectHtmlFiles(projectRoot);
+const htmlPathSet = new Set(htmlFiles);
+const manifestPathSet = new Set(sitePages.map((page) => page.path));
+const missingFromManifest = htmlFiles.filter((relativePath) => !manifestPathSet.has(relativePath));
+const missingFromProduction = sitePages.map((page) => page.path).filter((relativePath) => !htmlPathSet.has(relativePath));
+if (missingFromManifest.length || missingFromProduction.length) {
+  if (missingFromManifest.length) console.error(`Missing from page manifest: ${missingFromManifest.join(', ')}`);
+  if (missingFromProduction.length) console.error(`Missing production pages: ${missingFromProduction.join(', ')}`);
+  process.exit(1);
+}
 const changedFiles = [];
 const failures = [];
 

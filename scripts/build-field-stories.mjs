@@ -160,7 +160,7 @@ function head({ title, description, canonical, type = "website", schema }) {
   <script>document.documentElement.classList.add('js');</script>
   ${framePlaceholder('head')}
   <link rel="stylesheet" href="../css/living-watershed-surfaces.css?v=20260723-frame-hardening">
-  <link rel="stylesheet" href="../css/field-stories.css?v=20260723-story-plates1">
+  <link rel="stylesheet" href="../css/field-stories.css?v=20260723-story-mastheads1">
   <script type="application/ld+json">${JSON.stringify(schema)}</script>
   ${framePlaceholder('styles')}`;
 }
@@ -382,7 +382,6 @@ function renderStory(story, index, parsedStories) {
   <main id="main-content">
     <article class="field-story" aria-labelledby="story-title">
       <header class="field-story-masthead">
-        <div class="field-story-masthead-wash" aria-hidden="true"></div>
         <div class="surface-container field-story-masthead-layout">
           <div class="field-story-masthead-copy">
             <p class="surface-eyebrow">Field Story · Fiction</p>

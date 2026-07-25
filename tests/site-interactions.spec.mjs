@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { sitePages } from '../scripts/site-pages.mjs';
 
-const shareMessage = 'I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.';
+const shareMessage = 'I found this Cascadia.me page useful. It explains practical choices for living with interruptions in the Pacific Northwest and keeps the official sources close.';
 
 async function preventThirdPartyDependencies(page) {
   await page.route(/^https?:\/\/(?!127\.0\.0\.1:4173)/, (route) => route.abort());
@@ -43,7 +43,7 @@ test.describe('shared site frame', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Atlas' })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Find Official Help' })).toBeVisible();
 
     await page.keyboard.press('Escape');
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -60,7 +60,7 @@ test.describe('shared site frame', () => {
 
     const dialog = page.getByRole('dialog', { name: 'Now We Plan is coming soon' });
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('smart and comfortable household plan');
+    await expect(dialog).toContainText('keeping owners, agreements, review dates, and practice alive');
     expect(context.pages()).toHaveLength(pageCount);
 
     await page.keyboard.press('Escape');
@@ -84,6 +84,34 @@ test.describe('representative page interactions', () => {
     await expect(page.locator('.field-story-frontispiece')).toBeVisible();
     await expect(page.locator('#chapter-1')).toBeVisible();
     await expectNoHorizontalOverflow(page);
+  });
+
+  test('revised public spine and neighborhood field tools are usable', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1, name: 'Make the next hard day easier.' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Start with your place' })).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/people-nearby.html');
+    await expect(page.getByRole('heading', { level: 1, name: 'Start with one person.' })).toBeVisible();
+    await expect(page.locator('.mission-hero img')).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/neighborhood-inventory.html');
+    await expect(page.locator('.field-sheet')).toHaveCount(4);
+    await page.emulateMedia({ media: 'print' });
+    await expect(page.locator('.site-header')).toBeHidden();
+    await expect(page.locator('.field-sheet').first()).toBeVisible();
+  });
+
+  test('the neighborhood packet remains complete without JavaScript', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await preventThirdPartyDependencies(page);
+    await page.goto('/neighborhood-inventory.html');
+    await expect(page.locator('.field-sheet')).toHaveCount(4);
+    await expect(page.getByRole('heading', { level: 2, name: 'Status, needs, and offers' })).toBeVisible();
+    await context.close();
   });
 
   test('Atlas planning controls disclose their available layers', async ({ page }) => {

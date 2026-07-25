@@ -1,0 +1,395 @@
+/* ============================================================
+   Cascadia.me field-tool family
+   Paper-first, time-stamped working pages for neighborhood
+   status, needs, tasks, messages, and handoffs.
+   ============================================================ */
+
+.field-tool-page {
+  color: var(--cascadia-ink);
+  background: #f3ede1;
+}
+
+.field-tool-page main {
+  padding-top: var(--nav-height);
+}
+
+.field-tool-container {
+  width: min(100% - clamp(1.5rem, 4vw, 3rem), 78rem);
+  margin-inline: auto;
+}
+
+.field-tool-intro {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.field-tool-kicker {
+  margin: 0 0 0.75rem;
+  color: var(--cascadia-coral);
+  font: 700 var(--cascadia-type-label)/1.3 var(--cascadia-font-body);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.field-tool-intro h1 {
+  max-width: 65rem;
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(3.5rem, 7vw, 6.7rem);
+  font-weight: 500;
+  letter-spacing: -0.056em;
+  line-height: 0.9;
+}
+
+.field-tool-lede {
+  max-width: 45rem;
+  margin: 1.5rem 0 0;
+  font: 400 clamp(1.15rem, 1.7vw, 1.38rem)/1.62 var(--cascadia-font-display);
+}
+
+.field-tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.field-tool-action {
+  min-height: 3rem;
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--cascadia-ocean);
+  border-radius: var(--cascadia-radius-control);
+  color: var(--cascadia-cream);
+  background: var(--cascadia-ocean);
+  font: 700 0.88rem/1.2 var(--cascadia-font-body);
+  cursor: pointer;
+}
+
+.field-tool-action--quiet {
+  color: var(--cascadia-ocean);
+  background: transparent;
+  text-decoration: none;
+}
+
+.field-tool-action:hover {
+  color: #fff;
+  background: var(--cascadia-water);
+}
+
+.field-tool-boundary {
+  max-width: 58rem;
+  margin-top: 2rem;
+  padding: 1.1rem 1.25rem;
+  border-left: 5px solid var(--cascadia-coral);
+  background: #f8eadd;
+}
+
+.field-tool-boundary p {
+  margin: 0;
+  line-height: 1.62;
+}
+
+.field-tool-packet {
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.field-sheet {
+  padding: clamp(1.3rem, 3vw, 2.2rem);
+  border: 1px solid #b9ab93;
+  border-radius: 0.3rem;
+  background: #fffdf7;
+  box-shadow: 0 12px 34px rgba(35, 45, 49, 0.08);
+}
+
+.field-sheet__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--cascadia-ocean);
+}
+
+.field-sheet__number {
+  color: var(--cascadia-coral);
+  font: 700 0.72rem/1.3 var(--cascadia-font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.field-sheet h2 {
+  margin: 0.25rem 0 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.field-sheet__purpose {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--cascadia-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.field-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.field-line {
+  min-height: 3.35rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #cfc4b1;
+  background:
+    linear-gradient(transparent calc(100% - 1px), #d8cfbc 1px);
+}
+
+.field-line strong {
+  display: block;
+  color: var(--cascadia-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-table-wrap {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.field-table {
+  width: 100%;
+  min-width: 50rem;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.field-table th,
+.field-table td {
+  min-width: 6rem;
+  height: 3.5rem;
+  padding: 0.5rem;
+  border: 1px solid #bdb29f;
+  text-align: left;
+  vertical-align: top;
+}
+
+.field-table th {
+  height: auto;
+  color: #fff;
+  background: var(--cascadia-ocean);
+  font-size: 0.67rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.field-checks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.field-check {
+  min-height: 3rem;
+  padding: 0.7rem;
+  border: 1px solid #cfc4b1;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.field-check::before {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-right: 0.45rem;
+  border: 1px solid #746c60;
+  content: "";
+  vertical-align: -0.12rem;
+}
+
+.field-notes {
+  min-height: 9rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #cfc4b1;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 1.8rem,
+      #ded6c7 1.8rem,
+      #ded6c7 calc(1.8rem + 1px)
+    );
+}
+
+.field-notes strong {
+  display: inline-block;
+  padding-right: 0.4rem;
+  background: #fffdf7;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-tool-note {
+  padding: 1.2rem;
+  border: 1px solid rgba(47, 90, 67, 0.35);
+  border-left: 5px solid var(--cascadia-spruce);
+  background: #edf3e9;
+}
+
+.field-tool-note h2 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: 1.6rem;
+}
+
+.field-tool-note p,
+.field-tool-note li {
+  line-height: 1.62;
+}
+
+.field-tool-note ul {
+  padding-left: 1.2rem;
+}
+
+.field-tool-review {
+  color: var(--cascadia-muted);
+  font-size: var(--cascadia-type-meta);
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .field-sheet__header {
+    display: block;
+  }
+
+  .field-sheet__purpose {
+    margin-top: 0.8rem;
+  }
+
+  .field-meta,
+  .field-checks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field-tool-actions {
+    display: grid;
+  }
+
+  .field-tool-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 460px) {
+  .field-meta,
+  .field-checks {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0.45in;
+  }
+
+  .field-tool-page {
+    color: #111;
+    background: #fff;
+  }
+
+  .field-tool-page :is(.site-header, .site-footer, .feedback-widget, .field-tool-actions) {
+    display: none !important;
+  }
+
+  .neighborhood-inventory-page :is(.field-tool-intro, .field-tool-note, .field-tool-review) {
+    display: none !important;
+  }
+
+  .field-tool-page main {
+    padding-top: 0;
+  }
+
+  .field-tool-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .field-tool-intro {
+    padding-block: 0 0.25in;
+  }
+
+  .field-tool-intro h1 {
+    font-size: 30pt;
+  }
+
+  .field-tool-packet {
+    display: block;
+    padding: 0;
+  }
+
+  .field-sheet {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: 9.5in;
+    min-height: 0;
+    margin: 0;
+    padding: 0.2in;
+    overflow: hidden;
+    break-after: page;
+    break-inside: avoid-page;
+    border: 1px solid #777;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .field-sheet + .field-sheet {
+    break-before: page;
+  }
+
+  .field-sheet:last-of-type {
+    break-after: auto;
+  }
+
+  .field-sheet__header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  }
+
+  .field-table-wrap {
+    overflow: visible;
+  }
+
+  .field-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    font-size: 7.5pt;
+  }
+
+  .field-table th,
+  .field-table td {
+    min-width: 0;
+    height: 0.55in;
+    padding: 0.08in;
+    overflow-wrap: anywhere;
+  }
+
+  .field-tool-note {
+    break-before: page;
+    border: 1px solid #777;
+    background: #fff;
+  }
+}

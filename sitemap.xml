@@ -2,7 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cascadia.me/</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/place.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/first-moves.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/keep-life-going.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/water.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/recovery.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/people-nearby.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/after-an-event.html</loc>
+    <lastmod>2026-07-25</lastmod>
+  </url>
+  <url>
+    <loc>https://cascadia.me/neighborhood-inventory.html</loc>
+    <lastmod>2026-07-25</lastmod>
   </url>
   <url>
     <loc>https://cascadia.me/guides.html</loc>

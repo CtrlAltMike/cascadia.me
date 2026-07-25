@@ -49,7 +49,7 @@
           <button class="share-dialog-close" type="button" aria-label="Close coming-soon message">&times;</button>
         </div>
         <div class="nowweplan-dialog-copy" id="nowweplan-dialog-description">
-          <p>A new website for turning preparedness into a smart and comfortable household plan—one step at a time.</p>
+          <p>A new website for keeping owners, agreements, review dates, and practice alive after the first plan is made—one useful step at a time.</p>
         </div>
         <div class="share-dialog-actions">
           <button class="share-dialog-action share-dialog-action-primary" type="button" data-nowweplan-close>Keep exploring</button>

@@ -60,8 +60,9 @@ body.site-frame-page .nav-links a.active {
 
 body.site-frame-page .nav-links a {
   color: var(--site-frame-text);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 body.site-frame-page .nav-links a.active {
@@ -100,11 +101,17 @@ body.site-frame-page .floating-share-btn {
 
 @media (min-width: 1081px) {
   body.site-frame-page .nav-links {
-    gap: clamp(1.1rem, 1.6vw, 1.75rem);
+    gap: clamp(0.55rem, 0.85vw, 0.9rem);
   }
 
   body.site-frame-page .nav-share-btn {
-    margin-left: clamp(0.5rem, 1vw, 1rem);
+    margin-left: clamp(0.3rem, 0.7vw, 0.65rem);
+  }
+
+  body.site-frame-page .nav-utility a {
+    padding: 0.45rem 0.65rem;
+    border: 1px solid rgba(6, 59, 92, 0.2);
+    border-radius: 999px;
   }
 }
 

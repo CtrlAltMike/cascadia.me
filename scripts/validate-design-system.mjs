@@ -110,13 +110,14 @@ assert(sitePages.length === pages.length, `Expected ${pages.length} page-manifes
 
 const pagePaths = new Set(pages);
 const manifestPaths = new Set(sitePages.map((page) => page.path));
-const manifestCanonicals = new Set(sitePages.map((page) => page.canonical));
+const indexableManifestPages = sitePages.filter((page) => page.path !== '404.html' && page.indexable !== false);
+const manifestCanonicals = new Set(indexableManifestPages.map((page) => page.canonical));
 assert(manifestPaths.size === sitePages.length, 'Page manifest contains duplicate paths');
-assert(manifestCanonicals.size === sitePages.length, 'Page manifest contains duplicate canonical URLs');
+assert(manifestCanonicals.size === indexableManifestPages.length, 'Indexable page manifest contains duplicate canonical URLs');
 for (const relativePath of pages) assert(manifestPaths.has(relativePath), `${relativePath}: missing from page manifest`);
 for (const page of sitePages) assert(pagePaths.has(page.path), `${page.path}: manifest entry has no production page`);
 
-const allowedFamilies = new Set(['about', 'capability', 'faq', 'field-tool', 'guide', 'guide-library', 'home', 'instrument', 'not-found', 'story', 'story-library', 'workbook']);
+const allowedFamilies = new Set(['about', 'capability', 'faq', 'field-tool', 'guide', 'guide-library', 'handoff', 'home', 'instrument', 'not-found', 'story', 'story-library', 'workbook']);
 const allowedStyleFamilies = new Set(['atlas', 'capability', 'field-tool', 'guide', 'home', 'signals', 'surface']);
 const allowedNavSections = new Set([null, 'atlas', 'first', 'guides', 'home', 'keep-life', 'kit', 'people', 'place', 'recovery', 'signals', 'stories']);
 const allowedFooterItems = new Set([null, 'after-event', 'approach', 'atlas', 'earthquake', 'faq', 'first', 'flooding', 'inventory', 'keep-life', 'kit', 'people', 'place', 'recovery', 'signals', 'stories', 'volcano', 'wildfire', 'winter']);
@@ -220,6 +221,12 @@ for (const page of sitePages.filter((candidate) => candidate.family === 'field-t
   }
 }
 
+for (const page of sitePages.filter((candidate) => candidate.family === 'handoff')) {
+  const document = read(page.path);
+  assert(document.includes('class="handoff"'), `${page.path}: missing handoff-family contract`);
+  assert(page.indexable === false && page.redirectTo, `${page.path}: incomplete handoff registry contract`);
+}
+
 const designSystem = read('css/design-system.css');
 for (const token of [
   '--cascadia-page-width', '--cascadia-reading-width', '--cascadia-focus-ring',
@@ -250,9 +257,9 @@ assert(atlasScript.includes("'icon-allow-overlap': true"), 'atlas script: observ
 assert(atlasScript.includes("'icon-ignore-placement': true"), 'atlas script: observed-wind arrows can be displaced by label tiers');
 
 const illustratedPages = [
-  'index.html', 'guides.html', 'faq.html', 'build-your-kit.html', 'earthquake.html',
+  'index.html', 'guides.html', 'faq.html', 'household-workbook.html', 'earthquake.html',
   'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html', 'stories/index.html',
-  'place.html', 'first-moves.html', 'keep-life-going.html', 'people-nearby.html', 'recovery.html'
+  'place.html', 'building.html', 'first-moves.html', 'keep-life-going.html', 'people-nearby.html', 'recovery.html'
 ];
 for (const relativePath of illustratedPages) {
   const document = read(relativePath);
@@ -276,11 +283,23 @@ const earthquake = read('earthquake.html');
 assert(earthquake.includes('chapter--earthquake'), 'earthquake.html: missing shared hazard-family class');
 assert(earthquake.includes('primary-chapter-page earthquake-chapter-page'), 'earthquake.html: missing shared hazard-family page contract');
 assert(earthquake.includes('css/living-watershed-primary-chapters.css'), 'earthquake.html: missing shared hazard-family stylesheet');
+for (const relativePath of ['earthquake.html', 'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html']) {
+  const document = read(relativePath);
+  assert(document.includes('chapter-specificity'), `${relativePath}: missing consequence-specific decision spine`);
+  for (const href of ['building.html', 'signals/', 'keep-life-going.html', 'recovery.html']) {
+    assert(document.includes(`href="${href}"`), `${relativePath}: consequence-specific decision spine is missing ${href}`);
+  }
+  assert(
+    document.includes('href="movement.html"') || document.includes('href="staying-or-leaving.html"'),
+    `${relativePath}: consequence-specific decision spine is missing route guidance`
+  );
+}
 
 const header = read('scripts/site-frame/header.html');
 assert(header.includes('share-button nav-share-btn'), 'site-frame header: share control is not static');
 assert(
-  header.indexOf('>Know Your Place</a>') < header.indexOf('>First Moves</a>') &&
+  header.indexOf('>Home</a>') < header.indexOf('>Know Your Place</a>') &&
+    header.indexOf('>Know Your Place</a>') < header.indexOf('>First Moves</a>') &&
     header.indexOf('>First Moves</a>') < header.indexOf('>Keep Life Going</a>') &&
     header.indexOf('>Keep Life Going</a>') < header.indexOf('>Recovery</a>') &&
     header.indexOf('>Recovery</a>') < header.indexOf('>People Nearby</a>') &&
@@ -288,7 +307,7 @@ assert(
     header.indexOf('>Field Stories</a>') < header.indexOf('>Find Official Help</a>'),
   'site-frame header: public-spine task order is incorrect'
 );
-assert(!header.includes('>Home</a>'), 'site-frame header: Home should be represented by the wordmark');
+assert(header.includes('href="{{homeHref}}"{{homeState}}>Home</a>'), 'site-frame header: persistent Home link is missing');
 assert(header.includes('class="nav-utility"'), 'site-frame header: official-help utility treatment is missing');
 assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
 for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this work</a>']) {

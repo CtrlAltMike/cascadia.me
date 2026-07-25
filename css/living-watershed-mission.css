@@ -244,6 +244,10 @@
   background: #f5efdf;
 }
 
+.mission-card-grid--capabilities .mission-card:last-child {
+  grid-column: span 2;
+}
+
 .mission-route__number,
 .mission-card__label {
   display: block;
@@ -480,6 +484,10 @@
   .mission-card-grid,
   .mission-question-grid {
     grid-template-columns: 1fr;
+  }
+
+  .mission-card-grid--capabilities .mission-card:last-child {
+    grid-column: auto;
   }
 
   .mission-route:nth-child(even),

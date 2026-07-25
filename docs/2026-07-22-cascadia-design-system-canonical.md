@@ -26,7 +26,7 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 ## Phase 2 — heroes and instruments
 
 - All illustrated heroes use the shared `illustrated-hero`, `illustrated-hero__media`, and `illustrated-hero__content` contract.
-- Existing art direction and editorial composition remain page-family variants.
+- Existing art direction and editorial composition may remain page-family variants where they still serve the page. The mission revision may retain, refresh, replace, or create illustrations without changing the shared hero contract.
 - Atlas and Signals use the common `instrument-page` contract.
 - Signals aligns its palette, typography, panels, labels, and controls with Atlas and the Cascadia brand.
 - Interface labels do not fall below 12px and interactive targets do not fall below 44px.
@@ -48,7 +48,7 @@ Cascadia.me should feel like one publication with several purposeful formats, no
 
 ## Invariants
 
-- Keep page content, authorship, factual sourcing, and distinctive illustrations intact.
+- Preserve authorship and factual sourcing. Treat current illustrations as available editorial assets, not locked requirements; retain, refresh, replace, or create them according to the revised page's job.
 - Do not make every page visually identical.
 - Do not reintroduce the retired map-product surface.
 - Treat shared frame templates and canonical CSS tokens as the source of truth.

@@ -18,7 +18,7 @@
   }
 
   function suggestedMessage() {
-    return 'I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.';
+    return 'I found this Cascadia.me page useful. It explains practical choices for living with interruptions in the Pacific Northwest and keeps the official sources close.';
   }
 
   function getShareData(text) {

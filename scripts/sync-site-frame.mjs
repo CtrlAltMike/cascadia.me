@@ -79,10 +79,11 @@ function pageValues(relativePath) {
     headerAccessory: page.headerAccessory === 'story-progress'
       ? '  <div class="story-reading-progress" aria-hidden="true"><span id="story-progress-bar"></span></div>'
       : '',
-    homeState: state('home'),
-    guidesState: state('guides'),
-    kitState: state('kit'),
-    atlasState: state('atlas'),
+    placeState: state('place'),
+    firstState: state('first'),
+    keepLifeState: state('keep-life'),
+    recoveryState: state('recovery'),
+    peopleState: state('people'),
     signalsState: state('signals'),
     storiesState: state('stories'),
     earthquakeCurrent: current('earthquake'),
@@ -96,6 +97,13 @@ function pageValues(relativePath) {
     kitCurrent: current('kit'),
     approachCurrent: current('approach'),
     faqCurrent: current('faq'),
+    placeCurrent: current('place'),
+    firstCurrent: current('first'),
+    keepLifeCurrent: current('keep-life'),
+    recoveryCurrent: current('recovery'),
+    peopleCurrent: current('people'),
+    inventoryCurrent: current('inventory'),
+    afterEventCurrent: current('after-event'),
     designSystemVersion: siteCacheVersions.designSystem,
     frameVersion: siteCacheVersions.frame
   };

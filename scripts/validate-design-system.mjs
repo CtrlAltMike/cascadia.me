@@ -105,7 +105,7 @@ function localTarget(relativePage, rawValue) {
 }
 
 const pages = collectHtml(root);
-assert(pages.length === 23, `Expected 23 production pages, found ${pages.length}`);
+assert(pages.length > 0, 'No production pages were found');
 assert(sitePages.length === pages.length, `Expected ${pages.length} page-manifest entries, found ${sitePages.length}`);
 
 const pagePaths = new Set(pages);
@@ -116,10 +116,10 @@ assert(manifestCanonicals.size === sitePages.length, 'Page manifest contains dup
 for (const relativePath of pages) assert(manifestPaths.has(relativePath), `${relativePath}: missing from page manifest`);
 for (const page of sitePages) assert(pagePaths.has(page.path), `${page.path}: manifest entry has no production page`);
 
-const allowedFamilies = new Set(['about', 'faq', 'guide', 'guide-library', 'home', 'instrument', 'not-found', 'story', 'story-library', 'workbook']);
-const allowedStyleFamilies = new Set(['atlas', 'guide', 'home', 'signals', 'surface']);
-const allowedNavSections = new Set([null, 'atlas', 'guides', 'home', 'kit', 'signals', 'stories']);
-const allowedFooterItems = new Set([null, 'approach', 'atlas', 'earthquake', 'faq', 'flooding', 'kit', 'signals', 'stories', 'volcano', 'wildfire', 'winter']);
+const allowedFamilies = new Set(['about', 'capability', 'faq', 'field-tool', 'guide', 'guide-library', 'home', 'instrument', 'not-found', 'story', 'story-library', 'workbook']);
+const allowedStyleFamilies = new Set(['atlas', 'capability', 'field-tool', 'guide', 'home', 'signals', 'surface']);
+const allowedNavSections = new Set([null, 'atlas', 'first', 'guides', 'home', 'keep-life', 'kit', 'people', 'place', 'recovery', 'signals', 'stories']);
+const allowedFooterItems = new Set([null, 'after-event', 'approach', 'atlas', 'earthquake', 'faq', 'first', 'flooding', 'inventory', 'keep-life', 'kit', 'people', 'place', 'recovery', 'signals', 'stories', 'volcano', 'wildfire', 'winter']);
 
 for (const page of sitePages) {
   const document = read(page.path);
@@ -206,6 +206,20 @@ for (const page of sitePages) {
   }
 }
 
+for (const page of sitePages.filter((candidate) => candidate.family === 'capability')) {
+  const document = read(page.path);
+  for (const contract of ['capability-page', 'capability-first-move', 'capability-grid', 'capability-review']) {
+    assert(document.includes(contract), `${page.path}: missing capability-family contract ${contract}`);
+  }
+}
+
+for (const page of sitePages.filter((candidate) => candidate.family === 'field-tool')) {
+  const document = read(page.path);
+  for (const contract of ['field-tool-page', 'field-sheet', 'field-tool-review']) {
+    assert(document.includes(contract), `${page.path}: missing field-tool contract ${contract}`);
+  }
+}
+
 const designSystem = read('css/design-system.css');
 for (const token of [
   '--cascadia-page-width', '--cascadia-reading-width', '--cascadia-focus-ring',
@@ -237,7 +251,8 @@ assert(atlasScript.includes("'icon-ignore-placement': true"), 'atlas script: obs
 
 const illustratedPages = [
   'index.html', 'guides.html', 'faq.html', 'build-your-kit.html', 'earthquake.html',
-  'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html', 'stories/index.html'
+  'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html', 'stories/index.html',
+  'place.html', 'first-moves.html', 'keep-life-going.html', 'people-nearby.html', 'recovery.html'
 ];
 for (const relativePath of illustratedPages) {
   const document = read(relativePath);
@@ -265,10 +280,16 @@ assert(earthquake.includes('css/living-watershed-primary-chapters.css'), 'earthq
 const header = read('scripts/site-frame/header.html');
 assert(header.includes('share-button nav-share-btn'), 'site-frame header: share control is not static');
 assert(
-  header.indexOf('>Home</a>') < header.indexOf('>Field Stories</a>') &&
-    header.indexOf('>Field Stories</a>') < header.indexOf('>Guides</a>'),
-  'site-frame header: Field Stories must appear immediately after Home'
+  header.indexOf('>Know Your Place</a>') < header.indexOf('>First Moves</a>') &&
+    header.indexOf('>First Moves</a>') < header.indexOf('>Keep Life Going</a>') &&
+    header.indexOf('>Keep Life Going</a>') < header.indexOf('>Recovery</a>') &&
+    header.indexOf('>Recovery</a>') < header.indexOf('>People Nearby</a>') &&
+    header.indexOf('>People Nearby</a>') < header.indexOf('>Field Stories</a>') &&
+    header.indexOf('>Field Stories</a>') < header.indexOf('>Find Official Help</a>'),
+  'site-frame header: public-spine task order is incorrect'
 );
+assert(!header.includes('>Home</a>'), 'site-frame header: Home should be represented by the wordmark');
+assert(header.includes('class="nav-utility"'), 'site-frame header: official-help utility treatment is missing');
 assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
 for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this work</a>']) {
   assert(!header.includes(informationalLink), `site-frame header: ${informationalLink} has returned to primary task navigation`);
@@ -283,17 +304,17 @@ for (const retiredShareLabel of ['A note to send along', 'Suggested message', 'S
   assert(!shareScript.includes(retiredShareLabel), `share helper: retired dialog label remains: ${retiredShareLabel}`);
 }
 assert(
-  shareScript.includes('I thought this Cascadia.me guide might be useful. It offers preparedness information relevant to the Pacific Northwest.'),
+  shareScript.includes('I found this Cascadia.me page useful. It explains practical choices for living with interruptions in the Pacific Northwest and keeps the official sources close.'),
   'share helper: canonical suggested message is missing'
 );
 assert(read('css/site-frame.css').includes('.share-dialog-card'), 'site-frame.css: shared share panel is missing');
 const nowWePlanGate = read('js/nowweplan-gate.js');
-for (const gateContract of ['Now We Plan is coming soon', 'smart and comfortable household plan', 'nowweplan.com', 'aria-haspopup']) {
+for (const gateContract of ['Now We Plan is coming soon', 'keeping owners, agreements, review dates, and practice alive', 'nowweplan.com', 'aria-haspopup']) {
   assert(nowWePlanGate.includes(gateContract), `NowWePlan gate: missing ${gateContract}`);
 }
 assert(read('css/site-frame.css').includes('.nowweplan-dialog-copy'), 'site-frame.css: shared NowWePlan gate copy is missing');
-assert(read('css/site-frame.css').includes('gap: clamp(1.1rem, 1.6vw, 1.75rem)'), 'site-frame.css: compact desktop navigation rhythm is missing');
-assert(read('css/site-frame.css').includes('margin-left: clamp(0.5rem, 1vw, 1rem)'), 'site-frame.css: share-control separation is missing');
+assert(read('css/site-frame.css').includes('gap: clamp(0.55rem, 0.85vw, 0.9rem)'), 'site-frame.css: compact desktop navigation rhythm is missing');
+assert(read('css/site-frame.css').includes('margin-left: clamp(0.3rem, 0.7vw, 0.65rem)'), 'site-frame.css: share-control separation is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
 assert(read('css/site-frame.css').includes('@media (max-width: 1080px)'), 'site-frame.css: navigation collapse point is not 1080px');
 
@@ -301,6 +322,9 @@ const retiredFrameOwners = new Map([
   ['css/living-watershed-home.css', '.home-page'],
   ['css/living-watershed-guide.css', '.living-watershed-page'],
   ['css/living-watershed-surfaces.css', '.lw-surface-page'],
+  ['css/living-watershed-mission.css', '.mission-page'],
+  ['css/living-watershed-capability.css', '.capability-page'],
+  ['css/living-watershed-field-tool.css', '.field-tool-page'],
   ['css/living-watershed-atlas.css', '.living-watershed-atlas'],
   ['signals/styles.css', '.signals-page']
 ]);

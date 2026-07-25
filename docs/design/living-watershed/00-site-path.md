@@ -4,6 +4,8 @@
 
 **Date:** July 12, 2026
 
+> **Brand and voice authority:** The network relationship, message hierarchy, cadence, contractions, empathy, and humor are now governed by the [Resilience Network Brand Platform](../../resilience-network-brand-platform.md) and [Resilience Network Voice Guide](../../resilience-network-voice-guide.md). Where this completed implementation record conflicts with those documents, the newer canonical direction governs.
+
 Living Watershed is the visual and editorial direction for Cascadia.me. It is not merely a theme and it is not an emergency-management interface dressed in regional art. It is an illustrated Cascadian reader with live instruments and a household workbook.
 
 The artwork invites people into the place. The prose gives them a reason to remain. The evidence helps them decide what to do.

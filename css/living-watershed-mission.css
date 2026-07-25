@@ -1,0 +1,571 @@
+/* ============================================================
+   Cascadia.me mission revision
+   Public-spine hubs, consequence-first routing, and editorial
+   structures shared by the first revised pages.
+   ============================================================ */
+
+.mission-page,
+.home-page {
+  color: var(--cascadia-ink);
+  background: var(--cascadia-cream);
+}
+
+.mission-page main,
+.home-page main {
+  overflow-x: clip;
+}
+
+.mission-container {
+  width: min(100% - clamp(2rem, 6vw, 6rem), var(--cascadia-page-width));
+  margin-inline: auto;
+}
+
+.mission-reading {
+  width: min(100%, var(--cascadia-reading-width));
+}
+
+.mission-kicker {
+  margin: 0 0 0.8rem;
+  color: var(--cascadia-coral);
+  font: 700 var(--cascadia-type-label)/1.35 var(--cascadia-font-body);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mission-hero {
+  position: relative;
+  min-height: clamp(39rem, 61vw, 49rem);
+  padding-top: var(--nav-height);
+  overflow: hidden;
+  border-bottom: var(--cascadia-border);
+  isolation: isolate;
+}
+
+.mission-hero__media {
+  position: absolute;
+  inset: var(--nav-height) 0 0;
+  z-index: -2;
+}
+
+.mission-hero__media picture,
+.mission-hero__media img {
+  width: 100%;
+  height: 100%;
+}
+
+.mission-hero__media img {
+  object-position: center;
+}
+
+.mission-hero::after {
+  position: absolute;
+  inset: var(--nav-height) 0 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(251, 247, 238, 0.995) 0%,
+      rgba(251, 247, 238, 0.97) 31%,
+      rgba(251, 247, 238, 0.82) 45%,
+      rgba(251, 247, 238, 0.12) 67%,
+      rgba(251, 247, 238, 0) 76%
+    );
+  content: "";
+  pointer-events: none;
+}
+
+.mission-hero__inner {
+  display: flex;
+  min-height: clamp(35rem, calc(61vw - var(--nav-height)), 44.75rem);
+  align-items: center;
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.mission-hero__copy {
+  width: min(49%, 43rem);
+}
+
+.mission-hero h1 {
+  max-width: 47rem;
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(4.3rem, 7.7vw, 7.4rem);
+  font-weight: 500;
+  letter-spacing: -0.058em;
+  line-height: 0.86;
+}
+
+.mission-hero__lede {
+  max-width: 38rem;
+  margin: clamp(1.4rem, 3vw, 2.15rem) 0 0;
+  color: var(--cascadia-ink);
+  font-family: var(--cascadia-font-display);
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  line-height: 1.55;
+}
+
+.mission-hero__actions,
+.mission-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+}
+
+.mission-button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--cascadia-ocean);
+  border-radius: var(--cascadia-radius-control);
+  color: var(--cascadia-cream);
+  background: var(--cascadia-ocean);
+  font: 700 0.88rem/1.2 var(--cascadia-font-body);
+  text-decoration: none;
+}
+
+.mission-button:hover {
+  color: #fff;
+  background: var(--cascadia-water);
+}
+
+.mission-button--quiet {
+  color: var(--cascadia-ocean);
+  background: rgba(251, 247, 238, 0.9);
+}
+
+.mission-button--quiet:hover {
+  color: var(--cascadia-cream);
+  background: var(--cascadia-ocean);
+}
+
+.mission-section {
+  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+}
+
+.mission-section + .mission-section {
+  border-top: var(--cascadia-border);
+}
+
+.mission-section--tint {
+  background: rgba(242, 233, 215, 0.48);
+}
+
+.mission-section--ocean {
+  color: rgba(251, 247, 238, 0.88);
+  background: var(--cascadia-ocean);
+}
+
+.mission-section--ocean :is(h2, h3, a) {
+  color: var(--cascadia-cream);
+}
+
+.home-page .mission-section--ocean .mission-section__heading h2,
+.home-page .mission-section--ocean .mission-section__heading > p:last-child,
+.home-page .mission-section--ocean .mission-inline-links a {
+  color: var(--cascadia-cream);
+}
+
+.mission-section--ocean .mission-kicker {
+  color: var(--cascadia-sun);
+}
+
+.mission-section__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(18rem, 0.4fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+  margin-bottom: clamp(2.4rem, 5vw, 4rem);
+}
+
+.mission-section__heading .mission-kicker {
+  grid-column: 1 / -1;
+  margin-bottom: -0.2rem;
+}
+
+.mission-section__heading h2,
+.mission-reading > h2 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(2.75rem, 5.5vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.048em;
+  line-height: 0.94;
+}
+
+.mission-section__heading > p:last-child {
+  margin: 0;
+  color: var(--cascadia-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.mission-prose {
+  color: var(--cascadia-ink);
+  font-family: var(--cascadia-font-display);
+  font-size: clamp(1.18rem, 1.7vw, 1.42rem);
+  line-height: 1.66;
+}
+
+.mission-prose > * + * {
+  margin-top: 1.15em;
+}
+
+.mission-prose a {
+  color: var(--cascadia-water);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.mission-route-grid,
+.mission-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: var(--cascadia-border);
+  border-radius: var(--cascadia-radius-panel);
+  background: var(--cascadia-line);
+  box-shadow: var(--cascadia-shadow);
+}
+
+.mission-route,
+.mission-card {
+  min-width: 0;
+  padding: clamp(1.4rem, 3vw, 2.3rem);
+  background: var(--cascadia-cream);
+}
+
+.mission-route:nth-child(3n + 2),
+.mission-card:nth-child(3n + 2) {
+  background: #f5efdf;
+}
+
+.mission-route__number,
+.mission-card__label {
+  display: block;
+  margin-bottom: 1.1rem;
+  color: var(--cascadia-coral);
+  font: 700 0.72rem/1.2 var(--cascadia-font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mission-route h3,
+.mission-card h3 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(1.75rem, 3vw, 2.55rem);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.mission-route h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mission-route h3 a:hover {
+  color: var(--cascadia-coral);
+}
+
+.mission-route p,
+.mission-card p {
+  margin: 1rem 0 0;
+  color: var(--cascadia-muted);
+  font-size: 0.97rem;
+  line-height: 1.62;
+}
+
+.mission-route__link,
+.mission-card__link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 1.2rem;
+  color: var(--cascadia-water);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.mission-question-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.mission-question {
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: var(--cascadia-border);
+  border-left: 4px solid var(--cascadia-glacial);
+  border-radius: var(--cascadia-radius-panel);
+  background: rgba(255, 253, 248, 0.78);
+}
+
+.mission-question h3 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.mission-question p,
+.mission-question li {
+  color: var(--cascadia-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.mission-question ul {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.mission-steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: mission-step;
+}
+
+.mission-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  padding-block: 1.5rem;
+  border-top: var(--cascadia-border);
+  counter-increment: mission-step;
+}
+
+.mission-step::before {
+  color: var(--cascadia-coral);
+  content: counter(mission-step, decimal-leading-zero);
+  font: 500 clamp(2rem, 4vw, 3.2rem)/1 var(--cascadia-font-display);
+}
+
+.mission-step h3 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 560;
+  line-height: 1.05;
+}
+
+.mission-step p {
+  margin: 0.5rem 0 0;
+  color: var(--cascadia-muted);
+  line-height: 1.62;
+}
+
+.mission-boundary,
+.mission-source-note {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(196, 71, 55, 0.3);
+  border-left: 5px solid var(--cascadia-coral);
+  border-radius: var(--cascadia-radius-panel);
+  background: #f7ede4;
+}
+
+.mission-boundary h3,
+.mission-source-note h3 {
+  margin: 0;
+  color: var(--cascadia-ocean);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.mission-boundary p,
+.mission-source-note p {
+  margin: 0.7rem 0 0;
+  color: var(--cascadia-ink);
+  line-height: 1.6;
+}
+
+.mission-review {
+  margin-top: 2rem;
+  color: var(--cascadia-muted);
+  font-size: var(--cascadia-type-meta);
+  font-weight: 600;
+}
+
+.mission-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.mission-inline-links a {
+  color: var(--cascadia-water);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.home-page .mission-section .home-plate {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (max-width: 1080px) {
+  .mission-route-grid,
+  .mission-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mission-route:nth-child(3n + 2),
+  .mission-card:nth-child(3n + 2) {
+    background: var(--cascadia-cream);
+  }
+
+  .mission-route:nth-child(even),
+  .mission-card:nth-child(even) {
+    background: #f5efdf;
+  }
+}
+
+@media (max-width: 760px) {
+  .mission-hero {
+    display: grid;
+    min-height: 0;
+    padding-top: var(--nav-height);
+  }
+
+  .mission-hero__inner {
+    min-height: 0;
+    padding-block: 3.5rem;
+  }
+
+  .mission-hero__copy {
+    width: 100%;
+  }
+
+  .mission-hero h1 {
+    font-size: clamp(3.5rem, 16vw, 5rem);
+  }
+
+  .mission-hero::after {
+    background: linear-gradient(
+      180deg,
+      rgba(251, 247, 238, 0.995) 0%,
+      rgba(251, 247, 238, 0.94) 58%,
+      rgba(251, 247, 238, 0.22) 100%
+    );
+  }
+
+  .mission-hero__media {
+    opacity: 0.46;
+  }
+
+  .mission-section__heading {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-section__heading .mission-kicker {
+    grid-column: auto;
+  }
+
+  .mission-route-grid,
+  .mission-card-grid,
+  .mission-question-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-route:nth-child(even),
+  .mission-card:nth-child(even) {
+    background: #f5efdf;
+  }
+}
+
+@media (max-width: 520px) {
+  .mission-step {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .mission-actions,
+  .mission-hero__actions {
+    display: grid;
+  }
+
+  .mission-button {
+    width: 100%;
+  }
+}
+
+@media print {
+  .mission-page,
+  .home-page {
+    color: #111;
+    background: #fff;
+  }
+
+  .mission-page :is(.site-header, .site-footer, .feedback-widget),
+  .home-page :is(.site-header, .site-footer, .feedback-widget) {
+    display: none !important;
+  }
+
+  .mission-hero {
+    min-height: 0;
+    padding-top: 0;
+  }
+
+  .mission-hero__media {
+    display: none;
+  }
+
+  .mission-hero::after {
+    display: none;
+  }
+
+  .mission-hero__inner {
+    min-height: 0;
+    padding-block: 1.5rem;
+  }
+
+  .mission-hero__copy {
+    width: 100%;
+  }
+
+  .mission-section {
+    padding-block: 2rem;
+    background: #fff;
+  }
+
+  .mission-route-grid,
+  .mission-card-grid,
+  .mission-question-grid {
+    display: block;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .mission-route,
+  .mission-card,
+  .mission-question,
+  .mission-step {
+    break-inside: avoid;
+    border: 1px solid #bbb;
+    background: #fff !important;
+  }
+
+  .mission-route + .mission-route,
+  .mission-card + .mission-card,
+  .mission-question + .mission-question {
+    margin-top: 0.75rem;
+  }
+
+  .mission-button {
+    display: none;
+  }
+}

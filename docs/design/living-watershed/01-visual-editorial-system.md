@@ -6,6 +6,8 @@
 
 **Scope:** Shared system for every Cascadia.me page, guide, live instrument, illustration, household tool, and future ReadyPlan bridge
 
+> **Brand and voice authority:** The network relationship, message hierarchy, cadence, contractions, empathy, and humor are now governed by the [Resilience Network Brand Platform](../../resilience-network-brand-platform.md) and [Resilience Network Voice Guide](../../resilience-network-voice-guide.md). This document continues to govern the Living Watershed visual system and Cascadia-specific composition. Where its earlier campaign or voice language conflicts with the newer canonical documents, the newer direction governs.
+
 This document translates the approved Living Watershed direction into repeatable editorial, visual, operational, safety, accessibility, and provenance decisions.
 
 It should be read with [Living Watershed: An Illustrated Cascadian Reader](00-site-path.md) and the locked [Artwork Register](artwork-register.md). Earlier page-production notes describe the version 0.4 implementation. Where they conflict with this document, this document governs the next phase.

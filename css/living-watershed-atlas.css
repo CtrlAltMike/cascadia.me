@@ -1,5 +1,5 @@
 /* ============================================================
-   Cascadia.me — Living Watershed Regional Hazard Atlas
+   Cascadia.me — Cascadia Atlas
    Phase 6: map-first instrument, progressive layer controls,
    contextual legend, source status, and honest mobile sheet.
    ============================================================ */
@@ -1731,6 +1731,10 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
   }
 }
 
+.atlas-mobile-boundary {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .atlas-field select {
     font-size: 1rem;
@@ -1773,6 +1777,15 @@ html:not(.js) .living-watershed-atlas .atlas-sidebar {
     font-size: clamp(1.55rem, 8.2vw, 2rem);
     line-height: 1;
     white-space: nowrap;
+  }
+
+  .living-watershed-atlas .atlas-mobile-boundary {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--lw-muted);
+    font-size: 0.7rem;
+    font-weight: 650;
+    line-height: 1.25;
   }
 
   .living-watershed-atlas .atlas-panel {

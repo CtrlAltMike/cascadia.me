@@ -91,7 +91,7 @@ function localPageTarget(relativePage, rawValue) {
   return target;
 }
 
-const indexablePages = sitePages.filter((page) => page.path !== '404.html');
+const indexablePages = sitePages.filter((page) => page.path !== '404.html' && page.indexable !== false);
 const titles = new Map();
 const descriptions = new Map();
 const pageGraph = new Map();
@@ -124,6 +124,23 @@ for (const page of sitePages) {
   if (page.path === '404.html') {
     assert(/\bnoindex\b/i.test(robots), '404.html: custom error page must remain noindex');
     assert(/\bfollow\b/i.test(robots), '404.html: custom error page should allow link following');
+    continue;
+  }
+
+  if (page.indexable === false) {
+    assert(/\bnoindex\b/i.test(robots), `${page.path}: handoff page must remain noindex`);
+    assert(/\bfollow\b/i.test(robots), `${page.path}: handoff page should allow link following`);
+    if (page.redirectTo) {
+      assert(canonical.endsWith(`/${page.redirectTo}`), `${page.path}: canonical must point to its replacement`);
+      assert(
+        new RegExp(`<meta\\s+http-equiv="refresh"\\s+content="0;\\s*url=${page.redirectTo.replaceAll('.', '\\.')}"`, 'i').test(document),
+        `${page.path}: missing immediate refresh to ${page.redirectTo}`
+      );
+      assert(
+        new RegExp(`<a\\b[^>]*href="${page.redirectTo.replaceAll('.', '\\.')}"`, 'i').test(document),
+        `${page.path}: missing visible link to ${page.redirectTo}`
+      );
+    }
     continue;
   }
 

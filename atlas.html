@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- site-frame:metadata:start -->
-  <title>Regional Hazard Atlas | Cascadia.me</title>
-  <meta name="description" content="Read current official conditions, observed and forecast wind, and historical and planning layers together across Cascadia.">
+  <title>Cascadia Atlas: See How a Place Connects | Cascadia.me</title>
+  <meta name="description" content="Compare current reports, observed and forecast conditions, historical events, terrain, and planning layers across Cascadia without treating a regional map as local instruction.">
   <link rel="canonical" href="https://cascadia.me/atlas.html">
   <!-- site-frame:metadata:end -->
   <meta name="author" content="Michael Hendrick">
@@ -17,16 +17,16 @@
   <meta name="cascadia-forecast-wind-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/conditions/wind/forecast?model=rdps-10km">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Regional Hazard Atlas | Cascadia.me">
-  <meta property="og:description" content="Current reports, forecast guidance, and planning layers for reading land, water, weather, and risk across Cascadia.">
+  <meta property="og:title" content="Cascadia Atlas: See How a Place Connects | Cascadia.me">
+  <meta property="og:description" content="Compare current reports, conditions, history, terrain, and planning layers across the connected Cascadia region.">
   <meta property="og:url" content="https://cascadia.me/atlas.html">
   <meta property="og:image" content="https://cascadia.me/assets/hero_cm.jpg">
   <meta property="og:image:width" content="1536">
   <meta property="og:image:height" content="1024">
   <meta property="og:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Regional Hazard Atlas | Cascadia.me">
-  <meta name="twitter:description" content="Current reports, forecast guidance, and planning layers for reading land, water, weather, and risk across Cascadia.">
+  <meta name="twitter:title" content="Cascadia Atlas | Cascadia.me">
+  <meta name="twitter:description" content="See how current reports, conditions, history, terrain, and planning layers connect across Cascadia.">
   <meta name="twitter:image" content="https://cascadia.me/assets/hero_cm.jpg">
   <meta name="twitter:image:alt" content="Illustrated Pacific Northwest coastline with a snow-covered mountain and evergreen forest.">
   <script>document.documentElement.classList.add('js');</script>
@@ -38,11 +38,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=block">
   <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="favicon.ico?v=3">
-  <link rel="stylesheet" href="css/base.css?v=20260723-css-audit">
-  <link rel="stylesheet" href="css/components.css?v=20260723-css-audit">
+  <link rel="stylesheet" href="css/base.css?v=20260725-phase3">
+  <link rel="stylesheet" href="css/components.css?v=20260725-phase3">
   <!-- site-frame:head:end -->
   <!-- site-frame:page-styles:start -->
-  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260723-frame-hardening">
+  <link rel="stylesheet" href="css/living-watershed-atlas.css?v=20260725-phase4">
   <!-- site-frame:page-styles:end -->
   <script type="application/ld+json">
     {
@@ -100,8 +100,8 @@
           "@type": "WebPage",
           "@id": "https://cascadia.me/atlas.html#webpage",
           "url": "https://cascadia.me/atlas.html",
-          "name": "Regional Hazard Atlas",
-          "description": "A regional atlas separating current official reports, observed and forecast wind, historical records, and planning layers across Cascadia.",
+          "name": "Cascadia Atlas",
+          "description": "A regional atlas comparing current reports, observed and forecast conditions, historical events, terrain, and planning layers across Cascadia.",
           "inLanguage": "en-US",
           "isPartOf": {
             "@id": "https://cascadia.me/#website"
@@ -112,7 +112,7 @@
           "publisher": {
             "@id": "https://cascadia.me/#organization"
           },
-          "dateModified": "2026-07-21",
+          "dateModified": "2026-07-25",
           "breadcrumb": {
             "@id": "https://cascadia.me/atlas.html#breadcrumb"
           },
@@ -122,8 +122,8 @@
     }
   </script>
   <!-- site-frame:styles:start -->
-  <link rel="stylesheet" href="css/design-system.css?v=20260723-css-audit">
-  <link rel="stylesheet" href="css/site-frame.css?v=20260725-mission-nav">
+  <link rel="stylesheet" href="css/design-system.css?v=20260725-phase3">
+  <link rel="stylesheet" href="css/site-frame.css?v=20260725-home-nav">
   <!-- site-frame:styles:end -->
 </head>
 <body class="atlas-body living-watershed-atlas site-frame-page">
@@ -141,6 +141,7 @@
         <span class="nav-toggle-bar"></span>
       </button>
       <ul class="nav-links" id="site-nav-links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="place.html" class="active" aria-current="page">Know Your Place</a></li>
         <li><a href="first-moves.html">First Moves</a></li>
         <li><a href="keep-life-going.html">Keep Life Going</a></li>
@@ -166,15 +167,16 @@
   <main class="atlas-page instrument-page" id="main-content">
     <section class="atlas-page-section atlas-section" data-atlas>
       <div class="atlas-trust-strip" role="note">
-        <strong>Official feeds checked.</strong>
+        <strong>Regional data sources checked.</strong>
         <span>Conditions can change faster than a map updates.</span>
       </div>
 
       <div class="atlas-page-layout">
         <header class="atlas-copy">
-          <p class="atlas-eyebrow">Regional instrument</p>
-          <h1>Regional Hazard Atlas</h1>
-          <p>Start with official reports. Add observations, forecasts, or planning context as needed.</p>
+          <p class="atlas-eyebrow">Place and systems instrument</p>
+          <h1>Cascadia Atlas</h1>
+          <span class="atlas-mobile-boundary">Regional context—not address advice or instructions.</span>
+          <p>Compare current reports, observed and forecast conditions, historical events, terrain, and planning layers. The Atlas shows regional connections; it does not diagnose an address or issue instructions.</p>
           <p class="atlas-companion">Need the responsible local source? <a href="signals/">Find it in Signals.</a></p>
           <div class="atlas-availability" role="status">
             <span class="atlas-source-indicator" data-atlas-source-indicator data-state="loading" aria-hidden="true"></span>
@@ -185,8 +187,8 @@
           </div>
         </header>
 
-        <div class="atlas-panel" id="regional-hazard-atlas-map" aria-label="Regional hazard atlas">
-          <div class="atlas-map" id="cascadia-atlas-map" role="region" aria-label="Interactive map of Cascadia hazard data" aria-describedby="atlas-map-instructions">
+        <div class="atlas-panel" id="regional-hazard-atlas-map" aria-label="Cascadia Atlas">
+          <div class="atlas-map" id="cascadia-atlas-map" role="region" aria-label="Interactive map of Cascadia reports, conditions, history, terrain, and planning data" aria-describedby="atlas-map-instructions">
             <p class="sr-only" id="atlas-map-instructions">Use the map controls to zoom or restore the regional view. Keyboard users can focus the map and use arrow keys to pan. Use the Layers panel to change data and the Legend control to read active symbols.</p>
             <noscript>
               <section class="atlas-noscript" aria-labelledby="atlas-noscript-title">
@@ -196,8 +198,8 @@
               </section>
             </noscript>
             <div class="atlas-placeholder" data-atlas-placeholder>
-              <h2>Regional hazard atlas</h2>
-              <p>Loading a regional view from northern California to coastal British Columbia.</p>
+              <h2>Cascadia Atlas</h2>
+              <p>Loading reports, conditions, history, terrain, and planning layers from northern California to coastal British Columbia.</p>
               <button type="button" class="atlas-load-btn" data-atlas-load>Load the Atlas</button>
             </div>
             <div class="atlas-map-utility-dock" aria-label="Map utilities">
@@ -539,6 +541,7 @@
             <h4>Start here</h4>
             <ul>
               <li><a href="place.html">Know Your Place</a></li>
+              <li><a href="building.html">Understand Your Building</a></li>
               <li><a href="first-moves.html">First Moves</a></li>
               <li><a href="keep-life-going.html">Keep Life Going</a></li>
               <li><a href="recovery.html">Recovery</a></li>
@@ -548,7 +551,7 @@
           <div class="footer-col">
             <h4>Work together</h4>
             <ul>
-              <li><a href="build-your-kit.html">Household Workbook</a></li>
+              <li><a href="household-workbook.html">Household Workbook</a></li>
               <li><a href="neighborhood-inventory.html">Neighborhood Inventory</a></li>
               <li><a href="after-an-event.html">After an Event</a></li>
               <li><a href="atlas.html" aria-current="page">Cascadia Atlas</a></li>
@@ -580,11 +583,11 @@
   <script src="js/atlas.js?v=20260723-wind-arrows"></script>
   <!-- site-frame:page-scripts:end -->
   <!-- site-frame:scripts:start -->
-  <script src="js/share.js?v=20260725-mission-nav"></script>
-  <script src="js/nowweplan-gate.js?v=20260725-mission-nav"></script>
-  <script src="js/nav.js?v=20260723-css-audit"></script>
-  <script src="js/animations.js?v=20260723-css-audit"></script>
-  <script src="js/feedback.js?v=20260723-css-audit"></script>
+  <script src="js/share.js?v=20260725-home-nav"></script>
+  <script src="js/nowweplan-gate.js?v=20260725-home-nav"></script>
+  <script src="js/nav.js?v=20260725-phase3"></script>
+  <script src="js/animations.js?v=20260725-phase3"></script>
+  <script src="js/feedback.js?v=20260725-phase3"></script>
   <!-- site-frame:scripts:end -->
 </body>
 </html>

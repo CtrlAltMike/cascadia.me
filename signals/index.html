@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- site-frame:metadata:start -->
-  <title>Cascadia Signals | Official Alerts &amp; Emergency Services Directory</title>
-  <meta name="description" content="Find place-aware official alert systems, emergency management agencies, transportation updates, hazard information, and support resources across Washington, Oregon, and British Columbia.">
+  <title>Find Official Help in Cascadia | Cascadia Signals</title>
+  <meta name="description" content="Find responsible agencies, alert registration, current official instructions, transportation, utilities, health, and support sources across Cascadia.">
   <link rel="canonical" href="https://cascadia.me/signals/">
   <!-- site-frame:metadata:end -->
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#153f47">
   <meta property="og:site_name" content="Cascadia.me">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Cascadia Signals">
-  <meta property="og:description" content="A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.">
+  <meta property="og:title" content="Find Official Help in Cascadia | Cascadia Signals">
+  <meta property="og:description" content="Reach responsible agencies, alerts, transportation, utility, health, and support sources for a place in Cascadia.">
   <meta property="og:url" content="https://cascadia.me/signals/">
   <meta property="og:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
   <meta property="og:image:width" content="1731">
   <meta property="og:image:height" content="909">
   <meta property="og:image:alt" content="An illustrated Cascadian watershed connecting communities across the Pacific Northwest.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cascadia Signals">
-  <meta name="twitter:description" content="Find official alert systems and emergency resources for the place in view.">
+  <meta name="twitter:title" content="Find Official Help | Cascadia Signals">
+  <meta name="twitter:description" content="Reach official alerts, responsible agencies, transportation, utilities, health, and support sources.">
   <meta name="twitter:image" content="https://cascadia.me/assets/living-watershed/home-social.jpg">
   <meta name="twitter:image:alt" content="An illustrated Cascadian watershed connecting communities across the Pacific Northwest.">
   <meta name="cascadia-feedback-endpoint" content="https://cascadia-slack-alerts.mike-551.workers.dev/feedback">
@@ -34,12 +34,12 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=block">
   <link rel="icon" href="../favicon.svg?v=3" type="image/svg+xml" sizes="any">
   <link rel="icon" href="../favicon.ico?v=3">
-  <link rel="stylesheet" href="../css/base.css?v=20260723-css-audit">
-  <link rel="stylesheet" href="../css/components.css?v=20260723-css-audit">
+  <link rel="stylesheet" href="../css/base.css?v=20260725-phase3">
+  <link rel="stylesheet" href="../css/components.css?v=20260725-phase3">
   <!-- site-frame:head:end -->
   <!-- site-frame:page-styles:start -->
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="../signals/styles.css?v=20260723-frame-hardening">
+  <link rel="stylesheet" href="../signals/styles.css?v=20260725-official-first">
   <!-- site-frame:page-styles:end -->
   <script type="application/ld+json">
     {
@@ -47,8 +47,8 @@
       "@type": "WebPage",
       "@id": "https://cascadia.me/signals/#webpage",
       "url": "https://cascadia.me/signals/",
-      "name": "Cascadia Signals",
-      "description": "A place-aware directory of official alerts, emergency services, support, and preparedness resources across Cascadia.",
+      "name": "Find Official Help in Cascadia",
+      "description": "A place-aware directory of responsible agencies, alert registration, current official instructions, transportation, utilities, health, and support sources across Cascadia.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://cascadia.me/#website"
@@ -60,8 +60,8 @@
     }
   </script>
   <!-- site-frame:styles:start -->
-  <link rel="stylesheet" href="../css/design-system.css?v=20260723-css-audit">
-  <link rel="stylesheet" href="../css/site-frame.css?v=20260725-mission-nav">
+  <link rel="stylesheet" href="../css/design-system.css?v=20260725-phase3">
+  <link rel="stylesheet" href="../css/site-frame.css?v=20260725-home-nav">
   <!-- site-frame:styles:end -->
 </head>
 <body class="signals-page site-frame-page">
@@ -78,6 +78,7 @@
         <span class="nav-toggle-bar"></span>
       </button>
       <ul class="nav-links" id="site-nav-links">
+        <li><a href="../index.html">Home</a></li>
         <li><a href="../place.html">Know Your Place</a></li>
         <li><a href="../first-moves.html">First Moves</a></li>
         <li><a href="../keep-life-going.html">Keep Life Going</a></li>
@@ -103,14 +104,29 @@
   <main class="app-shell instrument-page" id="explorer">
     <section class="explorer-intro" aria-labelledby="explorer-title">
       <div class="explorer-heading">
-        <p class="eyebrow">Cascadia Signals / beta</p>
+        <p class="eyebrow">Find Official Help / Cascadia Signals</p>
         <h1 id="explorer-title">Who can help, <em>here?</em></h1>
-        <p class="lede">A place-aware directory of official alerts, emergency services, support, and preparedness resources—showing who issues instructions, who transmits alerts, and who supplies hazard information.</p>
+        <p class="lede">Start with the responsible agency, alert system, road, utility, health, or support source. The map helps locate publishers; it isn't the product and it doesn't issue instructions.</p>
         <p class="directory-freshness">
           <span>Directory last updated</span>
           <time id="directory-last-updated" datetime="2026-07-14">July 14, 2026</time>
           <small>Official programs can change before the next review.</small>
         </p>
+        <aside class="signals-caution" aria-label="Signals directory limits">
+          <strong>Use the issuing source.</strong>
+          <p>Signals is a beta directory and can contain stale links, errors, or omissions. It doesn't report emergencies. Open the responsible source, then follow its current instructions.</p>
+        </aside>
+        <nav class="signals-direct" aria-label="Direct official starting points">
+          <h2>Direct official starting points</h2>
+          <ul>
+            <li><a href="https://mil.wa.gov/alerts" target="_blank" rel="noopener">Washington alerts</a></li>
+            <li><a href="https://www.oregon.gov/oem/pages/default.aspx" target="_blank" rel="noopener">Oregon Emergency Management</a></li>
+            <li><a href="https://www.caloes.ca.gov/" target="_blank" rel="noopener">California Emergency Services</a></li>
+            <li><a href="https://www.emergencyinfobc.gov.bc.ca/" target="_blank" rel="noopener">EmergencyInfoBC</a></li>
+            <li><a href="https://www.weather.gov/alerts" target="_blank" rel="noopener">U.S. weather alerts</a></li>
+            <li><a href="https://weather.gc.ca/warnings/index_e.html" target="_blank" rel="noopener">Canadian weather alerts</a></li>
+          </ul>
+        </nav>
       </div>
 
     </section>
@@ -227,7 +243,7 @@
           <button type="button" id="clear-plan" disabled>Clear my checklist</button>
         </div>
         <p class="plan-privacy">Checkmarks are saved only in this browser. Signals never adds your postal code, map point, or named location to the checklist.</p>
-        <p class="plan-privacy">For household names, routes, care needs, and agreements, use <a href="../build-your-kit.html">Build Your Kit</a>. Cascadia.me does not save the answers entered there.</p>
+        <p class="plan-privacy">For household names, routes, care needs, and agreements, use <a href="../household-workbook.html">the Household Workbook</a>. Cascadia.me doesn't save the answers entered there.</p>
         <p class="plan-privacy">To keep several official sources with household owners and review dates, <a href="https://nowweplan.com/start?src=cascadia&amp;entry=signals" target="_blank" rel="noopener">open the optional private planning layer in NowWePlan</a>. Signals does not transfer your location, checklist, or sources.</p>
         <p class="plan-status" id="plan-status" role="status" aria-live="polite"></p>
       </section>
@@ -313,6 +329,7 @@
             <h4>Start here</h4>
             <ul>
               <li><a href="../place.html">Know Your Place</a></li>
+              <li><a href="../building.html">Understand Your Building</a></li>
               <li><a href="../first-moves.html">First Moves</a></li>
               <li><a href="../keep-life-going.html">Keep Life Going</a></li>
               <li><a href="../recovery.html">Recovery</a></li>
@@ -322,7 +339,7 @@
           <div class="footer-col">
             <h4>Work together</h4>
             <ul>
-              <li><a href="../build-your-kit.html">Household Workbook</a></li>
+              <li><a href="../household-workbook.html">Household Workbook</a></li>
               <li><a href="../neighborhood-inventory.html">Neighborhood Inventory</a></li>
               <li><a href="../after-an-event.html">After an Event</a></li>
               <li><a href="../atlas.html">Cascadia Atlas</a></li>
@@ -358,22 +375,6 @@
     <ol id="print-records"></ol>
     <footer>Signals is a beta directory and may contain stale links, errors, or omissions. It does not report current emergencies. Verify urgent information with the responsible official source.</footer>
   </section>
-
-  <dialog class="gate-dialog" id="beta-dialog" aria-labelledby="beta-title" aria-describedby="beta-description">
-    <div class="dialog-mark" aria-hidden="true"><span></span>Signals beta</div>
-    <h2 id="beta-title">Please read this before continuing.</h2>
-    <div id="beta-description" class="gate-copy">
-      <p>Signals is a very early directory assembled from official public registries, agency websites, and public mapping services. Alert programs and responsibilities change; names, links, and service areas can still be incomplete, unavailable, out of date, or wrong.</p>
-      <p>Signals does not report current emergencies. Use it to reach responsible organizations, then follow official alerts and instructions for urgent decisions.</p>
-    </div>
-    <form method="dialog" id="beta-form">
-      <label class="acknowledgment">
-        <input type="checkbox" id="beta-ack">
-        <span><strong>I understand</strong> that Signals is experimental and may contain errors or omissions.</span>
-      </label>
-      <button class="dialog-primary" id="beta-okay" value="acknowledged" disabled>Okay</button>
-    </form>
-  </dialog>
 
   <dialog class="view-dialog" id="view-dialog" aria-labelledby="view-title" aria-describedby="view-summary">
     <form method="dialog">
@@ -493,14 +494,14 @@
   <script src="../signals/authority-data.js?v=20260714-actionability" defer></script>
   <script src="../signals/bc-province-boundary.js?v=20260714" defer></script>
   <script src="../signals/bc-forecast-zones.js?v=20260714" defer></script>
-  <script src="../signals/app.js?v=20260722-overlay-system" defer></script>
+  <script src="../signals/app.js?v=20260725-official-first" defer></script>
   <!-- site-frame:page-scripts:end -->
   <!-- site-frame:scripts:start -->
-  <script src="../js/share.js?v=20260725-mission-nav"></script>
-  <script src="../js/nowweplan-gate.js?v=20260725-mission-nav"></script>
-  <script src="../js/nav.js?v=20260723-css-audit"></script>
-  <script src="../js/animations.js?v=20260723-css-audit"></script>
-  <script src="../js/feedback.js?v=20260723-css-audit"></script>
+  <script src="../js/share.js?v=20260725-home-nav"></script>
+  <script src="../js/nowweplan-gate.js?v=20260725-home-nav"></script>
+  <script src="../js/nav.js?v=20260725-phase3"></script>
+  <script src="../js/animations.js?v=20260725-phase3"></script>
+  <script src="../js/feedback.js?v=20260725-phase3"></script>
   <!-- site-frame:scripts:end -->
 </body>
 </html>

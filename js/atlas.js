@@ -1,5 +1,5 @@
 /* ============================================================
-   Cascadia.me — Regional Hazard Atlas
+   Cascadia.me — Cascadia Atlas
    Lazy-loads MapLibre, OpenFreeMap, and bounded public data.
    ============================================================ */
 

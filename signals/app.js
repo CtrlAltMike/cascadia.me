@@ -647,7 +647,6 @@ const mapLoading = document.querySelector("#map-loading");
 const viewDialog = document.querySelector("#view-dialog");
 const shareDialog = document.querySelector("#share-dialog");
 const perimeterDialog = document.querySelector("#perimeter-dialog");
-const betaDialog = document.querySelector("#beta-dialog");
 
 let map;
 let mapReady = false;
@@ -2732,19 +2731,6 @@ function clearOverlays() {
   updateOverlayAreas();
 }
 
-function initBetaGate() {
-  const acknowledgment = document.querySelector("#beta-ack");
-  const okay = document.querySelector("#beta-okay");
-  acknowledgment.checked = false;
-  okay.disabled = true;
-  acknowledgment.addEventListener("change", () => { okay.disabled = !acknowledgment.checked; });
-  betaDialog.addEventListener("cancel", (event) => event.preventDefault());
-  document.querySelector("#beta-form").addEventListener("submit", (event) => {
-    if (!acknowledgment.checked) event.preventDefault();
-  });
-  betaDialog.showModal();
-}
-
 filtersForm.addEventListener("input", (event) => {
   if (event.target.name === "overlay") {
     updateOverlayAreas();
@@ -2810,7 +2796,6 @@ registerCachedEcccForecastCoverage();
 updateFilterSummaries();
 renderDirectory();
 initMap();
-initBetaGate();
 
 Promise.allSettled([loadJurisdictionGeometry(), loadBcJurisdictionGeometry(), loadNoaaGeometry(), loadEcccForecastGeometry(), loadTribalReferenceGeometry()]).then(() => {
   updateOverlayAreas();

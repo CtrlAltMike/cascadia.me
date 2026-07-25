@@ -312,7 +312,7 @@
     display: none !important;
   }
 
-  .neighborhood-inventory-page :is(.field-tool-intro, .field-tool-note, .field-tool-review) {
+  :is(.neighborhood-inventory-page, .event-inserts-page) :is(.field-tool-intro, .field-tool-note, .field-tool-review) {
     display: none !important;
   }
 

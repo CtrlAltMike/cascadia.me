@@ -481,6 +481,62 @@
   margin-top: clamp(3rem, 6vw, 5rem);
 }
 
+.chapter-specificity {
+  background:
+    linear-gradient(145deg, var(--chapter-wash), transparent 42%),
+    var(--lw-cream-100);
+}
+
+.chapter-specificity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--lw-line);
+  border-radius: var(--cascadia-radius-panel);
+  background: var(--lw-line);
+  box-shadow: var(--cascadia-shadow);
+}
+
+.chapter-specificity-card {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.35rem);
+  background: var(--lw-cream-50);
+}
+
+.chapter-specificity-card:nth-child(even) {
+  background: var(--chapter-soft);
+}
+
+.chapter-specificity-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+  font-weight: 550;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.chapter-specificity-card p {
+  margin: 1rem 0 0;
+  color: var(--lw-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.chapter-specificity-card a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.chapter-specificity-card:last-child:nth-child(3n + 2) {
+  grid-column: span 2;
+}
+
 .chapter-decisions {
   background: linear-gradient(180deg, var(--lw-cream-50), var(--chapter-soft));
 }
@@ -778,6 +834,18 @@
 }
 
 @media (max-width: 1050px) {
+  .chapter-specificity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chapter-specificity-card:last-child:nth-child(3n + 2) {
+    grid-column: auto;
+  }
+
+  .chapter-specificity-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+
   .chapter-bypass-grid,
   .chapter-reference-grid {
     grid-template-columns: 1fr;
@@ -851,6 +919,14 @@
 }
 
 @media (max-width: 620px) {
+  .chapter-specificity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-specificity-card:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
   .chapter-container,
   .chapter-plate {
     width: min(100% - 2rem, 90rem);
@@ -991,6 +1067,7 @@
 
   .chapter-bypass-grid,
   .chapter-reference-grid,
+  .chapter-specificity-grid,
   .chapter-source-columns,
   .chapter-sources-layout,
   .chapter-live .lw-guide-live-list {
@@ -999,6 +1076,7 @@
 
   .chapter-bypass-grid li,
   .chapter-reference-grid > section,
+  .chapter-specificity-card,
   .chapter-live .lw-guide-live-item {
     break-inside: avoid;
     border-top: 1px solid #bbb;

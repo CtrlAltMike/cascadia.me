@@ -23,6 +23,11 @@ test.describe('shared site frame', () => {
 
   test('share dialog opens, carries the common message, and restores focus', async ({ page }) => {
     await page.goto('/');
+    const home = page.locator('.nav-links > li:first-child > a');
+    await expect(home).toHaveCount(1);
+    await expect(home).toHaveText('Home');
+    await expect(home).toHaveAttribute('aria-current', 'page');
+
     const share = page.getByRole('button', { name: 'Share this page' });
     await share.click();
 
@@ -43,6 +48,7 @@ test.describe('shared site frame', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Home', exact: true })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Find Official Help' })).toBeVisible();
 
     await page.keyboard.press('Escape');
@@ -51,7 +57,7 @@ test.describe('shared site frame', () => {
   });
 
   test('NowWePlan links show the temporary launch dialog and restore focus', async ({ page, context }) => {
-    await page.goto('/build-your-kit.html');
+    await page.goto('/household-workbook.html');
     const link = page.getByRole('link', { name: /Start a living household plan/ });
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /(?:^|\s)noopener(?:\s|$)/);
@@ -102,6 +108,12 @@ test.describe('representative page interactions', () => {
     await page.emulateMedia({ media: 'print' });
     await expect(page.locator('.site-header')).toBeHidden();
     await expect(page.locator('.field-sheet').first()).toBeVisible();
+
+    await page.goto('/event-inserts.html');
+    await expect(page.locator('.field-sheet')).toHaveCount(5);
+    await expect(page.getByRole('heading', { level: 2, name: 'Earthquake and tsunami' })).toBeVisible();
+    await expect(page.locator('.field-tool-intro')).toBeHidden();
+    await expectNoHorizontalOverflow(page);
   });
 
   test('the neighborhood packet remains complete without JavaScript', async ({ browser }) => {
@@ -111,7 +123,53 @@ test.describe('representative page interactions', () => {
     await page.goto('/neighborhood-inventory.html');
     await expect(page.locator('.field-sheet')).toHaveCount(4);
     await expect(page.getByRole('heading', { level: 2, name: 'Status, needs, and offers' })).toBeVisible();
+    await page.goto('/event-inserts.html');
+    await expect(page.locator('.field-sheet')).toHaveCount(5);
+    await expect(page.getByRole('heading', { level: 2, name: 'Volcanic ash' })).toBeVisible();
     await context.close();
+  });
+
+  test('building guidance and hazard decision spines remain usable', async ({ page }) => {
+    await page.goto('/building.html');
+    await expect(page.getByRole('heading', { level: 1, name: 'Ask a better question about the place you live.' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Get the facts the next person will ask for.' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'USGS explanation of property-specific assessment' })).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+
+    for (const hazard of ['earthquake', 'wildfire', 'flooding', 'winter-storm', 'volcano']) {
+      await page.goto(`/${hazard}.html`);
+      await expect(page.locator('.chapter-specificity-card')).toHaveCount(5);
+      await expect(page.locator('.chapter-specificity a[href="building.html"]')).toBeVisible();
+      await expect(page.locator('.chapter-specificity a[href="signals/"]')).toBeVisible();
+      await expect(page.locator('.chapter-specificity a[href="keep-life-going.html"]')).toBeVisible();
+      await expect(page.locator('.chapter-specificity a[href="recovery.html"]')).toBeVisible();
+      await expectNoHorizontalOverflow(page);
+    }
+  });
+
+  test('Signals keeps direct official starting points without JavaScript', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await preventThirdPartyDependencies(page);
+    await page.goto('/signals/');
+    await expect(page.getByLabel('Signals directory limits')).toBeVisible();
+    const direct = page.getByRole('navigation', { name: 'Direct official starting points' });
+    await expect(direct).toBeVisible();
+    await expect(direct.getByRole('link')).toHaveCount(6);
+    await expectNoHorizontalOverflow(page);
+    await context.close();
+  });
+
+  test('the workbook migration keeps the old address useful', async ({ page }) => {
+    await page.goto('/household-workbook.html');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Begin with an ordinary day');
+    await expectNoHorizontalOverflow(page);
+
+    const response = await page.request.get('/build-your-kit.html');
+    const handoff = await response.text();
+    expect(handoff).toContain('<meta name="robots" content="noindex,follow">');
+    expect(handoff).toContain('<meta http-equiv="refresh" content="0; url=household-workbook.html">');
+    expect(handoff).toContain('href="household-workbook.html">Open the Household Workbook</a>');
   });
 
   test('Atlas planning controls disclose their available layers', async ({ page }) => {
@@ -158,10 +216,8 @@ test.describe('representative page interactions', () => {
     });
     await page.goto('/signals/');
 
-    const gate = page.getByRole('dialog', { name: 'Please read this before continuing.' });
-    await gate.getByRole('checkbox').check();
-    await gate.getByRole('button', { name: 'Okay' }).click();
-    await expect(gate).toBeHidden();
+    await expect(page.getByLabel('Signals directory limits')).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Direct official starting points' })).toBeVisible();
 
     await page.getByLabel('Find a place').fill('98040');
     await page.getByRole('button', { name: 'Find', exact: true }).click();
@@ -188,10 +244,11 @@ test.describe('production-page CSS and frame smoke test', () => {
     await preventThirdPartyDependencies(page);
   });
 
-  test('every registered page loads its local styles without overflow or runtime errors', async ({ page }) => {
+  test('every indexable page loads its local styles without overflow or runtime errors', async ({ page }) => {
     test.setTimeout(90_000);
 
     for (const sitePage of sitePages) {
+      if (sitePage.indexable === false) continue;
       const pageErrors = [];
       const recordPageError = (error) => pageErrors.push(error.message);
       page.on('pageerror', recordPageError);

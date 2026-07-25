@@ -73,6 +73,7 @@ function pageValues(relativePath) {
   return {
     prefix,
     homeHref: relativePath === '404.html' ? '/' : `${prefix}index.html`,
+    homeState: state('home'),
     skipClass: page.skip.className,
     skipHref: page.skip.href,
     skipText: page.skip.text,

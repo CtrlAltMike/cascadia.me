@@ -120,6 +120,17 @@ test.describe('representative page interactions', () => {
     const routes = routeGrid.locator('.mission-route');
     await expect(routes).toHaveCount(6);
 
+    const typeScale = await page.evaluate(() => ({
+      hero: Number.parseFloat(getComputedStyle(document.querySelector('.mission-hero h1')).fontSize),
+      section: Number.parseFloat(getComputedStyle(document.querySelector('.mission-section__heading h2')).fontSize),
+      card: Number.parseFloat(getComputedStyle(document.querySelector('.mission-route h3')).fontSize)
+    }));
+    expect(typeScale.hero).toBeGreaterThan(typeScale.section);
+    expect(typeScale.section).toBeGreaterThan(typeScale.card);
+    expect(typeScale.hero).toBeLessThanOrEqual(92);
+    expect(typeScale.section).toBeLessThanOrEqual(54.5);
+    expect(typeScale.card).toBeLessThanOrEqual(33.6);
+
     const routePadding = await routes.evaluateAll((elements) => elements.map((element) => {
       const style = getComputedStyle(element);
       return `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`;

@@ -499,9 +499,11 @@
 }
 
 .chapter-specificity-card {
+  position: relative;
   min-width: 0;
   padding: clamp(1.5rem, 3vw, 2.35rem);
   background: var(--lw-cream-50);
+  isolation: isolate;
 }
 
 .chapter-specificity-card:nth-child(even) {
@@ -531,6 +533,89 @@
   margin-top: 1rem;
   font-size: 0.78rem;
   font-weight: 750;
+}
+
+.chapter-specificity-card a::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+@media (min-width: 621px) {
+  .chapter-specificity-grid {
+    gap: clamp(0.75rem, 1.35vw, 1.25rem);
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .chapter-specificity-card {
+    display: flex;
+    min-height: 15rem;
+    flex-direction: column;
+    border: 1px solid var(--lw-line);
+    border-radius: var(--cascadia-radius-panel);
+    box-shadow: 0 8px 24px rgba(6, 59, 92, 0.07);
+  }
+
+  .chapter-specificity-card::before {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    height: 3px;
+    background: var(--chapter-alert);
+    content: "";
+    transform: scaleX(0.24);
+    transform-origin: left;
+  }
+
+  .chapter-specificity-card a {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .chapter-specificity-card:focus-within {
+    border-color: color-mix(in srgb, var(--chapter-alert) 48%, transparent);
+    box-shadow: 0 16px 40px rgba(6, 59, 92, 0.13);
+  }
+
+  .chapter-specificity-card:focus-within::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (min-width: 621px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .chapter-specificity-card {
+    transition:
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out,
+      transform 180ms ease-out;
+  }
+
+  .chapter-specificity-card::before {
+    transition: transform 220ms ease-out;
+  }
+
+  .chapter-specificity-card h3 {
+    transition: color 180ms ease-out;
+  }
+
+  .chapter-specificity-card:hover {
+    z-index: 1;
+    border-color: color-mix(in srgb, var(--chapter-alert) 42%, transparent);
+    box-shadow: 0 18px 42px rgba(6, 59, 92, 0.14);
+    transform: translateY(-0.25rem);
+  }
+
+  .chapter-specificity-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .chapter-specificity-card:hover h3 {
+    color: var(--chapter-alert);
+  }
 }
 
 .chapter-specificity-card:last-child:nth-child(3n + 2) {

@@ -188,6 +188,67 @@ test.describe('representative page interactions', () => {
     await expectNoHorizontalOverflow(page);
   });
 
+  test('linked cards make their next action visible without animating reference cards', async ({ page }, testInfo) => {
+    await page.goto('/place.html');
+    const placeCards = page.locator('.mission-card-grid .mission-card');
+    await expect(placeCards).toHaveCount(6);
+    await expect(placeCards.locator('.mission-card__link')).toHaveCount(6);
+    await placeCards.nth(3).click({ position: { x: 20, y: 20 } });
+    await expect(page).toHaveURL(/\/movement\.html$/);
+
+    await page.goto('/building.html');
+    const buildingFacts = page.locator('.building-page .mission-card-grid .mission-card');
+    await expect(buildingFacts).toHaveCount(4);
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/people-nearby.html');
+    const peopleRoutes = page.locator('.people-page .mission-route-grid .mission-route');
+    await expect(peopleRoutes).toHaveCount(4);
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/water.html');
+    const nextMoves = page.locator('.capability-section[aria-labelledby="together-title"] .capability-card');
+    await expect(nextMoves).toHaveCount(3);
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/wildfire.html');
+    const specificityCards = page.locator('.chapter-specificity-card');
+    await expect(specificityCards).toHaveCount(5);
+    await expectNoHorizontalOverflow(page);
+
+    if (!testInfo.project.name.startsWith('mobile')) {
+      await page.goto('/place.html');
+      const placeGrid = page.locator('.mission-card-grid');
+      expect(await placeGrid.evaluate((element) => Number.parseFloat(getComputedStyle(element).columnGap))).toBeGreaterThanOrEqual(12);
+      await placeCards.first().hover();
+      await expect.poll(() => placeCards.first().evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
+      await page.goto('/building.html');
+      const buildingGrid = page.locator('.building-page .mission-card-grid');
+      expect(await buildingGrid.evaluate((element) => getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length)).toBe(2);
+      await buildingFacts.first().hover();
+      await expect(buildingFacts.first()).toHaveCSS('transform', 'none');
+
+      await page.goto('/people-nearby.html');
+      const peopleGrid = page.locator('.people-page .mission-route-grid');
+      expect(await peopleGrid.evaluate((element) => getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length)).toBe(2);
+      await peopleRoutes.first().hover();
+      await expect.poll(() => peopleRoutes.first().evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
+      await page.goto('/water.html');
+      await nextMoves.first().hover();
+      await expect.poll(() => nextMoves.first().evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
+      await page.goto('/wildfire.html');
+      await specificityCards.first().hover();
+      await expect.poll(() => specificityCards.first().evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.reload();
+      await expect(specificityCards.first()).toHaveCSS('transition-duration', '0s');
+    }
+  });
+
   test('primary guidance stays usable when images and fonts fail', async ({ page }) => {
     await page.route(/\.(?:avif|gif|jpe?g|png|svg|webp|woff2?)(?:\?.*)?$/i, (route) => route.abort());
 

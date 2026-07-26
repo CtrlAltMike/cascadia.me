@@ -140,6 +140,53 @@
   padding-left: 1.15rem;
 }
 
+.capability-card:has(a) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+.capability-card:has(a) p {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.capability-card:has(a) a::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.capability-card:has(a):focus-within {
+  border-color: rgba(196, 71, 55, 0.48);
+  box-shadow: 0 12px 28px rgba(6, 59, 92, 0.12);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .capability-card:has(a) {
+    transition:
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out,
+      transform 180ms ease-out;
+  }
+
+  .capability-card:has(a) h3 {
+    transition: color 180ms ease-out;
+  }
+
+  .capability-card:has(a):hover {
+    z-index: 1;
+    border-color: rgba(196, 71, 55, 0.42);
+    box-shadow: 0 14px 32px rgba(6, 59, 92, 0.13);
+    transform: translateY(-0.25rem);
+  }
+
+  .capability-card:has(a):hover h3 {
+    color: var(--cascadia-coral);
+  }
+}
+
 .capability-boundary {
   margin-top: 2rem;
   padding: 1.5rem;

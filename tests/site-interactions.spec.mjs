@@ -113,9 +113,13 @@ test.describe('representative page interactions', () => {
   });
 
   test('revised public spine and neighborhood field tools are usable', async ({ page }, testInfo) => {
+    for (const path of ['/', '/place.html', '/first-moves.html', '/keep-life-going.html', '/building.html', '/people-nearby.html', '/constitution.html']) {
+      await page.goto(path);
+      await expect(page.locator('main .mission-hero__actions')).toHaveCount(0);
+    }
+
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1, name: 'Keep everyday life moving.' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Start with your place' })).toBeVisible();
     const routeGrid = page.locator('.mission-route-grid');
     const routes = routeGrid.locator('.mission-route');
     await expect(routes).toHaveCount(6);

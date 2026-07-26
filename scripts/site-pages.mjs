@@ -77,7 +77,7 @@ const pageDefinitions = [
     footerItem: null,
     skip: mainSkip,
     title: 'Page not found | Cascadia.me',
-    description: 'This Cascadia.me page was not found. Return to the guides, household workbook, Atlas, Signals, or Field Stories.',
+    description: 'This Cascadia.me page was not found. Return home or choose the practical question you came to answer.',
     canonical: 'https://cascadia.me/404.html',
     schemaType: null
   },
@@ -101,7 +101,7 @@ const pageDefinitions = [
     footerItem: 'approach',
     skip: mainSkip,
     title: 'About Cascadia.me: Why It Exists and How the Work Is Checked',
-    description: 'Why Cascadia.me exists, how the work is checked, what its maps can and cannot tell you, and when to follow local instructions.',
+    description: 'Why Cascadia.me prepares for consequences, how the work is checked, what its limits are, and which public rules govern it.',
     canonical: 'https://cascadia.me/approach.html',
     schemaType: 'AboutPage'
   },
@@ -131,6 +131,42 @@ const pageDefinitions = [
     title: 'Understand Your Building in Cascadia | Cascadia.me',
     description: 'Learn which building, site, ownership, insurance, and professional-assessment questions can make hazard guidance more useful at a particular home.',
     canonical: 'https://cascadia.me/building.html',
+    schemaType: 'WebPage'
+  },
+  {
+    path: 'constitution.html',
+    family: 'about',
+    styleFamily: 'surface',
+    navSection: null,
+    footerItem: null,
+    skip: mainSkip,
+    title: 'The Resilience Network Constitution | Cascadia.me',
+    description: 'The twelve binding rules that govern Cascadia.me, NowWePlan.com, HurricaneCoast.me, and SanAndreas.me.',
+    canonical: 'https://cascadia.me/constitution.html',
+    schemaType: 'DigitalDocument'
+  },
+  {
+    path: 'amendments.html',
+    family: 'about',
+    styleFamily: 'surface',
+    navSection: null,
+    footerItem: null,
+    skip: mainSkip,
+    title: 'Constitution Amendments | Cascadia.me',
+    description: 'The public version history and amendment log for the Resilience Network Constitution.',
+    canonical: 'https://cascadia.me/amendments.html',
+    schemaType: 'WebPage'
+  },
+  {
+    path: 'corrections.html',
+    family: 'about',
+    styleFamily: 'surface',
+    navSection: null,
+    footerItem: null,
+    skip: mainSkip,
+    title: 'Corrections | Cascadia.me',
+    description: 'How Cascadia.me receives, checks, corrects, and records material errors.',
+    canonical: 'https://cascadia.me/corrections.html',
     schemaType: 'WebPage'
   },
   {
@@ -428,6 +464,18 @@ const pageDefinitions = [
     schemaType: 'WebPage'
   },
   {
+    path: 'review-policy.html',
+    family: 'about',
+    styleFamily: 'surface',
+    navSection: null,
+    footerItem: null,
+    skip: mainSkip,
+    title: 'Review Policy | Cascadia.me',
+    description: 'How often Cascadia.me checks substantive pages, official links, routes, instructions, and live-source boundaries.',
+    canonical: 'https://cascadia.me/review-policy.html',
+    schemaType: 'WebPage'
+  },
+  {
     path: 'signals/index.html',
     family: 'instrument',
     styleFamily: 'signals',
@@ -634,9 +682,12 @@ const styleFamilyAssets = Object.freeze({
 
 const pageAssetOverrides = Object.freeze({
   'after-an-event.html': { styles: ['mission'] },
+  'amendments.html': { styles: ['mission'] },
   'approach.html': { styles: ['approachPhase7'] },
   'atlas.html': { scripts: ['atlasScript'] },
   'building.html': { styles: ['mission'] },
+  'constitution.html': { styles: ['mission'] },
+  'corrections.html': { styles: ['mission'] },
   'event-inserts.html': { styles: ['mission'] },
   'earthquake.html': { styles: ['primaryGuides', 'earthquake'] },
   'faq.html': { styles: ['faq'] },
@@ -650,6 +701,7 @@ const pageAssetOverrides = Object.freeze({
   'people-nearby.html': { styles: ['mission'] },
   'place.html': { styles: ['mission'] },
   'recovery.html': { styles: ['mission'] },
+  'review-policy.html': { styles: ['mission'] },
   'signals/index.html': {
     scripts: ['maplibreScript', 'signalsAuthority', 'signalsProvince', 'signalsForecast', 'signalsApp']
   },

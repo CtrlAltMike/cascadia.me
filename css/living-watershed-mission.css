@@ -104,6 +104,58 @@
   line-height: 1.55;
 }
 
+.governance-page .mission-hero {
+  min-height: 0;
+  background:
+    radial-gradient(circle at 84% 24%, rgba(104, 167, 181, 0.2), transparent 28rem),
+    linear-gradient(145deg, #fbf7ee 0%, #f1eadc 100%);
+}
+
+.governance-page .mission-hero::after {
+  display: none;
+}
+
+.governance-page .mission-hero__inner {
+  min-height: 0;
+  padding-block: clamp(5rem, 10vw, 8.5rem);
+}
+
+.governance-page .mission-hero__copy {
+  width: min(100%, 56rem);
+}
+
+.governance-page .mission-hero h1 {
+  max-width: 58rem;
+}
+
+.governance-page .mission-reading {
+  margin-inline: auto;
+}
+
+.governance-page .mission-prose :is(h2, h3) {
+  color: var(--cascadia-ocean);
+}
+
+.governance-page .mission-prose h2 {
+  margin-top: 2.3em;
+  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  line-height: 1;
+}
+
+.governance-page .mission-prose h3 {
+  margin-top: 1.8em;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.08;
+}
+
+.governance-page .mission-prose :is(ol, ul) {
+  padding-left: 1.3em;
+}
+
+.governance-page .mission-prose li + li {
+  margin-top: 0.65em;
+}
+
 .mission-hero__actions,
 .mission-actions {
   display: flex;

@@ -310,11 +310,15 @@ assert(
 assert(header.includes('href="{{homeHref}}"{{homeState}}>Home</a>'), 'site-frame header: persistent Home link is missing');
 assert(header.includes('class="nav-utility"'), 'site-frame header: official-help utility treatment is missing');
 assert(!header.includes('ko-fi.com'), 'site-frame header: support link has returned to the primary task navigation');
-for (const informationalLink of ['>The Approach</a>', '>FAQ</a>', '>Support this work</a>']) {
+for (const informationalLink of ['>The Approach</a>', '>Publishing standards</a>', '>FAQ</a>', '>Help keep it public</a>']) {
   assert(!header.includes(informationalLink), `site-frame header: ${informationalLink} has returned to primary task navigation`);
   assert(read('scripts/site-frame/footer.html').includes(informationalLink), `site-frame footer: ${informationalLink} is missing`);
 }
-assert(read('approach.html').includes('>Reader support</a>'), 'approach.html: contextual support disclosure is missing');
+assert(
+  read('approach.html').includes('href="https://ko-fi.com/mikehen"') &&
+    read('approach.html').includes('reader support</a>'),
+  'approach.html: contextual support disclosure is missing'
+);
 const shareScript = read('js/share.js');
 for (const shareContract of ['Add a note', 'Note to accompany the shared link', 'Copy message + link', 'Copy link only', 'navigator.share']) {
   assert(shareScript.includes(shareContract), `share helper: missing ${shareContract}`);

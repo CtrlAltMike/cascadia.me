@@ -906,6 +906,15 @@
   line-height: 1.65;
 }
 
+.story-sources-review,
+.field-stories-review {
+  color: var(--cascadia-muted);
+  font-family: var(--cascadia-font-body);
+  font-size: var(--cascadia-type-meta);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
 .story-sources-copy > p {
   margin: 0 0 2.4rem;
   color: var(--lw-cream-100);

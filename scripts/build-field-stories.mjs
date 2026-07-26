@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = path.join(root, "public", "stories");
 const outputDirectory = path.join(root, "stories");
-const buildDate = "2026-07-16";
+const buildDate = "2026-07-25";
 const originalPublicationDate = "2026-07-15";
 
 const stories = [
@@ -313,6 +313,7 @@ function renderCollection(parsedStories) {
           <p>If conditions are changing now, follow current official information. Signals can help you find the responsible publisher. If you are preparing ahead, begin with the guide closest to your place or household.</p>
           <p><a href="../signals/">Open Signals <span aria-hidden="true">→</span></a> <a href="../guides.html">Open the Guides <span aria-hidden="true">→</span></a></p>
           <p>When a story raises a conversation your household wants to keep, NowWePlan offers <a href="https://nowweplan.com/guided-conversations">guided conversations</a> and <a href="https://nowweplan.com/practice-drills">short practice drills</a>. The stories remain free and complete here.</p>
+          <p class="field-stories-review">Fiction labels and factual-source boundaries reviewed July 25, 2026.</p>
         </div>
       </div>
     </aside>
@@ -424,6 +425,7 @@ function renderStory(story, index, parsedStories) {
             <ul>
               ${sourceItems}
             </ul>
+            <p class="story-sources-review">Factual notes reviewed July 25, 2026.</p>
           </div>
         </div>
       </aside>

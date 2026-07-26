@@ -119,6 +119,10 @@ test.describe('representative page interactions', () => {
     const routeGrid = page.locator('.mission-route-grid');
     const routes = routeGrid.locator('.mission-route');
     await expect(routes).toHaveCount(6);
+    const capabilityGrid = page.locator('.mission-card-grid');
+    const capabilityCards = capabilityGrid.locator('.mission-card');
+    await expect(capabilityCards).toHaveCount(6);
+    await expect(capabilityCards.first().locator('.mission-card__link')).toHaveCount(1);
 
     const typeScale = await page.evaluate(() => ({
       hero: Number.parseFloat(getComputedStyle(document.querySelector('.mission-hero h1')).fontSize),
@@ -140,14 +144,21 @@ test.describe('representative page interactions', () => {
     if (!testInfo.project.name.startsWith('mobile')) {
       const gridGap = await routeGrid.evaluate((element) => Number.parseFloat(getComputedStyle(element).columnGap));
       expect(gridGap).toBeGreaterThanOrEqual(12);
+      const capabilityGap = await capabilityGrid.evaluate((element) => Number.parseFloat(getComputedStyle(element).columnGap));
+      expect(capabilityGap).toBeGreaterThanOrEqual(12);
 
       const firstRoute = routes.first();
       await firstRoute.hover();
       await expect.poll(() => firstRoute.evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
 
+      const firstCapability = capabilityCards.first();
+      await firstCapability.hover();
+      await expect.poll(() => firstCapability.evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.reload();
       await expect(routes.first()).toHaveCSS('transition-duration', '0s');
+      await expect(capabilityCards.first()).toHaveCSS('transition-duration', '0s');
     }
 
     await expectNoHorizontalOverflow(page);

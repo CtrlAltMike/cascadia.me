@@ -103,6 +103,7 @@ test.describe('representative page interactions', () => {
   test('Field Stories shelf and story frontispiece remain usable', async ({ page }) => {
     await page.goto('/stories/');
     await expect(page.locator('.field-story-entry')).toHaveCount(9);
+    await expect(page.locator('.field-story-entry-sketch')).toHaveCount(9);
     await expectNoHorizontalOverflow(page);
 
     await page.goto('/stories/inventory.html');

@@ -227,6 +227,24 @@ for (const page of sitePages.filter((candidate) => candidate.family === 'handoff
   assert(page.indexable === false && page.redirectTo, `${page.path}: incomplete handoff registry contract`);
 }
 
+const visibleReviewDate = /(?:Reviewed|reviewed|Review date|review date)[\s\S]{0,120}(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}/;
+for (const page of sitePages.filter((candidate) => candidate.indexable !== false && candidate.path !== '404.html')) {
+  const document = read(page.path);
+  assert(visibleReviewDate.test(document), `${page.path}: substantive page is missing a visible review date`);
+  assert(
+    !/\bhref="(?:\.\.\/|\.\/|\/)?guides\.html(?:[?#][^"]*)?"/i.test(document),
+    `${page.path}: indexable page still links to the retired Guides address`
+  );
+  assert(
+    !/\bfive[- ]hazard\b|\bCascadia Guides\b|\bchoose (?:a|your) (?:guide|hazard)\b/i.test(document),
+    `${page.path}: retired hazard-guide positioning remains in public copy`
+  );
+  assert(
+    !/\bnext hard day\b|\bordinary problems, made harder\b/i.test(document),
+    `${page.path}: retired burden-heavy framing remains in public copy`
+  );
+}
+
 const designSystem = read('css/design-system.css');
 for (const token of [
   '--cascadia-page-width', '--cascadia-reading-width', '--cascadia-focus-ring',
@@ -257,7 +275,7 @@ assert(atlasScript.includes("'icon-allow-overlap': true"), 'atlas script: observ
 assert(atlasScript.includes("'icon-ignore-placement': true"), 'atlas script: observed-wind arrows can be displaced by label tiers');
 
 const illustratedPages = [
-  'index.html', 'guides.html', 'faq.html', 'household-workbook.html', 'earthquake.html',
+  'index.html', 'faq.html', 'household-workbook.html', 'earthquake.html',
   'wildfire.html', 'flooding.html', 'winter-storm.html', 'volcano.html', 'stories/index.html',
   'place.html', 'building.html', 'first-moves.html', 'keep-life-going.html', 'people-nearby.html', 'recovery.html'
 ];
@@ -269,16 +287,13 @@ for (const relativePath of illustratedPages) {
 }
 
 const guideTaxonomyPages = [
-  'index.html', 'guides.html', 'faq.html', 'earthquake.html', 'wildfire.html',
+  'index.html', 'faq.html', 'earthquake.html', 'wildfire.html',
   'flooding.html', 'winter-storm.html', 'volcano.html'
 ];
 const publicChapterLanguage = />[^<]*\bchapters?\b|content="[^"]*\bchapters?\b|"(?:description|text)":\s*"[^"]*\bchapters?\b/i;
 for (const relativePath of guideTaxonomyPages) {
   assert(!publicChapterLanguage.test(read(relativePath)), `${relativePath}: public copy still describes a hazard guide as a chapter`);
 }
-const guidesPage = read('guides.html');
-assert(!/>[^<]*\bguidebook\b|<title>[^<]*\bguidebook\b|"name":\s*"[^"]*\bguidebook\b/i.test(guidesPage), 'guides.html: public copy still presents the guide collection as one guidebook');
-
 const earthquake = read('earthquake.html');
 assert(earthquake.includes('chapter--earthquake'), 'earthquake.html: missing shared hazard-family class');
 assert(earthquake.includes('primary-chapter-page earthquake-chapter-page'), 'earthquake.html: missing shared hazard-family page contract');
@@ -300,8 +315,8 @@ assert(header.includes('share-button nav-share-btn'), 'site-frame header: share 
 assert(
   header.indexOf('>Home</a>') < header.indexOf('>Know Your Place</a>') &&
     header.indexOf('>Know Your Place</a>') < header.indexOf('>First Moves</a>') &&
-    header.indexOf('>First Moves</a>') < header.indexOf('>Keep Life Going</a>') &&
-    header.indexOf('>Keep Life Going</a>') < header.indexOf('>Recovery</a>') &&
+    header.indexOf('>First Moves</a>') < header.indexOf('>Keep Going</a>') &&
+    header.indexOf('>Keep Going</a>') < header.indexOf('>Recovery</a>') &&
     header.indexOf('>Recovery</a>') < header.indexOf('>People Nearby</a>') &&
     header.indexOf('>People Nearby</a>') < header.indexOf('>Field Stories</a>') &&
     header.indexOf('>Field Stories</a>') < header.indexOf('>Find Official Help</a>'),

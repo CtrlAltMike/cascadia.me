@@ -2673,15 +2673,22 @@
 
 @media (max-width: 768px) {
   .feedback-widget {
-    right: 0.75rem;
-    bottom: max(0.75rem, env(safe-area-inset-bottom));
-    left: 0.75rem;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    z-index: 1;
+    width: 100%;
+    padding: 1rem max(1rem, env(safe-area-inset-right)) 1rem max(1rem, env(safe-area-inset-left));
     align-items: stretch;
     gap: 0.5rem;
+    border-top: 1px solid rgba(107, 94, 79, 0.18);
+    background: var(--color-fog);
+    pointer-events: auto;
   }
 
   .feedback-widget-launcher {
-    align-self: flex-end;
+    align-self: center;
   }
 
   .feedback-widget.is-open .feedback-widget-launcher {
@@ -2720,7 +2727,9 @@
     width: 100%;
   }
 
-  .atlas-body .feedback-widget {
+  .atlas-body .feedback-widget,
+  .first-moves-page .feedback-widget,
+  .signals-page .feedback-widget {
     display: none;
   }
 

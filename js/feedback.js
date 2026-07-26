@@ -43,6 +43,7 @@
     launcher.className = 'feedback-widget-launcher';
     launcher.setAttribute('aria-expanded', 'false');
     launcher.setAttribute('aria-controls', 'feedback-widget-panel');
+    launcher.setAttribute('aria-label', 'Open feedback form');
     launcher.innerHTML = `${icon}<span>Feedback</span>`;
 
     panel = document.createElement('section');
@@ -79,7 +80,8 @@
 
     widgetRoot.appendChild(launcher);
     widgetRoot.appendChild(panel);
-    document.body.appendChild(widgetRoot);
+    const siteFooter = document.querySelector('.site-footer');
+    document.body.insertBefore(widgetRoot, siteFooter || null);
 
     status = panel.querySelector('.feedback-widget-status');
     bindWidget(endpoint);

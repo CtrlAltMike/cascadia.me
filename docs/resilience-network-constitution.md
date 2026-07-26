@@ -8,7 +8,7 @@ It is short on purpose. Every clause here is binding, and every clause here is o
 
 ## Purpose
 
-The network exists to help ordinary people make the lives they already have less brittle: to understand the places where they live, prepare for interruptions without organizing their lives around fear, recover faster when systems fail, and build the relationships that make recovery possible.
+The network exists to help ordinary people keep more of daily life working: understand the places where they live, prepare for interruptions without organizing life around them, recover with better information and options, and build the relationships that make recovery possible.
 
 **The promise: Understand what your place can do. Make the life you have less brittle. Know who you will face it with.**
 

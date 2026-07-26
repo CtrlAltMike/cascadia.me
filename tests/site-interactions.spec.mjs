@@ -42,7 +42,7 @@ test.describe('shared site frame', () => {
 
   test('mobile menu opens, closes with Escape, and returns focus', async ({ page }, testInfo) => {
     test.skip(!testInfo.project.name.startsWith('mobile'), 'Mobile navigation contract');
-    await page.goto('/guides.html');
+    await page.goto('/place.html');
 
     const toggle = page.getByRole('button', { name: 'Toggle menu' });
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -54,6 +54,26 @@ test.describe('shared site frame', () => {
     await page.keyboard.press('Escape');
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(toggle).toBeFocused();
+  });
+
+  test('mobile feedback stays compact and clear of urgent paths', async ({ page }, testInfo) => {
+    test.skip(!testInfo.project.name.startsWith('mobile'), 'Mobile feedback contract');
+
+    await page.goto('/first-moves.html');
+    await expect(page.locator('.feedback-widget')).toBeHidden();
+
+    await page.goto('/signals/');
+    await expect(page.locator('.feedback-widget')).toBeHidden();
+
+    await page.goto('/people-nearby.html');
+    const launcher = page.getByRole('button', { name: 'Open feedback form' });
+    await expect(launcher).toBeVisible();
+    await expect(launcher).toContainText('Feedback');
+    expect(await launcher.evaluate((element) => getComputedStyle(element.closest('.feedback-widget')).position)).toBe('relative');
+    expect(await page.locator('.feedback-widget + .site-footer').count()).toBe(1);
+
+    await launcher.click();
+    await expect(page.getByRole('dialog', { name: 'Share feedback' })).toBeVisible();
   });
 
   test('NowWePlan links show the temporary launch dialog and restore focus', async ({ page, context }) => {
@@ -94,7 +114,7 @@ test.describe('representative page interactions', () => {
 
   test('revised public spine and neighborhood field tools are usable', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1, name: 'Make the next hard day easier.' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Keep everyday life moving.' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Start with your place' })).toBeVisible();
     await expectNoHorizontalOverflow(page);
 
@@ -105,14 +125,36 @@ test.describe('representative page interactions', () => {
 
     await page.goto('/neighborhood-inventory.html');
     await expect(page.locator('.field-sheet')).toHaveCount(4);
+    const screenNote = page.locator('.field-tool-screen-note');
+    if (test.info().project.name.startsWith('mobile')) {
+      await expect(screenNote).toBeVisible();
+    } else {
+      await expect(screenNote).toBeHidden();
+    }
     await page.emulateMedia({ media: 'print' });
     await expect(page.locator('.site-header')).toBeHidden();
+    await expect(screenNote).toBeHidden();
     await expect(page.locator('.field-sheet').first()).toBeVisible();
 
     await page.goto('/event-inserts.html');
     await expect(page.locator('.field-sheet')).toHaveCount(5);
     await expect(page.getByRole('heading', { level: 2, name: 'Earthquake and tsunami' })).toBeVisible();
     await expect(page.locator('.field-tool-intro')).toBeHidden();
+    await expectNoHorizontalOverflow(page);
+  });
+
+  test('primary guidance stays usable when images and fonts fail', async ({ page }) => {
+    await page.route(/\.(?:avif|gif|jpe?g|png|svg|webp|woff2?)(?:\?.*)?$/i, (route) => route.abort());
+
+    await page.goto('/place.html', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { level: 1, name: 'Your address sits inside a system.' })).toBeVisible();
+    const references = page.getByRole('navigation', { name: 'Regional hazard references' });
+    await expect(references).toBeVisible();
+    await expect(references.getByRole('link')).toHaveCount(5);
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/first-moves.html', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { level: 1, name: "Some decisions shouldn't wait." })).toBeVisible();
     await expectNoHorizontalOverflow(page);
   });
 
@@ -160,7 +202,7 @@ test.describe('representative page interactions', () => {
     await context.close();
   });
 
-  test('the workbook migration keeps the old address useful', async ({ page }) => {
+  test('moved pages keep old addresses useful', async ({ page }) => {
     await page.goto('/household-workbook.html');
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Begin with an ordinary day');
     await expectNoHorizontalOverflow(page);
@@ -170,6 +212,12 @@ test.describe('representative page interactions', () => {
     expect(handoff).toContain('<meta name="robots" content="noindex,follow">');
     expect(handoff).toContain('<meta http-equiv="refresh" content="0; url=household-workbook.html">');
     expect(handoff).toContain('href="household-workbook.html">Open the Household Workbook</a>');
+
+    const guidesResponse = await page.request.get('/guides.html');
+    const guidesHandoff = await guidesResponse.text();
+    expect(guidesHandoff).toContain('<meta name="robots" content="noindex,follow">');
+    expect(guidesHandoff).toContain('<meta http-equiv="refresh" content="0; url=place.html">');
+    expect(guidesHandoff).toContain('href="place.html">Open Know Your Place</a>');
   });
 
   test('Atlas planning controls disclose their available layers', async ({ page }) => {
@@ -218,6 +266,12 @@ test.describe('representative page interactions', () => {
 
     await expect(page.getByLabel('Signals directory limits')).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Direct official starting points' })).toBeVisible();
+    const resultGroups = page.locator('details.result-group');
+    await expect(resultGroups.first()).toBeVisible();
+    expect(await resultGroups.evaluateAll((groups) => groups.every((group) => !group.open))).toBe(true);
+    await resultGroups.first().locator(':scope > summary').click();
+    await expect(resultGroups.first()).toHaveAttribute('open', '');
+    await expect(resultGroups.first().locator('.result-item').first()).toBeVisible();
 
     await page.getByLabel('Find a place').fill('98040');
     await page.getByRole('button', { name: 'Find', exact: true }).click();

@@ -1,7 +1,7 @@
 # The Resilience Network Brand Platform
 
 **Status:** Canonical network brand direction
-**Version:** 1.0
+**Version:** 1.1
 **Date:** July 25, 2026
 **Applies to:** NowWePlan.com, Cascadia.me, HurricaneCoast.me, and SanAndreas.me
 
@@ -15,7 +15,7 @@ Where an earlier site plan, campaign line, design brief, or editorial note confl
 
 ### Purpose
 
-Help ordinary people make the lives they already have less brittle: understand the places where they live, prepare for interruptions without organizing life around fear, recover faster when systems fail, and build the relationships that make recovery possible.
+Help ordinary people keep more of daily life working: understand the places where they live, prepare for interruptions without organizing life around them, recover with better information and options, and build the relationships that make recovery possible.
 
 ### Organizing principle
 
@@ -82,6 +82,12 @@ Connection is presented as practical infrastructure, not sentiment or obligation
 The work can be candid, warm, and occasionally dry without making light of danger or loss. Mild humor may acknowledge awkwardness, inconvenience, paperwork, storage, or the ordinary absurdities of household planning.
 
 The reader and their circumstances are never the joke.
+
+### Serious subjects need an emotional load budget
+
+The subject already supplies enough weight. Headlines, footers, transitions, and calls to action should not repeatedly remind readers that the future may be hard or that something may be lost.
+
+Name risk plainly when it changes a decision. Everywhere else, lead with what can keep working, what the reader can learn, and what people can do together. Positive language should create room to act, not manufacture optimism.
 
 ## Positioning
 
@@ -304,5 +310,6 @@ Before approving a page, campaign, product, or major feature, ask:
 6. Are the authority and evidence boundaries clear?
 7. Does the language sound spoken rather than manufactured?
 8. Can the reader act and then set the subject down?
+9. Does the copy spend emotional weight only where it improves understanding or safety?
 
 If the work passes the constitutional test but fails this relationship test, it isn't ready.

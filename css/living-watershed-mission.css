@@ -304,12 +304,14 @@
   background: var(--cascadia-cream);
 }
 
-.home-page :is(.mission-route, .mission-card) {
+.home-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)),
+.mission-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)) {
   position: relative;
   isolation: isolate;
 }
 
-.home-page :is(.mission-route, .mission-card)::before {
+.home-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link))::before,
+.mission-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link))::before {
   position: absolute;
   inset: 0 0 auto;
   z-index: 1;
@@ -355,7 +357,9 @@
 }
 
 .home-page .mission-route h3 a::after,
-.home-page .mission-card__link::after {
+.home-page .mission-card__link::after,
+.mission-page .mission-route h3 a::after,
+.mission-page .mission-card__link::after {
   position: absolute;
   inset: 0;
   content: "";
@@ -365,12 +369,14 @@
   color: var(--cascadia-coral);
 }
 
-.home-page :is(.mission-route, .mission-card):focus-within {
+.home-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):focus-within,
+.mission-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):focus-within {
   border-color: rgba(196, 71, 55, 0.48);
   box-shadow: 0 16px 40px rgba(6, 59, 92, 0.13);
 }
 
-.home-page :is(.mission-route, .mission-card):focus-within::before {
+.home-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):focus-within::before,
+.mission-page :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):focus-within::before {
   transform: scaleX(1);
 }
 
@@ -394,12 +400,14 @@
   text-underline-offset: 0.2em;
 }
 
-.home-page .mission-card {
+.home-page .mission-card:has(.mission-card__link),
+.mission-page .mission-card:has(.mission-card__link) {
   display: flex;
   flex-direction: column;
 }
 
-.home-page .mission-card__link {
+.home-page .mission-card__link,
+.mission-page .mission-card__link {
   margin-top: auto;
   padding-top: 1.2rem;
 }
@@ -530,7 +538,7 @@
 }
 
 @media (min-width: 761px) {
-  .home-page :is(.mission-route-grid, .mission-card-grid) {
+  :is(.home-page, .mission-page) :is(.mission-route-grid, .mission-card-grid) {
     gap: clamp(0.75rem, 1.35vw, 1.25rem);
     overflow: visible;
     border: 0;
@@ -539,46 +547,59 @@
     box-shadow: none;
   }
 
-  .home-page :is(.mission-route, .mission-card) {
-    min-height: 16rem;
+  :is(.home-page, .mission-page) :is(.mission-route, .mission-card) {
     border: var(--cascadia-border);
     border-radius: var(--cascadia-radius-panel);
     box-shadow: 0 8px 24px rgba(6, 59, 92, 0.07);
   }
 
-  .home-page .mission-route h3 {
+  :is(.home-page, .mission-page) :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)) {
+    min-height: 16rem;
+  }
+
+  :is(.home-page, .mission-page) .mission-route h3 {
     min-height: 2em;
+  }
+
+  .building-page .mission-card-grid,
+  .people-page .mission-route-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .building-page .mission-card:nth-child(even),
+  .people-page .mission-route:nth-child(even) {
+    background: #f5efdf;
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .home-page :is(.mission-route, .mission-card) {
+  :is(.home-page, .mission-page) :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)) {
     transition:
       border-color 180ms ease-out,
       box-shadow 180ms ease-out,
       transform 180ms ease-out;
   }
 
-  .home-page :is(.mission-route, .mission-card)::before {
+  :is(.home-page, .mission-page) :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link))::before {
     transition: transform 220ms ease-out;
   }
 
-  .home-page :is(.mission-route, .mission-card):hover {
+  :is(.home-page, .mission-page) :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):hover {
     z-index: 2;
     border-color: rgba(196, 71, 55, 0.42);
     box-shadow: 0 18px 42px rgba(6, 59, 92, 0.14);
     transform: translateY(-0.3rem);
   }
 
-  .home-page :is(.mission-route, .mission-card):hover::before {
+  :is(.home-page, .mission-page) :is(.mission-route:has(h3 a), .mission-card:has(.mission-card__link)):hover::before {
     transform: scaleX(1);
   }
 
-  .home-page .mission-card h3 {
+  :is(.home-page, .mission-page) .mission-card:has(.mission-card__link) h3 {
     transition: color 180ms ease-out;
   }
 
-  .home-page .mission-card:hover h3 {
+  :is(.home-page, .mission-page) .mission-card:has(.mission-card__link):hover h3 {
     color: var(--cascadia-coral);
   }
 }

@@ -304,12 +304,12 @@
   background: var(--cascadia-cream);
 }
 
-.home-page .mission-route {
+.home-page :is(.mission-route, .mission-card) {
   position: relative;
   isolation: isolate;
 }
 
-.home-page .mission-route::before {
+.home-page :is(.mission-route, .mission-card)::before {
   position: absolute;
   inset: 0 0 auto;
   z-index: 1;
@@ -354,7 +354,8 @@
   text-decoration: none;
 }
 
-.home-page .mission-route h3 a::after {
+.home-page .mission-route h3 a::after,
+.home-page .mission-card__link::after {
   position: absolute;
   inset: 0;
   content: "";
@@ -364,12 +365,12 @@
   color: var(--cascadia-coral);
 }
 
-.home-page .mission-route:focus-within {
+.home-page :is(.mission-route, .mission-card):focus-within {
   border-color: rgba(196, 71, 55, 0.48);
   box-shadow: 0 16px 40px rgba(6, 59, 92, 0.13);
 }
 
-.home-page .mission-route:focus-within::before {
+.home-page :is(.mission-route, .mission-card):focus-within::before {
   transform: scaleX(1);
 }
 
@@ -391,6 +392,16 @@
   font-size: 0.86rem;
   font-weight: 700;
   text-underline-offset: 0.2em;
+}
+
+.home-page .mission-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page .mission-card__link {
+  margin-top: auto;
+  padding-top: 1.2rem;
 }
 
 .mission-question-grid {
@@ -519,7 +530,7 @@
 }
 
 @media (min-width: 761px) {
-  .home-page .mission-route-grid {
+  .home-page :is(.mission-route-grid, .mission-card-grid) {
     gap: clamp(0.75rem, 1.35vw, 1.25rem);
     overflow: visible;
     border: 0;
@@ -528,7 +539,7 @@
     box-shadow: none;
   }
 
-  .home-page .mission-route {
+  .home-page :is(.mission-route, .mission-card) {
     min-height: 16rem;
     border: var(--cascadia-border);
     border-radius: var(--cascadia-radius-panel);
@@ -541,26 +552,34 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .home-page .mission-route {
+  .home-page :is(.mission-route, .mission-card) {
     transition:
       border-color 180ms ease-out,
       box-shadow 180ms ease-out,
       transform 180ms ease-out;
   }
 
-  .home-page .mission-route::before {
+  .home-page :is(.mission-route, .mission-card)::before {
     transition: transform 220ms ease-out;
   }
 
-  .home-page .mission-route:hover {
+  .home-page :is(.mission-route, .mission-card):hover {
     z-index: 2;
     border-color: rgba(196, 71, 55, 0.42);
     box-shadow: 0 18px 42px rgba(6, 59, 92, 0.14);
     transform: translateY(-0.3rem);
   }
 
-  .home-page .mission-route:hover::before {
+  .home-page :is(.mission-route, .mission-card):hover::before {
     transform: scaleX(1);
+  }
+
+  .home-page .mission-card h3 {
+    transition: color 180ms ease-out;
+  }
+
+  .home-page .mission-card:hover h3 {
+    color: var(--cascadia-coral);
   }
 }
 

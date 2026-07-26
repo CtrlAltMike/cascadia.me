@@ -112,10 +112,33 @@ test.describe('representative page interactions', () => {
     await expectNoHorizontalOverflow(page);
   });
 
-  test('revised public spine and neighborhood field tools are usable', async ({ page }) => {
+  test('revised public spine and neighborhood field tools are usable', async ({ page }, testInfo) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1, name: 'Keep everyday life moving.' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Start with your place' })).toBeVisible();
+    const routeGrid = page.locator('.mission-route-grid');
+    const routes = routeGrid.locator('.mission-route');
+    await expect(routes).toHaveCount(6);
+
+    const routePadding = await routes.evaluateAll((elements) => elements.map((element) => {
+      const style = getComputedStyle(element);
+      return `${style.paddingTop} ${style.paddingRight} ${style.paddingBottom} ${style.paddingLeft}`;
+    }));
+    expect(new Set(routePadding).size).toBe(1);
+
+    if (!testInfo.project.name.startsWith('mobile')) {
+      const gridGap = await routeGrid.evaluate((element) => Number.parseFloat(getComputedStyle(element).columnGap));
+      expect(gridGap).toBeGreaterThanOrEqual(12);
+
+      const firstRoute = routes.first();
+      await firstRoute.hover();
+      await expect.poll(() => firstRoute.evaluate((element) => getComputedStyle(element).transform)).not.toBe('none');
+
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.reload();
+      await expect(routes.first()).toHaveCSS('transition-duration', '0s');
+    }
+
     await expectNoHorizontalOverflow(page);
 
     await page.goto('/people-nearby.html');
@@ -176,6 +199,9 @@ test.describe('representative page interactions', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Ask a better question about the place you live.' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: 'Get the facts the next person will ask for.' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'USGS explanation of property-specific assessment' })).toBeVisible();
+    await expect(page.locator('.mission-step')).toHaveCount(4);
+    expect(await page.locator('.mission-step').evaluateAll((steps) => steps.every((step) => step.children.length === 1))).toBe(true);
+    await expect(page.locator('.mission-section__support')).toContainText("A permit sticker isn't thrilling.");
     await expectNoHorizontalOverflow(page);
 
     for (const hazard of ['earthquake', 'wildfire', 'flooding', 'winter-storm', 'volcano']) {

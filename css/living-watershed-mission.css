@@ -6,6 +6,9 @@
 
 .mission-page,
 .home-page {
+  --mission-section-space: clamp(4.5rem, 8vw, 7.5rem);
+  --mission-panel-space: clamp(var(--cascadia-space-3), 3vw, 2.25rem);
+
   color: var(--cascadia-ink);
   background: var(--cascadia-cream);
 }
@@ -195,7 +198,7 @@
 }
 
 .mission-section {
-  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  padding-block: var(--mission-section-space);
 }
 
 .mission-section + .mission-section {
@@ -248,11 +251,20 @@
   line-height: 0.94;
 }
 
-.mission-section__heading > p:last-child {
+.mission-section__heading > p:last-child,
+.mission-section__support {
   margin: 0;
   color: var(--cascadia-muted);
   font-size: 1.05rem;
   line-height: 1.65;
+}
+
+.mission-section__support p {
+  margin: 0;
+}
+
+.mission-section__support p + p {
+  margin-top: var(--cascadia-space-2);
 }
 
 .mission-prose {
@@ -287,8 +299,24 @@
 .mission-route,
 .mission-card {
   min-width: 0;
-  padding: clamp(1.4rem, 3vw, 2.3rem);
+  padding: var(--mission-panel-space);
   background: var(--cascadia-cream);
+}
+
+.home-page .mission-route {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-page .mission-route::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 3px;
+  background: var(--cascadia-coral);
+  content: "";
+  transform: scaleX(0.24);
+  transform-origin: left;
 }
 
 .mission-route:nth-child(3n + 2),
@@ -325,8 +353,23 @@
   text-decoration: none;
 }
 
+.home-page .mission-route h3 a::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
 .mission-route h3 a:hover {
   color: var(--cascadia-coral);
+}
+
+.home-page .mission-route:focus-within {
+  border-color: rgba(196, 71, 55, 0.48);
+  box-shadow: 0 16px 40px rgba(6, 59, 92, 0.13);
+}
+
+.home-page .mission-route:focus-within::before {
+  transform: scaleX(1);
 }
 
 .mission-route p,
@@ -356,7 +399,7 @@
 }
 
 .mission-question {
-  padding: clamp(1.35rem, 3vw, 2rem);
+  padding: var(--mission-panel-space);
   border: var(--cascadia-border);
   border-left: 4px solid var(--cascadia-glacial);
   border-radius: var(--cascadia-radius-panel);
@@ -426,7 +469,7 @@
 .mission-boundary,
 .mission-source-note {
   margin-top: 2rem;
-  padding: clamp(1.25rem, 3vw, 2rem);
+  padding: var(--mission-panel-space);
   border: 1px solid rgba(196, 71, 55, 0.3);
   border-left: 5px solid var(--cascadia-coral);
   border-radius: var(--cascadia-radius-panel);
@@ -472,6 +515,52 @@
 .home-page .mission-section .home-plate {
   opacity: 1 !important;
   transform: none !important;
+}
+
+@media (min-width: 761px) {
+  .home-page .mission-route-grid {
+    gap: clamp(0.75rem, 1.35vw, 1.25rem);
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .home-page .mission-route {
+    min-height: 17.5rem;
+    border: var(--cascadia-border);
+    border-radius: var(--cascadia-radius-panel);
+    box-shadow: 0 8px 24px rgba(6, 59, 92, 0.07);
+  }
+
+  .home-page .mission-route h3 {
+    min-height: 2em;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .home-page .mission-route {
+    transition:
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out,
+      transform 180ms ease-out;
+  }
+
+  .home-page .mission-route::before {
+    transition: transform 220ms ease-out;
+  }
+
+  .home-page .mission-route:hover {
+    z-index: 2;
+    border-color: rgba(196, 71, 55, 0.42);
+    box-shadow: 0 18px 42px rgba(6, 59, 92, 0.14);
+    transform: translateY(-0.3rem);
+  }
+
+  .home-page .mission-route:hover::before {
+    transform: scaleX(1);
+  }
 }
 
 @media (max-width: 1080px) {

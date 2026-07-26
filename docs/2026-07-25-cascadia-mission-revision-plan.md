@@ -42,7 +42,7 @@ The logo remains the route to Home. The primary navigation becomes:
 
 1. **Know Your Place**
 2. **First Moves**
-3. **Keep Life Going**
+3. **Keep Going**
 4. **Recovery**
 5. **People Nearby**
 6. **Field Stories**
@@ -51,7 +51,7 @@ The logo remains the route to Home. The primary navigation becomes:
 
 These labels are working names. Before implementation, test them aloud in sentences such as:
 
-- "I found it under Keep Life Going."
+- "I found it under Keep Going."
 - "Check First Moves."
 - "Signals is where I found the official source."
 
@@ -131,11 +131,11 @@ Refactor every page around the narrow places where cause matters:
 6. Which recurring consequences to prepare for
 7. What recovery may look like
 
-Remove duplicated all-purpose household guidance. Link those needs to Keep Life Going.
+Remove duplicated all-purpose household guidance. Link those needs to Keep Going.
 
 Each hazard page keeps its distinct editorial temperament. Shared structure should not produce repeated openings, slogans, or section language.
 
-### 4.5 Keep Life Going
+### 4.5 Keep Going
 
 **Proposed canonical path:** `/keep-life-going.html`
 **Page family:** New `capability` family.
@@ -736,7 +736,7 @@ Update `tests/site-interactions.spec.mjs`:
 - Rewrite Home.
 - Build Know Your Place.
 - Build First Moves.
-- Build the Keep Life Going hub.
+- Build the Keep Going hub.
 - Build Recovery and People Nearby.
 - Build the After an Event page and the printable neighborhood inventory packet.
 
@@ -812,7 +812,7 @@ The first build package should be deliberately broad enough to establish the new
 5. Rewritten Home
 6. Know Your Place
 7. First Moves
-8. Keep Life Going hub
+8. Keep Going hub
 9. Water capability page
 10. Recovery
 11. People Nearby

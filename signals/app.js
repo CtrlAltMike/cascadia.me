@@ -654,6 +654,7 @@ let selectedResourceId = null;
 let selectedServiceAreaKey = null;
 let visibleResources = [];
 let locationSelection = null;
+const expandedDirectoryGroups = new Set();
 let awaitingMapConfirmation = false;
 let initialPostalRestoreAttempted = false;
 let spiderfyActive = false;
@@ -1823,15 +1824,33 @@ function visibleResourcesForGroup(groupName) {
 function renderDirectory() {
   visibleResources = filteredResources();
   resultList.replaceChildren();
+  const collapseLongDirectory =
+    visibleResources.length > 36 &&
+    !locationSelection &&
+    !searchInput.value.trim();
 
   groupOrder.forEach((groupName) => {
     const groupResources = visibleResourcesForGroup(groupName);
     if (!groupResources.length) return;
-    const section = document.createElement("section");
+    const section = document.createElement("details");
     section.className = "result-group";
+    section.open =
+      !collapseLongDirectory ||
+      expandedDirectoryGroups.has(groupName) ||
+      groupResources.some((resource) => resource.id === selectedResourceId);
+    section.addEventListener("toggle", () => {
+      if (section.open) expandedDirectoryGroups.add(groupName);
+      else expandedDirectoryGroups.delete(groupName);
+    });
+    const summary = document.createElement("summary");
+    summary.className = "result-group-summary";
     const heading = document.createElement("h3");
     heading.textContent = groupName;
-    section.append(heading);
+    const groupCount = document.createElement("span");
+    groupCount.className = "result-group-count";
+    groupCount.textContent = `${groupResources.length} ${groupResources.length === 1 ? "source" : "sources"}`;
+    summary.append(heading, groupCount);
+    section.append(summary);
 
     groupResources.forEach((resource) => {
       const item = document.createElement("article");
@@ -1881,7 +1900,7 @@ function renderDirectory() {
     : `${countText} shown for this map area`;
   resultsContext.textContent = locationSelection
     ? `Showing official sources for ${describeViewport()}. The postal match locates the area; responsible agencies may use different boundaries.`
-    : `Showing official sources for ${describeViewport()}. Optional outlines do not change this list.`;
+    : `Showing official sources for ${describeViewport()}. Optional outlines do not change this list.${collapseLongDirectory ? " Open a publisher group, or narrow the list with a postal code or search." : ""}`;
   renderStartHere();
   updateResourcePoints();
   if (locationSelection) renderPostalResult();

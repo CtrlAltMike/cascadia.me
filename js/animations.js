@@ -18,10 +18,6 @@ function initReveals() {
     '.home-companion',
     '.home-neighbors > .home-reading-column',
     '.home-author-note-layout',
-    '.guidebook-frontispiece-note',
-    '.guidebook-opening',
-    '.guidebook-entry',
-    '.guidebook-coda-layout',
     '.approach-essay-section',
     '.lw-workbook-quickstart-intro',
     '.lw-workbook-section-heading',
@@ -56,7 +52,6 @@ function initReveals() {
   const staggerGroups = [
     ['.home-chapter-list', '.home-chapter-entry'],
     ['.home-companion-list', '.home-companion'],
-    ['.guidebook-toc', '.guidebook-entry'],
     ['.lw-workbook-capabilities', '.lw-workbook-capability'],
     ['.field-story-list', '.field-story-entry'],
   ];

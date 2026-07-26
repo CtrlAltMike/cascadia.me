@@ -1,7 +1,7 @@
 # The Resilience Network Voice Guide
 
 **Status:** Canonical writing standard
-**Version:** 1.0
+**Version:** 1.1
 **Date:** July 25, 2026
 **Applies to:** NowWePlan.com, Cascadia.me, HurricaneCoast.me, and SanAndreas.me
 
@@ -34,6 +34,26 @@ The network sounds:
 
 The voice doesn't perform calm. It earns calm by making the subject clearer.
 
+## Spend emotional weight carefully
+
+Serious subjects already carry weight. The copy doesn't need to keep adding more.
+
+Describe what the reader can protect, continue, arrange, learn, or make easier. Use words such as *hard*, *loss*, *failure*, *fear*, and *danger* when they name an important fact, not as recurring atmosphere. One necessary warning can be direct. The next paragraph should usually return to a useful choice.
+
+Positive language doesn't mean forced cheer or a promise that everything will be fine. It means keeping capability, continuity, and other people visible alongside the problem.
+
+Use:
+
+> Keep everyday life moving.
+
+> A few records and contacts can make the next conversation easier.
+
+Not:
+
+> Make the next hard day easier.
+
+> Recovery is a series of ordinary problems made harder.
+
 ## The relationship comes before the advice
 
 Before telling readers what to do, notice what may make the action difficult.
@@ -44,7 +64,7 @@ This doesn't require an empathy preamble on every page. One accurate sentence is
 
 > Talking with a neighbor about emergencies can feel oddly intimate, especially if you usually exchange little more than a wave.
 
-> Month three is difficult to imagine because most of its problems are ordinary ones made harder.
+> Month three can bring a new round of ordinary tasks: finding a place to stay, reaching work, replacing medication, and keeping paperwork moving.
 
 Recognition must be specific. Generic assurances such as “We know this can feel overwhelming” usually sound scripted.
 
@@ -285,13 +305,13 @@ The voice stays recognizable while the amount of warmth, explanation, and humor 
 
 > If the ground is moving, Drop, Cover, and Hold On. If you're near the coast and the shaking is strong or lasts a long time, move inland or to high ground as soon as you can do so safely. Follow current local instructions.
 
-### Recovery, loss, and displacement
+### Recovery, rebuilding, and displacement
 
 **Posture:** Patient, honest, restrained.
 **Humor:** Usually none. Never use it near grief or material loss.
 **Cadence:** Give difficult facts room. Do not rush toward uplift.
 
-> Recovery is often a series of ordinary problems made harder: finding a place to stay, reaching work, replacing medication, documenting damage, and telling the same story to another office. You can't solve all of that in advance. You may be able to remove one or two complications.
+> Recovery can involve finding a place to stay, reaching work, replacing medication, documenting damage, and telling the same story to another office. You don't have to solve all of that in advance. A few records and contacts can make the next conversation easier.
 
 ### Buildings, health, insurance, and technical boundaries
 
@@ -483,6 +503,7 @@ Read the page once for meaning, once aloud for cadence, and once as a reader wit
 - Does it sound adult to adult?
 - Does it leave room for skepticism, ambivalence, and different choices?
 - Does it avoid manufacturing intimacy or encouragement?
+- Does it keep capability visible instead of repeating the emotional weight of the subject?
 
 ### Cadence
 

@@ -310,8 +310,8 @@ function renderCollection(parsedStories) {
           <h2 id="coda-title">Start with the source for your place.</h2>
         </div>
         <div>
-          <p>If conditions are changing now, follow current official information. Signals can help you find the responsible publisher. If you are preparing ahead, begin with the guide closest to your place or household.</p>
-          <p><a href="../signals/">Open Signals <span aria-hidden="true">→</span></a> <a href="../guides.html">Open the Guides <span aria-hidden="true">→</span></a></p>
+          <p>If conditions are changing now, follow current official information. Find Official Help can point you toward the responsible publisher. If you are preparing ahead, begin with the reference closest to your place or household.</p>
+          <p><a href="../signals/">Find Official Help <span aria-hidden="true">→</span></a> <a href="../place.html#hazard-references">Open hazard references <span aria-hidden="true">→</span></a></p>
           <p>When a story raises a conversation your household wants to keep, NowWePlan offers <a href="https://nowweplan.com/guided-conversations">guided conversations</a> and <a href="https://nowweplan.com/practice-drills">short practice drills</a>. The stories remain free and complete here.</p>
           <p class="field-stories-review">Fiction labels and factual-source boundaries reviewed July 25, 2026.</p>
         </div>
@@ -443,7 +443,7 @@ function renderStory(story, index, parsedStories) {
     <h2 id="story-gate-title">Stories ask something different of us.</h2>
     <div class="story-gate-copy" id="story-gate-description">
       <p>Stories can teach what checklists cannot: how ordinary decisions feel when time narrows, and how people move through moments of crisis and catharsis.</p>
-      <p><strong>This story may contain fear, grief, and loss.</strong> Read when you have room for it. You can pause or leave at any time. If you need practical guidance now, use the <a href="../guides.html">Guides</a> or <a href="../signals/">Signals</a> instead.</p>
+      <p><strong>This story may contain fear, grief, and loss.</strong> Read when you have room for it. You can pause or leave at any time. If you need practical guidance now, use <a href="../place.html#hazard-references">the hazard references</a> or <a href="../signals/">Find Official Help</a> instead.</p>
     </div>
     <form method="dialog" id="story-gate-form">
       <label class="story-acknowledgment">

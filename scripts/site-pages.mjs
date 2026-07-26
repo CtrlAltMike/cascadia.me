@@ -17,14 +17,13 @@ const storySkip = Object.freeze({
 });
 
 export const siteCacheVersions = Object.freeze({
-  designSystem: '20260725-phase3',
+  designSystem: '20260725-ux-pass',
   frame: '20260725-home-nav',
   frameHardening: '20260723-frame-hardening',
-  mission: '20260725-phase3',
+  mission: '20260725-positive-voice',
   capability: '20260725-capability',
-  fieldTool: '20260725-event-inserts',
+  fieldTool: '20260725-mobile-tables',
   approach: '20260712-approach3',
-  guidesHero: '20260722-guides-hero',
   faqHero: '20260721-hero3',
   kit: '20260716-nowweplan',
   guideEditorial: '20260716-editorial',
@@ -36,7 +35,7 @@ export const siteCacheVersions = Object.freeze({
   atlasStyle: '20260725-phase4',
   signalsAuthority: '20260714-actionability',
   signalsBoundary: '20260714',
-  signalsApp: '20260725-official-first'
+  signalsApp: '20260725-directory-groups'
 });
 
 export const siteAssetCatalog = Object.freeze({
@@ -49,7 +48,6 @@ export const siteAssetCatalog = Object.freeze({
   atlasStyle: Object.freeze({ kind: 'style', path: 'css/living-watershed-atlas.css', version: siteCacheVersions.atlasStyle }),
   signalsStyle: Object.freeze({ kind: 'style', path: 'signals/styles.css', version: siteCacheVersions.signalsApp }),
   approachPhase7: Object.freeze({ kind: 'style', path: 'css/living-watershed-phase7.css', version: siteCacheVersions.approach }),
-  guidesPhase7: Object.freeze({ kind: 'style', path: 'css/living-watershed-phase7.css', version: siteCacheVersions.guidesHero }),
   faq: Object.freeze({ kind: 'style', path: 'css/faq.css', version: siteCacheVersions.faqHero }),
   kit: Object.freeze({ kind: 'style', path: 'css/living-watershed-kit.css', version: siteCacheVersions.kit }),
   primaryGuides: Object.freeze({ kind: 'style', path: 'css/living-watershed-primary-chapters.css', version: siteCacheVersions.primaryGuides }),
@@ -245,15 +243,17 @@ const pageDefinitions = [
   },
   {
     path: 'guides.html',
-    family: 'guide-library',
+    family: 'handoff',
     styleFamily: 'surface',
-    navSection: 'place',
+    navSection: null,
     footerItem: null,
     skip: mainSkip,
-    title: 'Cascadia Guides | Cascadia.me',
-    description: 'An illustrated table of contents for Cascadia.me’s place-based guides to earthquakes, wildfire, flooding, winter storms, and volcanoes.',
-    canonical: 'https://cascadia.me/guides.html',
-    schemaType: 'CollectionPage'
+    title: 'Cascadia Hazard References Have Moved | Cascadia.me',
+    description: 'Cascadia.me’s regional hazard references now begin within Know Your Place.',
+    canonical: 'https://cascadia.me/place.html',
+    schemaType: null,
+    indexable: false,
+    redirectTo: 'place.html'
   },
   {
     path: 'household-workbook.html',
@@ -278,8 +278,8 @@ const pageDefinitions = [
       href: '#main-content',
       text: 'Skip to main content'
     },
-    title: 'Understand Your Place. Make the Next Hard Day Easier. | Cascadia.me',
-    description: 'Understand what Cascadia can do, make ordinary life less brittle, find official help, and organize with the people nearby before and after an interruption.',
+    title: 'Understand Your Place. Keep Everyday Life Moving. | Cascadia.me',
+    description: 'Understand what Cascadia can do, keep everyday life moving, find official help, and organize with the people nearby before and after an interruption.',
     canonical: 'https://cascadia.me/',
     schemaType: 'WebPage'
   },
@@ -290,7 +290,7 @@ const pageDefinitions = [
     navSection: 'keep-life',
     footerItem: 'keep-life',
     skip: mainSkip,
-    title: 'Keep Life Going Through an Interruption | Cascadia.me',
+    title: 'Keep Going Through an Interruption | Cascadia.me',
     description: 'Practical Cascadia guidance for water, sanitation, temperature, clean air, food, medication, communication, documents, movement, animals, staying, and leaving.',
     canonical: 'https://cascadia.me/keep-life-going.html',
     schemaType: 'CollectionPage'
@@ -458,7 +458,7 @@ const pageDefinitions = [
     navSection: 'recovery',
     footerItem: 'recovery',
     skip: mainSkip,
-    title: 'Recovery: Make the Long Aftermath Easier | Cascadia.me',
+    title: 'Recovery: Make the Next Steps Easier | Cascadia.me',
     description: 'Practical orientation for housing, records, insurance, work, school, medical continuity, transportation, contractors, and community recovery after a major interruption.',
     canonical: 'https://cascadia.me/recovery.html',
     schemaType: 'WebPage'
@@ -693,7 +693,6 @@ const pageAssetOverrides = Object.freeze({
   'faq.html': { styles: ['faq'] },
   'flooding.html': { styles: ['primaryGuides'] },
   'first-moves.html': { styles: ['mission'] },
-  'guides.html': { styles: ['guidesPhase7'] },
   'household-workbook.html': { styles: ['kit'], scripts: ['workbookScript'] },
   'index.html': { styles: ['mission'] },
   'keep-life-going.html': { styles: ['mission'] },

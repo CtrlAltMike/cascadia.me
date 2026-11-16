@@ -29,6 +29,8 @@
         {
           "region": "Oregon",
           "url": "https://sos.oregon.gov/blue-book/government/Pages/about-city.aspx",
+          "sourceReviewedOn": "2026-11-16",
+          "sourceReviewNote": "Replacement official page confirms 241 incorporated cities. This source-only repair does not renew the July government-by-government coverage review.",
           "knownRosterCount": 241,
           "note": "Oregon Secretary of State count of incorporated cities. Official city-limit names are compared with the OR-Alert search directory."
         },

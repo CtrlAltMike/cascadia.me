@@ -1,5 +1,7 @@
 # Targeted source check: November 16, 2026
 
+Historical narrow-patch record. Superseded for release scope and validation by [the reconciled broader review](../2026-11-16-content-review.md). The narrow PR passed GitHub Actions with 32 tests passed and two intentional skips; the reconciled revision requires its own gate.
+
 This is a bounded maintenance patch, not a full guide or directory review.
 Historical July review dates and the review-policy adoption date remain intact.
 

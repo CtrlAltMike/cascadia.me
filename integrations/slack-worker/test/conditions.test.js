@@ -1,3 +1,4 @@
+import { mock } from "node:test";
 import assert from "node:assert/strict";
 import { buildConditions } from "../src/conditions.js";
 import worker from "../src/index.js";
@@ -263,8 +264,35 @@ assert.equal(degraded.degraded, true);
 assert.equal(degraded.summary.fireCount, 4);
 assert.equal(degraded.summary.weatherAlertCount, 0);
 
+// Transport Date must not masquerade as the source modification timestamp.
+const dateOnly = await buildConditions({}, { now: NOW, fetchImpl: async (url) => {
+  const response = await fixtureFetch(url);
+  const data = await response.json();
+  return new Response(JSON.stringify(data), { headers: { date: NOW.toUTCString() } });
+} });
+assert.equal(dateOnly.sources.find((source) => source.id === "bcws-fires").updatedAt, null);
+const capped = await buildConditions({}, { now: NOW, fetchImpl: async (url) => {
+  const response = await fixtureFetch(url);
+  const data = await response.json();
+  if (url.includes("WFIGS_Incident_Locations_Current")) data.properties = { exceededTransferLimit: true };
+  return jsonResponse(data);
+} });
+assert.equal(capped.sources.find((source) => source.id === "nifc-fires").incomplete, true);
+assert.equal(capped.degraded, true);
+
+const atLimit = await buildConditions({ WSDOT_ACCESS_CODE: "test-only" }, { now: NOW, fetchImpl: async (url) => {
+  if (url.includes("GetAlertsAsJson")) return jsonResponse(Array.from({ length: 301 }, () => ({})));
+  const response = await fixtureFetch(url);
+  const data = await response.json();
+  if (url.includes("WFIGS_Incident_Locations_Current")) data.features = Array.from({ length: 500 }, () => data.features[0]);
+  return jsonResponse(data);
+} });
+assert.equal(atLimit.sources.find((source) => source.id === "nifc-fires").incomplete, true);
+assert.equal(atLimit.sources.find((source) => source.id === "wsdot-highway-alerts").incomplete, true);
+
 const originalFetch = globalThis.fetch;
 globalThis.fetch = fixtureFetch;
+mock.timers.enable({ apis: ["Date"], now: NOW.getTime() });
 try {
   const response = await worker.fetch(
     new Request("https://conditions.example/conditions"),
@@ -286,6 +314,7 @@ try {
   assert.equal(preflight.headers.get("access-control-allow-methods"), "GET, OPTIONS");
 } finally {
   globalThis.fetch = originalFetch;
+  mock.timers.reset();
 }
 
 console.log("conditions tests passed");

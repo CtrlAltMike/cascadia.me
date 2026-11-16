@@ -173,6 +173,7 @@ export async function buildConditions(env = {}, options = {}) {
         status: "available",
         recordCount: result.value.collection.features.length,
         updatedAt: result.value.updatedAt,
+        incomplete: Boolean(result.value.incomplete),
       });
       return;
     }
@@ -205,7 +206,7 @@ export async function buildConditions(env = {}, options = {}) {
   delete collections.bcPerimeters;
 
   const incompleteSources = sources.filter((source) =>
-    source.status === "unavailable" || source.status === "not_configured"
+    source.status === "unavailable" || source.status === "not_configured" || source.incomplete
   ).length;
   const availableSources = sources.filter((source) => source.status === "available").length;
 
@@ -261,6 +262,7 @@ async function fetchCurrentFires(fetchImpl, now) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -293,6 +295,7 @@ async function fetchCurrentPerimeters(fetchImpl, now) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -327,6 +330,7 @@ async function fetchCurrentBcFires(fetchImpl, now) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: result.lastModifiedAt,
   };
 }
@@ -359,6 +363,7 @@ async function fetchCurrentBcPerimeters(fetchImpl, now) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -383,6 +388,7 @@ async function fetchChelanEvacuations(fetchImpl) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -399,6 +405,7 @@ async function fetchNwsAlerts(fetchImpl) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete,
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -412,6 +419,7 @@ async function fetchWsdotAlerts(fetchImpl, accessCode) {
 
   return {
     collection: featureCollection(features),
+    incomplete: result.incomplete || (Array.isArray(result.data) && result.data.length > 300),
     updatedAt: latestTimestamp(features, "updatedAt") || result.lastModifiedAt,
   };
 }
@@ -658,7 +666,11 @@ async function fetchJson(fetchImpl, url, headers) {
 
       return {
         data,
-        lastModifiedAt: toIso(response.headers.get("last-modified") || response.headers.get("date")),
+        // HTTP Date is retrieval time, not evidence of source modification.
+        lastModifiedAt: toIso(response.headers.get("last-modified")),
+        incomplete: Boolean(data?.exceededTransferLimit || data?.properties?.exceededTransferLimit)
+          || (Number(new URL(url).searchParams.get("resultRecordCount")) > 0
+            && (data?.features?.length || 0) >= Number(new URL(url).searchParams.get("resultRecordCount"))),
       };
     } catch (error) {
       lastError = error;

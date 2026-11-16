@@ -457,8 +457,9 @@
         ? NaN
         : Number(source.recordCount);
       const countText = Number.isFinite(count) ? ` · ${count.toLocaleString()} record${count === 1 ? '' : 's'}` : '';
-      const updateText = source.updatedAt ? ` · updated ${formatPopupDate(source.updatedAt)}` : '';
-      meta.textContent = ` — ${sourceStatusLabel(source.status)}${countText}${updateText}`;
+      const updateText = source.updatedAt ? ` · updated ${formatPopupDate(source.updatedAt)}` : ' · source update time unknown';
+      const incompleteText = source.incomplete ? ' · bounded results; coverage may be incomplete' : '';
+      meta.textContent = ` — ${sourceStatusLabel(source.status)}${countText}${updateText}${incompleteText}`;
       item.append(link, meta);
       list.append(item);
     });
@@ -1171,6 +1172,7 @@
     if (unavailableCount) {
       coverageNotes.push(`${unavailableCount} source${unavailableCount === 1 ? ' is' : 's are'} temporarily unavailable.`);
     }
+    if (sources.some((source) => source.incomplete)) coverageNotes.push('Some sources returned bounded results; records may be missing.');
     if (roadNotConfigured) coverageNotes.push('WSDOT road alerts are not connected.');
     if (data.degraded && !coverageNotes.length) coverageNotes.push('Some source coverage is incomplete.');
     const partial = Boolean(data.degraded || coverageNotes.length);
@@ -1233,7 +1235,7 @@
     const ageNote = staleCount
       ? ` ${staleCount} older observation${staleCount === 1 ? ' is' : 's are'} shown faintly.`
       : '';
-    const degraded = data.degraded ? ' One observation source is temporarily unavailable.' : '';
+    const degraded = data.degraded ? ' Observation coverage is incomplete; check source details.' : '';
     setStatus(
       'wind',
       `Observed wind: ${stationCount} recent station report${stationCount === 1 ? '' : 's'} across Cascadia.${ageNote}${degraded}`,
@@ -1676,7 +1678,9 @@
 
   async function ensureEarthquakes() {
     const filter = getQuakeFilter();
-    if (loadedQuakeKey === filter.key && loadedLayers.has('earthquakes')) return;
+    const cached = quakeCache.get(filter.key);
+    const isFresh = cached && Date.now() - cached.checkedAt < LIVE_REFRESH_MS;
+    if (isFresh && loadedQuakeKey === filter.key && loadedLayers.has('earthquakes')) return;
 
     syncQuakeSummary();
     setStatus('earthquakes', `Loading USGS ${filter.label}.`, 'loading');
@@ -1689,10 +1693,10 @@
       ...quakeParams(filter),
     });
 
-    const data = quakeCache.has(filter.key) ? quakeCache.get(filter.key) : await fetchJson(url);
-    if (!quakeCache.has(filter.key)) {
-      quakeCache.set(filter.key, data);
-    }
+    const data = isFresh ? cached.data : await fetchJson(url);
+    const checkedAt = isFresh ? cached.checkedAt : Date.now();
+    if (!isFresh) quakeCache.set(filter.key, { data, checkedAt });
+    const capped = (data.features || []).length >= Number(filter.window.limit);
     if (getQuakeFilter().key !== filter.key || !toggleForLayer('earthquakes')?.checked) return;
     data.features = (data.features || []).filter((feature) => {
       const coords = feature.geometry && feature.geometry.coordinates;
@@ -1740,7 +1744,7 @@
 
     loadedQuakeKey = filter.key;
     loadedLayers.add('earthquakes');
-    setStatus('earthquakes', `Earthquakes: ${data.features.length} USGS ${filter.label}.`, 'ready');
+    setStatus('earthquakes', `Earthquakes: ${data.features.length} USGS ${filter.label}. Checked ${formatPopupDate(checkedAt)}.${capped ? ' Result limit reached; additional events may be missing.' : ''}`, capped ? 'partial' : 'ready');
   }
 
   async function ensureVolcanoes() {
@@ -2118,6 +2122,7 @@
     });
 
     window.setInterval(() => {
+      if (toggleForLayer('earthquakes')?.checked && !document.hidden) loadLayerSafely('earthquakes');
       const liveToggle = toggles.find((input) => input.dataset.atlasLayer === 'live');
       if (liveToggle?.checked && !document.hidden) {
         loadLayerSafely('live');

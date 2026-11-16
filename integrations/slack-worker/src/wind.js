@@ -82,6 +82,7 @@ export async function buildWindConditions(options = {}) {
         status: "available",
         recordCount: result.value.collection.features.length,
         updatedAt: result.value.updatedAt,
+        incomplete: Boolean(result.value.incomplete),
       });
       return;
     }
@@ -119,7 +120,7 @@ export async function buildWindConditions(options = {}) {
       bounds: CASCADIA_BOUNDS,
     },
     availableSources,
-    degraded: unavailableSources > 0,
+    degraded: unavailableSources > 0 || sources.some((source) => source.incomplete),
     summary: {
       stationCount: observations.length,
       freshStationCount: observations.length - staleStationCount,
@@ -160,6 +161,7 @@ async function fetchBcwsObservations(fetchImpl, now) {
 
   return {
     collection: featureCollection(features),
+    incomplete: records.length >= BCWS_PAGE_COUNT * BCWS_PAGE_SIZE,
     updatedAt: latestTimestamp(features),
   };
 }
@@ -272,7 +274,7 @@ async function fetchBoundedJson(fetchImpl, url, headers) {
 
   return {
     data,
-    lastModifiedAt: toIso(response.headers.get("last-modified") || response.headers.get("date")),
+    lastModifiedAt: toIso(response.headers.get("last-modified")),
   };
 }
 

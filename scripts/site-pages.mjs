@@ -31,7 +31,7 @@ export const siteCacheVersions = Object.freeze({
   volcanoEditorial: '20260716-volcano-edit',
   fieldStories: '20260723-story-frontispieces2',
   storyShelf: '20260722-book-lift6',
-  atlas: '20260723-wind-arrows',
+  atlas: '20261116-freshness-review',
   atlasStyle: '20260725-phase4',
   signalsAuthority: '20260714-actionability',
   signalsBoundary: '20260714',

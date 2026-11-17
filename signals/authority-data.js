@@ -85,7 +85,7 @@
     ["Lane", "https://member.everbridge.net/337829242601799/login"],
     ["Lincoln", "https://member.everbridge.net/892807736721689/login"],
     ["Linn", "https://oralert.gov/linn-county/index.html"],
-    ["Malheur", "https://public.alertsense.com/SignUp/?regionid=1021"],
+    ["Malheur", "https://sheriff.malheurco.org/home/divisions/emergency-management/", "https://member.everbridge.net/148882356961282/new"],
     ["Marion", "https://member.everbridge.net/892807736721950/login"],
     ["Morrow", "https://member.everbridge.net/index/835495693123586"],
     ["Multnomah", "https://member.everbridge.net/453003085612905/login"],

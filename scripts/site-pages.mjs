@@ -33,7 +33,7 @@ export const siteCacheVersions = Object.freeze({
   storyShelf: '20260722-book-lift6',
   atlas: '20260723-wind-arrows',
   atlasStyle: '20260725-phase4',
-  signalsAuthority: '20260714-actionability',
+  signalsAuthority: '20261117-malheur-destination',
   signalsBoundary: '20260714',
   signalsApp: '20260725-directory-groups'
 });

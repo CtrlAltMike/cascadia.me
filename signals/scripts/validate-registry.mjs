@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import { applyActionUrlAmendments } from "./action-url-amendments.mjs";
 import crypto from "node:crypto";
 import { loadSignalsRegistry } from "./registry-loader.mjs";
 
@@ -190,6 +192,8 @@ for (const item of coverageAudit?.tracks?.indigenousGovernments?.supportResource
 if (actionReview?.schemaVersion !== 1 || actionReview?.status !== "confirmed" || !DATE.test(actionReview?.reviewedOn || "")) {
   errors.push("Action review must use schemaVersion 1 and have confirmed status with a review date");
 }
+const historicalActions = applyActionUrlAmendments(records, JSON.parse(fs.readFileSync(new URL("../action-url-amendments.json", import.meta.url))));
+errors.push(...historicalActions.errors);
 const reviewedIds = new Set();
 for (const batch of actionReview?.batches || []) {
   if (!batch.id || batch.status !== "confirmed" || !DATE.test(batch.reviewedOn || "") || !batch.method) {
@@ -206,7 +210,7 @@ for (const batch of actionReview?.batches || []) {
   for (const id of batch.recordIds) {
     if (reviewedIds.has(id)) errors.push(`${id}: appears in more than one action-review batch`);
     reviewedIds.add(id);
-    const record = records.find((candidate) => candidate.id === id);
+    const record = historicalActions.records.find((candidate) => candidate.id === id);
     if (!record) errors.push(`${id}: action review references an unknown record`);
     else batchRecords.push(record);
   }

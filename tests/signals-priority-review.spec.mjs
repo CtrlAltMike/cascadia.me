@@ -32,8 +32,10 @@ test('priority prose is visible while Signals review remains overdue', async ({ 
   await page.goto('/signals/?q=WSDOT');
   await expect(page.locator('.directory-freshness')).toContainText('review overdue');
   await expect(page.locator('#directory-last-updated')).toHaveAttribute('datetime', '2026-07-15');
+  await page.getByRole('button', { name: 'Show details for WSDOT travel alerts', exact: true }).click();
   await expect(page.getByText('Email and app notifications for travel updates.', { exact: false })).toBeVisible();
   await expect(page.getByText('Text alerts are available only for Washington State Ferries.', { exact: false })).toBeVisible();
   await page.goto('/signals/?q=King%20County%20Emergency%20Medical');
+  await page.getByRole('button', { name: 'Show details for King County Emergency Medical Services', exact: true }).click();
   await expect(page.getByText('The county EMS Division manages the Medic One/EMS system outside the City of Seattle.', { exact: false })).toBeVisible();
 });

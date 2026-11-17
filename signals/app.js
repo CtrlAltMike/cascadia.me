@@ -518,6 +518,7 @@ const coreRecordDetails = {
     deliveryChannels: ["web", "phone"]
   },
   "oregon-oem": {
+    editorialReview: {"reviewedOn":"2026-11-17","scope":"Official link, description and statewide applicability; not alert delivery or map-boundary verification.","evidencePath":"docs/signals-reviews/2026-11-17-oregon-oem-editorial.json"},
     authorityRole: "State emergency-management source",
     primaryAction: { type: "prepare", label: "Review Oregon emergency guidance", url: "https://www.oregon.gov/oem/Pages/default.aspx", priority: 20 },
     deliveryChannels: ["web"]
@@ -841,6 +842,7 @@ function exportPrivatePlan() {
       `Applies: ${resource.coverageNote}`,
       ...operationalFactLines(resource),
       `Reviewed: ${resource.verifiedOn}`,
+      ...(resource.editorialReview ? [editorialReviewText(resource)] : []),
       resource.primaryAction.url,
       ""
     ])
@@ -1980,7 +1982,7 @@ function renderViewDialog() {
 
       const review = document.createElement("p");
       review.className = "view-record-review";
-      review.textContent = `Reviewed ${formatDirectoryDate(resource.verifiedOn)} · ${resource.sourceRegistry}`;
+      review.textContent = `Reviewed ${formatDirectoryDate(resource.verifiedOn)} · ${resource.sourceRegistry}${resource.editorialReview ? " · " + editorialReviewText(resource) : ""}`;
 
       const info = document.createElement("a");
       info.className = "view-record-source";
@@ -2034,6 +2036,11 @@ function formatDirectoryDate(value) {
     year: "numeric",
     timeZone: "UTC"
   }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function editorialReviewText(resource) {
+  const review = resource.editorialReview;
+  return review ? 'Editorial review: ' + formatDirectoryDate(review.reviewedOn) + '. ' + review.scope : '';
 }
 
 function operationalFacts(resource) {
@@ -2248,7 +2255,8 @@ function selectResource(id, { revealMap = false } = {}) {
     <dt>Applicability</dt><dd>${escapeHtml(resource.coverageNote)}</dd>
     <dt>Mapped area</dt><dd>${escapeHtml(geometryDescription)}</dd>
     ${operational}
-    <dt>Source review</dt><dd>${escapeHtml(resource.sourceRegistry)} · ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}</dd>`;
+    <dt>Source review</dt><dd>${escapeHtml(resource.sourceRegistry)} · ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}</dd>
+    ${resource.editorialReview ? `<dt>Scoped editorial review</dt><dd>${escapeHtml(editorialReviewText(resource))}</dd>` : ""}`;
   const sourceLink = document.querySelector("#card-link");
   sourceLink.href = resource.primaryAction.url;
   sourceLink.innerHTML = `${escapeHtml(resource.primaryAction.label)} <span aria-hidden="true">↗</span>`;
@@ -2668,12 +2676,12 @@ function buildLinkedList() {
   const includePlanStatus = Boolean(document.querySelector("#include-plan-status")?.checked);
   const htmlItems = visibleResources.map((resource) => {
     const completion = includePlanStatus ? `<br><strong>Plan status:</strong> ${isActionComplete(resource.id) ? "Completed" : "Not completed"}` : "";
-    return `<li><strong>${escapeHtml(resource.name)}</strong> — ${escapeHtml(resource.place)}<br><em>${escapeHtml(resource.authorityRole)}</em><br>${escapeHtml(resource.summary)}<br><strong>Action:</strong> <a href="${escapeHtml(resource.primaryAction.url)}">${escapeHtml(resource.primaryAction.label)}</a><br><strong>Applies:</strong> ${escapeHtml(resource.coverageNote)}${operationalFactsHtml(resource)}<br><strong>Reviewed:</strong> ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}${completion}</li>`;
+    return `<li><strong>${escapeHtml(resource.name)}</strong> — ${escapeHtml(resource.place)}<br><em>${escapeHtml(resource.authorityRole)}</em><br>${escapeHtml(resource.summary)}<br><strong>Action:</strong> <a href="${escapeHtml(resource.primaryAction.url)}">${escapeHtml(resource.primaryAction.label)}</a><br><strong>Applies:</strong> ${escapeHtml(resource.coverageNote)}${operationalFactsHtml(resource)}<br><strong>Reviewed:</strong> ${escapeHtml(formatDirectoryDate(resource.verifiedOn))}${resource.editorialReview ? `<br>${escapeHtml(editorialReviewText(resource))}` : ""}${completion}</li>`;
   }).join("");
   const plainItems = visibleResources.map((resource, index) => {
     const completion = includePlanStatus ? `\nPlan status: ${isActionComplete(resource.id) ? "Completed" : "Not completed"}` : "";
     const operations = operationalFactLines(resource);
-    return `${index + 1}. ${resource.name} — ${resource.place}\nRole: ${resource.authorityRole}\n${resource.summary}\nAction: ${resource.primaryAction.label}\n${resource.primaryAction.url}\nApplies: ${resource.coverageNote}${operations.length ? `\n${operations.join("\n")}` : ""}\nReviewed: ${formatDirectoryDate(resource.verifiedOn)}${completion}`;
+    return `${index + 1}. ${resource.name} — ${resource.place}\nRole: ${resource.authorityRole}\n${resource.summary}\nAction: ${resource.primaryAction.label}\n${resource.primaryAction.url}\nApplies: ${resource.coverageNote}${operations.length ? `\n${operations.join("\n")}` : ""}\nReviewed: ${formatDirectoryDate(resource.verifiedOn)}${resource.editorialReview ? "\n" + editorialReviewText(resource) : ""}${completion}`;
   }).join("\n\n");
   return {
     html: `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(freshness)}</p><ol>${htmlItems}</ol><p>Shared from <a href="${escapeHtml(shareableUrl())}">${escapeHtml(shareableUrl())}</a></p>`,
@@ -2727,7 +2735,7 @@ function preparePrint() {
     name.textContent = `${isActionComplete(resource.id) ? "☒" : "☐"} ${resource.name}`;
     const detail = document.createElement("span");
     const operations = operationalFactLines(resource);
-    detail.textContent = `${publisherLabels[resource.publisher]} · ${resource.authorityRole} · ${resource.place} — ${resource.summary} Applies: ${resource.coverageNote}${operations.length ? ` ${operations.join(" ")}` : ""} Reviewed: ${formatDirectoryDate(resource.verifiedOn)}.`;
+    detail.textContent = `${publisherLabels[resource.publisher]} · ${resource.authorityRole} · ${resource.place} — ${resource.summary} Applies: ${resource.coverageNote}${operations.length ? ` ${operations.join(" ")}` : ""} Reviewed: ${formatDirectoryDate(resource.verifiedOn)}.${resource.editorialReview ? " " + editorialReviewText(resource) : ""}`;
     const link = document.createElement("a");
     link.href = resource.primaryAction.url;
     link.textContent = `${resource.primaryAction.label}: ${resource.primaryAction.url}`;

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "scope": "URL-only corrections; historical action snapshots and full-record review dates remain unchanged. These checks do not verify enrollment or delivery.",
+  "amendments": [
+    {
+      "recordId": "alert-or-malheur-county",
+      "checkedOn": "2026-11-17",
+      "priorVerifiedOn": "2026-07-14",
+      "previousActionUrl": "https://public.alertsense.com/SignUp/?regionid=1021",
+      "actionUrl": "https://member.everbridge.net/148882356961282/new",
+      "informationUrl": "https://sheriff.malheurco.org/home/divisions/emergency-management/",
+      "evidenceUrls": [
+        "https://public.alertsense.com/SignUp/?regionid=1021",
+        "https://sheriff.malheurco.org/home/divisions/emergency-management/"
+      ],
+      "evidence": "Old enrollment explicitly says it is no longer active. County sheriff directly links the new Everbridge target. New portal body was unreadable; no registration or delivery was tested.",
+      "recordReviewStatus": "partial-source-review"
+    }
+  ]
+}

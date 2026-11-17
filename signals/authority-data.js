@@ -85,7 +85,7 @@
     ["Lane", "https://member.everbridge.net/337829242601799/login"],
     ["Lincoln", "https://member.everbridge.net/892807736721689/login"],
     ["Linn", "https://oralert.gov/linn-county/index.html"],
-    ["Malheur", "https://public.alertsense.com/SignUp/?regionid=1021"],
+    ["Malheur", "https://sheriff.malheurco.org/home/divisions/emergency-management/", "https://member.everbridge.net/148882356961282/new"],
     ["Marion", "https://member.everbridge.net/892807736721950/login"],
     ["Morrow", "https://member.everbridge.net/index/835495693123586"],
     ["Multnomah", "https://member.everbridge.net/453003085612905/login"],
@@ -200,6 +200,29 @@
     "bc-victoria": [-123.5, 48.38, -123.25, 48.55]
   };
 
+  // Field-level corrections checked against direct official pages on 2026-11-16.
+  // These do not advance the historical full-record verification date or action seal.
+  // See docs/signals-reviews/2026-11-16-record-review.json for evidence and limits.
+  const countyFieldCorrections = {
+    "wa-cowlitz": {
+      summary: "Cowlitz County uses Hyper-Reach for emergency community alerts. Choose Voice or Voice & Text as the county advises. Landlines are automatically registered; cellular numbers must be enrolled.",
+      deliveryChannels: ["phone", "text", "email"],
+      // A single Required/Not required label cannot express the landline exception.
+      optInRequired: undefined
+    },
+    "wa-king": {
+      url: "https://kingcounty.gov/en/dept/executive-services/health-safety/safety-injury-prevention/emergency-preparedness/alert-king-county"
+    },
+    "wa-kitsap": {
+      url: "https://www.kitsapdem.com/programs/kitsapalert/"
+    },
+    "wa-yakima": {
+      summary: "Alert Yakima sends address-targeted emergency notifications. Listed landline numbers are automatically enrolled; residents can register other contact methods. A valid street address is required.",
+      deliveryChannels: ["phone", "email", "text"],
+      optInRequired: undefined
+    }
+  };
+
   const countyRecords = (rows, region, registryUrl, registryName) => rows.map(([name, url, actionUrl = url]) => ({
     id: `alert-${region}-${slugify(name)}-county`,
     name: `${name} County emergency alerts`,
@@ -230,7 +253,8 @@
     } : {}),
     coverageKeys: [`county-${region}-${slugify(name)}`],
     fallbackBounds: region === "wa" ? [-125.2, 45.5, -116.7, 49.15] : [-125.2, 41.7, -116.4, 46.4],
-    coverageNote: `Applies within ${name} County. Incorporated cities may also operate supplemental systems; follow the issuing agency named in each alert.`
+    coverageNote: `Applies within ${name} County. Incorporated cities may also operate supplemental systems; follow the issuing agency named in each alert.`,
+    ...countyFieldCorrections[`${region}-${slugify(name)}`]
   }));
 
   const cityRecords = [

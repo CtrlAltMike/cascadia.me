@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "e12e6c3ec6333a146b1ddde786390c09d3b9bd6e",
+  "scope": "Integration of exact independently reviewed patches only; not a new source review or expanded verification.",
+  "sourceHeads": {
+    "pr55": "a1704a46bfbf4b4c210cf3459bcefc93e050a729",
+    "pr56": "bcede2f56d81deebd844149a820e89be99cefd02",
+    "pr57": "d4d86c9c7d50e390eba4e74ee17fd5122ff0b208",
+    "pr58": "46274483af6cbfc3016a4e885269b9d06b4aa8e1"
+  },
+  "corrections": [
+    {
+      "recordId": "wsdot-alerts",
+      "stage": "pr57",
+      "fields": [
+        {
+          "key": "summary",
+          "beforePresent": true,
+          "before": "Email, text, and app notifications for highway travel alerts, ferries, passes, and selected routes.",
+          "afterPresent": true,
+          "after": "Email and app notifications for travel updates. Text alerts are available only for Washington State Ferries. I-90 Snoqualmie Pass text alerts ended August 31, 2026; use WSDOT app notifications instead."
+        }
+      ]
+    },
+    {
+      "recordId": "oregon-oem",
+      "stage": "pr58",
+      "fields": [
+        {
+          "key": "editorialReview",
+          "beforePresent": false,
+          "afterPresent": true,
+          "after": {
+            "reviewedOn": "2026-11-17",
+            "scope": "Official link, description and statewide applicability; not alert delivery or map-boundary verification.",
+            "evidencePath": "docs/signals-reviews/2026-11-17-oregon-oem-editorial.json"
+          }
+        }
+      ]
+    },
+    {
+      "recordId": "king-county-ems",
+      "stage": "pr57",
+      "fields": [
+        {
+          "key": "summary",
+          "beforePresent": true,
+          "before": "Regional EMS system information, community response programs, training, and emergency medical service contacts.",
+          "afterPresent": true,
+          "after": "Regional EMS information, community programs, and training. The county EMS Division manages the Medic One/EMS system outside the City of Seattle."
+        }
+      ]
+    },
+    {
+      "recordId": "alert-wa-cowlitz-county",
+      "stage": "pr55",
+      "fields": [
+        {
+          "key": "summary",
+          "beforePresent": true,
+          "before": "Official enrollment or alert-information source for Cowlitz County. The public agency\u2014not its notification vendor\u2014controls local use of this channel.",
+          "afterPresent": true,
+          "after": "Cowlitz County uses Hyper-Reach for emergency community alerts. Choose Voice or Voice & Text as the county advises. Landlines are automatically registered; cellular numbers must be enrolled."
+        },
+        {
+          "key": "deliveryChannels",
+          "beforePresent": true,
+          "before": [
+            "email",
+            "text"
+          ],
+          "afterPresent": true,
+          "after": [
+            "phone",
+            "text",
+            "email"
+          ]
+        },
+        {
+          "key": "optInRequired",
+          "beforePresent": true,
+          "before": true,
+          "afterPresent": true
+        }
+      ]
+    },
+    {
+      "recordId": "alert-wa-king-county",
+      "stage": "pr55",
+      "fields": [
+        {
+          "key": "url",
+          "beforePresent": true,
+          "before": "https://www.kingcounty.gov/depts/emergency-management/alert-king-county.aspx",
+          "afterPresent": true,
+          "after": "https://kingcounty.gov/en/dept/executive-services/health-safety/safety-injury-prevention/emergency-preparedness/alert-king-county"
+        }
+      ]
+    },
+    {
+      "recordId": "alert-wa-kitsap-county",
+      "stage": "pr55",
+      "fields": [
+        {
+          "key": "url",
+          "beforePresent": true,
+          "before": "https://kcowa.us/alert",
+          "afterPresent": true,
+          "after": "https://www.kitsapdem.com/programs/kitsapalert/"
+        }
+      ]
+    },
+    {
+      "recordId": "alert-wa-yakima-county",
+      "stage": "pr55",
+      "fields": [
+        {
+          "key": "summary",
+          "beforePresent": true,
+          "before": "Official enrollment or alert-information source for Yakima County. The public agency\u2014not its notification vendor\u2014controls local use of this channel.",
+          "afterPresent": true,
+          "after": "Alert Yakima sends address-targeted emergency notifications. Listed landline numbers are automatically enrolled; residents can register other contact methods. A valid street address is required."
+        },
+        {
+          "key": "deliveryChannels",
+          "beforePresent": true,
+          "before": [
+            "email",
+            "text"
+          ],
+          "afterPresent": true,
+          "after": [
+            "phone",
+            "email",
+            "text"
+          ]
+        },
+        {
+          "key": "optInRequired",
+          "beforePresent": true,
+          "before": true,
+          "afterPresent": true
+        }
+      ]
+    },
+    {
+      "recordId": "alert-or-malheur-county",
+      "stage": "pr56",
+      "fields": [
+        {
+          "key": "url",
+          "beforePresent": true,
+          "before": "https://public.alertsense.com/SignUp/?regionid=1021",
+          "afterPresent": true,
+          "after": "https://sheriff.malheurco.org/home/divisions/emergency-management/"
+        },
+        {
+          "key": "primaryAction",
+          "beforePresent": true,
+          "before": {
+            "type": "enroll",
+            "label": "Set up Malheur County alerts",
+            "url": "https://public.alertsense.com/SignUp/?regionid=1021",
+            "priority": 10
+          },
+          "afterPresent": true,
+          "after": {
+            "type": "enroll",
+            "label": "Set up Malheur County alerts",
+            "url": "https://member.everbridge.net/148882356961282/new",
+            "priority": 10
+          }
+        }
+      ]
+    }
+  ],
+  "evidenceFiles": {
+    "docs/signals-reviews/2026-11-16-record-review.json": "dbc7db4eff3e16aaf93d3a6976142ef22ed95883dfe3ff94fb9f650b5885390a",
+    "docs/signals-reviews/2026-11-16-record-review.md": "7f691c791763c59059e1e0d40b0308cd412997288bac3ed387f0c31dc0a14fd6",
+    "docs/signals-reviews/2026-11-17-malheur-destination-fix.md": "b7058d51180330713e89a9364eadf2c8764359b7ed4a82b84e7ec637039ef8c9",
+    "docs/signals-reviews/2026-11-17-priority-field-corrections.json": "ea62f0df3481c1bdb1a1f1731e548a42fc976a1465bdf89e2fa8f8a888ea0018",
+    "docs/signals-reviews/2026-11-17-oregon-oem-editorial.json": "77c4bd9bf37476d864ea8af14e32224bb3f534ae1f067cf83d45ecf0b10ffcec",
+    "signals/action-url-amendments.json": "190d5cd815c53d551f2f0d9961027097bebe6ebcb2a0e06d76c9f7ea519a6170",
+    "signals/action-review.json": "471eb0ff034c2d675ca4d01432292dc0b34ea8fbe87a1699741cb8b45dc6a991",
+    "signals/coverage-review.json": "d46211259afc315d331f6822cb4a29067b0dc224fb7cae3583b31ff2e625ec5c",
+    "signals/coverage-audit.json": "2cad04a533d9a1ea66a58dabbe16d75dabd0a1629237a43bd0e975f3ff76fbcf"
+  },
+  "authorityFile": {
+    "baselineSha256": "d37e2bff804b032a55470bf575fbfc2ad98c9785c19f87a7a72e74463071cd1f",
+    "integratedSha256": "e9e2798bbb22fbf15ffe2ab03c69bdf2d3aa94826d06ee9004d07397e069083a"
+  },
+  "baselineFieldOrder": {
+    "wsdot-alerts": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "summary",
+      "url",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote",
+      "point",
+      "authorityRole",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "rolePriority",
+      "sourceRegistry",
+      "registryUrl",
+      "sourceTier",
+      "verifiedOn"
+    ],
+    "oregon-oem": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "summary",
+      "url",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote",
+      "point",
+      "authorityRole",
+      "primaryAction",
+      "deliveryChannels",
+      "rolePriority",
+      "sourceRegistry",
+      "registryUrl",
+      "sourceTier",
+      "verifiedOn"
+    ],
+    "king-county-ems": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "summary",
+      "url",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote",
+      "point",
+      "authorityRole",
+      "primaryAction",
+      "deliveryChannels",
+      "offlineFallback",
+      "rolePriority",
+      "sourceRegistry",
+      "registryUrl",
+      "sourceTier",
+      "verifiedOn"
+    ],
+    "alert-wa-cowlitz-county": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "authorityRole",
+      "rolePriority",
+      "summary",
+      "url",
+      "registryUrl",
+      "sourceRegistry",
+      "sourceTier",
+      "verifiedOn",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote"
+    ],
+    "alert-wa-king-county": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "authorityRole",
+      "rolePriority",
+      "summary",
+      "url",
+      "registryUrl",
+      "sourceRegistry",
+      "sourceTier",
+      "verifiedOn",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote"
+    ],
+    "alert-wa-kitsap-county": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "authorityRole",
+      "rolePriority",
+      "summary",
+      "url",
+      "registryUrl",
+      "sourceRegistry",
+      "sourceTier",
+      "verifiedOn",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote"
+    ],
+    "alert-wa-yakima-county": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "authorityRole",
+      "rolePriority",
+      "summary",
+      "url",
+      "registryUrl",
+      "sourceRegistry",
+      "sourceTier",
+      "verifiedOn",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote"
+    ],
+    "alert-or-malheur-county": [
+      "id",
+      "name",
+      "organization",
+      "publisher",
+      "group",
+      "place",
+      "categories",
+      "authorityRole",
+      "rolePriority",
+      "summary",
+      "url",
+      "registryUrl",
+      "sourceRegistry",
+      "sourceTier",
+      "verifiedOn",
+      "primaryAction",
+      "deliveryChannels",
+      "optInRequired",
+      "cost",
+      "offlineFallback",
+      "coverageKeys",
+      "fallbackBounds",
+      "coverageNote"
+    ]
+  }
+}

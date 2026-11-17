@@ -1,4 +1,7 @@
+import fs from "node:fs";
+import { applyActionUrlAmendments } from "./action-url-amendments.mjs";
 import crypto from "node:crypto";
+import { validateEditorialReviews } from "./editorial-review-validation.mjs";
 import { loadSignalsRegistry } from "./registry-loader.mjs";
 
 const ACTION_TYPES = new Set(["enroll", "monitor-weather", "monitor-hazard", "transport", "support", "prepare"]);
@@ -11,7 +14,7 @@ const COVERAGE_REVIEW_METHODS = new Set(["manual-official-source-review", "offic
 const HTTPS = /^https:\/\//;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const { records, authorityMeta, coverageAudit, coverageReview, actionReview } = loadSignalsRegistry();
-const errors = [];
+const errors = [...validateEditorialReviews(records)];
 const ids = new Set();
 const VERB_LED_ACTION = /^(Check|Find|Learn|Monitor|Review|Set up|Sign up)\b/;
 
@@ -190,6 +193,8 @@ for (const item of coverageAudit?.tracks?.indigenousGovernments?.supportResource
 if (actionReview?.schemaVersion !== 1 || actionReview?.status !== "confirmed" || !DATE.test(actionReview?.reviewedOn || "")) {
   errors.push("Action review must use schemaVersion 1 and have confirmed status with a review date");
 }
+const historicalActions = applyActionUrlAmendments(records, JSON.parse(fs.readFileSync(new URL("../action-url-amendments.json", import.meta.url))));
+errors.push(...historicalActions.errors);
 const reviewedIds = new Set();
 for (const batch of actionReview?.batches || []) {
   if (!batch.id || batch.status !== "confirmed" || !DATE.test(batch.reviewedOn || "") || !batch.method) {
@@ -206,7 +211,7 @@ for (const batch of actionReview?.batches || []) {
   for (const id of batch.recordIds) {
     if (reviewedIds.has(id)) errors.push(`${id}: appears in more than one action-review batch`);
     reviewedIds.add(id);
-    const record = records.find((candidate) => candidate.id === id);
+    const record = historicalActions.records.find((candidate) => candidate.id === id);
     if (!record) errors.push(`${id}: action review references an unknown record`);
     else batchRecords.push(record);
   }

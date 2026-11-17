@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-17",
+  "status": "draft-field-corrections-not-full-review",
+  "baseCommit": "e12e6c3",
+  "scope": "Independent draft from current main. Two prose corrections only; no dependency on PRs #55/#56 or the ongoing audit branch. Historical full-review dates, action seals, categories, roles, coverage geometry and audit outcomes unchanged. No deployment.",
+  "productionCorrections": {
+    "recordIds": [
+      "wsdot-alerts",
+      "king-county-ems"
+    ],
+    "allowedFields": {
+      "wsdot-alerts": [
+        "summary"
+      ],
+      "king-county-ems": [
+        "summary"
+      ]
+    }
+  },
+  "beforeRecords": [
+    {
+      "id": "wsdot-alerts",
+      "name": "WSDOT travel alerts",
+      "organization": "Washington State Department of Transportation",
+      "publisher": "state",
+      "group": "State & statewide",
+      "place": "Washington",
+      "categories": [
+        "alerts",
+        "transport"
+      ],
+      "summary": "Email, text, and app notifications for highway travel alerts, ferries, passes, and selected routes.",
+      "url": "https://wsdot.wa.gov/travel/sign-wsdot-travel-alerts",
+      "coverageKeys": [
+        "state-wa"
+      ],
+      "fallbackBounds": [
+        -125.2,
+        45.5,
+        -116.7,
+        49.15
+      ],
+      "coverageNote": "Statewide transportation resource.",
+      "point": [
+        -122.9,
+        47.04
+      ],
+      "authorityRole": "Transportation alert issuer",
+      "primaryAction": {
+        "type": "transport",
+        "label": "Set up WSDOT travel alerts",
+        "url": "https://wsdot.wa.gov/travel/sign-wsdot-travel-alerts",
+        "priority": 10
+      },
+      "deliveryChannels": [
+        "email",
+        "text",
+        "app",
+        "web"
+      ],
+      "optInRequired": true,
+      "rolePriority": 10,
+      "sourceRegistry": "Direct official source",
+      "registryUrl": "https://wsdot.wa.gov/travel/sign-wsdot-travel-alerts",
+      "sourceTier": "official-direct",
+      "verifiedOn": "2026-07-15"
+    },
+    {
+      "id": "king-county-ems",
+      "name": "King County Emergency Medical Services",
+      "organization": "Public Health — Seattle & King County",
+      "publisher": "county",
+      "group": "County & regional",
+      "place": "King County, Washington",
+      "categories": [
+        "emergency",
+        "support",
+        "community"
+      ],
+      "summary": "Regional EMS system information, community response programs, training, and emergency medical service contacts.",
+      "url": "https://kingcounty.gov/en/dept/dph/health-safety/health-centers-programs-services/emergency-medical-services",
+      "coverageKeys": [
+        "county-wa-king"
+      ],
+      "fallbackBounds": [
+        -122.55,
+        47.08,
+        -120.85,
+        47.82
+      ],
+      "coverageNote": "King County regional EMS resource; call 911 for an active emergency.",
+      "point": [
+        -122.32,
+        47.6
+      ],
+      "authorityRole": "Regional emergency medical support",
+      "primaryAction": {
+        "type": "support",
+        "label": "Review King County EMS resources",
+        "url": "https://kingcounty.gov/en/dept/dph/health-safety/health-centers-programs-services/emergency-medical-services",
+        "priority": 30
+      },
+      "deliveryChannels": [
+        "web"
+      ],
+      "offlineFallback": "Call 911 for an active emergency.",
+      "rolePriority": 30,
+      "sourceRegistry": "Direct official source",
+      "registryUrl": "https://kingcounty.gov/en/dept/dph/health-safety/health-centers-programs-services/emergency-medical-services",
+      "sourceTier": "official-direct",
+      "verifiedOn": "2026-07-15"
+    }
+  ],
+  "evidence": {
+    "wsdot-alerts": [
+      "https://wsdot.wa.gov/travel/sign-wsdot-travel-alerts",
+      "https://wsdot.wa.gov/about/news/2026/i-90-text-message-alerts-are-taking-new-route-wsdot-mobile-app"
+    ],
+    "king-county-ems": [
+      "https://kingcounty.gov/en/dept/dph/health-safety/health-centers-programs-services/emergency-medical-services"
+    ]
+  },
+  "limitations": [
+    "WSDOT direct retrieval returned 403; substantive official indexed text supports correction. Conflicting delay thresholds deliberately omitted.",
+    "King County coverage remains resource relevance, not a direct medical response service boundary.",
+    "No enrollment or delivery tests; neither record becomes fully reverified."
+  ],
+  "preservedFiles": {
+    "signals/action-review.json": "471eb0ff034c2d675ca4d01432292dc0b34ea8fbe87a1699741cb8b45dc6a991",
+    "signals/coverage-review.json": "d46211259afc315d331f6822cb4a29067b0dc224fb7cae3583b31ff2e625ec5c",
+    "signals/coverage-audit.json": "2cad04a533d9a1ea66a58dabbe16d75dabd0a1629237a43bd0e975f3ff76fbcf"
+  },
+  "aberdeenInvestigation": {
+    "decision": "No production change; classification remains unresolved, not disproved.",
+    "evidenceUrls": [
+      "https://www.aberdeenwa.gov/notifyme",
+      "https://aberdeenwa.gov/31/Our-Community",
+      "https://aberdeenwa.gov/AlertCenter.aspx",
+      "https://www.aberdeenwa.gov/273/Emergency-Management",
+      "https://www.aberdeenwa.gov/DocumentCenter/View/2747/2026-Final-Budget"
+    ],
+    "findings": [
+      "Notify Me currently exposes agenda/bids/calendar/jobs lists, not an emergency category.",
+      "City Our Community explicitly describes disaster warnings by email/text; linked Alert Center directs users to Notify Me for emergency notices. This contradicts a definitive non-emergency reclassification.",
+      "2026 budget describes planned mass notification system, but budget planning does not prove deployment or identify a working enrollment destination."
+    ],
+    "unresolved": [
+      "Operational emergency category and enrollment route still unconfirmed. No signup, outreach or delivery test."
+    ]
+  },
+  "validation": {
+    "registry": "Passed after preserving sealed coverageNote; only summaries change.",
+    "note": "Earlier draft coverageNote modification caused action snapshot mismatch; excluded from this independent PR.",
+    "browser": "Local execution blocked by environment; GitHub CI pending."
+  },
+  "untouchedRecordHashes": {
+    "fema-region-10": "2fb2473980e374e7d25ca9deefd3c12117308c0b07a63867929e59eaf57cc9c8",
+    "nws-seattle": "a2c662723c323b55aa9aeddd602059f60113c6e1ef5e00c9fa0ff2f73c2611b6",
+    "nws-portland": "ced180dabbb66d9ef9e356124dd5966524e622692cdb83aebadd06a7b98e77b7",
+    "nws-medford": "b216d7e45c00133347cfd3a11b777ad2ca7f77b903b75f3afd40cc5d398dfbe7",
+    "usgs-cvo": "32a8cca1fde0e339b73efc6ffbb3b78a45c94c5ba72c02070426115f2394d2b2",
+    "usgs-calvo": "9e734a2962633471dcb72af08b0b879cf0bd4bf622b78831fc0f9f287aba1c07",
+    "nrcan-volcanoes": "c95653f5089fd7a288754b5132258d43a731610f6a0fc421cc6761dd822e5f50",
+    "preparedbc-volcano": "96b12f8be7f5fcd514b48417fee4da4a2a27b6424858796bfc7fcd39fb842192",
+    "pnsn": "2b2b9b22f27acb6eb420305100cd308d04e0108c714bc54df4249cd72b37b206",
+    "wa-emd-alerts": "c45c8f51e97852c476d04a5bcbffb031f0def129b6a5277b2ef436893092d1ec",
+    "wa-dnr-wildfire": "5a3b14b1a17fa81b7489434efa96415ff086e7b22f3da7af8bf05410f51b00a5",
+    "wa-211": "690a9ba6121a68995ebd878dd6930cada3ad682f2ce6179a4146a557afa2d02e",
+    "oregon-oem": "5662fd0ea59346dbc101f3559379daf0f0e30d55fc448c843c98e8c2354c08ee",
+    "or-alert": "44f30cecb5eabf3db69e817c02da8c59210340b983072941089a0255742b0907",
+    "tripcheck": "61a421809a4d6a92ce0409e02cd7c8c616843a28dbd0ca145b3ede58e98cccea",
+    "oregon-211": "8f45e2df572936061226090110c3942a957103362b92386a3466151d20bf66e3",
+    "drivebc": "5eb2fb6065caa4d54a2b2f6baff07a62322fd9994f8646e947f5915d64c14388",
+    "bc-211": "0d75194aff974bc01690f446dd4c9289a075927b8a706305a12a8116c14b6d88",
+    "grand-ronde-emergency": "2510670d7c40c39d4fe5ce95d0f2c9919727fbf96980c31dc9a442f0fbb52314",
+    "king-county-oem": "754bc90fa50f388d5ecbb029c3eede78a597179a16645a0a76804932b17984d7",
+    "seattle-oem": "4d18ef45887dbed922764200ab7b707f23b3817a97e910fcaa268d6ab539f87c",
+    "seattle-hubs": "906a94ecfeef30df6f6c06fc4920015a0b86d449d213788aa194fd8bc0d7ce39",
+    "fness-emergency-management": "12a348e64554d02e1b0c0189a6ecd8f2e2078f31d58b40ac56a21d7589dcdb6f",
+    "nws-spokane": "66ed6bca0d562cf93f48bd57423cf80af97deccd8f3df60c975c2167b618b851",
+    "nws-pendleton": "dfa958ec901e44c5c198189cf62545e3a391c4a115fa419abc3b306266f9dbad",
+    "nws-boise": "3a8c20cbbb945b160932028c3ad3e653598e266bb22e051f4338c5fe3c7c1416",
+    "bc-emergency-alert": "76287da1d348ebbdfc929c442ef8e1fd26f35a2dd18f47654dd9cd9318d44c32",
+    "emergency-info-bc": "67bce2ed79e3d190f49c91979ae54c05edbf6a967f57ad64519886bdaa4b338a",
+    "environment-canada-bc-alerts": "c70d01ecbdab2c50c57e458d87dd214029e5ab2bf70f5c399e3180af70ae6da6",
+    "bc-wildfire-service": "aab43fb65ba9b92022bb9e0c84dcf72715441afc371cd83905c4b415d5c0a0c7",
+    "alert-wa-adams-county": "da7d9517197c1e30e496ccddc4a40df77244a87b2f97dadd6c59dd7d7d614f08",
+    "alert-wa-asotin-county": "859678d729debca57910e6b1ff02e24bbf84a619b7bf521a2d72d8748263bb6a",
+    "alert-wa-benton-county": "046e4dc7d3f5b36d986a777f60aecfcb0c0837898b6a012afb77c928c1b60b30",
+    "alert-wa-chelan-county": "1858e12c2fc5215147de727b8da0a1727c8ac7b07d3670fcd479aa693d3c25a4",
+    "alert-wa-clallam-county": "06311a0e18a2f5227a933464e6b4bd9e3d56ac3238f67a133548ac411886f60d",
+    "alert-wa-clark-county": "d2d8c492489c3061f65301ca309b28fec4d23594898a536f4af1b97cfbe16680",
+    "alert-wa-columbia-county": "22170a64504616d392445e010a6703c05e95c256cea9e47e64cbd1328ef6008d",
+    "alert-wa-cowlitz-county": "8fe36c1c7601c7c5d5f0942d7e0c7bb4fd890d68838303658e0c34ceea444a78",
+    "alert-wa-douglas-county": "c3ad10eb92a0dafd5a2824547dd619a3cbb01a3cf9edcbd73cb385183ebbba15",
+    "alert-wa-ferry-county": "dde501fc9f90a1d6ea875ea1ea5a6ebe47ed4d2064fbc5ff06f505d15d185a0b",
+    "alert-wa-franklin-county": "52bc303c6c53f53b41dfc75e96e91e7dd47321537cce128d370517169a77d088",
+    "alert-wa-garfield-county": "6b37eeb41e42f599a2492798c62c95ae195af2a45f64d67843a570954f613bbb",
+    "alert-wa-grant-county": "6c32c68501a3f5cca8a48b9071b119c2ff9b6ee9330b20f903a4115a8b3b9930",
+    "alert-wa-grays-harbor-county": "88bf22aa258807487096dc3d9e9d3b98559a86933b34ee69f9b0ac4136b0373a",
+    "alert-wa-island-county": "f0e7de493274d11e16beb4c251d5f04f2a00ed227c0a47cd610a9f786ce56a58",
+    "alert-wa-jefferson-county": "ca88e5c9ef68c79c52d4975c904d1aeea75581c9acf91d1349aa575dc16a0a16",
+    "alert-wa-king-county": "c477e02b24eeaeb43b88e1a86754ddb79146087af22072e80d72c42a973121ad",
+    "alert-wa-kitsap-county": "9aacd055dfba971dd7c6143eb2987567236bef2acd5b3ad8d42cfbda05776637",
+    "alert-wa-kittitas-county": "4c4a8bb7625249fde4f13bb2c5a0fa2da839df38df32d07c2dc06be37816615e",
+    "alert-wa-klickitat-county": "8e289d08c354ad8cbd09ec5bdda2e5c42ba7bb9091d0816717d25d253d59bea4",
+    "alert-wa-lewis-county": "5e5b5806dd25c1db1bcaa7f362be7be41e80dec91208bd03a987a0af935fd910",
+    "alert-wa-lincoln-county": "89b0b06654b41d10a4968b268d190e367b5def4fdda906fcd956874b248d29b1",
+    "alert-wa-mason-county": "a2551b434357ea159f95c22fbfa8ad1e101ade28d4945eaa3607d392b19ae166",
+    "alert-wa-okanogan-county": "daf1ed31b6ab3354f9dd7023b2dd020c76f2a12ffe86960bfc28fd18e0e68308",
+    "alert-wa-pacific-county": "22ac9e2e61650132b1e7fd77e065c44098fc2901e4a6d1828798eb5546d74bd7",
+    "alert-wa-pend-oreille-county": "0e0c24e4b3e17ea3a8d9f9da4378e6fb59897720698c0891a0d9477980b90a6e",
+    "alert-wa-pierce-county": "49516e201f76ed9bcf7b95b544cdd93ebc99691f8ddead59592e09e488b0bab4",
+    "alert-wa-san-juan-county": "bc36dfd3bd0ef3c01c74da8d92c55198a7153f0956c45d1a1bf319a4c2871d25",
+    "alert-wa-skagit-county": "9243294066ba0a3a784fcf48aae14127423738d07161b133fa8c2237976ba8f3",
+    "alert-wa-skamania-county": "bd7eb571bd9599d61c188835f9a1971dc8e8c34e114129defa99dabb2b5eea17",
+    "alert-wa-snohomish-county": "5b628c154fc47bd5536f66858e51f7a263ded5b8a9d911e7c2a216483e90e2d2",
+    "alert-wa-spokane-county": "0961876ede39339a0f482053575417397c05e33d8143baa569f58aafcd3b2706",
+    "alert-wa-stevens-county": "2e11b835268ac2bcabf08a862faec4849cc7e6c3ccfef09f0aba8a5a7e6c3efe",
+    "alert-wa-thurston-county": "65a0b610839c25b5ab6e92995a88b7f216d61ee0af3fc16bf27df32a4fb1261e",
+    "alert-wa-wahkiakum-county": "23b18094f4c8b4486cc7bbfe23a7985e2c48ef9721363a88e74ddba19cd54b5b",
+    "alert-wa-walla-walla-county": "49ab2dd30eec5afcaab4711a96cb16cb204cc70b44a36bad37822802d3617d46",
+    "alert-wa-whatcom-county": "f7d84e4c3b59877602c1d0b883ac50bd0d154a201e11ffe1276582dace5b8a24",
+    "alert-wa-whitman-county": "98814cbea8b3f3b0c3d141249480a2490a7d71ba10a51fa1fe3c1e4f555baef7",
+    "alert-wa-yakima-county": "9d3865a5189420789b566a207853ada412f3d6ea83b3cd0c4ec17473f5c3371a",
+    "alert-or-baker-county": "08af2ea6137db6df68d3a61dd0ae949f08ecab3b519ccc2d51f904416ba8ff4b",
+    "alert-or-benton-county": "b499f3d04357221c9aac9a5e596413528dcdeb1592cea26e1c1a5f32ed932291",
+    "alert-or-clackamas-county": "77275bc4af436f813cf19e1e0feb947540bb9bd838b5a14bfb09adc6994e93f5",
+    "alert-or-clatsop-county": "26cbf5daf31dd363ad97fdd5c209906fec505605fdaba358cc63681bc52e8e64",
+    "alert-or-columbia-county": "8d8db779ec61df57c56b87075ab4ddab165780590a0ca2de2c5c1087874fe659",
+    "alert-or-coos-county": "67d936f0ee7af202c53bf2fc8a584739611c5e30c5490ff216bc26678a712c46",
+    "alert-or-crook-county": "e17a5775237639efe8c27379d878dc2a5b4051b590b7679b513a7fd4165b182c",
+    "alert-or-curry-county": "0c6dfc89883fc58c540e6a86c4aae9b26019c4358815086d83263243743ef343",
+    "alert-or-deschutes-county": "c577e35c47a44a1d7a313931e9080457f961f65868d4f1e54ebc1daee2b6a932",
+    "alert-or-douglas-county": "5312e414453ffbed58712fb557492b567ecc8b451660427c67ee13e1fbc0589e",
+    "alert-or-gilliam-county": "c1957a7b99a95d214f47ca794d323084345c14a9aae406a363dfe81351e3185f",
+    "alert-or-grant-county": "375d3af17cbbdc6d7808f8a89ca9a7784cc97fa2e51b74c6076f6f1f487766f2",
+    "alert-or-harney-county": "b5dea4ac5a8e0cec97e4b92dfcc76f0c3bdc8fe53a3324b76de32f09ebf920b5",
+    "alert-or-hood-river-county": "14c619a795fb183e5ac2f4d95ad9326560968a14ac898d8ff80662bda4ad0534",
+    "alert-or-jackson-county": "9a7ea6913ce6bcb08d7949192c0fc4d5091d3a53cb5097209b728cfa096d3c89",
+    "alert-or-jefferson-county": "142bfb5d35e5e3eb8c796ae117dff02292957fce82933f9f92ad6eb6466b592c",
+    "alert-or-josephine-county": "6ec1fb45ba2c2cc81a09b6d977fbe0c568dd445a266fdac0489e8c6c479d3faf",
+    "alert-or-klamath-county": "73473d5ea3d68f8eda84b3af3c9145d2e7063242e64156f3677b2c676c9248f3",
+    "alert-or-lake-county": "380ee34aea8e148789a97b1d266dd61e4786a52f59ba28d90b9f8491a7817841",
+    "alert-or-lane-county": "15152ad1e923501154ea9cd1cd0eba4ef4d380ec53357b2abe5bb67de37122e6",
+    "alert-or-lincoln-county": "3df9ea7a850bffe143b0a2ae445b16b5212f6d3d856205a802dc0678c5f9b7ae",
+    "alert-or-linn-county": "6a99b3a8542206eceaed7065eae44077ab612b6d8f649903afdb3f4e9ed91401",
+    "alert-or-malheur-county": "06eed88bec30b490a77cb67d092634f82b40aef78fdb5fc5b9ceed5c033230ca",
+    "alert-or-marion-county": "d2265c290895795b43ef778d9597492a8444d981c3154e56afb7787c226977b4",
+    "alert-or-morrow-county": "a1193ebf382aa93b008039255d777e60c44afbc39ab5c82167c43138bc2f00cb",
+    "alert-or-multnomah-county": "0ea79a79ac7ea6423ba12efd24f0ac754d9243daec310bb7c043ec46704137b0",
+    "alert-or-polk-county": "c8b09d34a2279b0f481ffa6d8a83691731a6b6da5cea0b468f5a7273f792afcb",
+    "alert-or-sherman-county": "8edbfc6613c18cb397cd072bd9c7236ee95d64d0aaad7adb01f1673f67fe3f8d",
+    "alert-or-tillamook-county": "4e486761cb0fa3f4c27a7bd8b476cf717aaa2627ad6dc5ae614e8d6224f41224",
+    "alert-or-umatilla-county": "14dc94a7c857174b534d6f94d3238913b03b27f9c858189be300fc20211c3c25",
+    "alert-or-union-county": "9859189660f6b2fb2f3c2fc1d54c574bdf8fa2a6e6cd79c2b7c5baaef1ba0a0a",
+    "alert-or-wallowa-county": "0dfb15fc22ade74331f81188f3971bdab588fd81440b44f0d39baacfe03584e9",
+    "alert-or-wasco-county": "b6cf535adfe93352b12efb7bf175cecaf8023b661e428d35014430cd73123c1d",
+    "alert-or-washington-county": "13ebe05dd1fc90611abe3e1f5bd5ca7c52cdffe9a296f56dc749a00a546c8443",
+    "alert-or-wheeler-county": "835526ee7794d742e26dbde3a24b121322a9c9d2c0ee988c59a8cb46613ef656",
+    "alert-or-yamhill-county": "97632825b92f9b7fe6372c976d788e34e865a330399258ecdbbe13d321f9e516",
+    "alert-bc-alberni-clayoquot-regional": "92d38eff568f6118df7cf31cc9974e302c51272c00d9355e981b01e5df3d86ba",
+    "alert-bc-bulkley-nechako-regional": "8c43af8cbc4d6ec9b535d57ef58423cd3294a9d37b0492ea33a856b75b8b831e",
+    "alert-bc-capital-regional": "85f06a76a9eea489880c9d1cf57e5f0a01bff6accda07e5b6b7d34ae34007199",
+    "alert-bc-cariboo-regional": "6c270d47d2d4856f95ccf39467f527c744f66b422ad73e06ccb0356b19af9f0b",
+    "alert-bc-central-coast-regional": "ad4a3f0f1c73ebf024e025e11408d60eb44a1239560973af185684e464a9aade",
+    "alert-bc-central-kootenay-regional": "77975f2481b4d31e934989a4bc9490850441e4d6dabf0c3e40ea2e206b481623",
+    "alert-bc-central-okanagan-regional": "ad48ac471280b73cc8c9dc09dc1a998c80c23ddc44b8cf248ea93f9deb60676e",
+    "alert-bc-columbia-shuswap-regional": "4f370627aa01344b7617933fc361e7e4801bf7bf1828445c44bf9ef3f0ef4728",
+    "alert-bc-comox-valley-regional": "a9a4d0e3a1aad4113804b08a4ea0bcc80aee4fdab74fb74173c7c80c307eab2d",
+    "alert-bc-cowichan-valley-regional": "25af458ba592df8bee2a0cebb9dda441e8334cd8feb2840e6390914b8b0c268d",
+    "alert-bc-east-kootenay-regional": "3ff478c6fec6c27ad68538092cc52093ba9b822155ee75b9906e15248d41f3c0",
+    "alert-bc-fraser-valley-regional": "6dc840ac40decc90899758404ea1ac7b596f120270fc51654f55851f38e20eec",
+    "alert-bc-fraser-fort-george-regional": "25f2d16854e8775fc74e2cf82b0023daea33523f76f522f174da813ce8c019d9",
+    "alert-bc-kitimat-stikine-regional": "115e2587e17f8dc21625e6caa59024a9cae5be98c951a036de839942080397ad",
+    "alert-bc-kootenay-boundary-regional": "5f0d40407ba752c1934809a62954f482a9ac791c0bdb2b28d7f52f96137cb739",
+    "alert-bc-metro-vancouver-regional": "a2937fc4d536ebf5c0a92dedb389b75cd428637ff49b53ce1a30631721e1e8be",
+    "alert-bc-mount-waddington-regional": "aafdb91d2d49ee944c09c78a80257948335ecd052559fd4a3d1accb53053b77b",
+    "alert-bc-nanaimo-regional": "9552d5e72a7da456ad2f9f21942a879ab6e6757c72726a8d747c90bd99a02e7c",
+    "alert-bc-north-coast-regional": "44541085889c72aff89f207e595b49d569728e515109eedebbd9c363b8bc48b6",
+    "alert-bc-north-okanagan-regional": "830315007efd5abe7a57c0f3dc1eb937100090c33f5e25ebf1224b588a339f05",
+    "alert-bc-okanagan-similkameen-regional": "99b27ce51152091f177d468f913ebe2dee7da394ecc56cf60df971737c0f08a3",
+    "alert-bc-peace-river-regional": "274b63ab99f61240338240a36a3f9c0db7449e1536c3c719548254a5473fdd91",
+    "alert-bc-qathet-regional": "373609df8808ad416e8e2061da2eb37f3dcd4350c290979ffe273d518ab040ce",
+    "alert-bc-squamish-lillooet-regional": "e6d7c50bee249cfd689417f33fbf4e4301e785e2fd6dbf3513f9aca62c1551fd",
+    "alert-bc-strathcona-regional": "b5411af0ce3643234124caf3f48b87725e4d86207c1b2525c147ac65dc90d82e",
+    "alert-bc-sunshine-coast-regional": "7b04332e27c5ecd4c62dc1f471802091c6938b9f56c1f8992b404f4e9f3f11fa",
+    "alert-bc-thompson-nicola-regional": "d5d6f2d2c672e63222b578db57accbc23c0c06eb3928ff9296b1f85d8d3be4f2",
+    "alert-wa-aberdeen-city": "d4d4adeea4836bfb44428f1c9d8d69be53bbd28739080bf346b0eeeda2b1ddbe",
+    "alert-wa-bainbridge-island-city": "8962536b4d006a018c82adc33110f8d96f43d3492c20f5111ffade99f69be39a",
+    "alert-wa-marysville-city": "dda9ebbad287a08ac2dfd3488066b8045715eb90b0168830db87e41f6563eba1",
+    "alert-wa-puyallup-city": "3927ea0bf4006fc88b2246ce3bb1de40683a4e1ff1536632d421e1702b506010",
+    "alert-wa-redmond-city": "79290f7e9baeac02f60cb56c2feafed06b637f968bacf91b7f9946a7d7eef7a0",
+    "alert-wa-seattle-city": "7bb795309e4ea124b77c2182b7d5254fd0cbb69fe2b948f69e29ec264a969fbb",
+    "alert-wa-snoqualmie-city": "3a35b73831282f9551ad3c21b6d098673b156fb6cb47b78d688d0d99a9faab63",
+    "alert-wa-sumner-city": "b38ba18eb32b677d89ab053ae3c6773edcbb06b49d2f834a024f85a6aed45c8a",
+    "alert-wa-tacoma-city": "6c36314148bfff05d2120a8cd6f9624421b7040af1165d2f9488d86810a8d1b6",
+    "alert-or-portland-city": "889bf3d5f5a85628203c5826197ec6cb3148f1c4833a413f8f988cd3158b9aa2",
+    "alert-bc-kamloops-city": "f450a3b04cb116295dbcaf22f2d9849aae018b0319fd576f6afee096679f1f3f",
+    "alert-bc-vancouver-city": "10d59e694ae1a8841525d52eb28957182fac64d4a0e98ee609d32b7af80616df",
+    "alert-bc-victoria-city": "5e397a44962657c5e7b42fef1b4bb38c4f6ef406f0e8299ec37b86a6894812c5"
+  }
+}

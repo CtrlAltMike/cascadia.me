@@ -120,3 +120,32 @@ curl -X POST "https://cascadia-slack-alerts.mike-551.workers.dev/traffic/digest?
 ## Notes
 
 Cloudflare Web Analytics remains the source of truth. The Worker only queries aggregate data and sends Slack messages; it does not write traffic data to KV or maintain a separate counter.
+
+### Atlas feed contracts and bounded coverage
+
+`GET /conditions` also includes southern British Columbia BCWS incidents and
+perimeters. Its coverage is not all of Cascadia: U.S. fires are limited to WA/OR,
+selected weather alerts to Washington, and mapped evacuations to Chelan County.
+Source objects include `incomplete: true` when an upstream transfer limit is
+reported, a requested ArcGIS record ceiling is reached, or WSDOT's local 300-row
+limit drops records. This marks the aggregate degraded; it does not mean the
+source is wholly unavailable. A ceiling can indicate possible rather than proven
+omissions. Absence of this flag does not guarantee comprehensive coverage.
+
+`GET /conditions/wind` aggregates BCWS and NOAA METAR station observations, with
+a 15-minute cache. BCWS samples the newest four 100-row provincial pages before
+regional filtering. A full sample is disclosed as potentially incomplete.
+Observations older than two hours are marked stale; BCWS readings older than 12
+hours and METAR readings older than four hours are excluded.
+
+`GET /conditions/wind/forecast?model=rdps-10km` serves ECCC GeoMet 10 m wind model
+metadata. Forecast metadata and raster tiles cache for 30 minutes; point queries
+cache for 15 minutes. This is 10 km forecast guidance, not observations or a
+prediction of fire/smoke movement. ECCC now describes RDPS as a GDPS component;
+existing GeoMet layer IDs remain unchanged pending live contract verification.
+
+A feed's `checkedAt` is retrieval time. A source's `updatedAt` may be unknown;
+HTTP response Date is never substituted for source modification time. Last-Modified
+and available record timestamps are used where present. Live deployment parity
+and full source completeness still require operational verification. See
+`../../docs/2026-11-16-atlas-audit.md`.

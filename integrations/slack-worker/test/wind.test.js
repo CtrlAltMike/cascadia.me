@@ -119,6 +119,19 @@ const sea = payload.observations.features.find((feature) => feature.properties.s
 assert.equal(Math.round(sea.properties.speedKmh), 19);
 assert.equal(Math.round(sea.properties.gustKmh), 33);
 
+const emptyDateOnly = await buildWindConditions({ now: NOW, fetchImpl: async (url) =>
+  new Response(JSON.stringify(url.includes("bcwsapi") ? { collection: [] } : { type: "FeatureCollection", features: [] }), {
+    headers: { date: NOW.toUTCString() },
+  })
+});
+assert.equal(emptyDateOnly.sources.find((source) => source.id === "noaa-metar-stations").updatedAt, null);
+const cappedSample = await buildWindConditions({ now: NOW, fetchImpl: async (url) => {
+  if (url.includes("bcwsapi")) return jsonResponse({ collection: Array.from({ length: 100 }, () => ({})) });
+  return fixtureFetch(url);
+} });
+assert.equal(cappedSample.sources.find((source) => source.id === "bcws-weather-stations").incomplete, true);
+assert.equal(cappedSample.degraded, true);
+
 const originalFetch = globalThis.fetch;
 globalThis.fetch = fixtureFetch;
 try {

@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "test:release": "playwright test",
-    "validate": "node scripts/sync-site-frame.mjs --check && node scripts/validate-design-system.mjs && node scripts/validate-seo.mjs && npm run test:release"
+    "test:atlas-freshness": "node scripts/test-atlas-freshness.mjs",
+    "validate": "npm run test:atlas-freshness && node scripts/sync-site-frame.mjs --check && node scripts/validate-design-system.mjs && node scripts/validate-seo.mjs && npm run test:release"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1"

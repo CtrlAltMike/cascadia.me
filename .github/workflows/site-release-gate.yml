@@ -45,6 +45,12 @@ jobs:
       - name: Validate search metadata and crawl contracts
         run: node scripts/validate-seo.mjs
 
+      - name: Validate Atlas freshness and uncertainty disclosure
+        run: npm run test:atlas-freshness
+
+      - name: Validate Worker syntax and feed regressions
+        run: npm test --prefix integrations/slack-worker
+
       - name: Exercise shared interactions and responsive layouts
         run: npm run test:release
 

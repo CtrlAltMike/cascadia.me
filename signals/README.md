@@ -63,3 +63,7 @@ The GitHub workflow runs the registry validator on Signals pull requests and pus
 ## Local preview
 
 Serve the repository over HTTP and open `/signals/`. No build step is required.
+
+### Scoped editorial checks
+
+Optional `editorialReview` metadata describes a narrower check separately from the historical `verifiedOn` date. It currently exists only for Oregon OEM. Its dated evidence ledger binds the exact historical record (excluding this new metadata) with SHA-256 and documents scope and limitations. Registry validation rejects missing evidence or changed fingerprints. This is not an alert-delivery test, polygon certification, renewed directory review, or renewed government-coverage audit. All historical dates, batch seals and overdue disclosures remain unchanged. Details, list view, print, share and private checklist exports preserve the distinction.

@@ -42,7 +42,7 @@ test('editorial review displays scope without clearing directory overdue status'
  await expect(page.locator('#card-meta')).toContainText('Editorial review: November 17, 2026');
  await expect(page.locator('#card-meta')).toContainText(ledger.scope);
  // Exercise the actual text/HTML sharing and print formatters without publishing.
- const outputs=await page.evaluate(()=>{ window.print=()=>{}; preparePrint(); renderViewDialog(); return {share:buildLinkedList(), print:document.querySelector('#print-records').textContent, view:document.querySelector('.view-record-review').textContent}; });
+ const outputs=await page.evaluate(()=>{ window.print=()=>{}; preparePrint(); renderViewDialog(); return {share:buildLinkedList(), print:document.querySelector('#print-records').textContent, view:Array.from(document.querySelectorAll('.view-record')).find(article => article.querySelector('.view-record-heading strong')?.textContent === 'Oregon Department of Emergency Management')?.querySelector('.view-record-review').textContent}; });
  expect(JSON.stringify(outputs.share)).toContain(ledger.scope);
  expect(JSON.stringify(outputs.share)).toContain('July 15, 2026');
  expect(outputs.print).toContain(ledger.scope);

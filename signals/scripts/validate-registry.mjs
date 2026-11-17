@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { validateEditorialReviews } from "./editorial-review-validation.mjs";
 import { loadSignalsRegistry } from "./registry-loader.mjs";
 
 const ACTION_TYPES = new Set(["enroll", "monitor-weather", "monitor-hazard", "transport", "support", "prepare"]);
@@ -11,7 +12,7 @@ const COVERAGE_REVIEW_METHODS = new Set(["manual-official-source-review", "offic
 const HTTPS = /^https:\/\//;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const { records, authorityMeta, coverageAudit, coverageReview, actionReview } = loadSignalsRegistry();
-const errors = [];
+const errors = [...validateEditorialReviews(records)];
 const ids = new Set();
 const VERB_LED_ACTION = /^(Check|Find|Learn|Monitor|Review|Set up|Sign up)\b/;
 

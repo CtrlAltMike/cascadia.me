@@ -76,22 +76,24 @@ test.describe('shared site frame', () => {
     await expect(page.getByRole('dialog', { name: 'Share feedback' })).toBeVisible();
   });
 
-  test('NowWePlan links show the temporary launch dialog and restore focus', async ({ page, context }) => {
+  test('NowWePlan links open NowWePlan directly with a paid-service disclosure', async ({ page, context }) => {
+    await context.route(/^https:\/\/nowweplan\.com\//, (route) =>
+      route.fulfill({ status: 200, contentType: 'text/html', body: '<title>NowWePlan stub</title>' })
+    );
     await page.goto('/household-workbook.html');
     const link = page.getByRole('link', { name: /Start a living household plan/ });
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /(?:^|\s)noopener(?:\s|$)/);
-    const pageCount = context.pages().length;
+    await expect(link).not.toHaveAttribute('aria-haspopup', 'dialog');
+    await expect(page.locator('.lw-workbook-plan-bridge-note')).toContainText('a paid subscription made by the author of Cascadia.me');
+
+    const popupPromise = page.waitForEvent('popup');
     await link.click();
-
-    const dialog = page.getByRole('dialog', { name: 'Now We Plan is coming soon' });
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('keeping owners, agreements, review dates, and practice alive');
-    expect(context.pages()).toHaveLength(pageCount);
-
-    await page.keyboard.press('Escape');
-    await expect(dialog).toBeHidden();
-    await expect(link).toBeFocused();
+    const popup = await popupPromise;
+    await popup.waitForLoadState('domcontentloaded');
+    expect(popup.url()).toMatch(/^https:\/\/nowweplan\.com\/start\?src=cascadia&entry=workbook$/);
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await popup.close();
   });
 });
 

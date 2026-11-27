@@ -158,8 +158,14 @@ for (const relativePath of pages) {
   assert(/<body class="[^"]*\bsite-frame-page\b/.test(document), `${relativePath}: missing site-frame-page body class`);
   assert(count(document, 'class="share-button nav-share-btn"') === 1, `${relativePath}: static share control must appear once`);
   assert(count(document, `js/share.js?v=${siteCacheVersions.frame}`) === 1, `${relativePath}: canonical share helper cache key is missing`);
-  for (const script of ['share', 'nowweplan-gate', 'nav', 'animations', 'feedback']) {
+  for (const script of ['share', 'nav', 'animations', 'feedback']) {
     assert(count(document, `js/${script}.js`) === 1, `${relativePath}: ${script}.js must appear once`);
+  }
+  if (document.includes('href="https://nowweplan.com')) {
+    assert(
+      /paid subscription made by (?:the author of Cascadia\.me|Michael Hendrick, who also writes Cascadia\.me)/.test(document),
+      `${relativePath}: NowWePlan links need the Constitution article 8 paid-subscription disclosure`
+    );
   }
 
   const ids = [...document.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
@@ -346,11 +352,6 @@ assert(
   'share helper: canonical suggested message is missing'
 );
 assert(read('css/site-frame.css').includes('.share-dialog-card'), 'site-frame.css: shared share panel is missing');
-const nowWePlanGate = read('js/nowweplan-gate.js');
-for (const gateContract of ['Now We Plan is coming soon', 'keeping owners, agreements, review dates, and practice alive', 'nowweplan.com', 'aria-haspopup']) {
-  assert(nowWePlanGate.includes(gateContract), `NowWePlan gate: missing ${gateContract}`);
-}
-assert(read('css/site-frame.css').includes('.nowweplan-dialog-copy'), 'site-frame.css: shared NowWePlan gate copy is missing');
 assert(read('css/site-frame.css').includes('gap: clamp(0.55rem, 0.85vw, 0.9rem)'), 'site-frame.css: compact desktop navigation rhythm is missing');
 assert(read('css/site-frame.css').includes('margin-left: clamp(0.3rem, 0.7vw, 0.65rem)'), 'site-frame.css: share-control separation is missing');
 assert(read('css/components.css').includes('@media (max-width: 1080px)'), 'components.css: navigation collapse point is not 1080px');
@@ -381,7 +382,7 @@ for (const [relativePath, owner] of retiredFrameOwners) {
   }
 }
 
-for (const removed of ['css/effects.css', 'js/conditions.js', 'js/kits.js']) {
+for (const removed of ['css/effects.css', 'js/conditions.js', 'js/kits.js', 'js/nowweplan-gate.js']) {
   assert(!fs.existsSync(path.join(root, removed)), `${removed}: dead production asset still exists`);
 }
 
